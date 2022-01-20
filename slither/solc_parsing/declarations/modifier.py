@@ -98,7 +98,7 @@ class ModifierSolc(FunctionSolc):
     ) -> NodeSolc:
         name = statement[self.get_key()]
         if name == "PlaceholderStatement":
-            placeholder_node = self._new_node(NodeType.PLACEHOLDER, statement["src"], scope)
+            placeholder_node = self._new_node_id(NodeType.PLACEHOLDER, statement["src"], scope, statement["id"])
             link_nodes(node.underlying_node, placeholder_node.underlying_node)
             return placeholder_node
         return super()._parse_statement(statement, node, scope)

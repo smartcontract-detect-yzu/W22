@@ -185,6 +185,7 @@ class Node(SourceMapping, ChildFunction):  # pylint: disable=too-many-public-met
         self._expression: Optional[Expression] = None
         self._variable_declaration: Optional[LocalVariable] = None
         self._node_id: int = node_id
+        self._ast_id: int = 0 # 当前语句对应的AST ID
 
         self._vars_written: List[Variable] = []
         self._vars_read: List[Variable] = []
@@ -236,7 +237,6 @@ class Node(SourceMapping, ChildFunction):  # pylint: disable=too-many-public-met
     # region General's properties
     ###################################################################################
     ###################################################################################
-
     @property
     def compilation_unit(self) -> "SlitherCompilationUnit":
         return self.function.compilation_unit
@@ -245,6 +245,11 @@ class Node(SourceMapping, ChildFunction):  # pylint: disable=too-many-public-met
     def node_id(self) -> int:
         """Unique node id."""
         return self._node_id
+
+    @property
+    def node_ast_id(self) -> int:
+        """Unique node id."""
+        return self._ast_id
 
     @property
     def type(self) -> NodeType:
@@ -599,6 +604,11 @@ class Node(SourceMapping, ChildFunction):  # pylint: disable=too-many-public-met
     # region Graph
     ###################################################################################
     ###################################################################################
+    def set_ast_id(self, ast_id:int):
+        """
+        设置当前语句的ast id到对应的node中
+        """
+        self._ast_id = ast_id
 
     def add_father(self, father: "Node"):
         """Add a father node
