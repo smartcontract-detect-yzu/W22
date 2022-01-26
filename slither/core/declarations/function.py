@@ -1304,7 +1304,8 @@ class Function(SourceMapping, metaclass=ABCMeta):  # pylint: disable=too-many-pu
         with open(filename, "w", encoding="utf8") as f:
             f.write("digraph{\n")
             for node in self.nodes:
-                f.write('{}[label="{}"];\n'.format(node.node_id, str(node)))
+                # f.write('{}[label="{}"];\n'.format(node.node_id, str(node)))
+                f.write('{}[label="ID:{} {}"];\n'.format(node.node_id, node.node_id, str(node)))
                 for son in node.sons:
                     f.write("{}->{};\n".format(node.node_id, son.node_id))
 
