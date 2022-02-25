@@ -192,4 +192,10 @@ contract EasyMultiplier {
         return queue.length - currentReceiverIndex;
     }
 
+    function t() public {
+        int a;
+        int b;
+        b = ++a;
+        b = a++;
+    }
 }
