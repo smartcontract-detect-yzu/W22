@@ -1,5 +1,7 @@
+import argparse
 import itertools
 import os
+import shutil
 import subprocess
 from queue import LifoQueue
 
@@ -9,7 +11,91 @@ import networkx.drawing.nx_pydot as nx_dot
 from slither.core.cfg.node import NodeType
 
 EXAMPLE_PERFIX = "examples/ponzi/"
+EXAMPLE_ANALYZE_PERFIX = "examples/analyze_test/"
+
+DATASET_PERFIX = "examples/ponzi_dataset/"
+ANALYZE_PERFIX = "examples/analyze/"
+
+SAD_DATASET_PERFIX = "examples/ponzi_dataset_sad/"
+SAD_ANALYZE_PERFIX = "examples/analyze_sad/"
 DEBUG_PNG = 1
+
+versions = ['0', '0.1.7', '0.2.2', '0.3.6', '0.4.26', '0.5.17', '0.6.12', '0.7.6', '0.8.6']
+
+
+def select_solc_version(version_info):
+    start = 0
+
+    for i, char in enumerate(version_info):
+        if char == '0' and start == 0:
+            start = 1
+            op_info = version_info[0:i]
+
+            space_cnt = 0
+            for c in op_info:
+                if c == '^' or c == '>':
+                    return versions[int(version_info[i + 2])]
+
+                if c == '=':
+                    last_char = version_info[i + 5]
+                    if '0' <= last_char <= '9':
+                        return version_info[i:i + 6]
+                    else:
+                        return version_info[i:i + 5]
+
+                if c == ' ':
+                    space_cnt += 1
+
+            if space_cnt == len(op_info):
+                last_char = version_info[i + 5]
+
+                if '0' <= last_char <= '9':
+                    return version_info[i:i + 6]
+                else:
+                    return version_info[i:i + 5]
+
+    return "auto"
+
+
+def parse_solc_version(file):
+    with open(file, 'r', encoding='utf-8') as contract_code:
+
+        mini = 100
+        version_resault = None
+
+        for line in contract_code:
+            target_id = line.find("pragma solidity")
+            if target_id != -1:
+                new_line = line[target_id:]
+                version_info = new_line.split("pragma solidity")[1]
+                v = select_solc_version(version_info)
+
+                if v[-3] == '.':
+                    last_version = int(v[-2:])
+                else:
+                    last_version = int(v[-1:])
+
+                if mini > last_version:
+                    mini = last_version
+                    version_resault = v
+
+                return version_resault
+
+                # version_info = version_info.replace('\r', '').replace('\n', '').replace('\t', '')
+                # print("info:%s  ---  version:%s" % (version_info, version_resault))
+
+        return version_resault
+
+
+def argParse():
+    parser = argparse.ArgumentParser(description='manual to this script')
+
+    parser.add_argument('-t', type=str, default="test")
+
+    args = parser.parse_args()
+    return args.t
+
+    # return args.f, args.cfg, args.var, args.stmts
 
 
 def debug_get_ddg_and_cdg(cfg, cdg_edges, ddg_edges, data_flows, ddg_edges_loop):
@@ -34,14 +120,18 @@ def debug_get_ddg_and_cdg(cfg, cdg_edges, ddg_edges, data_flows, ddg_edges_loop)
     debug_get_graph_png(ddg_f, "ddg_f")
 
 
-def debug_get_graph_png(graph: nx.Graph, postfix):
+def debug_get_graph_png(graph: nx.Graph, postfix, cur_dir):
     if DEBUG_PNG != 1:
         return
 
-    dot_name = EXAMPLE_PERFIX + "{}_{}.dot".format(graph.graph["name"], postfix)
-    nx_dot.write_dot(graph, dot_name)
-
-    cfg_name = EXAMPLE_PERFIX + "{}_{}.png".format(graph.graph["name"], postfix)
+    if not cur_dir:
+        dot_name = EXAMPLE_PERFIX + "{}_{}.dot".format(graph.graph["name"], postfix)
+        nx_dot.write_dot(graph, dot_name)
+        cfg_name = EXAMPLE_PERFIX + "{}_{}.png".format(graph.graph["name"], postfix)
+    else:
+        dot_name = "{}_{}.dot".format(graph.graph["name"], postfix)
+        cfg_name = "{}_{}.png".format(graph.graph["name"], postfix)
+        nx_dot.write_dot(graph, dot_name)
 
     subprocess.check_call(["dot", "-Tpng", dot_name, "-o", cfg_name])
     os.remove(dot_name)
@@ -50,6 +140,20 @@ def debug_get_graph_png(graph: nx.Graph, postfix):
 def get_png(target_fun):
     cfg_dot_file = EXAMPLE_PERFIX + "{}_cfg.dot".format(target_fun.name)
     cfg_png = EXAMPLE_PERFIX + "{}_cfg.png".format(target_fun.name)
+    target_fun.cfg_to_dot(cfg_dot_file)
+    subprocess.check_call(["dot", "-Tpng", cfg_dot_file, "-o", cfg_png])
+
+    # dom_tree_dot_file = EXAMPLE_PERFIX + "{}_dom.dot".format(target_fun.name)
+    # dom_png = EXAMPLE_PERFIX + "{}_dom.png".format(target_fun.name)
+    # target_fun.dominator_tree_to_dot(dom_tree_dot_file)
+    # subprocess.check_call(["dot", "-Tpng", dom_tree_dot_file, "-o", dom_png])
+
+    return cfg_dot_file
+
+
+def _get_png(target_fun):
+    cfg_dot_file = "{}_cfg.dot".format(target_fun.name)
+    cfg_png = "{}_cfg.png".format(target_fun.name)
     target_fun.cfg_to_dot(cfg_dot_file)
     subprocess.check_call(["dot", "-Tpng", cfg_dot_file, "-o", cfg_png])
 
@@ -87,7 +191,7 @@ def _recheck_vars_in_expression(stmt_expression, vars):
 
 
 def get_function_cfg(function):
-    cfg_dot_file = get_png(function)
+    cfg_dot_file = _get_png(function)
     cfg: nx.DiGraph = nx.drawing.nx_agraph.read_dot(cfg_dot_file)
     os.remove(cfg_dot_file)
     cfg.graph["name"] = function.name
@@ -141,6 +245,7 @@ def _stmt_var_info(stmt_info):
     return stmt_var_info
 
 
+
 def _preprocess_for_dependency_analyze(or_cfg, function):
     """
     1.破环：将CFG中的循环结构消除
@@ -171,25 +276,46 @@ def _preprocess_for_dependency_analyze(or_cfg, function):
     stmts_loops = []
     stmts_var_info_maps = {}
     if_paris = {}
-    for stmt in function.nodes:
+    node_id_2_id = {}
 
-        # 2:当前语句的变量使用情况
+    for id, stmt in enumerate(function.nodes):
+        # 链表下标和节点ID是不同的
+        node_id_2_id[stmt.node_id] = id
+
+    for id, stmt in enumerate(function.nodes):
+
+        # 语句的变量使用情况
         stmts_var_info_maps[str(stmt.node_id)] = _stmt_var_info(stmt)
 
         if stmt.can_send_eth():
             stmts_send_eth.append(stmt.node_id)
+            if ".transfer(" in str(stmt.expression):
+                trans_info = str(stmt.expression).split(".transfer(")
+                to = trans_info[0]
+                eth = trans_info[1].strip(")")
+
+            elif ".send(" in str(stmt.expression):
+                trans_info = str(stmt.expression).split(".send(")
+                to = trans_info[0]
+                eth = trans_info[1].strip(")")
+
             print("==== 切片准则：{}".format(stmt.expression))
-            print("\t 变量读：{}".format([str(v) for v in stmt.variables_read]))
-            print("\t 变量写：{}".format([str(v) for v in stmt.variables_written]))
+            print("发送以太币 {} 到 {}".format(eth, to))
+
+
 
         if stmt.type == NodeType.IF:
             stack.append(str(stmt.node_id))
             if_stmts.append(str(stmt.node_id))
 
         if stmt.type == NodeType.STARTLOOP:
+
             # begin_loop --> if_loop
             for suc_node_id in cfg.successors(str(stmt.node_id)):
-                if function.nodes[int(suc_node_id)].type == NodeType.IFLOOP:
+
+                # NOTE 规避 node_id和function.nodes下标不一致的问题
+                list_index = node_id_2_id[int(suc_node_id)]
+                if function.nodes[list_index].type == NodeType.IFLOOP:
                     stack.append(str(suc_node_id))
                     if_stmts.append(str(suc_node_id))
 
@@ -204,7 +330,8 @@ def _preprocess_for_dependency_analyze(or_cfg, function):
             for pre_node_id in cfg.predecessors(str(stmt.node_id)):
 
                 # IF_LOOP 的前驱节点中非 START_LOOP 的节点到IF_LOOP的边需要删除
-                if function.nodes[int(pre_node_id)].type != NodeType.STARTLOOP:
+                list_index = node_id_2_id[int(suc_node_id)]
+                if function.nodes[list_index].type != NodeType.STARTLOOP:
                     remove_edges.append((pre_node_id, str(stmt.node_id)))
 
                     # 记录循环体的起止节点：循环执行的路径起止点
@@ -226,10 +353,10 @@ def _preprocess_for_dependency_analyze(or_cfg, function):
 
     # debug_get_graph_png(cfg, "cfg_exit")
 
-    return cfg, if_stmts, stmts_var_info_maps, stmts_send_eth, stmts_loops, if_paris
+    return cfg, if_stmts, stmts_var_info_maps, stmts_send_eth, stmts_loops, if_paris, node_id_2_id
 
 
-def _get_control_dependency_relations(cfg, if_stmts, predom_relations, function):
+def _get_control_dependency_relations(cfg, if_stmts, predom_relations, function, node_id_2_id):
     """
     根据控制流和前向支配计算当前函数的控制依赖关系
     Y is control dependent on X
@@ -253,8 +380,10 @@ def _get_control_dependency_relations(cfg, if_stmts, predom_relations, function)
         cfg_paths = nx.all_simple_paths(cfg, source=x, target="EXIT_POINT")
 
         for cfg_path in list(cfg_paths):
+
             for y in cfg_path[1:-1]:
-                node_info = function.nodes[int(y)]
+                list_index = node_id_2_id[int(y)]
+                node_info = function.nodes[list_index]
 
                 # 虚拟节点暂时不进行控制依赖分析
                 if node_info.type != NodeType.ENDIF \
@@ -309,11 +438,11 @@ def if_exit_fliter(simple_cfg, from_node, to_node, if_paris):
         else:
             return False
     else:
-        print("错误语句：{} to {}".format(from_node, to_node))
-        raise RuntimeError("控制依赖并没有指向条件语句")
+        # 有可能没有配对
+        return False
 
 
-def get_control_dependency_relations(simple_cfg, if_stmts, function, if_paris):
+def get_control_dependency_relations(simple_cfg, if_stmts, function, if_paris, node_id_2_id):
     """
     利用前向支配关系生成控制流依赖
     1.生成前向支配关系
@@ -326,7 +455,8 @@ def get_control_dependency_relations(simple_cfg, if_stmts, function, if_paris):
     del predom_relations["EXIT_POINT"]  # 删除EXIT_POINT，因为这是虚拟节点
 
     # 控制流依赖关系计算 <key:from, value:{"to": to_node, "distance": distance}>
-    control_dep_relations = _get_control_dependency_relations(simple_cfg, if_stmts, predom_relations, function)
+    control_dep_relations = _get_control_dependency_relations(simple_cfg, if_stmts, predom_relations, function,
+                                                              node_id_2_id)
 
     cdg_edges = []
     for from_node in control_dep_relations:
@@ -611,7 +741,7 @@ def program_slice(cfg, semantic_edges, criterias):
         sliced_pdg = nx.MultiDiGraph(sliced_cfg)
         sliced_pdg.add_edges_from(new_edges)
 
-        debug_get_graph_png(sliced_pdg, "sliced_pdg_{}".format(criteria))
+        debug_get_graph_png(sliced_pdg, "sliced_pdg_{}".format(criteria), cur_dir=True)
 
 
 def loop_structure_extreact(simple_cfg, loop_structures, criteria):
@@ -639,24 +769,22 @@ def loop_structure_extreact(simple_cfg, loop_structures, criteria):
     return loop_reverse_paths
 
 
-def create_pdg(function):
+def _analyze_function(function):
     semantic_edges = {}
 
     # 获得控制流图
     cfg = get_function_cfg(function)
 
     # 预处理
-    simple_cfg, if_stmts, stmts_var_info_maps, transaction_stmts, loop_stmts, if_paris \
+    simple_cfg, if_stmts, stmts_var_info_maps, transaction_stmts, loop_stmts, if_paris, node_id_2_id \
         = _preprocess_for_dependency_analyze(cfg, function)
-
-    print("if 配对结果：{}".format(if_paris))
 
     # 数据流分析
     data_flow_edges = trans_data_flow_analyze(simple_cfg, stmts_var_info_maps, transaction_stmts)
     semantic_edges["data_flow"] = data_flow_edges
 
     # 控制依赖关系
-    cdg_edges = get_control_dependency_relations(simple_cfg, if_stmts, function, if_paris)
+    cdg_edges = get_control_dependency_relations(simple_cfg, if_stmts, function, if_paris, node_id_2_id)
     semantic_edges["ctrl_dep"] = cdg_edges
 
     # 数据依赖生成
@@ -673,16 +801,72 @@ def create_pdg(function):
     # 程序切片
     program_slice(cfg, semantic_edges, transaction_stmts)
 
-if __name__ == '__main__':
 
-    slither = Slither(EXAMPLE_PERFIX + '0x09515cb5e3acaef239ab83d78b2f3e3764fcab9b.sol')
-    # slither = Slither(EXAMPLE_PERFIX + 'test.sol')
-    # slither = Slither(EXAMPLE_PERFIX + '0x6aae3fd4e1545e9865bfdc92c032cb2c712fb125.sol')
+def analyze_contract(name):
 
+    slither = Slither(name)
     for contract in slither.contracts:
-        print("当前合约名称{}  当前合约类型：{}".format(contract.name, contract.contract_kind))
-
         for function in contract.functions:
             if function.can_send_eth():
-                print("\n目标函数：{}".format(function.name))
-                create_pdg(function)
+                _analyze_function(function)
+
+
+def analyze_dataset(target):
+    pwd = os.getcwd()
+
+    if target == "sad":
+        dataset_prefix = SAD_DATASET_PERFIX
+        analyze_prefix = SAD_ANALYZE_PERFIX
+    elif target == "xblock":
+        dataset_prefix = DATASET_PERFIX
+        analyze_prefix = ANALYZE_PERFIX
+    else:
+        dataset_prefix = DATASET_PERFIX
+        analyze_prefix = ANALYZE_PERFIX
+
+    g = os.walk(dataset_prefix)
+    for path, dir_list, file_list in g:
+        for file_name in file_list:
+            if file_name.endswith(".sol"):
+                src_file = os.path.join(path, file_name)
+
+                address = file_name.split(".sol")[0]
+                analyze_dir = analyze_prefix + address
+
+                if not os.path.exists(analyze_dir):
+                    os.mkdir(analyze_dir)
+
+                if not os.path.exists(analyze_dir + "/" + file_name):
+                    shutil.copy(src_file, analyze_dir)
+
+                done_file = analyze_dir + "/done.txt"
+                pass_file = analyze_dir + "/pass.txt"
+                if os.path.exists(done_file) or os.path.exists(pass_file):
+                    print("========={}===========".format(file_name))
+                    continue
+                else:
+                    os.chdir(analyze_dir)  # TODO: 切换工作目录
+                    solc_version = parse_solc_version(file_name)
+                    print("========={} V: {}".format(file_name, solc_version))
+                    subprocess.check_call(["solc-select", "use", solc_version])
+                    analyze_contract(file_name)
+                    with open("done.txt", "w+") as f:
+                        f.write("done")
+                    os.chdir(pwd)  # TODO: 还原工作目录
+
+
+if __name__ == '__main__':
+
+    target = argParse()
+
+    if target == "test":
+        sc_name = "0x92e2d8348df613104c321bb7ab2862f0883e3bdc.sol"
+        os.chdir("examples/test/")
+        analyze_contract(sc_name)
+
+    else:
+        analyze_dataset(target)
+
+    # slither = Slither(EXAMPLE_PERFIX + '0x09515cb5e3acaef239ab83d78b2f3e3764fcab9b.sol')
+    # slither = Slither(EXAMPLE_PERFIX + 'test.sol')
+    # slither = Slither(EXAMPLE_PERFIX + '0x6aae3fd4e1545e9865bfdc92c032cb2c712fb125.sol')
