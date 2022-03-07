@@ -1,9 +1,12 @@
 import argparse
 import itertools
+import json
 import os
 import shutil
 import subprocess
 from queue import LifoQueue
+
+from slither.core.expressions import Identifier
 
 from slither import Slither
 import networkx as nx
@@ -16,9 +19,12 @@ EXAMPLE_ANALYZE_PERFIX = "examples/analyze_test/"
 DATASET_PERFIX = "examples/ponzi_dataset/"
 ANALYZE_PERFIX = "examples/analyze/"
 
-SAD_DATASET_PERFIX = "examples/ponzi_dataset_sad/"
-SAD_ANALYZE_PERFIX = "examples/analyze_sad/"
-DEBUG_PNG = 1
+SAD_CHAIN_DATASET_PERFIX = "examples/ponzi_dataset_sad/chain/"
+SAD_CHAIN_ANALYZE_PERFIX = "examples/analyze_sad/chain/"
+
+SAD_TREE_DATASET_PERFIX = "examples/ponzi_dataset_sad/tree/"
+SAD_TREE_ANALYZE_PERFIX = "examples/analyze_sad/tree/"
+DEBUG_PNG = 0
 
 versions = ['0', '0.1.7', '0.2.2', '0.3.6', '0.4.26', '0.5.17', '0.6.12', '0.7.6', '0.8.6']
 
@@ -84,6 +90,8 @@ def parse_solc_version(file):
                 # version_info = version_info.replace('\r', '').replace('\n', '').replace('\t', '')
                 # print("info:%s  ---  version:%s" % (version_info, version_resault))
 
+        if version_resault == None:
+            version_resault = "0.4.26"
         return version_resault
 
 
@@ -91,39 +99,76 @@ def argParse():
     parser = argparse.ArgumentParser(description='manual to this script')
 
     parser.add_argument('-t', type=str, default="test")
+    parser.add_argument('-n', type=str, default=None)
 
     args = parser.parse_args()
-    return args.t
+    return args.t, args.n
 
     # return args.f, args.cfg, args.var, args.stmts
 
 
 def debug_get_ddg_and_cdg(cfg, cdg_edges, ddg_edges, data_flows, ddg_edges_loop):
-    # 生成控制依赖图
-    cdg = nx.DiGraph()
-    cdg.add_edges_from(cdg_edges)
-    debug_get_graph_png(cdg, "cdg")
+    debug = 0
 
-    # 生成数据依赖图
-    ddg = nx.DiGraph()
-    ddg.add_edges_from(ddg_edges)
-    debug_get_graph_png(ddg, "ddg")
+    pdg = nx.MultiDiGraph(cfg)
+    pdg.add_edges_from(cdg_edges)
+    pdg.add_edges_from(ddg_edges)
+    pdg.add_edges_from(data_flows)
+    pdg.add_edges_from(ddg_edges_loop)
+    debug_get_graph_png(pdg, "pdg", cur_dir=True)
 
-    # 数据依赖图loop增强版本
-    ddg.add_edges_from(ddg_edges_loop)
-    debug_get_graph_png(ddg, "ddg_loop")
+    if debug:
+        # 生成控制依赖图
+        cdg = nx.DiGraph()
+        cdg.add_edges_from(cdg_edges)
+        debug_get_graph_png(cdg, "cdg")
 
-    # 数据流
-    ddg_f = nx.MultiDiGraph(cfg)
-    ddg_f.add_edges_from(ddg_edges)
-    ddg_f.add_edges_from(data_flows)
-    debug_get_graph_png(ddg_f, "ddg_f")
+        # 生成数据依赖图
+        ddg = nx.DiGraph()
+        ddg.add_edges_from(ddg_edges)
+        debug_get_graph_png(ddg, "ddg")
+
+        # 数据依赖图loop增强版本
+        ddg.add_edges_from(ddg_edges_loop)
+        debug_get_graph_png(ddg, "ddg_loop")
+
+        # 数据流
+        ddg_f = nx.MultiDiGraph(cfg)
+        ddg_f.add_edges_from(ddg_edges)
+        ddg_f.add_edges_from(data_flows)
+        debug_get_graph_png(ddg_f, "ddg_f")
+
+
+def _debug_stat_var_info(state_var_read_function_map, state_var_write_function_map, state_var_declare_function_map):
+    if DEBUG_PNG == 0:
+        return
+
+    print("===全局变量定义信息：")
+    for var in state_var_declare_function_map:
+        print("\t定义变量{}".format(str(var)))
+
+        if "exp" in state_var_declare_function_map[var]:
+            print("\t\t{}".format(state_var_declare_function_map[var]["exp"]))
+
+        if "fun" in state_var_declare_function_map[var]:
+            print("\t\t{}".format(state_var_declare_function_map[var]["fun"].name))
+
+    print("===全局变量读信息：")
+    for var in state_var_read_function_map:
+
+        print("读变量{}".format(str(var)))
+        for func in state_var_read_function_map[var]:
+            print("\t{}".format(func.name))
+
+    print("===全局变量写信息：")
+    for var in state_var_write_function_map:
+
+        print("写变量{}".format(str(var)))
+        for func in state_var_write_function_map[var]:
+            print("\t{}".format(func.name))
 
 
 def debug_get_graph_png(graph: nx.Graph, postfix, cur_dir):
-    if DEBUG_PNG != 1:
-        return
-
     if not cur_dir:
         dot_name = EXAMPLE_PERFIX + "{}_{}.dot".format(graph.graph["name"], postfix)
         nx_dot.write_dot(graph, dot_name)
@@ -182,19 +227,20 @@ def _recheck_vars_in_expression(stmt_expression, vars):
             miss_vars.append(var)
 
     if len(miss_vars) != 0:
-        print("\n==ERROR IN DATA DEF-USE==")
-        print("\t语句：{}".format(stmt_expression))
-        print("\t变量：{}".format(miss_vars))
-        print("==ERROR IN DATA DEF-USE==\n")
+        print("\n\t==ERROR IN DATA DEF-USE==")
+        print("\t\t语句：{}".format(stmt_expression))
+        print("\t\t变量：{}".format(miss_vars))
+        print("\t==ERROR IN DATA DEF-USE==\n")
 
     return ret_vars
 
 
-def get_function_cfg(function):
+def get_function_cfg(contract_name, function):
     cfg_dot_file = _get_png(function)
     cfg: nx.DiGraph = nx.drawing.nx_agraph.read_dot(cfg_dot_file)
     os.remove(cfg_dot_file)
     cfg.graph["name"] = function.name
+    cfg.graph["contract_name"] = contract_name
 
     for node in function.nodes:
         cfg_node = cfg.nodes[str(node.node_id)]
@@ -203,7 +249,7 @@ def get_function_cfg(function):
     return cfg
 
 
-def _stmt_var_info(stmt_info):
+def _stmt_var_info(stmt_info, state_defs):
     stmt_var_info = []
 
     expression = str(stmt_info.expression)
@@ -228,6 +274,11 @@ def _stmt_var_info(stmt_info):
     write_state_vars = [str(var) for var in stmt_info.state_variables_written]
     if no_write == 0 and len(write_state_vars) != 0:
         rechecked_write_state_vars = _recheck_vars_in_expression(expression, write_state_vars)
+        for stat_var in rechecked_write_state_vars:
+            if stat_var not in state_defs:
+                state_defs[stat_var] = [stmt_info.node_id]
+            else:
+                state_defs[stat_var].append(stmt_info.node_id)
         stmt_var_info.append({"list": rechecked_write_state_vars, "type": "state", "op_type": "def"})
 
     # 局部变量读 use
@@ -243,7 +294,6 @@ def _stmt_var_info(stmt_info):
         stmt_var_info.append({"list": rechecked_read_state_vars, "type": "state", "op_type": "use"})
 
     return stmt_var_info
-
 
 
 def _preprocess_for_dependency_analyze(or_cfg, function):
@@ -272,11 +322,12 @@ def _preprocess_for_dependency_analyze(or_cfg, function):
     # 1:破环 将CFG中的循环结构消除
     if_stmts = []
     remove_edges = []
-    stmts_send_eth = []
+    stmts_send_eth = {}
     stmts_loops = []
     stmts_var_info_maps = {}
     if_paris = {}
     node_id_2_id = {}
+    state_defs = {}
 
     for id, stmt in enumerate(function.nodes):
         # 链表下标和节点ID是不同的
@@ -285,10 +336,12 @@ def _preprocess_for_dependency_analyze(or_cfg, function):
     for id, stmt in enumerate(function.nodes):
 
         # 语句的变量使用情况
-        stmts_var_info_maps[str(stmt.node_id)] = _stmt_var_info(stmt)
+        stmts_var_info_maps[str(stmt.node_id)] = _stmt_var_info(stmt, state_defs)
+        # print("语句：{}".format(stmt.expression))
+        # print("变量使用：{}".format(stmts_var_info_maps[str(stmt.node_id)]))
+        # print("============\n")
 
         if stmt.can_send_eth():
-            stmts_send_eth.append(stmt.node_id)
             if ".transfer(" in str(stmt.expression):
                 trans_info = str(stmt.expression).split(".transfer(")
                 to = trans_info[0]
@@ -298,11 +351,21 @@ def _preprocess_for_dependency_analyze(or_cfg, function):
                 trans_info = str(stmt.expression).split(".send(")
                 to = trans_info[0]
                 eth = trans_info[1].strip(")")
+            else:
+                eth = None
+                to = None
+                # print("可能是function call")
 
-            print("==== 切片准则：{}".format(stmt.expression))
-            print("发送以太币 {} 到 {}".format(eth, to))
-
-
+            if eth is None and to is None:
+                pass
+            else:  # 防止出现调用函数的情况
+                stmts_send_eth[str(stmt.node_id)] = {
+                    "to": to,
+                    "eth": eth,
+                    "exp": stmt.expression.__str__()
+                }
+                # print("=== 切片准则：{} at {}@{} ===".format(stmt.expression, or_cfg.graph["name"], stmt.node_id))
+                # print("发送以太币 {} 到 {}\n".format(eth, to))
 
         if stmt.type == NodeType.IF:
             stack.append(str(stmt.node_id))
@@ -330,7 +393,7 @@ def _preprocess_for_dependency_analyze(or_cfg, function):
             for pre_node_id in cfg.predecessors(str(stmt.node_id)):
 
                 # IF_LOOP 的前驱节点中非 START_LOOP 的节点到IF_LOOP的边需要删除
-                list_index = node_id_2_id[int(suc_node_id)]
+                list_index = node_id_2_id[int(pre_node_id)]
                 if function.nodes[list_index].type != NodeType.STARTLOOP:
                     remove_edges.append((pre_node_id, str(stmt.node_id)))
 
@@ -353,7 +416,8 @@ def _preprocess_for_dependency_analyze(or_cfg, function):
 
     # debug_get_graph_png(cfg, "cfg_exit")
 
-    return cfg, if_stmts, stmts_var_info_maps, stmts_send_eth, stmts_loops, if_paris, node_id_2_id
+    return cfg, if_stmts, stmts_var_info_maps, stmts_send_eth, stmts_loops, \
+           if_paris, node_id_2_id, state_defs
 
 
 def _get_control_dependency_relations(cfg, if_stmts, predom_relations, function, node_id_2_id):
@@ -466,7 +530,8 @@ def get_control_dependency_relations(simple_cfg, if_stmts, function, if_paris, n
         if not if_exit_fliter(simple_cfg, from_node, to_node, if_paris):
             cdg_edges.append((from_node, to_node, {'color': "red", "type": "ctrl_dependency"}))
         else:
-            print("过滤控制流边{}-{}".format(from_node, to_node))
+            # print("过滤控制流边{}-{}".format(from_node, to_node))
+            pass
     return cdg_edges
 
 
@@ -532,10 +597,12 @@ def get_data_dependency_relations(cfg, stmts_var_info_maps):
     for path in cfg_paths:
         var_def_use_chain.clear()
 
+        # print("\t开始分析路径：{}".format(path[:-1]))
         for stmt in path[:-1]:  # 去尾，避免EXIT_POINT
             stmt_id = str(stmt)
             stmt_var_infos = stmts_var_info_maps[stmt_id]
 
+            # print("\t\t节点{}: {}".format(stmt_id, stmt_var_infos))
             for var_info in stmt_var_infos:
                 for var_name in var_info["list"]:
                     info = {"id": stmt_id, "var_type": var_info["type"], "op_type": var_info["op_type"]}
@@ -547,8 +614,8 @@ def get_data_dependency_relations(cfg, stmts_var_info_maps):
 
         # 计算当前执行路径下的def_use_chain分析
         for var in var_def_use_chain:
+            # print("DBUG 数据依赖 {}：{}".format(var, var_def_use_chain[var]))
             last_def = None
-
             chain = var_def_use_chain[var]
             for chain_node in chain:
                 if chain_node["op_type"] == "def":
@@ -586,54 +653,68 @@ def get_data_dependency_relations_forloop(simple_cfg, stmts_var_info_maps, trans
     return ddg_edges
 
 
-def trans_data_flow_analyze(cfg, stmts_var_info_maps, transaction_stmts):
+def data_flow_analyze(cfg, stmts_var_info_maps):
     """
     交易行为相关数据流分析
     transaction：<to, money>
     反向分析控制流，得到数据流
     """
     data_flow_edges = []
+    data_flow_map = {}
     duplicate = {}
-    for trans_stmt in transaction_stmts:
+    def_info = {}
+    use_info = {}
 
-        cfg_paths = nx.all_simple_paths(cfg, source="0", target=str(trans_stmt))
-        for cfg_path in cfg_paths:
+    cfg_paths = nx.all_simple_paths(cfg, source="0", target="EXIT_POINT")
+    for cfg_path in cfg_paths:
+        def_info.clear()
+        use_info.clear()
 
-            def_info = {}
-            use_info = {}
+        # [{"list": rechecked_read_state_vars, "type": "state", "op_type": "use"}]
+        for from_node in reversed(cfg_path):
 
-            for from_node in reversed(cfg_path):
+            if from_node == 'EXIT_POINT':
+                continue
 
-                # [{"list": rechecked_read_state_vars, "type": "state", "op_type": "use"}]
-                current_stmt_vars = stmts_var_info_maps[from_node]
-                for var_info in current_stmt_vars:
+            current_stmt_vars = stmts_var_info_maps[from_node]
+            for var_info in current_stmt_vars:
 
-                    # 读变量：压栈
-                    if var_info["op_type"] == "use":
-                        for var in var_info["list"]:
-                            if var not in use_info:
-                                use_info[var] = [from_node]
-                            else:
-                                use_info[var].append(from_node)
+                # 读变量：压栈
+                if var_info["op_type"] == "use":
+                    for var in var_info["list"]:
+                        if var not in use_info:
+                            use_info[var] = [from_node]
+                        else:
+                            use_info[var].append(from_node)
 
-                    # 如果当前语句有写操作，查询之前语句对该变量是否有读操作
-                    # 写变量：所有读操作出栈
-                    if var_info["op_type"] == "def":
-                        for var in var_info["list"]:
-                            if var in use_info:
-                                for to_node in use_info[var]:
-                                    key = "{}-{}".format(from_node, to_node)
-                                    if key not in duplicate:
-                                        duplicate[key] = 1
-                                        data_flow_edges.append(
-                                            (from_node, to_node, {'color': "yellow", "type": "data_flow"}))
-                                del use_info[var]
+                # 如果当前语句有写操作，查询之前语句对该变量是否有读操作
+                # 写变量：该变量出读操作栈
+                if var_info["op_type"] == "def":
+                    for var in var_info["list"]:
+                        if var in use_info:
+                            for to_node in use_info[var]:
+                                key = "{}-{}".format(from_node, to_node)
+                                if key not in duplicate:
+                                    duplicate[key] = 1
+                                    if to_node not in data_flow_map:
+                                        data_flow_map[to_node] = [from_node]
+                                    else:
+                                        data_flow_map[to_node].append(from_node)
+                                    data_flow_edges.append(
+                                        (from_node, to_node, {'color': "blue", "type": "data_flow"}))
 
-                            # kill：中断上一次def的flow
-                            def_info[var] = from_node
+                            # kill：中断上一次def的flow 出读操作栈
+                            del use_info[var]
+
+                        def_info[var] = from_node
+
+    if DEBUG_PNG == 1:
+        dfg = nx.MultiDiGraph(cfg)
+        dfg.add_edges_from(data_flow_edges)
+        debug_get_graph_png(dfg, "dfg", cur_dir=True)
 
     # print("数据流:", data_flow_edges)
-    return data_flow_edges
+    return data_flow_edges, data_flow_map
 
 
 def _forward_analyze(cfg, criteria):
@@ -658,7 +739,7 @@ def _forward_analyze(cfg, criteria):
                 # print("分析：{} -{}- {}".format(current_stmt, edge_data,successor_stmt))
 
                 if "type" in edge_data:
-                    # print("节点{} 依赖于 {} as {}".format(current_stmt, successor_stmt, edge_data["type"]))
+                    # print("DEBUG 节点{} 依赖于 {} as {}".format(current_stmt, successor_stmt, edge_data["type"]))
                     if successor_stmt not in result:
                         result[successor_stmt] = 1
                         stack.put(successor_stmt)  # 压栈
@@ -716,8 +797,61 @@ def do_slice(cfg, reserve_nodes):
     return sliced_cfg
 
 
-def program_slice(cfg, semantic_edges, criterias):
+def save_sliced_pdg_to_json(graph):
+    graph_info = {}
+    nodes = []
+    cfg_edges = []
+    cdg_edges = []
+    ddg_edges = []
+    dfg_edges = []
+    cfg_to_graph_id = {}
+    graph_id = 0
+    for node in graph.nodes:
+        id = graph_id
+        cfg_to_graph_id[node] = id
+        graph_id += 1
+        cfg_id = node
+        type = graph.nodes[node]["type"]
+        expr = graph.nodes[node]["expression"]
+        node_info = {
+            "id": id,
+            "cfg_id": cfg_id,
+            "expr": expr,
+            "type": type
+        }
+        nodes.append(node_info)
+
+    for u, v, d in graph.edges(data=True):
+
+        edge_info = {
+            "from": cfg_to_graph_id[u],
+            "to": cfg_to_graph_id[v],
+            "cfg_from": u,
+            "cfg_to": v
+        }
+
+        if "type" in d:
+            if d["type"] == "ctrl_dependency":
+                cdg_edges.append(edge_info)
+            if d["type"] == "data_dependency":
+                ddg_edges.append(edge_info)
+            if d["type"] == "data_flow":
+                dfg_edges.append(edge_info)
+        else:
+            cfg_edges.append(edge_info)
+
+    graph_info["nodes"] = nodes
+    graph_info["cfg_edges"] = cfg_edges
+    graph_info["cdg_edges"] = cdg_edges
+    graph_info["ddg_edges"] = ddg_edges
+    graph_info["dfg_edges"] = dfg_edges
+
+    return graph_info
+
+
+def program_slice(cfg, semantic_edges, criterias, criterias_append, external_state_map):
     pdg = nx.MultiDiGraph(cfg)
+
     for semantic_type in semantic_edges:
         if semantic_type == "ctrl_dep" \
                 or semantic_type == "data_dep" \
@@ -725,8 +859,19 @@ def program_slice(cfg, semantic_edges, criterias):
             pdg.add_edges_from(semantic_edges[semantic_type])
 
     for criteria in criterias:
+        criteria_set = [criteria]
+        if criteria in criterias_append:
+            for append_criteria in criterias_append[criteria]:
+                criteria_set += append_criteria
+
         # 针对每个切片准则进行前向依赖分析
-        reserved_nodes = _forward_analyze(pdg, criteria)
+        reserved_nodes = {}
+        print("切片准则：{}".format(criteria_set))
+        for criteria_stmt in criteria_set:
+            criteria_reserved_nodes = _forward_analyze(pdg, criteria_stmt)
+            for reserved_node in criteria_reserved_nodes:
+                if reserved_node not in reserved_nodes:
+                    reserved_nodes[reserved_node] = 1
 
         sliced_cfg = do_slice(cfg, reserved_nodes)
 
@@ -741,7 +886,47 @@ def program_slice(cfg, semantic_edges, criterias):
         sliced_pdg = nx.MultiDiGraph(sliced_cfg)
         sliced_pdg.add_edges_from(new_edges)
 
-        debug_get_graph_png(sliced_pdg, "sliced_pdg_{}".format(criteria), cur_dir=True)
+        first_node = None
+        for node in sliced_pdg.nodes:
+            first_node = node
+            break
+
+        # 外部节点信息, 添加到cfg中
+        external_id = 0
+        last_id = None
+        if criteria in external_state_map:
+            for external_node in reversed(external_state_map[criteria]):
+                # print("外部节点: {}".format(external_node))
+                external_id += 1
+                new_id = "{}@{}".format(str(external_id), "tag")
+
+                if last_id is None:
+                    last_id = new_id
+                    current_id = new_id
+                else:
+                    current_id = new_id
+
+                sliced_pdg.add_node(new_id,
+                                    label=external_node["expression"],
+                                    expression=external_node["expression"],
+                                    type=external_node["type"])
+
+                if last_id != current_id:
+                    sliced_pdg.add_edge(last_id, current_id, color="black")
+
+                # print("VAR:{} TYPE:{}".format(external_node["var"], external_node["type"]))
+                # print("EXPR:{}".format(external_node["expression"]))
+
+        if last_id is not None:
+            sliced_pdg.add_edge(last_id, first_node, color="black")
+
+        # 保存为json格式
+        graph_info = save_sliced_pdg_to_json(sliced_pdg)
+        name = "{}_{}_{}.json".format(cfg.graph["contract_name"], cfg.graph["name"], criteria)
+        with open(name, "w+") as f:
+            f.write(json.dumps(graph_info))
+
+        debug_get_graph_png(sliced_pdg, "ssliced_pdg_{}".format(criteria), cur_dir=True)
 
 
 def loop_structure_extreact(simple_cfg, loop_structures, criteria):
@@ -769,61 +954,301 @@ def loop_structure_extreact(simple_cfg, loop_structures, criteria):
     return loop_reverse_paths
 
 
-def _analyze_function(function):
+def transaction_data_flow_analyze(stmts_var_info_maps, data_flow_map, transaction_stmts):
+    trans_stats = {}
+
+    for trans_stmt in transaction_stmts:
+        stack = [trans_stmt]
+        trans_state_infos = []
+        while len(stack) != 0:
+            to_id = stack.pop()
+            if to_id in data_flow_map:
+                for from_id in data_flow_map[to_id]:
+
+                    stmt_var_infos = stmts_var_info_maps[from_id]
+                    for var_info in stmt_var_infos:
+                        if var_info["op_type"] == "use" and var_info["type"] == "state":
+                            trans_state_infos.append({"vars": var_info["list"], "stmt_id": from_id})
+
+                    stack.append(from_id)
+
+        trans_stats[trans_stmt] = trans_state_infos
+        print("切片准则：{}".format(trans_stmt))
+        print("涉及全局变量信息:{}".format(trans_stats[trans_stmt]))
+
+    return trans_stats
+
+
+def state_criteria_add(transaction_states, state_defs):
+    criteria_append = {}
+    dup = {}
+    for transaction_stmt in transaction_states:
+        dup.clear()
+        trans_states = transaction_states[transaction_stmt]
+        criteria_append[transaction_stmt] = []
+        for state_info in trans_states:
+
+            states = state_info["vars"]
+            for state in states:
+                if state in state_defs and state not in dup:
+                    dup[state] = 1
+                    criteria_append[transaction_stmt].append(state_defs[state])
+
+    return criteria_append
+
+
+def interprocedural_state_analyze(this_function,
+                                  transaction_states,
+                                  state_var_write_function_map,
+                                  state_var_declare_function_map):
+    # 跨函数交易依赖全局变量修改分析
+    external_nodes_map = {}
+    duplicate = {}
+    for trans_criteria in transaction_states:
+        external_nodes_map[trans_criteria] = []
+        for transaction_state in transaction_states[trans_criteria]:
+            for trans_stat_var in transaction_state["vars"]:
+                duplicate.clear()
+                stack = [trans_stat_var]
+                duplicate[trans_stat_var] = 1
+                while len(stack) != 0:
+
+                    current_var = stack.pop()
+                    state_defs_t = {}
+
+                    if current_var in state_var_write_function_map:
+                        write_funs = state_var_write_function_map[current_var]
+                    elif current_var in state_var_declare_function_map:
+                        if "exp" in state_var_declare_function_map[current_var]:
+
+                            # print("\t\tDEC_EXP:{}".format(state_var_declare_function_map[current_var]["exp"]))
+                            continue
+                        elif "fun" in state_var_declare_function_map[current_var]:
+
+                            write_funs = [state_var_declare_function_map[current_var]["fun"]]
+                            # print("\t\tDEC_FUN:{}".format(state_var_declare_function_map[current_var]["fun"].name))
+                        else:
+                            raise RuntimeError("全局变量缺乏定义和修改")
+
+                    else:
+                        raise RuntimeError("全局变量缺乏定义和修改")
+
+                    for write_fun in write_funs:
+
+                        if write_fun.full_name == this_function.full_name:
+                            continue  # 过滤非当前函数
+
+                        # print("\t\tFun name is", write_fun.full_name)
+                        for node in write_fun.nodes:
+                            # print("\t\tFUNC_EXP:{}".format(node.expression))
+                            # print("\t\tSTAT_VAR:{}\n".format([str(v) for v in node.state_variables_written]))
+                            state_defs_t.clear()
+                            for v in node.state_variables_written:
+
+                                if current_var == str(v):
+                                    var_infos = _stmt_var_info(node, state_defs_t)
+                                    for ir in node.irs:
+                                        print(str(ir))
+
+                                    print("\r")
+
+                                    for ir_ssa in node.irs_ssa:
+                                        print(str(ir_ssa))
+
+                                    print("\n\tFUNC_EXP:{}".format(node.expression))
+                                    for var in node.variables_written:
+                                        print("\tWRITE:{} {}".format(var.type, var.name))
+                                    for var in node.variables_read:
+                                        print("\tREAD:{} {}".format(var.type, var.name))
+
+                                    # print("\t\tSTAT_VAR:{} FUNC_EXP:{} CFG_ID:{}\n".format(transaction_state,
+                                    #                                                        node.expression,
+                                    #                                                        node.node_id))
+                                    node_expression = node.expression.__str__()  # 语句
+                                    node_type = node.type.__str__()  # 类型
+
+                                    external_nodes_map[trans_criteria].append({
+                                        "state_var": current_var,
+                                        "expression": node_expression,
+                                        "type": node_type,
+                                        "info": var_infos,
+                                        "fun": write_fun,
+                                        "node": node
+                                    })
+
+                                    for var_info in var_infos:
+                                        if var_info["type"] == "state" and var_info["op_type"] == "use":
+                                            for var in var_info["list"]:
+                                                if var not in duplicate:
+                                                    # print("\t\t下一个变量{}".format(var))
+                                                    duplicate[var] = 1
+                                                    stack.append(var)
+
+    return external_nodes_map
+
+
+def _analyze_function(contract_name, function, state_var_write_function_map, state_var_declare_function_map):
     semantic_edges = {}
 
     # 获得控制流图
-    cfg = get_function_cfg(function)
+    cfg = get_function_cfg(contract_name, function)
 
     # 预处理
-    simple_cfg, if_stmts, stmts_var_info_maps, transaction_stmts, loop_stmts, if_paris, node_id_2_id \
-        = _preprocess_for_dependency_analyze(cfg, function)
+    simple_cfg, if_stmts, stmts_var_info_maps, \
+    transaction_stmts, loop_stmts, if_paris, \
+    node_id_2_id, state_defs = _preprocess_for_dependency_analyze(cfg, function)
+
+    debug_get_graph_png(simple_cfg, "simple_cfg", cur_dir=True)
 
     # 数据流分析
-    data_flow_edges = trans_data_flow_analyze(simple_cfg, stmts_var_info_maps, transaction_stmts)
+    data_flow_edges, data_flow_map = data_flow_analyze(simple_cfg, stmts_var_info_maps)
     semantic_edges["data_flow"] = data_flow_edges
 
-    # 控制依赖关系
-    cdg_edges = get_control_dependency_relations(simple_cfg, if_stmts, function, if_paris, node_id_2_id)
-    semantic_edges["ctrl_dep"] = cdg_edges
+    # Note: 根据交易语句获得与交易相关的全局变量
+    transaction_states = transaction_data_flow_analyze(stmts_var_info_maps,
+                                                       data_flow_map,
+                                                       transaction_stmts)
+
+    # Note: 将交易全局变量作为切片准则
+    criteria_append = state_criteria_add(transaction_states,
+                                         state_defs)
+
+    # 函数间全局变量修改关系分析
+    external_state_map = interprocedural_state_analyze(function,
+                                                       transaction_states,
+                                                       state_var_write_function_map,
+                                                       state_var_declare_function_map)
 
     # 数据依赖生成
-    ddg_edges = get_data_dependency_relations(simple_cfg, stmts_var_info_maps)
+    ddg_edges = get_data_dependency_relations(simple_cfg,
+                                              stmts_var_info_maps)
     semantic_edges["data_dep"] = ddg_edges
 
+    # 控制依赖关系
+    cdg_edges = get_control_dependency_relations(simple_cfg,
+                                                 if_stmts,
+                                                 function,
+                                                 if_paris,
+                                                 node_id_2_id)
+    semantic_edges["ctrl_dep"] = cdg_edges
+
     # 循环体内部的数据流依赖
-    loop_ddg_edges = get_data_dependency_relations_forloop(simple_cfg, stmts_var_info_maps, transaction_stmts,
+    loop_ddg_edges = get_data_dependency_relations_forloop(simple_cfg,
+                                                           stmts_var_info_maps,
+                                                           transaction_stmts,
                                                            loop_stmts)
     semantic_edges["loop_data_dep"] = loop_ddg_edges
 
-    # debug_get_ddg_and_cdg(cfg, cdg_edges, ddg_edges, data_flow_edges, loop_ddg_edges)
+    debug_get_ddg_and_cdg(cfg, cdg_edges, ddg_edges, data_flow_edges, loop_ddg_edges)
 
     # 程序切片
-    program_slice(cfg, semantic_edges, transaction_stmts)
+    program_slice(cfg, semantic_edges, transaction_stmts,
+                  criteria_append, external_state_map)
+
+    return transaction_stmts
+
+
+def state_vars_info(function, state_var_declare_function_map, state_var_read_function_map,
+                    state_var_write_function_map):
+    # 全局变量定义
+    if function.is_constructor or function.is_constructor_variables:
+        for v in function.state_variables_written:
+            if str(v) not in state_var_declare_function_map:
+                state_var_declare_function_map[str(v)] = {"fun": function}
+            else:
+                state_var_declare_function_map[str(v)] = {"fun": function}
+    else:
+        # 全局变量读
+        for v in function.state_variables_read:
+            if str(v) not in state_var_read_function_map:
+                state_var_read_function_map[str(v)] = [function]
+            else:
+                state_var_read_function_map[str(v)].append(function)
+
+        # 全局变量写
+        for v in function.state_variables_written:
+
+            if not function.can_send_eth():
+                continue  # NOTE:对于参与交易的函数，下面会进行重点分析
+
+            if str(v) not in state_var_write_function_map:
+                state_var_write_function_map[str(v)] = [function]
+            else:
+                state_var_write_function_map[str(v)].append(function)
+
+
+def stat_vars_delcare_without_assign(contract, state_var_declare_function_map):
+    for v in contract.state_variables:
+        if v.expression is None:
+            exp = str(v.type) + " " + str(Identifier(v))
+            state_var_declare_function_map[str(Identifier(v))] = {"type": str(v.type), "exp": exp}
 
 
 def analyze_contract(name):
-
+    slice_record = []
     slither = Slither(name)
+
     for contract in slither.contracts:
+
+        state_var_declare_function_map = {}  # <全局变量名称, slither.function>
+        state_var_read_function_map = {}  # <全局变量名称, slither.function>
+        state_var_write_function_map = {}  # <全局变量名称, slither.function>
+        structs_info = {}
+
+        # 结构体定义信息抽取
+        for structure in contract.structures:
+            structs_info[structure.name] = structure
+
+        # 全局变量信息扫描 收集
+        stat_vars_delcare_without_assign(contract, state_var_declare_function_map)
         for function in contract.functions:
+
+            # 全局变量：声明/读取/写
+            state_vars_info(function,
+                            state_var_declare_function_map,
+                            state_var_read_function_map,
+                            state_var_write_function_map)
+
+        _debug_stat_var_info(state_var_read_function_map, state_var_write_function_map, state_var_declare_function_map)
+
+        for function in contract.functions:
+
             if function.can_send_eth():
-                _analyze_function(function)
+                # print("\n=====开始分析函数 {}====".format(function.name))
+                slices_tag = _analyze_function(contract.name,
+                                               function,
+                                               state_var_write_function_map,
+                                               state_var_declare_function_map)
+                for slice_id in slices_tag:
+                    exp = slices_tag[slice_id]["exp"]
+                    name = "{}_{}_{}".format(contract.name, function.name, slice_id)
+                    slice_record.append({"name": name, "exp": exp})
+
+    for record in slice_record:
+        print("{}".format(record))
+    return slice_record
 
 
 def analyze_dataset(target):
     pwd = os.getcwd()
 
-    if target == "sad":
-        dataset_prefix = SAD_DATASET_PERFIX
-        analyze_prefix = SAD_ANALYZE_PERFIX
+    if target == "sad_chain":
+        dataset_prefix = SAD_CHAIN_DATASET_PERFIX
+        analyze_prefix = SAD_CHAIN_ANALYZE_PERFIX
+
+    elif target == "sad_tree":
+        dataset_prefix = SAD_TREE_DATASET_PERFIX
+        analyze_prefix = SAD_TREE_ANALYZE_PERFIX
+
     elif target == "xblock":
         dataset_prefix = DATASET_PERFIX
         analyze_prefix = ANALYZE_PERFIX
+
     else:
         dataset_prefix = DATASET_PERFIX
         analyze_prefix = ANALYZE_PERFIX
 
+    slices_map = {}
     g = os.walk(dataset_prefix)
     for path, dir_list, file_list in g:
         for file_name in file_list:
@@ -839,33 +1264,75 @@ def analyze_dataset(target):
                 if not os.path.exists(analyze_dir + "/" + file_name):
                     shutil.copy(src_file, analyze_dir)
 
-                done_file = analyze_dir + "/done.txt"
+                done_file = analyze_dir + "/done_ok.txt"
                 pass_file = analyze_dir + "/pass.txt"
-                if os.path.exists(done_file) or os.path.exists(pass_file):
+                pass_tag = 0
+
+                if os.path.exists(pass_file):
+                    continue
+
+                if os.path.exists(done_file) and pass_tag:
+
                     print("========={}===========".format(file_name))
                     continue
                 else:
-                    os.chdir(analyze_dir)  # TODO: 切换工作目录
+
+                    # 首先删除 done_ok.txt 并 切换工作目录
+                    if os.path.exists(done_file):
+                        os.remove(done_file)
+
+                    # 切换工作目录
+                    os.chdir(analyze_dir)
+
+                    # solc 版本解析
                     solc_version = parse_solc_version(file_name)
+                    if solc_version == "0.4.6": solc_version = "0.4.26"
                     print("========={} V: {}".format(file_name, solc_version))
                     subprocess.check_call(["solc-select", "use", solc_version])
-                    analyze_contract(file_name)
-                    with open("done.txt", "w+") as f:
+
+                    # 分析
+                    slices = analyze_contract(file_name)
+                    if address in slices_map:
+                        raise RuntimeError("重复了")
+                    else:
+                        slices_map[address] = {
+                            "addre": address,
+                            "slice": slices
+                        }
+
+                    with open("done_ok.txt", "w+") as f:
                         f.write("done")
                     os.chdir(pwd)  # TODO: 还原工作目录
+
+    with open("slice_record_{}.json".format(target), "w") as dump_f:
+        json.dump(slices_map, dump_f)
 
 
 if __name__ == '__main__':
 
-    target = argParse()
-
-    if target == "test":
-        sc_name = "0x92e2d8348df613104c321bb7ab2862f0883e3bdc.sol"
+    target, name = argParse()
+    label_map = {}
+    if name is not None:
+        src_prex = "examples/ponzi_dataset_sad/tree/"
+        test_path = "examples/test/"
+        # for files in os.listdir(test_path):
+        #     os.remove(os.path.join(test_path, files))
+        # if not os.path.exists(test_path + name):
+        #     shutil.copy(src_prex + name, test_path)
         os.chdir("examples/test/")
-        analyze_contract(sc_name)
+        solc_version = parse_solc_version(name)
+        print("========={} V: {}".format(name, solc_version))
+        subprocess.check_call(["solc-select", "use", solc_version])
+        slices_record = analyze_contract(name)
 
     else:
-        analyze_dataset(target)
+        if target == "test":
+            sc_name = "0x53e523b0207c0987af44aed9c09c4d3e59e7db9a.sol"
+            os.chdir("examples/test/")
+            analyze_contract(sc_name)
+
+        else:
+            analyze_dataset(target)
 
     # slither = Slither(EXAMPLE_PERFIX + '0x09515cb5e3acaef239ab83d78b2f3e3764fcab9b.sol')
     # slither = Slither(EXAMPLE_PERFIX + 'test.sol')
