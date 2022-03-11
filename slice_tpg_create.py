@@ -5,6 +5,9 @@ import os
 import shutil
 import subprocess
 from queue import LifoQueue
+from infercode.client.infercode_client import InferCodeClient
+import os
+import logging
 
 from slither.core.expressions import Identifier
 
@@ -27,6 +30,7 @@ SAD_TREE_ANALYZE_PERFIX = "examples/analyze_sad/tree/"
 DEBUG_PNG = 0
 
 versions = ['0', '0.1.7', '0.2.2', '0.3.6', '0.4.26', '0.5.17', '0.6.12', '0.7.6', '0.8.6']
+infercode_praser = None
 
 
 def select_solc_version(version_info):
@@ -1184,6 +1188,14 @@ def stat_vars_delcare_without_assign(contract, state_var_declare_function_map):
             state_var_declare_function_map[str(Identifier(v))] = {"type": str(v.type), "exp": exp}
 
 
+def infer_code_init():
+    logging.basicConfig(level=logging.INFO)
+    os.environ['CUDA_VISIBLE_DEVICES'] = "-1"  # Change from -1 to 0 to enable GPU
+    infercode = InferCodeClient(language="solidity")
+    infercode.init_from_config()
+    return infercode
+
+
 def analyze_contract(name):
     slice_record = []
     slither = Slither(name)
@@ -1202,7 +1214,6 @@ def analyze_contract(name):
         # 全局变量信息扫描 收集
         stat_vars_delcare_without_assign(contract, state_var_declare_function_map)
         for function in contract.functions:
-
             # 全局变量：声明/读取/写
             state_vars_info(function,
                             state_var_declare_function_map,
@@ -1214,6 +1225,7 @@ def analyze_contract(name):
         for function in contract.functions:
 
             if function.can_send_eth():
+
                 # print("\n=====开始分析函数 {}====".format(function.name))
                 slices_tag = _analyze_function(contract.name,
                                                function,
@@ -1226,6 +1238,7 @@ def analyze_contract(name):
 
     for record in slice_record:
         print("{}".format(record))
+
     return slice_record
 
 
@@ -1312,13 +1325,20 @@ if __name__ == '__main__':
 
     target, name = argParse()
     label_map = {}
+
+    # infercode_praser = infer_code_init()
+
     if name is not None:
         src_prex = "examples/ponzi_dataset_sad/tree/"
         test_path = "examples/test/"
-        # for files in os.listdir(test_path):
-        #     os.remove(os.path.join(test_path, files))
-        # if not os.path.exists(test_path + name):
-        #     shutil.copy(src_prex + name, test_path)
+
+        for file in os.listdir(test_path):
+            if not file.endswith(".sol") and not file == "ast":
+                os.remove(os.path.join(test_path, file))
+
+        if not os.path.exists(test_path + name):
+            shutil.copy(src_prex + name, test_path)
+
         os.chdir("examples/test/")
         solc_version = parse_solc_version(name)
         print("========={} V: {}".format(name, solc_version))
