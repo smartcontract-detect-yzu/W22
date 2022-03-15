@@ -1,0 +1,797 @@
+{
+	"dd4cbc549965974cef6fe14d9e80b62d73384153_Queue": {
+		"addre": "dd4cbc549965974cef6fe14d9e80b62d73384153_Queue",
+		"slice": [
+			{
+				"name": "Queue_fallback_9",
+				"exp": "PROMO1.send(promo1)"
+			},
+			{
+				"name": "Queue_fallback_11",
+				"exp": "PROMO2.send(promo2)"
+			},
+			{
+				"name": "Queue_fallback_13",
+				"exp": "PROMO3.send(promo3)"
+			},
+			{
+				"name": "Queue_fallback_15",
+				"exp": "PRIZE.send(prize)"
+			},
+			{
+				"tag": "1",
+				"name": "Queue_pay_16",
+				"exp": "dep.depositor.send(leftPayout)"
+			},
+			{
+				"tag": "1",
+				"name": "Queue_pay_21",
+				"exp": "dep.depositor.send(money)"
+			}
+		]
+	},
+	"50dccbe239a820c03c8d4f2da881b7e5b743c5a9_Queue": {
+		"addre": "50dccbe239a820c03c8d4f2da881b7e5b743c5a9_Queue",
+		"slice": [
+			{
+				"name": "Queue_fallback_10",
+				"exp": "PROMO1.send(promo1)"
+			},
+			{
+				"name": "Queue_fallback_12",
+				"exp": "PROMO2.send(promo2)"
+			},
+			{
+				"name": "Queue_fallback_14",
+				"exp": "PROMO3.send(promo3)"
+			},
+			{
+				"name": "Queue_fallback_16",
+				"exp": "PRIZE.send(prize)"
+			},
+			{
+				"tag": "1",
+				"name": "Queue_pay_16",
+				"exp": "dep.depositor.send(leftPayout)"
+			},
+			{
+				"tag": "1",
+				"name": "Queue_pay_21",
+				"exp": "dep.depositor.send(money)"
+			}
+		]
+	},
+	"a1d9496bfe632d4f039616d662665049deec40f2_Multi_X125_1eth": {
+		"addre": "a1d9496bfe632d4f039616d662665049deec40f2_Multi_X125_1eth",
+		"slice": [
+			{
+				"name": "Multi_X125_1eth_fallback_10",
+				"exp": "PROMO1.send(promo1)"
+			},
+			{
+				"name": "Multi_X125_1eth_fallback_12",
+				"exp": "PROMO2.send(promo2)"
+			},
+			{
+				"name": "Multi_X125_1eth_fallback_14",
+				"exp": "PRIZE.send(prize)"
+			},
+			{
+				"tag": "1",
+				"name": "Multi_X125_1eth_pay_15",
+				"exp": "dep.depositor.send(leftPayout)"
+			},
+			{
+				"tag": "1",
+				"name": "Multi_X125_1eth_pay_20",
+				"exp": "dep.depositor.send(money)"
+			}
+		]
+	},
+	"07c672d5de0885d3a3b3d0a3b65e6caf72332757_Restarter": {
+		"addre": "07c672d5de0885d3a3b3d0a3b65e6caf72332757_Restarter",
+		"slice": [
+			{
+				"name": "Restarter_fallback_14",
+				"exp": "ADS_SUPPORT.transfer(ads)"
+			},
+			{
+				"name": "Restarter_fallback_16",
+				"exp": "TECH_SUPPORT.transfer(tech)"
+			},
+			{
+				"name": "Restarter__pay_9",
+				"exp": "dep.depositor.transfer(dep.expect)"
+			},
+			{
+				"name": "Restarter__pay_11",
+				"exp": "dep.depositor.transfer(money)"
+			},
+			{
+				"name": "Restarter__payoutJackpot_3",
+				"exp": "dep.depositor.transfer(uint128(jackpotAmount * JACKPOT_WINNER_PERCENT / 100))"
+			},
+			{
+				"tag": "1",
+				"name": "Restarter__payoutJackpot_11",
+				"exp": "dep.depositor.transfer(dep.expect)"
+			},
+			{
+				"tag": "1",
+				"name": "Restarter__payoutJackpot_14",
+				"exp": "dep.depositor.transfer(money)"
+			}
+		]
+	},
+	"b56745f3d86add3ffa879a0f5a0728041857025a_BestMultiplier": {
+		"addre": "b56745f3d86add3ffa879a0f5a0728041857025a_BestMultiplier",
+		"slice": [
+			{
+				"name": "BestMultiplier_fallback_7",
+				"exp": "Reclame.send(promo)"
+			},
+			{
+				"name": "BestMultiplier_fallback_9",
+				"exp": "Admin.send(admin)"
+			},
+			{
+				"name": "BestMultiplier_fallback_11",
+				"exp": "BMG.send(bmg)"
+			},
+			{
+				"name": "BestMultiplier_refferal_7",
+				"exp": "Reclame.send(promo)"
+			},
+			{
+				"name": "BestMultiplier_refferal_9",
+				"exp": "Admin.send(admin)"
+			},
+			{
+				"name": "BestMultiplier_refferal_11",
+				"exp": "BMG.send(bmg)"
+			},
+			{
+				"name": "BestMultiplier_refferal_14",
+				"exp": "REF.send(ref)"
+			},
+			{
+				"tag": "1",
+				"name": "BestMultiplier_pay_9",
+				"exp": "dep.depositor.send(dep.expect)"
+			},
+			{
+				"tag": "1",
+				"name": "BestMultiplier_pay_12",
+				"exp": "dep.depositor.send(money)"
+			}
+		]
+	},
+	"2046c492b0da8a52731c8d1773fc89e0adda78cf_Multiplier": {
+		"addre": "2046c492b0da8a52731c8d1773fc89e0adda78cf_Multiplier",
+		"slice": [
+			{
+				"name": "Multiplier_fallback_6",
+				"exp": "PROMO1.send(promo1)"
+			},
+			{
+				"name": "Multiplier_fallback_8",
+				"exp": "PROMO2.send(promo2)"
+			},
+			{
+				"name": "Multiplier_fallback_10",
+				"exp": "TECH.send(tech)"
+			},
+			{
+				"tag": "1",
+				"name": "Multiplier_pay_9",
+				"exp": "dep.depositor.send(dep.expect)"
+			},
+			{
+				"tag": "1",
+				"name": "Multiplier_pay_12",
+				"exp": "dep.depositor.send(money)"
+			}
+		]
+	},
+	"7c8f49e0eb0a5fc5f2eea223a177c74d562cfe63_BestMultiplier": {
+		"addre": "7c8f49e0eb0a5fc5f2eea223a177c74d562cfe63_BestMultiplier",
+		"slice": [
+			{
+				"name": "BestMultiplier_fallback_7",
+				"exp": "Reclame.send(promo)"
+			},
+			{
+				"name": "BestMultiplier_fallback_9",
+				"exp": "Admin.send(admin)"
+			},
+			{
+				"name": "BestMultiplier_fallback_11",
+				"exp": "BMG.send(bmg)"
+			},
+			{
+				"name": "BestMultiplier_refferal_7",
+				"exp": "Reclame.send(promo)"
+			},
+			{
+				"name": "BestMultiplier_refferal_9",
+				"exp": "Admin.send(admin)"
+			},
+			{
+				"name": "BestMultiplier_refferal_11",
+				"exp": "BMG.send(bmg)"
+			},
+			{
+				"name": "BestMultiplier_refferal_14",
+				"exp": "REF.send(ref)"
+			},
+			{
+				"tag": "1",
+				"name": "BestMultiplier_pay_9",
+				"exp": "dep.depositor.send(dep.expect)"
+			},
+			{
+				"tag": "1",
+				"name": "BestMultiplier_pay_12",
+				"exp": "dep.depositor.send(money)"
+			}
+		]
+	},
+	"f1a20fd6843b6117c8bea0a8a45fccb4ee574dbc_BestMultiplier": {
+		"addre": "f1a20fd6843b6117c8bea0a8a45fccb4ee574dbc_BestMultiplier",
+		"slice": [
+			{
+				"name": "BestMultiplier_fallback_11",
+				"exp": "support.transfer(msg.value * 5 / 1000)"
+			},
+			{
+				"tag": "1",
+				"name": "BestMultiplier_pay_9",
+				"exp": "dep.depositor.send(dep.expect)"
+			},
+			{
+				"tag": "1",
+				"name": "BestMultiplier_pay_12",
+				"exp": "dep.depositor.send(money)"
+			}
+		]
+	},
+	"2ee573762a018c5a0dff3cdc3cd9e63657bb2f78_SmartEthRocket": {
+		"addre": "2ee573762a018c5a0dff3cdc3cd9e63657bb2f78_SmartEthRocket",
+		"slice": [
+			{
+				"name": "SmartEthRocket_fallback_14",
+				"exp": "support.transfer(fee)"
+			},
+			{
+				"name": "SmartEthRocket_fallback_21",
+				"exp": "lastInvestor.transfer(prize)"
+			},
+			{
+				"tag": "1",
+				"name": "SmartEthRocket_pay_16",
+				"exp": "dep.depositor.send(leftPayout)"
+			},
+			{
+				"tag": "1",
+				"name": "SmartEthRocket_pay_21",
+				"exp": "dep.depositor.send(money)"
+			}
+		]
+	},
+	"TMhnfM4bx8E4xgJqPJH5qjF6W8eBvT1urK_Carousel": {
+		"addre": "TMhnfM4bx8E4xgJqPJH5qjF6W8eBvT1urK_Carousel",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "Carousel_pay_12",
+				"exp": "dep.depositor.transfer(dep.expect)"
+			},
+			{
+				"tag": "1",
+				"name": "Carousel_pay_15",
+				"exp": "dep.depositor.transfer(money)"
+			},
+			{
+				"name": "Carousel_addDeposit_16",
+				"exp": "referrer.transfer(referrerPay)"
+			},
+			{
+				"name": "Carousel_addDeposit_23",
+				"exp": "owner.transfer(ownerval)"
+			},
+			{
+				"name": "Carousel_addDeposit_25",
+				"exp": "TECH.transfer(support)"
+			},
+			{
+				"name": "Carousel_addDeposit_27",
+				"exp": "PROMO.transfer(adv)"
+			},
+			{
+				"name": "Carousel_withdrawPrize_8",
+				"exp": "queue[lastDepositInfo.index].depositor.transfer(prize)"
+			}
+		]
+	},
+	"b7a96f3375287942f6ab515a84bd5ac8c0fe9c84_Multipliers": {
+		"addre": "b7a96f3375287942f6ab515a84bd5ac8c0fe9c84_Multipliers",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "Multipliers_pay_12",
+				"exp": "dep.depositor.send(dep.expect)"
+			},
+			{
+				"tag": "1",
+				"name": "Multipliers_pay_15",
+				"exp": "dep.depositor.send(money)"
+			},
+			{
+				"name": "Multipliers_addDeposit_14",
+				"exp": "TECH.send(support)"
+			},
+			{
+				"name": "Multipliers_addDeposit_16",
+				"exp": "PROMO.send(adv)"
+			},
+			{
+				"name": "Multipliers_withdrawPrize_14",
+				"exp": "queue[lastDepositInfo.index].depositor.send(prize)"
+			}
+		]
+	},
+	"fb9ec5f2e4e98cc89771f2c6677db348d92c0f3a_Multiplier_X150_max_1eth": {
+		"addre": "fb9ec5f2e4e98cc89771f2c6677db348d92c0f3a_Multiplier_X150_max_1eth",
+		"slice": [
+			{
+				"name": "Multiplier_X150_max_1eth_fallback_6",
+				"exp": "PROMO.transfer(promo)"
+			},
+			{
+				"tag": "1",
+				"name": "Multiplier_X150_max_1eth_pay_9",
+				"exp": "dep.depositor.transfer(dep.expect)"
+			},
+			{
+				"tag": "1",
+				"name": "Multiplier_X150_max_1eth_pay_12",
+				"exp": "dep.depositor.transfer(money)"
+			}
+		]
+	},
+	"f29b67131dfb2d107903e2dfeca6ae148c717926_Queue": {
+		"addre": "f29b67131dfb2d107903e2dfeca6ae148c717926_Queue",
+		"slice": [
+			{
+				"name": "Queue_fallback_8",
+				"exp": "PROMO1.send(promo1)"
+			},
+			{
+				"name": "Queue_fallback_10",
+				"exp": "PROMO2.send(promo2)"
+			},
+			{
+				"name": "Queue_fallback_12",
+				"exp": "PROMO3.send(promo3)"
+			},
+			{
+				"tag": "1",
+				"name": "Queue_pay_16",
+				"exp": "dep.depositor.send(leftPayout)"
+			},
+			{
+				"tag": "1",
+				"name": "Queue_pay_21",
+				"exp": "dep.depositor.send(money)"
+			}
+		]
+	},
+	"eb0333a5a5f0a9692419f1df0b6c9b0632c614fa_MultiX150max1eth": {
+		"addre": "eb0333a5a5f0a9692419f1df0b6c9b0632c614fa_MultiX150max1eth",
+		"slice": [
+			{
+				"name": "MultiX150max1eth_fallback_6",
+				"exp": "PROMO.transfer(promo)"
+			},
+			{
+				"tag": "1",
+				"name": "MultiX150max1eth_pay_9",
+				"exp": "dep.depositor.transfer(dep.expect)"
+			},
+			{
+				"tag": "1",
+				"name": "MultiX150max1eth_pay_12",
+				"exp": "dep.depositor.transfer(money)"
+			}
+		]
+	},
+	"b9c42c81b885ca6aceedec2a21d339f4fefef228_Queue": {
+		"addre": "b9c42c81b885ca6aceedec2a21d339f4fefef228_Queue",
+		"slice": [
+			{
+				"name": "Queue_fallback_9",
+				"exp": "PROMO1.send(promo1)"
+			},
+			{
+				"name": "Queue_fallback_11",
+				"exp": "PROMO2.send(promo2)"
+			},
+			{
+				"name": "Queue_fallback_13",
+				"exp": "PROMO3.send(promo3)"
+			},
+			{
+				"name": "Queue_fallback_15",
+				"exp": "PRIZE.send(prize)"
+			},
+			{
+				"tag": "1",
+				"name": "Queue_pay_16",
+				"exp": "dep.depositor.send(leftPayout)"
+			},
+			{
+				"tag": "1",
+				"name": "Queue_pay_21",
+				"exp": "dep.depositor.send(money)"
+			}
+		]
+	},
+	"b1a6b21086fac49d78e08d65eb3fa8432c338aa8_Multiplier": {
+		"addre": "b1a6b21086fac49d78e08d65eb3fa8432c338aa8_Multiplier",
+		"slice": [
+			{
+				"name": "Multiplier_fallback_6",
+				"exp": "PROMO.send(promo)"
+			},
+			{
+				"tag": "1",
+				"name": "Multiplier_pay_9",
+				"exp": "dep.depositor.send(dep.expect)"
+			},
+			{
+				"tag": "1",
+				"name": "Multiplier_pay_12",
+				"exp": "dep.depositor.send(money)"
+			}
+		]
+	},
+	"356b2f65522aad8895485a0e877ef29f1d363fcc_Multi_X125_1eth": {
+		"addre": "356b2f65522aad8895485a0e877ef29f1d363fcc_Multi_X125_1eth",
+		"slice": [
+			{
+				"name": "Multi_X125_1eth_fallback_9",
+				"exp": "PROMO1.send(promo1)"
+			},
+			{
+				"name": "Multi_X125_1eth_fallback_11",
+				"exp": "PROMO2.send(promo2)"
+			},
+			{
+				"name": "Multi_X125_1eth_fallback_13",
+				"exp": "PRIZE.send(prize)"
+			},
+			{
+				"tag": "1",
+				"name": "Multi_X125_1eth_pay_15",
+				"exp": "dep.depositor.send(leftPayout)"
+			},
+			{
+				"tag": "1",
+				"name": "Multi_X125_1eth_pay_20",
+				"exp": "dep.depositor.send(money)"
+			}
+		]
+	},
+	"24be30ae655da880540a3e1b2594b8691b7981da_Multiplier": {
+		"addre": "24be30ae655da880540a3e1b2594b8691b7981da_Multiplier",
+		"slice": [
+			{
+				"name": "Multiplier_fallback_6",
+				"exp": "PROMO.send(promo)"
+			},
+			{
+				"tag": "1",
+				"name": "Multiplier_pay_9",
+				"exp": "dep.depositor.send(dep.expect)"
+			},
+			{
+				"tag": "1",
+				"name": "Multiplier_pay_12",
+				"exp": "dep.depositor.send(money)"
+			}
+		]
+	},
+	"bd67100cb9eab5263048a7e71035b7d5a4b5206d_Multiplier": {
+		"addre": "bd67100cb9eab5263048a7e71035b7d5a4b5206d_Multiplier",
+		"slice": [
+			{
+				"name": "Multiplier_fallback_6",
+				"exp": "PROMO1.transfer(promo1)"
+			},
+			{
+				"name": "Multiplier_fallback_8",
+				"exp": "PROMO2.transfer(promo2)"
+			},
+			{
+				"name": "Multiplier_fallback_10",
+				"exp": "TECH.transfer(tech)"
+			},
+			{
+				"tag": "1",
+				"name": "Multiplier_pay_9",
+				"exp": "dep.depositor.transfer(dep.expect)"
+			},
+			{
+				"tag": "1",
+				"name": "Multiplier_pay_12",
+				"exp": "dep.depositor.transfer(money)"
+			}
+		]
+	},
+	"cacd9ca742ca86b376695f8dca4515edebe6f913_Multipliers": {
+		"addre": "cacd9ca742ca86b376695f8dca4515edebe6f913_Multipliers",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "Multipliers_pay_12",
+				"exp": "dep.depositor.send(dep.expect)"
+			},
+			{
+				"tag": "1",
+				"name": "Multipliers_pay_15",
+				"exp": "dep.depositor.send(money)"
+			},
+			{
+				"name": "Multipliers_addDeposit_14",
+				"exp": "TECH.send(support)"
+			},
+			{
+				"name": "Multipliers_addDeposit_16",
+				"exp": "PROMO.send(adv)"
+			},
+			{
+				"name": "Multipliers_withdrawPrize_14",
+				"exp": "queue[lastDepositInfo.index].depositor.send(prize)"
+			}
+		]
+	},
+	"f7645dde97be687a681d787fe51a256d63748686_Multi_X125_1eth": {
+		"addre": "f7645dde97be687a681d787fe51a256d63748686_Multi_X125_1eth",
+		"slice": [
+			{
+				"name": "Multi_X125_1eth_fallback_9",
+				"exp": "PROMO1.send(promo1)"
+			},
+			{
+				"name": "Multi_X125_1eth_fallback_11",
+				"exp": "PROMO2.send(promo2)"
+			},
+			{
+				"name": "Multi_X125_1eth_fallback_13",
+				"exp": "PRIZE.send(prize)"
+			},
+			{
+				"tag": "1",
+				"name": "Multi_X125_1eth_pay_15",
+				"exp": "dep.depositor.send(leftPayout)"
+			},
+			{
+				"tag": "1",
+				"name": "Multi_X125_1eth_pay_20",
+				"exp": "dep.depositor.send(money)"
+			}
+		]
+	},
+	"3be274206e77fc9cbfe4aa2b4c5c211303228447_Queue": {
+		"addre": "3be274206e77fc9cbfe4aa2b4c5c211303228447_Queue",
+		"slice": [
+			{
+				"name": "Queue_fallback_10",
+				"exp": "PROMO1.send(promo1)"
+			},
+			{
+				"name": "Queue_fallback_12",
+				"exp": "PROMO2.send(promo2)"
+			},
+			{
+				"name": "Queue_fallback_14",
+				"exp": "PROMO3.send(promo3)"
+			},
+			{
+				"name": "Queue_fallback_16",
+				"exp": "PRIZE.send(prize)"
+			},
+			{
+				"tag": "1",
+				"name": "Queue_pay_16",
+				"exp": "dep.depositor.send(leftPayout)"
+			},
+			{
+				"tag": "1",
+				"name": "Queue_pay_21",
+				"exp": "dep.depositor.send(money)"
+			}
+		]
+	},
+	"7fef9e225a94a3d841086ebf686932620e838a75_Queue": {
+		"addre": "7fef9e225a94a3d841086ebf686932620e838a75_Queue",
+		"slice": [
+			{
+				"name": "Queue_fallback_8",
+				"exp": "PROMO1.send(promo1)"
+			},
+			{
+				"name": "Queue_fallback_10",
+				"exp": "PROMO2.send(promo2)"
+			},
+			{
+				"name": "Queue_fallback_12",
+				"exp": "PROMO3.send(promo3)"
+			},
+			{
+				"name": "Queue_fallback_14",
+				"exp": "PRIZE.send(prize)"
+			},
+			{
+				"tag": "1",
+				"name": "Queue_pay_16",
+				"exp": "dep.depositor.send(leftPayout)"
+			},
+			{
+				"tag": "1",
+				"name": "Queue_pay_21",
+				"exp": "dep.depositor.send(money)"
+			}
+		]
+	},
+	"4e562ebec5d51ede0f622400eae7864253e347b7_INVEST_212": {
+		"addre": "4e562ebec5d51ede0f622400eae7864253e347b7_INVEST_212",
+		"slice": [
+			{
+				"name": "INVEST_212_fallback_6",
+				"exp": "PROMO.send(promo)"
+			},
+			{
+				"tag": "1",
+				"name": "INVEST_212_pay_9",
+				"exp": "dep.depositor.send(dep.expect)"
+			},
+			{
+				"tag": "1",
+				"name": "INVEST_212_pay_12",
+				"exp": "dep.depositor.send(money)"
+			}
+		]
+	},
+	"61115bced1cc5a3b3e02e7842f6b1c0f12c35a85_Queue": {
+		"addre": "61115bced1cc5a3b3e02e7842f6b1c0f12c35a85_Queue",
+		"slice": [
+			{
+				"name": "Queue_fallback_9",
+				"exp": "PROMO1.send(promo1)"
+			},
+			{
+				"name": "Queue_fallback_11",
+				"exp": "PROMO2.send(promo2)"
+			},
+			{
+				"name": "Queue_fallback_13",
+				"exp": "PROMO3.send(promo3)"
+			},
+			{
+				"name": "Queue_fallback_15",
+				"exp": "PRIZE.send(prize)"
+			},
+			{
+				"tag": "1",
+				"name": "Queue_pay_16",
+				"exp": "dep.depositor.send(leftPayout)"
+			},
+			{
+				"tag": "1",
+				"name": "Queue_pay_21",
+				"exp": "dep.depositor.send(money)"
+			}
+		]
+	},
+	"a70eb839a5e09b6746c99d31c5168c286b6dfee0_Multi_X125_1eth": {
+		"addre": "a70eb839a5e09b6746c99d31c5168c286b6dfee0_Multi_X125_1eth",
+		"slice": [
+			{
+				"name": "Multi_X125_1eth_fallback_10",
+				"exp": "PROMO1.send(promo1)"
+			},
+			{
+				"name": "Multi_X125_1eth_fallback_12",
+				"exp": "PROMO2.send(promo2)"
+			},
+			{
+				"name": "Multi_X125_1eth_fallback_14",
+				"exp": "PRIZE.send(prize)"
+			},
+			{
+				"tag": "1",
+				"name": "Multi_X125_1eth_pay_15",
+				"exp": "dep.depositor.send(leftPayout)"
+			},
+			{
+				"tag": "1",
+				"name": "Multi_X125_1eth_pay_20",
+				"exp": "dep.depositor.send(money)"
+			}
+		]
+	},
+	"43d6ec78cbc8c5176f749918076682aac518a4f3_FastBetMultiplier": {
+		"addre": "43d6ec78cbc8c5176f749918076682aac518a4f3_FastBetMultiplier",
+		"slice": [
+			{
+				"name": "FastBetMultiplier_fallback_10",
+				"exp": "support.transfer(msg.value * 5 / 1000)"
+			},
+			{
+				"tag": "1",
+				"name": "FastBetMultiplier_pay_9",
+				"exp": "dep.depositor.send(dep.expect)"
+			},
+			{
+				"tag": "1",
+				"name": "FastBetMultiplier_pay_12",
+				"exp": "dep.depositor.send(money)"
+			}
+		]
+	},
+	"77700c746fde1289b5cb12cdeb6d34c2e71e0777_Multipliers": {
+		"addre": "77700c746fde1289b5cb12cdeb6d34c2e71e0777_Multipliers",
+		"slice": [
+			{
+				"name": "Multipliers_fallback_4",
+				"exp": "msg.sender.transfer(msg.value)"
+			},
+			{
+				"tag": "1",
+				"name": "Multipliers_pay_12",
+				"exp": "dep.depositor.send(dep.expect)"
+			},
+			{
+				"tag": "1",
+				"name": "Multipliers_pay_15",
+				"exp": "dep.depositor.send(money)"
+			},
+			{
+				"name": "Multipliers_addDeposit_14",
+				"exp": "tech.send(support)"
+			},
+			{
+				"name": "Multipliers_addDeposit_16",
+				"exp": "promo.send(adv)"
+			},
+			{
+				"name": "Multipliers_withdrawPrize_14",
+				"exp": "queue[lastDepositInfo.index].depositor.send(prize)"
+			}
+		]
+	},
+	"37b0d8b1299c1edf07a8ee4c5c1d245f17d56e3f_MultiX125_05eth": {
+		"addre": "37b0d8b1299c1edf07a8ee4c5c1d245f17d56e3f_MultiX125_05eth",
+		"slice": [
+			{
+				"name": "MultiX125_05eth_fallback_6",
+				"exp": "ADS_SUPPORT.transfer(ads)"
+			},
+			{
+				"name": "MultiX125_05eth_fallback_8",
+				"exp": "TECH_SUPPORT.transfer(tech)"
+			},
+			{
+				"tag": "1",
+				"name": "MultiX125_05eth_pay_9",
+				"exp": "dep.depositor.transfer(dep.expect)"
+			},
+			{
+				"tag": "1",
+				"name": "MultiX125_05eth_pay_12",
+				"exp": "dep.depositor.transfer(money)"
+			}
+		]
+	}
+}
