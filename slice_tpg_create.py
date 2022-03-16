@@ -34,6 +34,7 @@ SAD_TREE_DATASET_PERFIX = "examples/ponzi_dataset_sad/tree/"
 SAD_TREE_ANALYZE_PERFIX = "examples/analyze_sad/tree/"
 
 DEBUG_PNG = 0
+PRINT_PNG = 1
 
 versions = ['0', '0.1.7', '0.2.2', '0.3.6', '0.4.26', '0.5.17', '0.6.12', '0.7.6', '0.8.6']
 
@@ -178,6 +179,9 @@ def _debug_stat_var_info(state_var_read_function_map, state_var_write_function_m
 
 
 def debug_get_graph_png(graph: nx.Graph, postfix, cur_dir):
+    if PRINT_PNG == 0:
+        return
+
     if not cur_dir:
         dot_name = EXAMPLE_PERFIX + "{}_{}.dot".format(graph.graph["name"], postfix)
         nx_dot.write_dot(graph, dot_name)
@@ -189,20 +193,6 @@ def debug_get_graph_png(graph: nx.Graph, postfix, cur_dir):
 
     subprocess.check_call(["dot", "-Tpng", dot_name, "-o", cfg_name])
     os.remove(dot_name)
-
-
-def get_png(target_fun):
-    cfg_dot_file = EXAMPLE_PERFIX + "{}_cfg.dot".format(target_fun.name)
-    cfg_png = EXAMPLE_PERFIX + "{}_cfg.png".format(target_fun.name)
-    target_fun.cfg_to_dot(cfg_dot_file)
-    subprocess.check_call(["dot", "-Tpng", cfg_dot_file, "-o", cfg_png])
-
-    # dom_tree_dot_file = EXAMPLE_PERFIX + "{}_dom.dot".format(target_fun.name)
-    # dom_png = EXAMPLE_PERFIX + "{}_dom.png".format(target_fun.name)
-    # target_fun.dominator_tree_to_dot(dom_tree_dot_file)
-    # subprocess.check_call(["dot", "-Tpng", dom_tree_dot_file, "-o", dom_png])
-
-    return cfg_dot_file
 
 
 def _get_png(target_fun):
@@ -267,6 +257,8 @@ def _stmt_var_info(stmt_info, state_defs):
     if stmt_info.type == NodeType.IFLOOP:
         no_write = 1  # if语句不许写
 
+    # print("当前语句：{}".format(expression))
+
     # 当前语句声明的变量
     if no_write == 0 and stmt_info.variable_declaration is not None:
         declare_vars = [str(stmt_info.variable_declaration)]
@@ -319,10 +311,13 @@ def _preprocess_for_dependency_analyze(or_cfg, function):
     function - 当前函数的slither分析结果
 
     Return：
-    cfg - 没有循环体，且添加了函数退出节点的控制流图
-    if_stmts - 所有条件语句
-    stmts_var_info_maps - 所有语句的变量使用情况
-    stmts_send_eth - 所有交易语句
+    if_stmts # 条件语句列表
+    stmts_var_info_maps # 各语句变量使用情况
+    stmts_send_eth # 存在交易行为的语句列表
+    stmts_loops # 循环语句列表
+    if_paris # IF 与 END_IF
+    node_id_2_id # node_id 与 cfg id
+    state_defs # 全局变量定义
     """
 
     cfg = nx.DiGraph(or_cfg)
@@ -330,13 +325,13 @@ def _preprocess_for_dependency_analyze(or_cfg, function):
     remove_edges = []
 
     # 需要返回的变量
-    if_stmts = []
-    stmts_var_info_maps = {}
-    stmts_send_eth = {}
-    stmts_loops = []
-    if_paris = {}
-    node_id_2_id = {}
-    state_defs = {}
+    if_stmts = []  # 条件语句列表
+    stmts_var_info_maps = {}  # 各语句变量使用情况
+    stmts_send_eth = {}  # 存在交易行为的语句列表
+    stmts_loops = []  # 循环语句列表
+    if_paris = {}  # IF 与 END_IF
+    node_id_2_id = {}  # node_id 与 cfg id
+    state_defs = {}  # 全局变量定义
 
     for id, stmt in enumerate(function.nodes):
         # 链表下标和节点ID是不同的
@@ -373,8 +368,9 @@ def _preprocess_for_dependency_analyze(or_cfg, function):
                     "eth": eth,
                     "exp": stmt.expression.__str__()
                 }
-                # print("=== 切片准则：{} at {}@{} ===".format(stmt.expression, or_cfg.graph["name"], stmt.node_id))
-                # print("发送以太币 {} 到 {}\n".format(eth, to))
+                print("=== 切片准则：{} at {}@{} ===".format(stmt.expression, or_cfg.graph["name"], stmt.node_id))
+                print("发送以太币 {} 到 {}\n".format(eth, to))
+                print("变量使用: {}".format(stmts_var_info_maps[str(stmt.node_id)]))
 
         if stmt.type == NodeType.IF:
             stack.append(str(stmt.node_id))
@@ -920,6 +916,7 @@ def external_graph_node(sliced_pdg, criteria, external_state_map):
 def external_struct_expand_graph_node(sliced_pdg, criteria, external_state_map):
     # 外部节点信息, 添加到cfg中
     external_id = 0
+    first_id = None
     current_id = None
     previous_id = None
 
@@ -933,6 +930,7 @@ def external_struct_expand_graph_node(sliced_pdg, criteria, external_state_map):
                     external_id += 1
 
                     if previous_id is None:
+                        first_id = new_id
                         previous_id = new_id
                         current_id = new_id
                     else:
@@ -952,6 +950,7 @@ def external_struct_expand_graph_node(sliced_pdg, criteria, external_state_map):
                 new_id = "{}@{}".format(str(external_id), "tag")
 
                 if previous_id is None:
+                    first_id = new_id
                     previous_id = new_id
                     current_id = new_id
                 else:
@@ -966,10 +965,48 @@ def external_struct_expand_graph_node(sliced_pdg, criteria, external_state_map):
                 if previous_id != current_id:
                     sliced_pdg.add_edge(previous_id, current_id, color="black")
 
-    return current_id
+    return first_id, current_id
 
 
-def program_slice(cfg, semantic_edges, loop_stmts, criterias, criterias_append, external_state_map):
+def add_reenter_edges(sliced_pdg, first_id, criteria, stmts_var_info_maps):
+    sliced_cfg = nx.MultiDiGraph(sliced_pdg)
+    sliced_cfg.graph["name"] = sliced_pdg.graph["name"]
+
+    for u, v, k, d in sliced_pdg.edges(data=True, keys=True):
+        if "type" in d:
+            sliced_cfg.remove_edge(u, v, k)
+
+    debug_get_graph_png(sliced_cfg, "sliced_cfg_{}".format(criteria), cur_dir=True)
+
+    for node_id in sliced_cfg.nodes:
+        if sliced_cfg.out_degree(node_id) == 0:  # 叶子节点列表
+
+            # print("from {} to {}".format(node_id, first_id))
+            sliced_pdg.add_edge(node_id, first_id, color="black")
+
+            if node_id not in stmts_var_info_maps or first_id not in stmts_var_info_maps:
+                # 新增语句 缺少数据流信息，暂不进行分析
+                continue
+
+            # 由于新加了re_enter边，需要分析 node_id 和 first_id之间是否存在数据依赖
+            # node_id -> first_id 需要分析 first_id 使用的数据是否依赖于 node_id
+            previous_def = {}
+            stmt_var_infos_def = stmts_var_info_maps[node_id]
+            for var_info in stmt_var_infos_def:
+                if var_info["op_type"] == "def":
+                    for var in var_info["list"]:
+                        previous_def[var] = 1
+
+            stmt_var_infos_use = stmts_var_info_maps[first_id]
+            for var_info in stmt_var_infos_use:
+                if var_info["op_type"] == "use":
+                    for var in var_info["list"]:
+                        if var in previous_def:
+                            sliced_pdg.add_edge(first_id, node_id, color="green", type="data_dependency")
+
+
+def program_slice(cfg, semantic_edges, loop_stmts, criterias, criterias_append, external_state_map,
+                  stmts_var_info_maps):
     pdg = nx.MultiDiGraph(cfg)
 
     for semantic_type in semantic_edges:
@@ -981,8 +1018,6 @@ def program_slice(cfg, semantic_edges, loop_stmts, criterias, criterias_append, 
     for criteria in criterias:
         reserved_nodes = reserved_nodes_for_criteria(pdg, criteria, criterias_append, loop_stmts)
         sliced_cfg = do_slice(cfg, reserved_nodes)
-
-        debug_get_graph_png(sliced_cfg, "sliced_cfg_{}".format(criteria), cur_dir=True)
 
         new_edges = []
         for semantic_type in semantic_edges:
@@ -999,14 +1034,20 @@ def program_slice(cfg, semantic_edges, loop_stmts, criterias, criterias_append, 
             break
 
         # 外部节点信息, 添加到cfg中: 是否包含了结构体展开操作
-        external_last_id = external_struct_expand_graph_node(sliced_pdg, criteria, external_state_map)
+        new_first_id, external_last_id = external_struct_expand_graph_node(sliced_pdg, criteria, external_state_map)
         if external_last_id is not None:
             sliced_pdg.add_edge(external_last_id, first_node, color="black")
 
+        # reentry edge 重入边，保存一个函数可以执行多次的语义
+        if new_first_id is not None:
+            add_reenter_edges(sliced_pdg, new_first_id, criteria, stmts_var_info_maps)
+        else:
+            add_reenter_edges(sliced_pdg, first_node, criteria, stmts_var_info_maps)
+
         # 保存为json格式
         graph_info = save_sliced_pdg_to_json(sliced_pdg)
-        name = "{}_{}_{}.json".format(cfg.graph["contract_name"], cfg.graph["name"], criteria)
-        with open(name, "w+") as f:
+        graph_json_file = "{}_{}_{}.json".format(cfg.graph["contract_name"], cfg.graph["name"], criteria)
+        with open(graph_json_file, "w+") as f:
             f.write(json.dumps(graph_info))
 
         debug_get_graph_png(sliced_pdg, "ssliced_pdg_{}".format(criteria), cur_dir=True)
@@ -1265,6 +1306,12 @@ def interprocedural_state_analyze(this_function,
 
 def _analyze_function(contract_name, function, structs_info, state_var_write_function_map,
                       state_var_declare_function_map):
+    print("\n##################################")
+    print("##### 合约名 {}".format(contract_name))
+    print("##### 函数名 {}".format(function.name))
+    print("####################################")
+
+    # 语义边集合
     semantic_edges = {}
 
     # 获得控制流图
@@ -1281,7 +1328,7 @@ def _analyze_function(contract_name, function, structs_info, state_var_write_fun
     data_flow_edges, data_flow_map = data_flow_analyze(simple_cfg, stmts_var_info_maps)
     semantic_edges["data_flow"] = data_flow_edges
 
-    # Note: 根据交易语句获得与交易相关的全局变量
+    # 根据交易语句获得与交易相关的全局变量
     transaction_states = transaction_data_flow_analyze(stmts_var_info_maps, data_flow_map, transaction_stmts)
 
     # Note: 将交易全局变量作为切片准则
@@ -1314,7 +1361,7 @@ def _analyze_function(contract_name, function, structs_info, state_var_write_fun
 
     # 程序切片
     program_slice(cfg, semantic_edges, loop_stmts, transaction_stmts,
-                  criteria_append, external_state_map)
+                  criteria_append, external_state_map, stmts_var_info_maps)
 
     return transaction_stmts
 
@@ -1407,7 +1454,6 @@ def analyze_contract(contract_file, debug_print=False):
 
 
 def _get_work_dir(target):
-
     if target == "sad_chain":
         dataset_prefix = SAD_CHAIN_DATASET_PERFIX
         analyze_prefix = SAD_CHAIN_ANALYZE_PERFIX
@@ -1435,7 +1481,6 @@ def _get_work_dir(target):
 
 
 def analyze_dataset(target):
-
     pwd = os.getcwd()
     slices_map = {}
 
