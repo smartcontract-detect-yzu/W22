@@ -1,13 +1,12 @@
 import argparse
 import itertools
 import json
-import os
+
 import shutil
 import subprocess
 from queue import LifoQueue
-from infercode.client.infercode_client import InferCodeClient
+
 import os
-import logging
 
 from slither.core.expressions import Identifier
 
@@ -25,12 +24,18 @@ ANALYZE_PERFIX = "examples/analyze/"
 SAD_CHAIN_DATASET_PERFIX = "examples/ponzi_dataset_sad/chain/"
 SAD_CHAIN_ANALYZE_PERFIX = "examples/analyze_sad/chain/"
 
+BUYPOOL_DATASET_PERFIX = "examples/keys_dataset/key_buypool/"
+BUYPOOL_ANALYZE_PERFIX = "examples/keys_analyze/key_buypool/"
+
+DEPOSIT_DATASET_PERFIX = "examples/keys_dataset/key_deposit/"
+DEPOSIT_ANALYZE_PERFIX = "examples/keys_analyze/key_deposit/"
+
 SAD_TREE_DATASET_PERFIX = "examples/ponzi_dataset_sad/tree/"
 SAD_TREE_ANALYZE_PERFIX = "examples/analyze_sad/tree/"
+
 DEBUG_PNG = 0
 
 versions = ['0', '0.1.7', '0.2.2', '0.3.6', '0.4.26', '0.5.17', '0.6.12', '0.7.6', '0.8.6']
-infercode_praser = None
 
 
 def select_solc_version(version_info):
@@ -102,7 +107,7 @@ def parse_solc_version(file):
 def argParse():
     parser = argparse.ArgumentParser(description='manual to this script')
 
-    parser.add_argument('-t', type=str, default="test")
+    parser.add_argument('-t', type=str, default=None)
     parser.add_argument('-n', type=str, default=None)
 
     args = parser.parse_args()
@@ -322,13 +327,13 @@ def _preprocess_for_dependency_analyze(or_cfg, function):
 
     cfg = nx.DiGraph(or_cfg)
     stack = []
-
-    # 1:破环 将CFG中的循环结构消除
-    if_stmts = []
     remove_edges = []
+
+    # 需要返回的变量
+    if_stmts = []
+    stmts_var_info_maps = {}
     stmts_send_eth = {}
     stmts_loops = []
-    stmts_var_info_maps = {}
     if_paris = {}
     node_id_2_id = {}
     state_defs = {}
@@ -651,8 +656,10 @@ def get_data_dependency_relations_forloop(simple_cfg, stmts_var_info_maps, trans
                 key = "{}-{}".format(edge_info["from"], edge_info["to"])
                 if key not in duplicate:
                     duplicate[key] = 1
+                    print("LOOP DATA: {}-{}".format(edge_info["from"], edge_info["to"]))
                     ddg_edges.append(
-                        (edge_info["from"], edge_info["to"], {'color': "green", "type": "data_dependency"}))
+                        (edge_info["from"], edge_info["to"], {'color': "green", "type": "data_dependency"})
+                    )
 
     return ddg_edges
 
@@ -853,7 +860,116 @@ def save_sliced_pdg_to_json(graph):
     return graph_info
 
 
-def program_slice(cfg, semantic_edges, criterias, criterias_append, external_state_map):
+def reserved_nodes_for_criteria(pdg, criteria, criterias_append, loop_stmts):
+    criteria_set = [criteria]
+    if criteria in criterias_append:
+        for append_criteria in criterias_append[criteria]:
+            criteria_set += append_criteria
+
+    # 针对每个切片准则进行前向依赖分析
+    reserved_nodes = {}
+    print("切片准则：{}".format(criteria_set))
+    for criteria_stmt in criteria_set:
+        criteria_reserved_nodes = _forward_analyze(pdg, criteria_stmt)
+        for reserved_node in criteria_reserved_nodes:
+            if reserved_node not in reserved_nodes:
+                reserved_nodes[reserved_node] = 1
+
+    # 循环体保留
+    for loop_struct in loop_stmts:
+        loop_from = loop_struct["from"]
+        loop_to = loop_struct["to"]
+        if loop_from in reserved_nodes and loop_to not in reserved_nodes:
+            print("保存loop {}-{}".format(loop_from, loop_to))
+            reserved_nodes[loop_to] = 1
+
+    return reserved_nodes
+
+
+def external_graph_node(sliced_pdg, criteria, external_state_map):
+    # 外部节点信息, 添加到cfg中
+    external_id = 0
+    current_id = None
+    previous_id = None
+
+    if criteria in external_state_map:
+        for external_node in reversed(external_state_map[criteria]):
+
+            # print("外部节点: {}".format(external_node))
+            external_id += 1
+            new_id = "{}@{}".format(str(external_id), "tag")
+
+            if previous_id is None:
+                previous_id = new_id
+                current_id = new_id
+            else:
+                previous_id = current_id
+                current_id = new_id
+
+            sliced_pdg.add_node(new_id,
+                                label=external_node["expression"],
+                                expression=external_node["expression"],
+                                type=external_node["type"])
+
+            if previous_id != current_id:
+                sliced_pdg.add_edge(previous_id, current_id, color="black")
+
+    return current_id
+
+
+def external_struct_expand_graph_node(sliced_pdg, criteria, external_state_map):
+    # 外部节点信息, 添加到cfg中
+    external_id = 0
+    current_id = None
+    previous_id = None
+
+    if criteria in external_state_map:
+        for external_node in reversed(external_state_map[criteria]):
+
+            if "expand" in external_node:
+                for expand_stmt in external_node["expand"]:
+
+                    new_id = "{}@{}".format(str(external_id), "tag")
+                    external_id += 1
+
+                    if previous_id is None:
+                        previous_id = new_id
+                        current_id = new_id
+                    else:
+                        previous_id = current_id
+                        current_id = new_id
+
+                    sliced_pdg.add_node(new_id,
+                                        label=expand_stmt,
+                                        expression=expand_stmt,
+                                        type=external_node["type"])
+
+                    if previous_id != current_id:
+                        sliced_pdg.add_edge(previous_id, current_id, color="black")
+            else:
+                # print("外部节点: {}".format(external_node))
+                external_id += 1
+                new_id = "{}@{}".format(str(external_id), "tag")
+
+                if previous_id is None:
+                    previous_id = new_id
+                    current_id = new_id
+                else:
+                    previous_id = current_id
+                    current_id = new_id
+
+                sliced_pdg.add_node(new_id,
+                                    label=external_node["expression"],
+                                    expression=external_node["expression"],
+                                    type=external_node["type"])
+
+                if previous_id != current_id:
+                    sliced_pdg.add_edge(previous_id, current_id, color="black")
+
+    return current_id
+
+
+def program_slice(cfg, semantic_edges, loop_stmts, criterias, criterias_append, external_state_map):
     pdg = nx.MultiDiGraph(cfg)
 
     for semantic_type in semantic_edges:
@@ -863,23 +979,10 @@ def program_slice(cfg, semantic_edges, criterias, criterias_append, external_sta
             pdg.add_edges_from(semantic_edges[semantic_type])
 
     for criteria in criterias:
-        criteria_set = [criteria]
-        if criteria in criterias_append:
-            for append_criteria in criterias_append[criteria]:
-                criteria_set += append_criteria
-
-        # 针对每个切片准则进行前向依赖分析
-        reserved_nodes = {}
-        print("切片准则：{}".format(criteria_set))
-        for criteria_stmt in criteria_set:
-            criteria_reserved_nodes = _forward_analyze(pdg, criteria_stmt)
-            for reserved_node in criteria_reserved_nodes:
-                if reserved_node not in reserved_nodes:
-                    reserved_nodes[reserved_node] = 1
-
+        reserved_nodes = reserved_nodes_for_criteria(pdg, criteria, criterias_append, loop_stmts)
         sliced_cfg = do_slice(cfg, reserved_nodes)
 
-        # debug_get_graph_png(sliced_cfg, "sliced_cfg_{}".format(criteria))
+        debug_get_graph_png(sliced_cfg, "sliced_cfg_{}".format(criteria), cur_dir=True)
 
         new_edges = []
         for semantic_type in semantic_edges:
@@ -895,34 +998,10 @@ def program_slice(cfg, semantic_edges, criterias, criterias_append, external_sta
             first_node = node
             break
 
-        # 外部节点信息, 添加到cfg中
-        external_id = 0
-        last_id = None
-        if criteria in external_state_map:
-            for external_node in reversed(external_state_map[criteria]):
-                # print("外部节点: {}".format(external_node))
-                external_id += 1
-                new_id = "{}@{}".format(str(external_id), "tag")
-
-                if last_id is None:
-                    last_id = new_id
-                    current_id = new_id
-                else:
-                    current_id = new_id
-
-                sliced_pdg.add_node(new_id,
-                                    label=external_node["expression"],
-                                    expression=external_node["expression"],
-                                    type=external_node["type"])
-
-                if last_id != current_id:
-                    sliced_pdg.add_edge(last_id, current_id, color="black")
-
-                # print("VAR:{} TYPE:{}".format(external_node["var"], external_node["type"]))
-                # print("EXPR:{}".format(external_node["expression"]))
-
-        if last_id is not None:
-            sliced_pdg.add_edge(last_id, first_node, color="black")
+        # 外部节点信息, 添加到cfg中: 是否包含了结构体展开操作
+        external_last_id = external_struct_expand_graph_node(sliced_pdg, criteria, external_state_map)
+        if external_last_id is not None:
+            sliced_pdg.add_edge(external_last_id, first_node, color="black")
 
         # 保存为json格式
         graph_info = save_sliced_pdg_to_json(sliced_pdg)
@@ -939,7 +1018,8 @@ def loop_structure_extreact(simple_cfg, loop_structures, criteria):
     for(循环条件){
         A ; criteria ;B ;C ;D
     }
-    存在执行路径 <criteria, B, C, D, 循环条件>, 需要分析该路径的数据依赖关系
+    存在执行路径 <criteria, B, C, D, 循环条件>, 需要分析该路径的数据依赖关系，而B C D会对criteria造成影响
+    存在执行路径 <B, C, D, 循环条件, criteria>, 需要分析该路径的数据依赖关系，而B C D会对criteria造成影响
     """
     loop_reverse_paths = []
     for loop_structure in loop_structures:
@@ -952,9 +1032,10 @@ def loop_structure_extreact(simple_cfg, loop_structures, criteria):
 
             for index, path_node in enumerate(cfg_path):
                 if path_node == str(criteria):
-                    loop_exe_path = cfg_path[index + 1:] + [path_node] + ["EXIT_POINT"]  # 将初始节点放在最后
+                    loop_exe_path = cfg_path[index + 1:] + [path_node] + ["EXIT_POINT"]  # 将初始节点(切片准则)放在最后
                     loop_reverse_paths.append(loop_exe_path)
                     break
+
     return loop_reverse_paths
 
 
@@ -1001,10 +1082,116 @@ def state_criteria_add(transaction_states, state_defs):
     return criteria_append
 
 
+def _new_struct_analyze(stmt, struct_name, structs_info):
+    struct_end_pos = None
+    new_struct_elems = []
+    stack = []
+    new_stmts = []
+
+    expr = str(stmt.expression).rsplit(struct_name + "(")[1]
+    expr = "(" + expr
+    for index, char in enumerate(expr):
+        if index == 0:
+            if char != "(":
+                print("\n[ERROR]语句不是左括号开头: {}".format(stmt.expression))
+                print("\n[ERROR]语句不是左括号开头: {}".format(expr))
+                raise RuntimeError("语句不是左括号开头")
+            else:
+                stack.append("(_first")
+        elif char == "(":
+            stack.append(char)
+        elif char == ")":
+            top_char = stack.pop()
+            if top_char == "(_first":
+                struct_end_pos = index
+                break
+
+    _struct_expr = expr[1:struct_end_pos].split(",")
+    left_expr = str(stmt.expression).split(struct_name)[0]
+    left_expr = "{}{}{}".format(left_expr, struct_name, expr[struct_end_pos + 1:])
+
+    struct_info = structs_info[struct_name]
+    for i, elem in enumerate(struct_info.elems_ordered):
+        elem_type = elem.type.__str__()
+        elem_name = elem.name.__str__()
+        elem_content = _struct_expr[i].__str__()
+
+        if elem_content.startswith(elem_type):
+            elem_content = elem_content.strip("{}(".format(elem_type))[:-1]
+
+        elem_content = "{}.{} = {}".format(struct_name, elem_name, elem_content)
+        new_stmts.append(elem_content)
+        new_struct_elems.append(elem_content)
+
+    new_stmts.append(left_expr)
+
+    print("\n==原始语句:", stmt.expression.__str__())
+    for new_stmt in new_stmts:
+        print("\t\t", new_stmt)
+
+    return new_struct_elems, left_expr, new_stmts
+
+
+def _new_struct(node, structs_info):
+    for ir in node.irs:
+
+        if "new " in str(ir):  # 如果当前语句进行了结构体定义
+            struct_name = str(ir).split("new ")[1].split("(")[0]
+            if struct_name not in structs_info:
+                # print("\n====异常结构体名称：", struct_name)
+                # print(node.expression.__str__())
+                # print(ir)
+                # print("当前结构体：", [str(s_n) for s_n in structs_info])
+                continue
+            else:
+                return struct_name
+    return None
+
+
+def struct_analyze(external_state_map, structs_info):
+    for stmt_id in external_state_map:
+
+        stmts_array = external_state_map[stmt_id]
+        for stmt_info in stmts_array:
+            node = stmt_info['node']
+            struct_name = _new_struct(node, structs_info)
+            if struct_name is not None:
+                _, _, new_stmts = _new_struct_analyze(node, struct_name, structs_info)
+                stmt_info["expand"] = new_stmts
+
+
+def _debug_irs_for_stmt(node):
+    if DEBUG_PNG == 0:
+        return
+
+    for ir in node.irs:
+        print(str(ir))
+    print("\r")
+    for ir_ssa in node.irs_ssa:
+        print(str(ir_ssa))
+
+    print("\n\tFUNC_EXP:{}".format(node.expression))
+    for var in node.variables_written:
+        print("\tWRITE:{} {}".format(var.type, var.name))
+    for var in node.variables_read:
+        print("\tREAD:{} {}".format(var.type, var.name))
+
+
 def interprocedural_state_analyze(this_function,
                                   transaction_states,
                                   state_var_write_function_map,
                                   state_var_declare_function_map):
+    """
+    Parameters:
+    this_function -- 当前函数的信息
+    transaction_states -- 当前函数依赖中交易行为依赖的全局变量
+    state_var_write_function_map -- 当前智能合约中全局变量修改操作和函数的对应表
+    state_var_declare_function_map -- 当前智能合约中全局变量声明操作和函数的对应表
+
+    Return：
+    external_nodes_map - <交易相关全局变量, [交易相关全局变量修改函数]>
+    """
+
     # 跨函数交易依赖全局变量修改分析
     external_nodes_map = {}
     duplicate = {}
@@ -1051,23 +1238,8 @@ def interprocedural_state_analyze(this_function,
 
                                 if current_var == str(v):
                                     var_infos = _stmt_var_info(node, state_defs_t)
-                                    for ir in node.irs:
-                                        print(str(ir))
+                                    _debug_irs_for_stmt(node)
 
-                                    print("\r")
-
-                                    for ir_ssa in node.irs_ssa:
-                                        print(str(ir_ssa))
-
-                                    print("\n\tFUNC_EXP:{}".format(node.expression))
-                                    for var in node.variables_written:
-                                        print("\tWRITE:{} {}".format(var.type, var.name))
-                                    for var in node.variables_read:
-                                        print("\tREAD:{} {}".format(var.type, var.name))
-
-                                    # print("\t\tSTAT_VAR:{} FUNC_EXP:{} CFG_ID:{}\n".format(transaction_state,
-                                    #                                                        node.expression,
-                                    #                                                        node.node_id))
                                     node_expression = node.expression.__str__()  # 语句
                                     node_type = node.type.__str__()  # 类型
 
@@ -1091,7 +1263,8 @@ def interprocedural_state_analyze(this_function,
     return external_nodes_map
 
 
-def _analyze_function(contract_name, function, state_var_write_function_map, state_var_declare_function_map):
+def _analyze_function(contract_name, function, structs_info, state_var_write_function_map,
+                      state_var_declare_function_map):
     semantic_edges = {}
 
     # 获得控制流图
@@ -1109,13 +1282,10 @@ def _analyze_function(contract_name, function, state_var_write_function_map, sta
     semantic_edges["data_flow"] = data_flow_edges
 
     # Note: 根据交易语句获得与交易相关的全局变量
-    transaction_states = transaction_data_flow_analyze(stmts_var_info_maps,
-                                                       data_flow_map,
-                                                       transaction_stmts)
+    transaction_states = transaction_data_flow_analyze(stmts_var_info_maps, data_flow_map, transaction_stmts)
 
     # Note: 将交易全局变量作为切片准则
-    criteria_append = state_criteria_add(transaction_states,
-                                         state_defs)
+    criteria_append = state_criteria_add(transaction_states, state_defs)
 
     # 函数间全局变量修改关系分析
     external_state_map = interprocedural_state_analyze(function,
@@ -1123,17 +1293,14 @@ def _analyze_function(contract_name, function, state_var_write_function_map, sta
                                                        state_var_write_function_map,
                                                        state_var_declare_function_map)
 
+    struct_analyze(external_state_map, structs_info)
+
     # 数据依赖生成
-    ddg_edges = get_data_dependency_relations(simple_cfg,
-                                              stmts_var_info_maps)
+    ddg_edges = get_data_dependency_relations(simple_cfg, stmts_var_info_maps)
     semantic_edges["data_dep"] = ddg_edges
 
     # 控制依赖关系
-    cdg_edges = get_control_dependency_relations(simple_cfg,
-                                                 if_stmts,
-                                                 function,
-                                                 if_paris,
-                                                 node_id_2_id)
+    cdg_edges = get_control_dependency_relations(simple_cfg, if_stmts, function, if_paris, node_id_2_id)
     semantic_edges["ctrl_dep"] = cdg_edges
 
     # 循环体内部的数据流依赖
@@ -1146,13 +1313,15 @@ def _analyze_function(contract_name, function, state_var_write_function_map, sta
     debug_get_ddg_and_cdg(cfg, cdg_edges, ddg_edges, data_flow_edges, loop_ddg_edges)
 
     # 程序切片
-    program_slice(cfg, semantic_edges, transaction_stmts,
+    program_slice(cfg, semantic_edges, loop_stmts, transaction_stmts,
                   criteria_append, external_state_map)
 
     return transaction_stmts
 
 
-def state_vars_info(function, state_var_declare_function_map, state_var_read_function_map,
+def state_vars_info(function,
+                    state_var_declare_function_map,
+                    state_var_read_function_map,
                     state_var_write_function_map):
     # 全局变量定义
     if function.is_constructor or function.is_constructor_variables:
@@ -1188,27 +1357,20 @@ def stat_vars_delcare_without_assign(contract, state_var_declare_function_map):
             state_var_declare_function_map[str(Identifier(v))] = {"type": str(v.type), "exp": exp}
 
 
-def infer_code_init():
-    logging.basicConfig(level=logging.INFO)
-    os.environ['CUDA_VISIBLE_DEVICES'] = "-1"  # Change from -1 to 0 to enable GPU
-    infercode = InferCodeClient(language="solidity")
-    infercode.init_from_config()
-    return infercode
-
-
-def analyze_contract(name):
+def analyze_contract(contract_file, debug_print=False):
     slice_record = []
-    slither = Slither(name)
+    slither = Slither(contract_file)
 
     for contract in slither.contracts:
 
         state_var_declare_function_map = {}  # <全局变量名称, slither.function>
         state_var_read_function_map = {}  # <全局变量名称, slither.function>
         state_var_write_function_map = {}  # <全局变量名称, slither.function>
-        structs_info = {}
+        structs_info = {}  # <结构体名称, StructureContract>
 
         # 结构体定义信息抽取
         for structure in contract.structures:
+            print("结构体名称：{}".format(structure.name))
             structs_info[structure.name] = structure
 
         # 全局变量信息扫描 收集
@@ -1220,15 +1382,17 @@ def analyze_contract(name):
                             state_var_read_function_map,
                             state_var_write_function_map)
 
-        _debug_stat_var_info(state_var_read_function_map, state_var_write_function_map, state_var_declare_function_map)
+        # 全局变量调试信息打印
+        _debug_stat_var_info(state_var_read_function_map,
+                             state_var_write_function_map,
+                             state_var_declare_function_map)
 
         for function in contract.functions:
 
             if function.can_send_eth():
-
-                # print("\n=====开始分析函数 {}====".format(function.name))
                 slices_tag = _analyze_function(contract.name,
                                                function,
+                                               structs_info,
                                                state_var_write_function_map,
                                                state_var_declare_function_map)
                 for slice_id in slices_tag:
@@ -1242,8 +1406,7 @@ def analyze_contract(name):
     return slice_record
 
 
-def analyze_dataset(target):
-    pwd = os.getcwd()
+def _get_work_dir(target):
 
     if target == "sad_chain":
         dataset_prefix = SAD_CHAIN_DATASET_PERFIX
@@ -1257,11 +1420,26 @@ def analyze_dataset(target):
         dataset_prefix = DATASET_PERFIX
         analyze_prefix = ANALYZE_PERFIX
 
-    else:
-        dataset_prefix = DATASET_PERFIX
-        analyze_prefix = ANALYZE_PERFIX
+    elif target == "buypool":
+        dataset_prefix = BUYPOOL_DATASET_PERFIX
+        analyze_prefix = BUYPOOL_ANALYZE_PERFIX
 
+    elif target == "deposit":
+        dataset_prefix = DEPOSIT_DATASET_PERFIX
+        analyze_prefix = DEPOSIT_ANALYZE_PERFIX
+
+    else:
+        raise RuntimeError("-t 没有指定数据集")
+
+    return dataset_prefix, analyze_prefix
+
+
+def analyze_dataset(target):
+
+    pwd = os.getcwd()
     slices_map = {}
+
+    dataset_prefix, analyze_prefix = _get_work_dir(target)
     g = os.walk(dataset_prefix)
     for path, dir_list, file_list in g:
         for file_name in file_list:
@@ -1315,7 +1493,7 @@ def analyze_dataset(target):
 
                     with open("done_ok.txt", "w+") as f:
                         f.write("done")
-                    os.chdir(pwd)  # TODO: 还原工作目录
+                    os.chdir(pwd)  # 还原工作目录
 
     with open("slice_record_{}.json".format(target), "w") as dump_f:
         json.dump(slices_map, dump_f)
@@ -1324,12 +1502,9 @@ def analyze_dataset(target):
 if __name__ == '__main__':
 
     target, name = argParse()
-    label_map = {}
-
-    # infercode_praser = infer_code_init()
 
     if name is not None:
-        src_prex = "examples/ponzi_dataset_sad/tree/"
+        src_prex = "examples/ponzi_dataset/"
         test_path = "examples/test/"
 
         for file in os.listdir(test_path):
@@ -1346,13 +1521,7 @@ if __name__ == '__main__':
         slices_record = analyze_contract(name)
 
     else:
-        if target == "test":
-            sc_name = "0x53e523b0207c0987af44aed9c09c4d3e59e7db9a.sol"
-            os.chdir("examples/test/")
-            analyze_contract(sc_name)
-
-        else:
-            analyze_dataset(target)
+        analyze_dataset(target)
 
     # slither = Slither(EXAMPLE_PERFIX + '0x09515cb5e3acaef239ab83d78b2f3e3764fcab9b.sol')
     # slither = Slither(EXAMPLE_PERFIX + 'test.sol')
