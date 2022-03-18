@@ -259,6 +259,18 @@ def _stmt_var_info(stmt_info, state_defs):
 
     # print("当前语句：{}".format(expression))
 
+    # 局部变量读 use
+    read_local_vars = [str(var) for var in stmt_info.local_variables_read]
+    if len(read_local_vars) != 0:
+        rechecked_read_local_vars = _recheck_vars_in_expression(expression, read_local_vars)
+        stmt_var_info.append({"list": rechecked_read_local_vars, "type": "local", "op_type": "use"})
+
+    # 全局变量读 use
+    read_state_vars = [str(var) for var in stmt_info.state_variables_read]
+    if len(read_state_vars) != 0:
+        rechecked_read_state_vars = _recheck_vars_in_expression(expression, read_state_vars)
+        stmt_var_info.append({"list": rechecked_read_state_vars, "type": "state", "op_type": "use"})
+
     # 当前语句声明的变量
     if no_write == 0 and stmt_info.variable_declaration is not None:
         declare_vars = [str(stmt_info.variable_declaration)]
@@ -281,18 +293,6 @@ def _stmt_var_info(stmt_info, state_defs):
             else:
                 state_defs[stat_var].append(stmt_info.node_id)
         stmt_var_info.append({"list": rechecked_write_state_vars, "type": "state", "op_type": "def"})
-
-    # 局部变量读 use
-    read_local_vars = [str(var) for var in stmt_info.local_variables_read]
-    if len(read_local_vars) != 0:
-        rechecked_read_local_vars = _recheck_vars_in_expression(expression, read_local_vars)
-        stmt_var_info.append({"list": rechecked_read_local_vars, "type": "local", "op_type": "use"})
-
-    # 全局变量读 use
-    read_state_vars = [str(var) for var in stmt_info.state_variables_read]
-    if len(read_state_vars) != 0:
-        rechecked_read_state_vars = _recheck_vars_in_expression(expression, read_state_vars)
-        stmt_var_info.append({"list": rechecked_read_state_vars, "type": "state", "op_type": "use"})
 
     return stmt_var_info
 
@@ -341,9 +341,9 @@ def _preprocess_for_dependency_analyze(or_cfg, function):
 
         # 语句的变量使用情况
         stmts_var_info_maps[str(stmt.node_id)] = _stmt_var_info(stmt, state_defs)
-        # print("语句：{}".format(stmt.expression))
-        # print("变量使用：{}".format(stmts_var_info_maps[str(stmt.node_id)]))
-        # print("============\n")
+        print("语句：{}".format(stmt.expression))
+        print("变量使用：{}".format(stmts_var_info_maps[str(stmt.node_id)]))
+        print("============\n")
 
         if stmt.can_send_eth():
             if ".transfer(" in str(stmt.expression):
@@ -619,10 +619,13 @@ def get_data_dependency_relations(cfg, stmts_var_info_maps):
 
         # 计算当前执行路径下的def_use_chain分析
         for var in var_def_use_chain:
-            # print("DBUG 数据依赖 {}：{}".format(var, var_def_use_chain[var]))
             last_def = None
             chain = var_def_use_chain[var]
             for chain_node in chain:
+
+                if var == "_dividends":
+                    print("chain_node {}".format(chain_node))
+
                 if chain_node["op_type"] == "def":
                     last_def = chain_node["id"]
                 else:
@@ -701,6 +704,10 @@ def data_flow_analyze(cfg, stmts_var_info_maps):
                         if var in use_info:
                             for to_node in use_info[var]:
                                 key = "{}-{}".format(from_node, to_node)
+
+                                if from_node == to_node:  # 单条语句内部的自环依赖
+                                    continue
+
                                 if key not in duplicate:
                                     duplicate[key] = 1
                                     if to_node not in data_flow_map:
@@ -1322,14 +1329,20 @@ def _analyze_function(contract_name, function, structs_info, state_var_write_fun
     transaction_stmts, loop_stmts, if_paris, \
     node_id_2_id, state_defs = _preprocess_for_dependency_analyze(cfg, function)
 
+    print("===========预处理完成==============")
+
     debug_get_graph_png(simple_cfg, "simple_cfg", cur_dir=True)
 
     # 数据流分析
     data_flow_edges, data_flow_map = data_flow_analyze(simple_cfg, stmts_var_info_maps)
     semantic_edges["data_flow"] = data_flow_edges
 
+    print("===========data_flow_analyze==============")
+
     # 根据交易语句获得与交易相关的全局变量
     transaction_states = transaction_data_flow_analyze(stmts_var_info_maps, data_flow_map, transaction_stmts)
+
+    print("===========transaction_data_flow_analyze==============")
 
     # Note: 将交易全局变量作为切片准则
     criteria_append = state_criteria_add(transaction_states, state_defs)
@@ -1453,6 +1466,9 @@ def analyze_contract(contract_file, debug_print=False):
     return slice_record
 
 
+defined_target_list = ["sad_chain", "sad_tree", "xblock", "buypool", "deposit"]
+
+
 def _get_work_dir(target):
     if target == "sad_chain":
         dataset_prefix = SAD_CHAIN_DATASET_PERFIX
@@ -1566,7 +1582,11 @@ if __name__ == '__main__':
         slices_record = analyze_contract(name)
 
     else:
-        analyze_dataset(target)
+        if target == "all":
+            for defined_target in defined_target_list:
+                analyze_dataset(defined_target)
+        else:
+            analyze_dataset(target)
 
     # slither = Slither(EXAMPLE_PERFIX + '0x09515cb5e3acaef239ab83d78b2f3e3764fcab9b.sol')
     # slither = Slither(EXAMPLE_PERFIX + 'test.sol')
