@@ -222,6 +222,7 @@ def _recheck_vars_in_expression(stmt_expression, vars):
     miss_vars = []
     for var in vars:
         if var in stmt_expression:
+
             ret_vars.append(var)
         else:
             miss_vars.append(var)
@@ -249,7 +250,7 @@ def get_function_cfg(contract_name, function):
     return cfg
 
 
-def _stmt_var_info(stmt_info, state_defs):
+def _stmt_var_info(stmt_info, state_defs, const_var_init, state_var_declare_function_map):
     stmt_var_info = []
 
     expression = str(stmt_info.expression)
@@ -270,12 +271,20 @@ def _stmt_var_info(stmt_info, state_defs):
     read_state_vars = [str(var) for var in stmt_info.state_variables_read]
     if len(read_state_vars) != 0:
         rechecked_read_state_vars = _recheck_vars_in_expression(expression, read_state_vars)
+        for var in rechecked_read_state_vars:
+            if var in state_var_declare_function_map and "full_expr" in state_var_declare_function_map[var]:
+                if var not in const_var_init:
+                    const_var_init[var] = state_var_declare_function_map[var]["full_expr"]
         stmt_var_info.append({"list": rechecked_read_state_vars, "type": "state", "op_type": "use"})
 
     # 当前语句声明的变量
     if no_write == 0 and stmt_info.variable_declaration is not None:
         declare_vars = [str(stmt_info.variable_declaration)]
         rechecked_declare_var = _recheck_vars_in_expression(expression, declare_vars)
+        for var in rechecked_declare_var:
+            if var in state_var_declare_function_map and "full_expr" in state_var_declare_function_map[var]:
+                if var not in const_var_init:
+                    const_var_init[var] = state_var_declare_function_map[var]["full_expr"]
         stmt_var_info.append({"list": rechecked_declare_var, "type": "local", "op_type": "def"})
 
     # 当前语句局部变量写 def
@@ -289,6 +298,11 @@ def _stmt_var_info(stmt_info, state_defs):
     if no_write == 0 and len(write_state_vars) != 0:
         rechecked_write_state_vars = _recheck_vars_in_expression(expression, write_state_vars)
         for stat_var in rechecked_write_state_vars:
+
+            if stat_var in state_var_declare_function_map and "full_expr" in state_var_declare_function_map[stat_var]:
+                if stat_var not in const_var_init:
+                    const_var_init[stat_var] = state_var_declare_function_map[stat_var]["full_expr"]
+
             if stat_var not in state_defs:
                 state_defs[stat_var] = [stmt_info.node_id]
             else:
@@ -298,14 +312,9 @@ def _stmt_var_info(stmt_info, state_defs):
     return stmt_var_info
 
 
-def _preprocess_for_dependency_analyze(or_cfg, function):
+def _preprocess_for_dependency_analyze(or_cfg, function, state_var_declare_function_map):
     """
-    1.破环：将CFG中的循环结构消除
-        IF_LOOP的前驱节点，并且该前驱节点不是BEGIN_LOOP
-        BEGIN_LOOP --> IF_LOOP --> EXPRESSION
-                         <----LOOP------|
-    2.每条语句的变量使用情况解析，方便后续数据依赖分析
-    3.exit：给CFG中的所有叶子节点添加exit子节点作为函数退出的标识符
+    语句预处理，提前有用的信息方便下一步的分析
 
     Parameters:
     cfg      - 当前函数的cfg
@@ -333,6 +342,8 @@ def _preprocess_for_dependency_analyze(or_cfg, function):
     if_paris = {}  # IF 与 END_IF
     node_id_2_id = {}  # node_id 与 cfg id
     state_defs = {}  # 全局变量定义
+    const_var_init = {}  # 涉及的全局变量初始化语句
+    msg_value_stmt = {}  # 使用了msg.value的语句
 
     for id, stmt in enumerate(function.nodes):
         # 链表下标和节点ID是不同的
@@ -341,10 +352,16 @@ def _preprocess_for_dependency_analyze(or_cfg, function):
     for id, stmt in enumerate(function.nodes):
 
         # 语句的变量使用情况
-        stmts_var_info_maps[str(stmt.node_id)] = _stmt_var_info(stmt, state_defs)
-        # print("语句：{}".format(stmt.expression))
-        # print("变量使用：{}".format(stmts_var_info_maps[str(stmt.node_id)]))
-        # print("============\n")
+        stmts_var_info_maps[str(stmt.node_id)] = _stmt_var_info(stmt, state_defs, const_var_init,
+                                                                state_var_declare_function_map)
+        print("语句：{}".format(stmt.expression))
+        print("变量使用：{}".format(stmts_var_info_maps[str(stmt.node_id)]))
+        print("============\n")
+
+        if "msg.value" in stmt.expression.__str__():
+            msg_value_stmt[str(stmt.node_id)] = {
+                "exp": stmt.expression.__str__()
+            }
 
         if stmt.can_send_eth():
             if ".transfer(" in str(stmt.expression):
@@ -423,7 +440,7 @@ def _preprocess_for_dependency_analyze(or_cfg, function):
     # debug_get_graph_png(cfg, "cfg_exit")
 
     return cfg, if_stmts, stmts_var_info_maps, stmts_send_eth, stmts_loops, \
-           if_paris, node_id_2_id, state_defs
+           if_paris, node_id_2_id, state_defs, const_var_init, msg_value_stmt
 
 
 def _get_control_dependency_relations(cfg, if_stmts, predom_relations, function, node_id_2_id):
@@ -879,11 +896,17 @@ def save_sliced_pdg_to_json(graph):
     return graph_info
 
 
-def reserved_nodes_for_criteria(pdg, criteria, criterias_append, loop_stmts):
+def reserved_nodes_for_criteria(pdg, criteria, criterias_append, msg_value_stmts, loop_stmts):
     criteria_set = [criteria]
+
+    # 交易相关全局变量语义补充
     if criteria in criterias_append:
         for append_criteria in criterias_append[criteria]:
             criteria_set += append_criteria
+
+    # 保留使用msg.value的语句
+    for msg_value_stmt in msg_value_stmts:
+        criteria_set.append(msg_value_stmt)
 
     # 针对每个切片准则进行前向依赖分析
     reserved_nodes = {}
@@ -960,7 +983,7 @@ def external_struct_expand_graph_node(sliced_pdg, criteria, const_init, external
                             label=const_init[const_var],
                             expression=const_init[const_var],
                             type=const_init[const_var])
-            
+
         if previous_id != current_id:
             sliced_pdg.add_edge(previous_id, current_id, color="black")
 
@@ -1049,8 +1072,8 @@ def add_reenter_edges(sliced_pdg, first_id, criteria, stmts_var_info_maps):
                             sliced_pdg.add_edge(first_id, node_id, color="green", type="data_dependency")
 
 
-def program_slice(cfg, semantic_edges, loop_stmts, criterias, criterias_append, external_state_map, const_init,
-                  stmts_var_info_maps):
+def program_slice(cfg, semantic_edges, loop_stmts, criterias, criterias_append, msg_value_stmts,
+                  external_state_map, const_init, stmts_var_info_maps):
     pdg = nx.MultiDiGraph(cfg)
 
     for semantic_type in semantic_edges:
@@ -1060,7 +1083,7 @@ def program_slice(cfg, semantic_edges, loop_stmts, criterias, criterias_append, 
             pdg.add_edges_from(semantic_edges[semantic_type])
 
     for criteria in criterias:
-        reserved_nodes = reserved_nodes_for_criteria(pdg, criteria, criterias_append, loop_stmts)
+        reserved_nodes = reserved_nodes_for_criteria(pdg, criteria, criterias_append, msg_value_stmts, loop_stmts)
         sliced_cfg = do_slice(cfg, reserved_nodes)
 
         new_edges = []
@@ -1234,9 +1257,7 @@ def _new_struct(node, structs_info):
     return None
 
 
-def struct_analyze(external_state_map, structs_info, state_var_declare_function_map):
-    const_init = {}
-
+def struct_analyze(external_state_map, structs_info, const_var_init, state_var_declare_function_map):
     for stmt_id in external_state_map:
 
         stmts_array = external_state_map[stmt_id]
@@ -1245,8 +1266,8 @@ def struct_analyze(external_state_map, structs_info, state_var_declare_function_
             node = stmt_info['node']
             for v in node.state_variables_read:
                 if str(v) in state_var_declare_function_map and "full_expr" in state_var_declare_function_map[str(v)]:
-                    if str(v) not in const_init:
-                        const_init[str(v)] = state_var_declare_function_map[str(v)]["full_expr"]
+                    if str(v) not in const_var_init:
+                        const_var_init[str(v)] = state_var_declare_function_map[str(v)]["full_expr"]
 
             struct_name = _new_struct(node, structs_info)
             if struct_name is not None:
@@ -1254,10 +1275,8 @@ def struct_analyze(external_state_map, structs_info, state_var_declare_function_
                 stmt_info["expand"] = new_stmts
 
     print("\n=======常数初始化:")
-    for var in const_init:
-        print("\t", const_init[var])
-
-    return const_init
+    for var in const_var_init:
+        print("\t", const_var_init[var])
 
 
 def _debug_irs_for_stmt(node):
@@ -1306,6 +1325,7 @@ def interprocedural_state_analyze(this_function,
 
                     current_var = stack.pop()
                     state_defs_t = {}
+                    const_var_init_t = {}
 
                     if current_var in state_var_write_function_map:
                         write_funs = state_var_write_function_map[current_var]
@@ -1337,7 +1357,11 @@ def interprocedural_state_analyze(this_function,
                             for v in node.state_variables_written:
 
                                 if current_var == str(v):
-                                    var_infos = _stmt_var_info(node, state_defs_t)
+                                    var_infos = _stmt_var_info(node,
+                                                               state_defs_t,
+                                                               const_var_init_t,
+                                                               state_var_declare_function_map)
+
                                     _debug_irs_for_stmt(node)
 
                                     node_expression = node.expression.__str__()  # 语句
@@ -1351,7 +1375,6 @@ def interprocedural_state_analyze(this_function,
                                         "fun": write_fun,
                                         "func_name": write_fun.name,
                                         "node": node
-
                                     })
 
                                     for var_info in var_infos:
@@ -1390,9 +1413,9 @@ def _analyze_function(contract_name,
     cfg = get_function_cfg(contract_name, function)
 
     # 预处理
-    simple_cfg, if_stmts, stmts_var_info_maps, \
-    transaction_stmts, loop_stmts, if_paris, \
-    node_id_2_id, state_defs = _preprocess_for_dependency_analyze(cfg, function)
+    simple_cfg, if_stmts, stmts_var_info_maps, transaction_stmts, \
+    loop_stmts, if_paris, node_id_2_id, state_defs, const_var_init, msg_value_stmts \
+        = _preprocess_for_dependency_analyze(cfg, function, state_var_declare_function_map)
 
     if len(transaction_stmts) == 0: return transaction_stmts
 
@@ -1407,7 +1430,7 @@ def _analyze_function(contract_name,
     # 根据交易语句获得与交易相关的全局变量
     transaction_states = transaction_data_flow_analyze(stmts_var_info_maps, data_flow_map, transaction_stmts)
 
-    # Note: 将交易全局变量作为切片准则
+    # 每个交易语句相关的全局变量作为补充切片准则，补充交易语句的语义
     criteria_append = state_criteria_add(transaction_states, state_defs)
 
     # 函数间全局变量修改关系分析
@@ -1417,7 +1440,8 @@ def _analyze_function(contract_name,
                                                        state_var_declare_function_map)
 
     # 结构体展开, 常数定义
-    const_init = struct_analyze(external_state_map, structs_info, state_var_declare_function_map)
+    const_var_init.clear()  # TODO: 有BUG 该功能暂时不能用
+    struct_analyze(external_state_map, structs_info, const_var_init, state_var_declare_function_map)
 
     # 数据依赖生成
     ddg_edges = get_data_dependency_relations(simple_cfg, stmts_var_info_maps)
@@ -1437,8 +1461,8 @@ def _analyze_function(contract_name,
     debug_get_ddg_and_cdg(cfg, cdg_edges, ddg_edges, data_flow_edges, loop_ddg_edges)
 
     # 程序切片
-    program_slice(cfg, semantic_edges, loop_stmts, transaction_stmts,
-                  criteria_append, external_state_map, const_init, stmts_var_info_maps)
+    program_slice(cfg, semantic_edges, loop_stmts, transaction_stmts, criteria_append, msg_value_stmts,
+                  external_state_map, const_var_init, stmts_var_info_maps)
 
     return transaction_stmts
 
