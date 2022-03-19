@@ -162,7 +162,7 @@ def _debug_stat_var_info(state_var_read_function_map, state_var_write_function_m
             print("\t\t{}".format(state_var_declare_function_map[var]["exp"]))
 
         if "fun" in state_var_declare_function_map[var]:
-            print("\t\t{}".format(state_var_declare_function_map[var]["fun"].name))
+            print("\t\t{}".format(state_var_declare_function_map[var]["full_expr"]))
 
     print("===全局变量读信息：")
     for var in state_var_read_function_map:
@@ -936,12 +936,33 @@ def external_graph_node(sliced_pdg, criteria, external_state_map):
     return current_id
 
 
-def external_struct_expand_graph_node(sliced_pdg, criteria, external_state_map):
+def external_struct_expand_graph_node(sliced_pdg, criteria, const_init, external_state_map):
     # 外部节点信息, 添加到cfg中
     external_id = 0
     first_id = None
     current_id = None
     previous_id = None
+
+    for const_var in const_init:
+
+        new_id = "{}@{}".format(str(external_id), "tag")
+        external_id += 1
+
+        if previous_id is None:
+            first_id = new_id
+            previous_id = new_id
+            current_id = new_id
+        else:
+            previous_id = current_id
+            current_id = new_id
+
+        sliced_pdg.add_node(new_id,
+                            label=const_init[const_var],
+                            expression=const_init[const_var],
+                            type=const_init[const_var])
+            
+        if previous_id != current_id:
+            sliced_pdg.add_edge(previous_id, current_id, color="black")
 
     if criteria in external_state_map:
         for external_node in reversed(external_state_map[criteria]):
@@ -1005,7 +1026,7 @@ def add_reenter_edges(sliced_pdg, first_id, criteria, stmts_var_info_maps):
         if sliced_cfg.out_degree(node_id) == 0:  # 叶子节点列表
 
             # print("from {} to {}".format(node_id, first_id))
-            sliced_pdg.add_edge(node_id, first_id, color="black")
+            sliced_pdg.add_edge(node_id, first_id, color="yellow", label="re_enter")
 
             if node_id not in stmts_var_info_maps or first_id not in stmts_var_info_maps:
                 # 新增语句 缺少数据流信息，暂不进行分析
@@ -1028,7 +1049,7 @@ def add_reenter_edges(sliced_pdg, first_id, criteria, stmts_var_info_maps):
                             sliced_pdg.add_edge(first_id, node_id, color="green", type="data_dependency")
 
 
-def program_slice(cfg, semantic_edges, loop_stmts, criterias, criterias_append, external_state_map,
+def program_slice(cfg, semantic_edges, loop_stmts, criterias, criterias_append, external_state_map, const_init,
                   stmts_var_info_maps):
     pdg = nx.MultiDiGraph(cfg)
 
@@ -1057,7 +1078,8 @@ def program_slice(cfg, semantic_edges, loop_stmts, criterias, criterias_append, 
             break
 
         # 外部节点信息, 添加到cfg中: 是否包含了结构体展开操作
-        new_first_id, external_last_id = external_struct_expand_graph_node(sliced_pdg, criteria, external_state_map)
+        new_first_id, external_last_id = external_struct_expand_graph_node(sliced_pdg, criteria, const_init,
+                                                                           external_state_map)
         if external_last_id is not None:
             sliced_pdg.add_edge(external_last_id, first_node, color="black")
 
@@ -1212,16 +1234,30 @@ def _new_struct(node, structs_info):
     return None
 
 
-def struct_analyze(external_state_map, structs_info):
+def struct_analyze(external_state_map, structs_info, state_var_declare_function_map):
+    const_init = {}
+
     for stmt_id in external_state_map:
 
         stmts_array = external_state_map[stmt_id]
         for stmt_info in stmts_array:
+
             node = stmt_info['node']
+            for v in node.state_variables_read:
+                if str(v) in state_var_declare_function_map and "full_expr" in state_var_declare_function_map[str(v)]:
+                    if str(v) not in const_init:
+                        const_init[str(v)] = state_var_declare_function_map[str(v)]["full_expr"]
+
             struct_name = _new_struct(node, structs_info)
             if struct_name is not None:
                 _, _, new_stmts = _new_struct_analyze(node, struct_name, structs_info)
                 stmt_info["expand"] = new_stmts
+
+    print("\n=======常数初始化:")
+    for var in const_init:
+        print("\t", const_init[var])
+
+    return const_init
 
 
 def _debug_irs_for_stmt(node):
@@ -1380,8 +1416,8 @@ def _analyze_function(contract_name,
                                                        state_var_write_function_map,
                                                        state_var_declare_function_map)
 
-    # 结构体展开
-    struct_analyze(external_state_map, structs_info)
+    # 结构体展开, 常数定义
+    const_init = struct_analyze(external_state_map, structs_info, state_var_declare_function_map)
 
     # 数据依赖生成
     ddg_edges = get_data_dependency_relations(simple_cfg, stmts_var_info_maps)
@@ -1402,7 +1438,7 @@ def _analyze_function(contract_name,
 
     # 程序切片
     program_slice(cfg, semantic_edges, loop_stmts, transaction_stmts,
-                  criteria_append, external_state_map, stmts_var_info_maps)
+                  criteria_append, external_state_map, const_init, stmts_var_info_maps)
 
     return transaction_stmts
 
@@ -1413,11 +1449,15 @@ def state_vars_info(function,
                     state_var_write_function_map):
     # 全局变量定义
     if function.is_constructor or function.is_constructor_variables:
-        for v in function.state_variables_written:
-            if str(v) not in state_var_declare_function_map:
-                state_var_declare_function_map[str(v)] = {"fun": function}
-            else:
-                state_var_declare_function_map[str(v)] = {"fun": function}
+        for node in function.nodes:
+            for v in node.state_variables_written:
+                full_exp = "{} {}".format(str(v.type), node.expression)
+                state_var_declare_function_map[str(v)] = {
+                    "fun": function,
+                    "expr": node.expression,
+                    "full_expr": full_exp
+                }
+
     else:
         # 全局变量读
         for v in function.state_variables_read:
@@ -1462,7 +1502,10 @@ def analyze_contract(contract_file, debug_print=False):
             print("结构体名称：{}".format(structure.name))
             structs_info[structure.name] = structure
 
-        stat_vars_delcare_without_assign(contract, state_var_declare_function_map)
+        # 变量声明
+        stat_vars_delcare_without_assign(contract,
+                                         state_var_declare_function_map)
+
         for function in contract.functions:
 
             # 函数调用关系解析
