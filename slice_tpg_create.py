@@ -14,6 +14,7 @@ from slither import Slither
 import networkx as nx
 import networkx.drawing.nx_pydot as nx_dot
 from slither.core.cfg.node import NodeType
+from slither.core.cfg.node import Node as Slither_Node
 
 EXAMPLE_PERFIX = "examples/ponzi/"
 EXAMPLE_ANALYZE_PERFIX = "examples/analyze_test/"
@@ -341,9 +342,9 @@ def _preprocess_for_dependency_analyze(or_cfg, function):
 
         # 语句的变量使用情况
         stmts_var_info_maps[str(stmt.node_id)] = _stmt_var_info(stmt, state_defs)
-        print("语句：{}".format(stmt.expression))
-        print("变量使用：{}".format(stmts_var_info_maps[str(stmt.node_id)]))
-        print("============\n")
+        # print("语句：{}".format(stmt.expression))
+        # print("变量使用：{}".format(stmts_var_info_maps[str(stmt.node_id)]))
+        # print("============\n")
 
         if stmt.can_send_eth():
             if ".transfer(" in str(stmt.expression):
@@ -623,9 +624,6 @@ def get_data_dependency_relations(cfg, stmts_var_info_maps):
             chain = var_def_use_chain[var]
             for chain_node in chain:
 
-                if var == "_dividends":
-                    print("chain_node {}".format(chain_node))
-
                 if chain_node["op_type"] == "def":
                     last_def = chain_node["id"]
                 else:
@@ -663,6 +661,17 @@ def get_data_dependency_relations_forloop(simple_cfg, stmts_var_info_maps, trans
     return ddg_edges
 
 
+def _data_flow_reorder(current_stmt_vars):
+    use_vars = []
+    def_vars = []
+    for var_info in current_stmt_vars:
+        if var_info["op_type"] == "use":
+            use_vars.append(var_info)
+        elif var_info["op_type"] == "def":
+            def_vars.append(var_info)
+
+    return def_vars + use_vars
+
 def data_flow_analyze(cfg, stmts_var_info_maps):
     """
     交易行为相关数据流分析
@@ -686,34 +695,30 @@ def data_flow_analyze(cfg, stmts_var_info_maps):
             if from_node == 'EXIT_POINT':
                 continue
 
-            current_stmt_vars = stmts_var_info_maps[from_node]
-            for var_info in current_stmt_vars:
+            _current_stmt_vars = stmts_var_info_maps[from_node]
+            current_stmt_vars = _data_flow_reorder(_current_stmt_vars)
 
-                # 读变量：压栈
-                if var_info["op_type"] == "use":
-                    for var in var_info["list"]:
-                        if var not in use_info:
-                            use_info[var] = [from_node]
-                        else:
-                            use_info[var].append(from_node)
+            for var_info in current_stmt_vars:
 
                 # 如果当前语句有写操作，查询之前语句对该变量是否有读操作
                 # 写变量：该变量出读操作栈
                 if var_info["op_type"] == "def":
                     for var in var_info["list"]:
+
                         if var in use_info:
                             for to_node in use_info[var]:
-                                key = "{}-{}".format(from_node, to_node)
 
-                                if from_node == to_node:  # 单条语句内部的自环依赖
+                                if from_node == to_node:
                                     continue
 
+                                key = "{}-{}".format(from_node, to_node)
                                 if key not in duplicate:
                                     duplicate[key] = 1
                                     if to_node not in data_flow_map:
                                         data_flow_map[to_node] = [from_node]
                                     else:
                                         data_flow_map[to_node].append(from_node)
+
                                     data_flow_edges.append(
                                         (from_node, to_node, {'color': "blue", "type": "data_flow"}))
 
@@ -722,12 +727,21 @@ def data_flow_analyze(cfg, stmts_var_info_maps):
 
                         def_info[var] = from_node
 
+                # 读变量：压栈
+                if var_info["op_type"] == "use":
+                    for var in var_info["list"]:
+
+                        if var not in use_info:
+                            use_info[var] = [from_node]
+                        else:
+                            use_info[var].append(from_node)
+
     if DEBUG_PNG == 1:
         dfg = nx.MultiDiGraph(cfg)
         dfg.add_edges_from(data_flow_edges)
         debug_get_graph_png(dfg, "dfg", cur_dir=True)
 
-    # print("数据流:", data_flow_edges)
+    print("数据流:", data_flow_map)
     return data_flow_edges, data_flow_map
 
 
@@ -1297,7 +1311,9 @@ def interprocedural_state_analyze(this_function,
                                         "type": node_type,
                                         "info": var_infos,
                                         "fun": write_fun,
+                                        "func_name": write_fun.name,
                                         "node": node
+
                                     })
 
                                     for var_info in var_infos:
@@ -1311,7 +1327,18 @@ def interprocedural_state_analyze(this_function,
     return external_nodes_map
 
 
-def _analyze_function(contract_name, function, structs_info, state_var_write_function_map,
+def interprocedural_function_analyze(simple_cfg, function, called_by_callee):
+    for node in function.nodes:
+        key = "{}_{}".format(function.name.__str__(), node.node_id.__str__())
+        if key in called_by_callee:
+            called_name = called_by_callee[key]["name"]
+            called_function = called_by_callee[key]["function"]
+
+
+def _analyze_function(contract_name,
+                      function, structs_info,
+                      called_by_callee,
+                      state_var_write_function_map,
                       state_var_declare_function_map):
     print("\n##################################")
     print("##### 合约名 {}".format(contract_name))
@@ -1329,7 +1356,9 @@ def _analyze_function(contract_name, function, structs_info, state_var_write_fun
     transaction_stmts, loop_stmts, if_paris, \
     node_id_2_id, state_defs = _preprocess_for_dependency_analyze(cfg, function)
 
-    print("===========预处理完成==============")
+    if len(transaction_stmts) == 0: return transaction_stmts
+
+    #  TODO:函数过程间分析 interprocedural_function_analyze(simple_cfg, function, called_by_callee)
 
     debug_get_graph_png(simple_cfg, "simple_cfg", cur_dir=True)
 
@@ -1337,12 +1366,8 @@ def _analyze_function(contract_name, function, structs_info, state_var_write_fun
     data_flow_edges, data_flow_map = data_flow_analyze(simple_cfg, stmts_var_info_maps)
     semantic_edges["data_flow"] = data_flow_edges
 
-    print("===========data_flow_analyze==============")
-
     # 根据交易语句获得与交易相关的全局变量
     transaction_states = transaction_data_flow_analyze(stmts_var_info_maps, data_flow_map, transaction_stmts)
-
-    print("===========transaction_data_flow_analyze==============")
 
     # Note: 将交易全局变量作为切片准则
     criteria_append = state_criteria_add(transaction_states, state_defs)
@@ -1353,6 +1378,7 @@ def _analyze_function(contract_name, function, structs_info, state_var_write_fun
                                                        state_var_write_function_map,
                                                        state_var_declare_function_map)
 
+    # 结构体展开
     struct_analyze(external_state_map, structs_info)
 
     # 数据依赖生成
@@ -1427,15 +1453,33 @@ def analyze_contract(contract_file, debug_print=False):
         state_var_read_function_map = {}  # <全局变量名称, slither.function>
         state_var_write_function_map = {}  # <全局变量名称, slither.function>
         structs_info = {}  # <结构体名称, StructureContract>
+        called_by_callee = {}  # <函数, <调用者, 调用位置>>
 
         # 结构体定义信息抽取
         for structure in contract.structures:
             print("结构体名称：{}".format(structure.name))
             structs_info[structure.name] = structure
 
-        # 全局变量信息扫描 收集
         stat_vars_delcare_without_assign(contract, state_var_declare_function_map)
         for function in contract.functions:
+
+            # 函数调用关系解析
+            for callee_info in function.reachable_from_nodes:
+                callee_node: Slither_Node = callee_info.node
+                callee_function = callee_node.function
+
+                called_info = {
+                    "name": function.name,
+                    "function": function,
+                }
+
+                # 当前函数的当前语句, 调用了函数
+                key = "{}_{}".format(callee_function.name.__str__(), callee_node.node_id.__str__())
+                if key not in called_by_callee:
+                    called_by_callee[key] = called_info
+                else:
+                    raise RuntimeError("一行代码居然调用两个函数??")
+
             # 全局变量：声明/读取/写
             state_vars_info(function,
                             state_var_declare_function_map,
@@ -1453,6 +1497,7 @@ def analyze_contract(contract_file, debug_print=False):
                 slices_tag = _analyze_function(contract.name,
                                                function,
                                                structs_info,
+                                               called_by_callee,
                                                state_var_write_function_map,
                                                state_var_declare_function_map)
                 for slice_id in slices_tag:
