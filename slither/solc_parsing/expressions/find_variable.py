@@ -125,12 +125,20 @@ def _find_top_level(
             new_val = SolidityImportPlaceHolder(import_directive)
             return new_val, True
 
+    if var_name in scope.variables:
+        return scope.variables[var_name], False
+
+    # This path should be reached only after the top level custom error have been parsed
+    # If not, slither will crash
+    # It does not seem to be reacheable, but if so, we will have to adapt the order of logic
+    # This must be at the end, because other top level objects might require to go over "_find_top_level"
+    # Before the parsing of the top level custom error
+    # For example, a top variable that use another top level variable
+    # IF more top level objects are added to Solidity, we have to be careful with the order of the lookup
+    # in this function
     for custom_error in scope.custom_errors:
         if custom_error.solidity_signature == var_name:
             return custom_error, False
-
-    if var_name in scope.variables:
-        return scope.variables[var_name], False
 
     return None, False
 
@@ -326,6 +334,9 @@ def find_variable(
     # Because functions are copied between contracts, two functions can have the same ref
     # So we need to first look with respect to the direct context
 
+    if var_name in current_scope.renaming:
+        var_name = current_scope.renaming[var_name]
+
     # Use ret0/ret1 to help mypy
     ret0 = _find_variable_from_ref_declaration(
         referenced_declaration, direct_contracts, direct_functions
@@ -407,4 +418,4 @@ def find_variable(
     if ret:
         return ret, False
 
-    raise VariableNotFound("Variable not found: {} (context {})".format(var_name, contract))
+    raise VariableNotFound(f"Variable not found: {var_name} (context {contract})")
