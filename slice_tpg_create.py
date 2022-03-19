@@ -664,6 +664,8 @@ def get_data_dependency_relations_forloop(simple_cfg, stmts_var_info_maps, trans
 def _data_flow_reorder(current_stmt_vars):
     use_vars = []
     def_vars = []
+
+    # issue2: 由于数据流分析是逆向分析，导致变量关系需要先分析def 再分析use
     for var_info in current_stmt_vars:
         if var_info["op_type"] == "use":
             use_vars.append(var_info)
@@ -671,6 +673,7 @@ def _data_flow_reorder(current_stmt_vars):
             def_vars.append(var_info)
 
     return def_vars + use_vars
+
 
 def data_flow_analyze(cfg, stmts_var_info_maps):
     """
@@ -697,7 +700,6 @@ def data_flow_analyze(cfg, stmts_var_info_maps):
 
             _current_stmt_vars = stmts_var_info_maps[from_node]
             current_stmt_vars = _data_flow_reorder(_current_stmt_vars)
-
             for var_info in current_stmt_vars:
 
                 # 如果当前语句有写操作，查询之前语句对该变量是否有读操作
