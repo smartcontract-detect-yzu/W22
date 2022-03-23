@@ -7,7 +7,6 @@ import subprocess
 from queue import LifoQueue
 
 import os
-
 from slither.core.expressions import Identifier
 
 from slither import Slither
@@ -15,6 +14,7 @@ import networkx as nx
 import networkx.drawing.nx_pydot as nx_dot
 from slither.core.cfg.node import NodeType
 from slither.core.cfg.node import Node as Slither_Node
+from slither.core.declarations.function import Function
 
 EXAMPLE_PERFIX = "examples/ponzi/"
 EXAMPLE_ANALYZE_PERFIX = "examples/analyze_test/"
@@ -36,6 +36,8 @@ SAD_TREE_ANALYZE_PERFIX = "examples/analyze_sad/tree/"
 
 DEBUG_PNG = 0
 PRINT_PNG = 1
+VERSION = 2
+ONLY_CFG_FLAG = 0
 
 versions = ['0', '0.1.7', '0.2.2', '0.3.6', '0.4.26', '0.5.17', '0.6.12', '0.7.6', '0.8.6']
 
@@ -154,7 +156,7 @@ def _debug_stat_var_info(state_var_read_function_map, state_var_write_function_m
     if DEBUG_PNG == 0:
         return
 
-    print("===全局变量定义信息：")
+    print(u"===全局变量定义信息：")
     for var in state_var_declare_function_map:
         print("\t定义变量{}".format(str(var)))
 
@@ -259,8 +261,6 @@ def _stmt_var_info(stmt_info, state_defs, const_var_init, state_var_declare_func
     if stmt_info.type == NodeType.IFLOOP:
         no_write = 1  # if语句不许写
 
-    # print("当前语句：{}".format(expression))
-
     # 局部变量读 use
     read_local_vars = [str(var) for var in stmt_info.local_variables_read]
     if len(read_local_vars) != 0:
@@ -328,6 +328,8 @@ def _preprocess_for_dependency_analyze(or_cfg, function, state_var_declare_funct
     if_paris # IF 与 END_IF
     node_id_2_id # node_id 与 cfg id
     state_defs # 全局变量定义
+    const_var_init = {}  # 涉及的全局变量初始化语句
+    msg_value_stmt = {}  # 使用了msg.value的语句
     """
 
     cfg = nx.DiGraph(or_cfg)
@@ -354,9 +356,11 @@ def _preprocess_for_dependency_analyze(or_cfg, function, state_var_declare_funct
         # 语句的变量使用情况
         stmts_var_info_maps[str(stmt.node_id)] = _stmt_var_info(stmt, state_defs, const_var_init,
                                                                 state_var_declare_function_map)
-        print("语句：{}".format(stmt.expression))
-        print("变量使用：{}".format(stmts_var_info_maps[str(stmt.node_id)]))
-        print("============\n")
+
+        if DEBUG_PNG == 1:
+            print("语句：{}".format(stmt.expression))
+            print("变量使用：{}".format(stmts_var_info_maps[str(stmt.node_id)]))
+            print("============\n")
 
         if "msg.value" in stmt.expression.__str__():
             msg_value_stmt[str(stmt.node_id)] = {
@@ -376,9 +380,9 @@ def _preprocess_for_dependency_analyze(or_cfg, function, state_var_declare_funct
             else:
                 eth = None
                 to = None
-                # print("可能是function call")
 
             if eth is None and to is None:
+                print("调用函数")
                 pass
             else:  # 防止出现调用函数的情况
                 stmts_send_eth[str(stmt.node_id)] = {
@@ -553,7 +557,7 @@ def get_control_dependency_relations(simple_cfg, if_stmts, function, if_paris, n
         if not if_exit_fliter(simple_cfg, from_node, to_node, if_paris):
             cdg_edges.append((from_node, to_node, {'color': "red", "type": "ctrl_dependency"}))
         else:
-            # print("过滤控制流边{}-{}".format(from_node, to_node))
+            print("过滤控制流边{}-{}".format(from_node, to_node))
             pass
     return cdg_edges
 
@@ -572,7 +576,7 @@ def _get_ddg_edges(data_dependency_relations):
             duplicate[key] = 1
             ddg_edges.append((edge_info["from"], edge_info["to"], {'color': "green", "type": "data_dependency"}))
 
-    # print("数据依赖：", ddg_edges)
+    # print("DEBUG 数据依赖：", ddg_edges)
     return ddg_edges
 
 
@@ -620,12 +624,10 @@ def get_data_dependency_relations(cfg, stmts_var_info_maps):
     for path in cfg_paths:
         var_def_use_chain.clear()
 
-        # print("\t开始分析路径：{}".format(path[:-1]))
         for stmt in path[:-1]:  # 去尾，避免EXIT_POINT
             stmt_id = str(stmt)
             stmt_var_infos = stmts_var_info_maps[stmt_id]
 
-            # print("\t\t节点{}: {}".format(stmt_id, stmt_var_infos))
             for var_info in stmt_var_infos:
                 for var_name in var_info["list"]:
                     info = {"id": stmt_id, "var_type": var_info["type"], "op_type": var_info["op_type"]}
@@ -670,7 +672,9 @@ def get_data_dependency_relations_forloop(simple_cfg, stmts_var_info_maps, trans
                 key = "{}-{}".format(edge_info["from"], edge_info["to"])
                 if key not in duplicate:
                     duplicate[key] = 1
+
                     print("LOOP DATA: {}-{}".format(edge_info["from"], edge_info["to"]))
+
                     ddg_edges.append(
                         (edge_info["from"], edge_info["to"], {'color': "green", "type": "data_dependency"})
                     )
@@ -783,7 +787,7 @@ def _forward_analyze(cfg, criteria):
 
             for edge_id in cfg[current_stmt][successor_stmt]:
                 edge_data = cfg[current_stmt][successor_stmt][edge_id]
-                # print("分析：{} -{}- {}".format(current_stmt, edge_data,successor_stmt))
+                # print("分析：{} -{}- {}".format(current_stmt, edge_data, successor_stmt))
 
                 if "type" in edge_data:
                     # print("DEBUG 节点{} 依赖于 {} as {}".format(current_stmt, successor_stmt, edge_data["type"]))
@@ -1167,8 +1171,8 @@ def transaction_data_flow_analyze(stmts_var_info_maps, data_flow_map, transactio
                     stack.append(from_id)
 
         trans_stats[trans_stmt] = trans_state_infos
-        print("切片准则：{}".format(trans_stmt))
-        print("涉及全局变量信息:{}".format(trans_stats[trans_stmt]))
+        # print("DEBUG 切片准则：{}".format(trans_stmt))
+        # print("DEBUG 涉及全局变量信息:{}".format(trans_stats[trans_stmt]))
 
     return trans_stats
 
@@ -1277,6 +1281,13 @@ def struct_analyze(external_state_map, structs_info, const_var_init, state_var_d
     print("\n=======常数初始化:")
     for var in const_var_init:
         print("\t", const_var_init[var])
+
+
+def _function_property(function):
+    print("type {}".format(function.type.__str__()))
+    print("function_type {}".format(function.function_type.__str__()))
+    print("{}".format(function.external_calls_as_expressions))
+    pass
 
 
 def _debug_irs_for_stmt(node):
@@ -1402,8 +1413,8 @@ def _analyze_function(contract_name,
                       state_var_write_function_map,
                       state_var_declare_function_map):
     print("\n##################################")
-    print("##### 合约名 {}".format(contract_name))
-    print("##### 函数名 {}".format(function.name))
+    print("##### 合约名 {}  ##".format(contract_name))
+    print("##### 函数名 {}  ##".format(function.name))
     print("####################################")
 
     # 语义边集合
@@ -1411,6 +1422,13 @@ def _analyze_function(contract_name,
 
     # 获得控制流图
     cfg = get_function_cfg(contract_name, function)
+
+    if ONLY_CFG_FLAG == 1:
+        graph_info = save_sliced_pdg_to_json(cfg)  # 保存为json格式
+        graph_json_file = "{}_{}_cfg.json".format(cfg.graph["contract_name"], cfg.graph["name"])
+        with open(graph_json_file, "w+") as f:
+            f.write(json.dumps(graph_info))
+            return ["only cfg"]
 
     # 预处理
     simple_cfg, if_stmts, stmts_var_info_maps, transaction_stmts, \
@@ -1509,56 +1527,123 @@ def stat_vars_delcare_without_assign(contract, state_var_declare_function_map):
             state_var_declare_function_map[str(Identifier(v))] = {"type": str(v.type), "exp": exp}
 
 
-def analyze_contract(contract_file, debug_print=False):
+def _preprocess_for_contract(contract):
+    state_var_declare_function_map = {}  # <全局变量名称, slither.function>
+    state_var_read_function_map = {}  # <全局变量名称, slither.function>
+    state_var_write_function_map = {}  # <全局变量名称, slither.function>
+    structs_info = {}  # <结构体名称, StructureContract>
+    called_by_callee = {}  # <函数, <调用者, 调用位置>>
+
+    # 结构体定义信息抽取
+    for structure in contract.structures:
+        print("结构体名称：{}".format(structure.name))
+        structs_info[structure.name] = structure
+
+    # 变量声明
+    stat_vars_delcare_without_assign(contract,
+                                     state_var_declare_function_map)
+
+    call_chain = []
+
+    # NOTE: 寻找真实调用<>.send<> 和 <>.transfer<>接口的函数
+    send_function_map = {}
+    for function in contract.functions:
+        for node in function.nodes:
+            if ".transfer(" in str(node.expression) or ".send(" in str(node.expression):
+                if function.name not in send_function_map:
+                    send_function_map[function.id] = {
+                        "id": function.id,
+                        "name": function.name,
+                        "function": function,
+                        "exp": node.expression,
+                        "node": node
+                    }
+
+    # 调用图
+    call_graph = nx.DiGraph()
+    call_graph.graph["name"] = contract.name
+    edges = []
+    duplicate = {}
+    fid_2_gid = {}
+    node_id = 0
+    for function in contract.functions:
+
+        if function.id not in fid_2_gid:
+            call_graph.add_node(node_id, label=function.name, fid=function.id)
+            fid_2_gid[function.id] = node_id
+            node_id += 1
+
+        from_node = fid_2_gid[function.id]
+        for internal_call in function.internal_calls:
+
+            if isinstance(internal_call, Function):
+                if internal_call.id not in fid_2_gid:
+                    call_graph.add_node(node_id, label=internal_call.name, fid=internal_call.id)
+                    fid_2_gid[internal_call.id] = node_id
+                    node_id += 1
+
+                to_node = fid_2_gid[internal_call.id]
+                if "{}-{}".format(from_node, to_node) not in duplicate:
+                    duplicate["{}-{}".format(from_node, to_node)] = 1
+                    edges.append((from_node, to_node))
+    call_graph.add_edges_from(edges)
+    debug_get_graph_png(call_graph, "call_graph", cur_dir=True)
+
+    entry_points = []
+    for node_id in call_graph.nodes:
+        if call_graph.in_degree(node_id) == 0:  # 入口节点
+            entry_points.append(node_id)
+
+    end_ponits = []
+    for fid in send_function_map:
+        end_ponits.append(fid_2_gid[fid])
+
+    for src in entry_points:
+        for dst in end_ponits:
+            call_graph_paths = nx.all_simple_paths(call_graph, source=src, target=dst)
+            for call_path in call_graph_paths:
+                function_path = []
+                for path_node in call_path:
+                    function_path.append(call_graph.nodes[path_node]["label"])
+
+                print("调用链: {}".format(function_path))
+
+
+    call_chain = []
+    # for entry_point in entry_points:
+    #     for
+    #     cfg_paths = nx.all_simple_paths(call_graph, source=x, target="EXIT_POINT")
+
+    for function in contract.functions:
+        # 全局变量：声明/读取/写
+        state_vars_info(function,
+                        state_var_declare_function_map,
+                        state_var_read_function_map,
+                        state_var_write_function_map)
+
+    # 全局变量调试信息打印
+    _debug_stat_var_info(state_var_read_function_map,
+                         state_var_write_function_map,
+                         state_var_declare_function_map)
+
+    return state_var_declare_function_map, \
+           state_var_read_function_map, \
+           state_var_write_function_map, \
+           structs_info, \
+           called_by_callee
+
+
+def analyze_contract(contract_file):
     slice_record = []
     slither = Slither(contract_file)
 
     for contract in slither.contracts:
 
-        state_var_declare_function_map = {}  # <全局变量名称, slither.function>
-        state_var_read_function_map = {}  # <全局变量名称, slither.function>
-        state_var_write_function_map = {}  # <全局变量名称, slither.function>
-        structs_info = {}  # <结构体名称, StructureContract>
-        called_by_callee = {}  # <函数, <调用者, 调用位置>>
-
-        # 结构体定义信息抽取
-        for structure in contract.structures:
-            print("结构体名称：{}".format(structure.name))
-            structs_info[structure.name] = structure
-
-        # 变量声明
-        stat_vars_delcare_without_assign(contract,
-                                         state_var_declare_function_map)
-
-        for function in contract.functions:
-
-            # 函数调用关系解析
-            for callee_info in function.reachable_from_nodes:
-                callee_node: Slither_Node = callee_info.node
-                callee_function = callee_node.function
-
-                called_info = {
-                    "name": function.name,
-                    "function": function,
-                }
-
-                # 当前函数的当前语句, 调用了函数
-                key = "{}_{}".format(callee_function.name.__str__(), callee_node.node_id.__str__())
-                if key not in called_by_callee:
-                    called_by_callee[key] = called_info
-                else:
-                    raise RuntimeError("一行代码居然调用两个函数??")
-
-            # 全局变量：声明/读取/写
-            state_vars_info(function,
-                            state_var_declare_function_map,
-                            state_var_read_function_map,
-                            state_var_write_function_map)
-
-        # 全局变量调试信息打印
-        _debug_stat_var_info(state_var_read_function_map,
-                             state_var_write_function_map,
-                             state_var_declare_function_map)
+        state_var_declare_function_map, \
+        state_var_read_function_map, \
+        state_var_write_function_map, \
+        structs_info, \
+        called_by_callee = _preprocess_for_contract(contract)
 
         for function in contract.functions:
 
@@ -1569,10 +1654,11 @@ def analyze_contract(contract_file, debug_print=False):
                                                called_by_callee,
                                                state_var_write_function_map,
                                                state_var_declare_function_map)
-                for slice_id in slices_tag:
-                    exp = slices_tag[slice_id]["exp"]
-                    name = "{}_{}_{}".format(contract.name, function.name, slice_id)
-                    slice_record.append({"name": name, "exp": exp})
+                if ONLY_CFG_FLAG == 0:
+                    for slice_id in slices_tag:
+                        exp = slices_tag[slice_id]["exp"]
+                        name = "{}_{}_{}".format(contract.name, function.name, slice_id)
+                        slice_record.append({"name": name, "exp": exp})
 
     for record in slice_record:
         print("{}".format(record))
@@ -1580,10 +1666,23 @@ def analyze_contract(contract_file, debug_print=False):
     return slice_record
 
 
-defined_target_list = ["sad_chain", "sad_tree", "xblock", "buypool", "deposit"]
+defined_target_list = [
+    "sad_chain",
+    "sad_tree",
+    "xblock_dissecting",
+    "buypool",
+    "deposit",
+    "buypool",
+    "etherscan"
+]
 
 
 def _get_work_dir(target):
+    if VERSION == 2:
+        dataset_prefix = "examples/ponzi_src/{}/".format(target)
+        analyze_prefix = "examples/ponzi_src/analyze/{}/".format(target)
+        return dataset_prefix, analyze_prefix
+
     if target == "sad_chain":
         dataset_prefix = SAD_CHAIN_DATASET_PERFIX
         analyze_prefix = SAD_CHAIN_ANALYZE_PERFIX
@@ -1679,8 +1778,12 @@ if __name__ == '__main__':
     target, name = argParse()
 
     if name is not None:
+
+        # 生成png文件
+        PRINT_PNG = 1
+
         src_prex = "examples/ponzi_dataset/"
-        test_path = "examples/test/"
+        test_path = "examples/ponzi/"
 
         for file in os.listdir(test_path):
             if not file.endswith(".sol") and not file == "ast":
@@ -1689,14 +1792,22 @@ if __name__ == '__main__':
         if not os.path.exists(test_path + name):
             shutil.copy(src_prex + name, test_path)
 
-        os.chdir("examples/test/")
+        os.chdir(test_path)
         solc_version = parse_solc_version(name)
         print("========={} V: {}".format(name, solc_version))
         subprocess.check_call(["solc-select", "use", solc_version])
         slices_record = analyze_contract(name)
 
     else:
+
+        # 不生成png文件
+        PRINT_PNG = 0
+
         if target == "all":
+            for defined_target in defined_target_list:
+                analyze_dataset(defined_target)
+        elif target == "all_cfg":
+            ONLY_CFG_FLAG = 1
             for defined_target in defined_target_list:
                 analyze_dataset(defined_target)
         else:
