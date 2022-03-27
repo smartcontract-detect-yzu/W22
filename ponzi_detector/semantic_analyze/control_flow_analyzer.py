@@ -57,8 +57,6 @@ class ControlFlowAnalyzer:
         cfg = self.function_info.simple_cfg
         if_stmts = self.function_info.if_stmts
         predom_relations = self.predom_relations
-        function = self.function_info.function
-        node_id_2_id = self.function_info.node_id_2_id
 
         control_dep_relations_dup = {}
 
@@ -70,8 +68,9 @@ class ControlFlowAnalyzer:
             for cfg_path in list(cfg_paths):
 
                 for y in cfg_path[1:-1]:
-                    list_index = node_id_2_id[int(y)]
-                    node_info = function.nodes[list_index]
+
+                    # 获得当前节点的function.node信息
+                    node_info = self.function_info.get_node_info_by_node_id_from_function(int(y))
 
                     # 虚拟节点暂时不进行控制依赖分析
                     if node_info.type != NodeType.ENDIF \

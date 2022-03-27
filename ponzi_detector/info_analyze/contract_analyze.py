@@ -1,14 +1,22 @@
+import os
+import subprocess
+from typing import Dict
 import networkx as nx
+import networkx.drawing.nx_pydot as nx_dot
 
 from slither.core.declarations import Contract
 from slither.core.declarations.function import Function
 from slither.core.expressions import Identifier
+
+EXAMPLE_PERFIX = "examples/ponzi/"
 
 
 class ContractInfo:
     def __init__(self, contract: Contract):
         self.name = contract.name
         self.contract = contract
+
+        self.function_info_map = {}
 
         # 合约内部定义的结构体信息 <结构体名称, StructureContract>
         self.structs_info = {}
@@ -18,6 +26,7 @@ class ContractInfo:
 
         # 合约函数调用图
         self.funcid_2_graphid = {}  # <key:function.id value: call_graph.node_id>
+        self.fid_2_function: Dict[str, Function] = {}
         self.call_graph = None
 
         # 全局变量 <--> 函数对应关系表
@@ -43,6 +52,8 @@ class ContractInfo:
                 self.state_var_declare_function_map[str(Identifier(v))] = {"type": str(v.type), "exp": exp}
 
         for function in self.contract.functions:
+
+            self.fid_2_function[function.id] = function
 
             # 全局变量定义
             if function.is_constructor or function.is_constructor_variables:
@@ -118,6 +129,17 @@ class ContractInfo:
                         duplicate["{}-{}".format(from_node, to_node)] = 1
                         edges.append((from_node, to_node))
         call_graph.add_edges_from(edges)
+
+        entry_nodes = []
+        for node in call_graph:
+            if call_graph.in_degree(node) == 0:
+                entry_nodes.append(node)
+
+        # 添加虚拟entry_node, 方便寻找call_chain
+        call_graph.add_node("entry_node", label="entry_node", fid="entry_node")
+        for entry_node in entry_nodes:
+            call_graph.add_edge("entry_node", entry_node)
+
         self.call_graph = call_graph
 
     def contract_info_analyze(self):
@@ -125,6 +147,19 @@ class ContractInfo:
         self._stat_vars_info_in_contract()  # 获得结构体信息
         self._functions_with_transaction_call()
         self._construct_call_graph()
+
+    def debug_get_call_graph(self):
+
+        if self.call_graph is not None:
+            graph = self.call_graph
+            dot_name = "{}_{}.dot".format(graph.graph["name"], "call_graph")
+            cfg_name = "{}_{}.png".format(graph.graph["name"], "call_graph")
+            nx_dot.write_dot(graph, dot_name)
+
+            subprocess.check_call(["dot", "-Tpng", dot_name, "-o", cfg_name])
+            os.remove(dot_name)
+        else:
+            raise RuntimeError("call_graph 为空")
 
     def debug_stat_var_info(self):
 
@@ -151,3 +186,31 @@ class ContractInfo:
             print("写变量{}".format(str(var)))
             for func in self.state_var_write_function_map[var]:
                 print("\t{}".format(func.name))
+
+    def get_call_chain(self, target_function: Function):
+
+        ret_call_chain = []
+
+        target_id = self.funcid_2_graphid[target_function.id]
+        call_chains = nx.all_simple_paths(self.call_graph, source="entry_node", target=target_id)
+        for call_chain in list(call_chains):
+
+            chain_info = []
+            # print("call chain:", call_chain)
+            for node in call_chain:
+                if node != "entry_node":
+                    # print("cont :{}".format(self.call_graph.nodes[node]))
+                    chain_info.append(self.call_graph.nodes[node])
+
+            ret_call_chain.append(chain_info)
+        return ret_call_chain
+
+    def get_function_by_fid(self, fid: str):
+        return self.fid_2_function[fid]
+
+    def get_function_info_by_fid(self, fid: str):
+
+        if fid in self.function_info_map:
+            return self.function_info_map[fid]
+
+        return None

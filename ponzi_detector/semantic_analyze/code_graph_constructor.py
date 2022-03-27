@@ -1,11 +1,119 @@
 import itertools
+import os
+import subprocess
 import json
-
+from typing import Dict
 import networkx as nx
+import networkx.drawing.nx_pydot as nx_dot
 
 from ponzi_detector.info_analyze.contract_analyze import ContractInfo
 from ponzi_detector.info_analyze.function_analyze import FunctionInfo
 from queue import LifoQueue
+
+
+def add_graph_node_info(graph: nx.MultiDiGraph, id, key, value):
+    node = graph.nodes[id]
+    if key not in node:
+        node[key] = value
+    else:
+        raise RuntimeError("所添加的 key 重复了")
+
+
+def _get_cfg_from_pdg(pdg: nx.MultiDiGraph):
+    # 获得切片之后的控制流图 sliced_cfg
+    cfg = nx.MultiDiGraph(pdg)
+    cfg.graph["name"] = cfg.graph["name"]
+    for u, v, k, d in pdg.edges(data=True, keys=True):
+        if "type" in d:
+            cfg.remove_edge(u, v, k)
+    return cfg
+
+
+def _add_entry_point_for_graph(graph: nx.MultiDiGraph):
+    entry_points = []
+    name = graph.graph["name"]
+    for node_id in graph.nodes:
+        if graph.in_degree(node_id) == 0:  # 入口节点
+            entry_points.append(node_id)
+    graph.add_node("{}@entry".format(name), label="entry")
+
+    for entry_point in entry_points:
+        graph.add_edge("{}@entry".format(name), entry_point)
+
+    return graph
+
+
+def _add_exit_point_for_graph(graph: nx.MultiDiGraph):
+    exit_points = []
+    name = graph.graph["name"]
+    for node_id in graph.nodes:
+        if graph.out_degree(node_id) == 0:  # 入口节点
+            exit_points.append(node_id)
+    graph.add_node("{}@exit".format(name), label="entry")
+
+    for exit_point in exit_points:
+        graph.add_edge(exit_point, "{}@exit".format(name))
+
+    return graph
+
+
+def do_graph_relabel_before_merge(graph: nx.MultiDiGraph, prefix: str):
+    """
+    将两个图合并之前，需要先修改图的node id
+    避免两个图的node id出现相同的情况
+    """
+    return nx.relabel_nodes(graph, lambda x: "{}@{}".format(prefix, x))
+
+
+def do_merge_graph1_to_graph2(graph: nx.MultiDiGraph, to_graph: nx.MultiDiGraph, pos_at_to_graph):
+    # 原始操作在CFG上完成
+    g1 = _get_cfg_from_pdg(graph)
+    g1 = _add_entry_point_for_graph(g1)
+    g1 = _add_exit_point_for_graph(g1)
+
+    g2 = _get_cfg_from_pdg(to_graph)
+
+    sources = []
+    for source, _ in g2.in_edges(pos_at_to_graph):
+        sources.append(source)
+
+    targets = []
+    for _, target in g2.out_edges(pos_at_to_graph):
+        targets.append(target)
+
+    name = g1.graph["name"]
+    to_name = g2.graph["name"]
+
+    joint_graph: nx.MultiDiGraph = nx.union(g1, g2)
+    for src in sources:
+        joint_graph.add_edge(src, "{}@entry".format(name))
+
+    for target in targets:
+        joint_graph.add_edge("{}@exit".format(name), target)
+
+    joint_graph.remove_node(pos_at_to_graph)
+
+    # joint_graph: nx.MultiDiGraph = nx.union(g1, g2, rename=("{}@".format(name), "{}@".format(to_name)))
+    #
+    # for src in sources:
+    #     joint_graph.add_edge("{}@{}".format(to_name, src), "{}@entry".format(name))
+    #     print(" {} -> {}".format("{}@{}".format(to_name, src), "{}@entry".format(name)))
+    #
+    # for target in targets:
+    #     joint_graph.add_edge("{}@exit".format(name), "{}@{}".format(to_name, target))
+    #
+    # joint_graph.remove_node("{}@{}".format(to_name, pos_at_to_graph))
+
+    return joint_graph
+
+
+def debug_get_graph_png(graph: nx.Graph, postfix, dot=False):
+    dot_name = "{}_{}.dot".format(graph.graph["name"], postfix)
+    cfg_name = "{}_{}.png".format(graph.graph["name"], postfix)
+    nx_dot.write_dot(graph, dot_name)
+    subprocess.check_call(["dot", "-Tpng", dot_name, "-o", cfg_name])
+    if dot is False:
+        os.remove(dot_name)
 
 
 def save_graph_to_json_format(graph, key):
@@ -63,7 +171,7 @@ def save_graph_to_json_format(graph, key):
     return graph_info, file_name
 
 
-# 基于PDG的前向依赖发内心
+# 基于PDG的前向依赖分析
 def forward_dependence_analyze(pdg, criteria):
     """
     前向依赖分析:
@@ -101,7 +209,6 @@ def _remove_node(g, node):
 
     for source, _ in g.in_edges(node):
         edge = g[source][node]
-        # print("from {} to {}(removed)：{}".format(source, node, g[source][node]))
         if "type" not in edge:  # note：过滤：只保留CFG边，依赖关系删除
             sources.append(source)
 
@@ -131,14 +238,32 @@ def _remove_node(g, node):
 
 def do_slice(graph, reserve_nodes):
     remove_nodes = []
+    input_tmp_prefix = 10000
+    input_temp_map = {}
     sliced_graph = nx.MultiDiGraph(graph)
 
     for cfg_node_id in sliced_graph.nodes:
         if cfg_node_id not in reserve_nodes:
-            remove_nodes.append(int(cfg_node_id))
+            if "input_" not in cfg_node_id:
 
+                remove_nodes.append(int(cfg_node_id))
+            else:
+
+                # 入参节点的ID是 input_开头，无法进行排序，此处进行特殊处理
+                # 可以先删除，其出度入度都不大
+                input_tmp_prefix += 1
+                input_temp_map[input_tmp_prefix] = cfg_node_id
+                remove_nodes.append(input_tmp_prefix)
+
+    # 加速策略：优先删除id较大节点（叶子节点）
+    # TODO：其实应该按照出度+入度的大小排列
     remove_nodes.sort(reverse=True)
     for remove_node in remove_nodes:
+
+        # 还原
+        if remove_node in input_temp_map:
+            remove_node = input_temp_map[remove_node]
+
         sliced_graph = _remove_node(sliced_graph, str(remove_node))
 
     return sliced_graph
@@ -153,6 +278,9 @@ class CodeGraphConstructor:
 
         self.slice_graphs = {}
         self.external_node_id = {}
+
+        # <criteria, graphs>
+        self.external_slice_graphs: Dict[int, nx.MultiDiGraph] = {}
 
     def _add_edges_for_graph(self, g, reserved_nodes):
 
@@ -190,9 +318,10 @@ class CodeGraphConstructor:
 
         return current_criteria_set
 
-    def reserved_nodes_for_a_criteria(self, criteria):
+    def reserved_nodes_for_a_criteria(self, criteria, criteria_type="all"):
 
-        criteria_set = self._get_slice_criterias(criteria)
+        criteria_set = self._get_slice_criterias(criteria) if criteria_type is "all" else [criteria]
+        # criteria_set = self._get_slice_criterias(criteria)
         print("切片准则：{}".format(criteria_set))
 
         # 针对每个切片准则进行前向依赖分析
@@ -215,14 +344,41 @@ class CodeGraphConstructor:
 
         return reserved_nodes
 
+    def _const_var_filter_by_sliced_graph(self, sliced_pdg):
+
+        candidate_const_var = []
+
+        const_init = self.function_info.const_var_init
+        for graph_node in sliced_pdg.nodes:
+
+            if "input_" in graph_node:
+                continue
+
+            var_infos = self.function_info.stmts_var_info_maps[str(graph_node)]
+            for var_info in var_infos:
+                if "list" in var_info:
+                    for var in var_info["list"]:
+                        if str(var) in const_init:
+                            candidate_const_var.append(str(var))
+
+        return candidate_const_var
+
     def _add_external_nodes(self, sliced_pdg, criteria):
+
+        """
+        外部节点来源：
+        1.  self.function_info.const_var_init --> 常数的定义
+        2.  self.function_info.external_state_def_nodes_map --> 交易涉及全局变量的外部修改
+        """
 
         external_id = 0
         first_id = current_id = previous_id = None
 
         # 外部节点来源1：const_init
+
         const_init = self.function_info.const_var_init
-        for const_var in const_init:
+        candidate_const_var = self._const_var_filter_by_sliced_graph(sliced_pdg)  # Note: 需要判断当前图表示经过切片后剩余的节点究竟涉及那些常数
+        for const_var in candidate_const_var:
 
             new_id = "{}@{}".format(str(external_id), "tag")
             external_id += 1
@@ -328,6 +484,26 @@ class CodeGraphConstructor:
                             if var in previous_def:
                                 sliced_pdg.add_edge(first_id, node_id, color="green", type="data_dependency")
 
+    def do_code_slice_by_criterias_type(self, criteria_type="external"):
+
+        criterias = self.function_info.get_criteria_by_type(criteria_type)
+        for criteria in criterias:
+            # 计算需要保留的节点
+            reserved_nodes = self.reserved_nodes_for_a_criteria(criteria, criteria_type="external")
+
+            # 在原始CFG中去除其它节点
+            sliced_cfg = do_slice(self.function_info.cfg, reserved_nodes)
+
+            # 为切片后的cfg添加语义边，构成切片后的属性图
+            first_node, sliced_pdg = self._add_edges_for_graph(sliced_cfg, reserved_nodes)
+
+            debug_get_graph_png(sliced_pdg, "external_{}".format(criteria))
+
+            # 保存到当前的图构建器中
+            self.external_slice_graphs[criteria] = sliced_pdg
+
+        return self.external_slice_graphs
+
     def do_code_slice_by_function_criterias(self):
 
         # 切片之前的准备工作
@@ -339,8 +515,9 @@ class CodeGraphConstructor:
             raise RuntimeError("please construct the pdg before do slice")
 
         for criteria in self.function_info.criterias:
+
             # 计算需要保留的节点
-            reserved_nodes = self.reserved_nodes_for_a_criteria(criteria)
+            reserved_nodes = self.reserved_nodes_for_a_criteria(criteria, criteria_type="all")
 
             # 在原始CFG中去除其它节点
             sliced_cfg = do_slice(self.function_info.cfg, reserved_nodes)
@@ -351,6 +528,8 @@ class CodeGraphConstructor:
             # 保存
             self.slice_graphs[criteria] = sliced_pdg
             self.function_info.sliced_pdg[criteria] = sliced_pdg
+
+            # 入函数间分析器池
 
             # TODO 外部节点
             new_first_id, external_last_id = self._add_external_nodes(sliced_pdg, criteria)
