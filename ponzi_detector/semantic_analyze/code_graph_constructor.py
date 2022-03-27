@@ -300,10 +300,14 @@ class CodeGraphConstructor:
 
         return first_node, g
 
-    def _get_slice_criterias(self, criteria):
+    def _expand_criteria_by_semantic(self, criteria):
+
+        """
+        根据切片准则进行语义增强
+        保留更多的切片准则
+        """
 
         current_criteria_set = [criteria]
-
         criterias_append = self.function_info.append_criterias
         msg_value_stmts = self.function_info.criterias_msg
 
@@ -320,8 +324,11 @@ class CodeGraphConstructor:
 
     def reserved_nodes_for_a_criteria(self, criteria, criteria_type="all"):
 
-        criteria_set = self._get_slice_criterias(criteria) if criteria_type is "all" else [criteria]
-        # criteria_set = self._get_slice_criterias(criteria)
+        # 首先根据切片类型判断使用需要对切片准则进行语义增强
+        if criteria_type is "all":
+            criteria_set = self._expand_criteria_by_semantic(criteria)
+        else:
+            criteria_set = [criteria]
         print("切片准则：{}".format(criteria_set))
 
         # 针对每个切片准则进行前向依赖分析
@@ -504,10 +511,14 @@ class CodeGraphConstructor:
 
         return self.external_slice_graphs
 
-    def do_code_slice_by_function_criterias(self):
+    def do_code_slice_by_internal_all_criterias(self):
+        """
+
+        """
 
         # 切片之前的准备工作
-        self.function_info.get_all_criterias()
+        self.function_info.get_all_internal_criterias()
+
         if self.function_info.pdg is None:
             self.function_info.construct_dependency_graph()
 
@@ -546,3 +557,7 @@ class CodeGraphConstructor:
             graph_info, file_name = save_graph_to_json_format(sliced_cfg, criteria)
             with open(file_name, "w+") as f:
                 f.write(json.dumps(graph_info))
+
+    def do_code_create_without_slice(self):
+        pass
+

@@ -318,5 +318,6 @@ class InterproceduralAnalyzer:
                     data_flow_analyzer.do_data_semantic_analyze()  # 数据语义分析
                     inter_analyzer.do_interprocedural_analyze_for_state_def()  # 过程间全局变量数据流分析
                     function_info.construct_dependency_graph()  # 语义分析完之后进行数据增强，为切片做准备
-                    graphs_map = graph_constructor.do_code_slice_by_criterias_type(criteria_type="external")  # 切片
+
+                    # graphs_map = graph_constructor.do_code_slice_by_criterias_type(criteria_type="external")  # 切片
 

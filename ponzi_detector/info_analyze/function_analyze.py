@@ -312,8 +312,6 @@ class FunctionInfo:
             # 并将信息保存到cfg节点
             self.cfg.nodes[str(stmt_info.node_id)]["called"] = called_infos
 
-
-
     def __stmt_var_info(self, stmt_info: Node):
 
         stmt_var_info = []
@@ -624,7 +622,7 @@ class FunctionInfo:
     #######################################
     # 获得所有的切片准则                     #
     #######################################
-    def get_all_criterias(self):
+    def get_all_internal_criterias(self):
 
         if self.append_criterias is None:
             raise RuntimeError("获得切片准则之前需要进行数据流分析")
