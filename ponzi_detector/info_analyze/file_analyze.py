@@ -2,6 +2,7 @@ import argparse
 import os
 import shutil
 import subprocess
+
 from ponzi_detector.info_analyze.contract_analyze import ContractInfo
 from ponzi_detector.info_analyze.function_analyze import FunctionInfo
 from ponzi_detector.semantic_analyze.control_flow_analyzer import ControlFlowAnalyzer
@@ -48,20 +49,79 @@ def _select_solc_version(version_info):
 
 # 文件分析器
 class SolFileAnalyzer:
-    def __init__(self, file_name: str, path: str):
+    def __init__(self, file_name: str, work_path: str):
 
         self.file_name = file_name
-        self.work_path = path
+        self.work_path = work_path
+
+        self.opcode_file = file_name.split(".sol")[0] + ".evm"
+
+        self.contract_opcode_files = {}
+
+        self.contract_asm_files = {}
 
         self.solc_version = None
 
-    def parse_solc_version(self):
+    def do_file_analyze_prepare(self):
+
+        os.chdir(self.work_path)  # 切换工作目录
+
+        self._parse_solc_version()  # 解析编译器版本 必须在工作目录下
+
+        self._select_compiler()  # 更改编译器版本
+
+        self.get_opcode_and_disasm_file()  # 生成asm 和 bin文件
+
+    def get_opcode_and_disasm_file(self):
+
+        with open(self.opcode_file, 'w+') as f:
+            subprocess.check_call(["solc", "--bin-runtime", self.file_name], stdout=f)
+
+        with open(self.opcode_file, 'r') as f:
+
+            key = "{}:".format(self.file_name)
+
+            code_flag = 0
+            for line in f.readlines():
+
+                if code_flag == 1:
+                    code_cnt -= 1
+
+                    if code_cnt == 0:
+                        code_flag = 0
+
+                        with open("{}.bin".format(contract_name), 'w+') as contract_op_file:
+                            contract_op_file.write(line)
+
+                        # 去除.old_asm文件第一行,写入.asm文件
+                        with open("{}.old_asm".format(contract_name), 'w+') as asm_file:
+                            subprocess.call(["evm", "disasm", "{}.bin".format(contract_name)], stdout=asm_file)
+                        with open("{}.old_asm".format(contract_name), 'r') as fin:
+                            data = fin.read().splitlines(True)
+                        with open("{}.asm".format(contract_name), 'w') as fout:
+                            fout.writelines(data[1:])
+                        os.remove("{}.old_asm".format(contract_name))
+
+                        self.contract_opcode_files[contract_name] = "{}.bin".format(contract_name)
+                        self.contract_asm_files[contract_name] = "{}.asm".format(contract_name)
+
+                elif key in line:
+                    file_contract = line.split("=======")[1][1:-1]
+                    contract_name = file_contract.split(":")[1]
+                    print(contract_name)
+                    code_flag = 1
+                    code_cnt = 2  # 空两行
+
+    def _select_compiler(self):
+        print("========={} V: {}".format(self.file_name, self.solc_version))
+        subprocess.check_call(["solc-select", "use", self.solc_version])
+
+    def _parse_solc_version(self):
+        version_resault = None
 
         with open(self.file_name, 'r', encoding='utf-8') as contract_code:
 
             mini = 100
-            version_resault = None
-
             for line in contract_code:
                 target_id = line.find("pragma solidity")
                 if target_id != -1:
@@ -78,6 +138,8 @@ class SolFileAnalyzer:
                         mini = last_version
                         version_resault = v
 
+                    print("version_resault:{}".format(version_resault))
+                    self.solc_version = version_resault
                     return version_resault
 
                     # version_info = version_info.replace('\r', '').replace('\n', '').replace('\t', '')
