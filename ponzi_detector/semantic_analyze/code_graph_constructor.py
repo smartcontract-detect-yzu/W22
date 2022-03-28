@@ -24,10 +24,11 @@ def graph_clean_up(graph: nx.DiGraph):
         if u == v:
             label = graph.nodes[u]["label"]
             if label == "ENTRY" or label == "EXIT":
-                to_remove_edges.append((u,v))
+                to_remove_edges.append((u, v))
                 # print("u:{} v:{} label:{}".format(u, v, label))
 
     graph.remove_edges_from(to_remove_edges)
+
 
 def add_graph_node_info(graph: nx.MultiDiGraph, idx, key, value):
     node = graph.nodes[idx]
@@ -340,6 +341,7 @@ class CodeGraphConstructor:
     def _expand_criteria_by_semantic(self, criteria):
 
         """
+        输入切片准则为交易语句
         根据切片准则进行语义增强
         保留更多的切片准则
         """
@@ -377,7 +379,16 @@ class CodeGraphConstructor:
                 if reserved_node not in reserved_nodes:
                     reserved_nodes[reserved_node] = 1
 
-        # 循环体结构保留
+        # 保留IF END_IF结构
+        if_paris = self.function_info.if_paris
+        for if_stmt in if_paris:
+            end_if_stmt = if_paris[if_stmt]
+
+            if if_stmt in reserved_nodes and end_if_stmt not in reserved_nodes:
+                print("保存if {}-{}".format(if_stmt, end_if_stmt))
+                reserved_nodes[end_if_stmt] = 1
+
+        # 保留循环体结构
         loop_stmts = self.function_info.loop_stmts
         for loop_struct in loop_stmts:
             loop_from = loop_struct["from"]
@@ -550,7 +561,7 @@ class CodeGraphConstructor:
 
     def do_code_slice_by_internal_all_criterias(self):
         """
-
+        单函数分析
         """
 
         # 切片之前的准备工作
