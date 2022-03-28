@@ -2,7 +2,7 @@ import networkx as nx
 from typing import Dict, List
 from ponzi_detector.info_analyze.contract_analyze import ContractInfo
 from ponzi_detector.info_analyze.function_analyze import FunctionInfo
-from ponzi_detector.semantic_analyze.code_graph_constructor import CodeGraphConstructor
+from ponzi_detector.semantic_analyze.code_graph_constructor import CodeGraphConstructor, do_prepare_before_merge
 from ponzi_detector.semantic_analyze.code_graph_constructor import do_merge_graph1_to_graph2
 from ponzi_detector.semantic_analyze.code_graph_constructor import debug_get_graph_png
 from ponzi_detector.semantic_analyze.code_graph_constructor import do_graph_relabel_before_merge
@@ -261,6 +261,8 @@ class InterproceduralAnalyzer:
 
     def do_interprocedural_analyze_for_call_chain(self, chain):
 
+        merged_graphs = None
+
         fid = self.function_info.get_fid()
         if fid not in self.interprocedural_function_infos:
             self.interprocedural_function_infos[fid] = self.function_info  # leaf
@@ -280,44 +282,69 @@ class InterproceduralAnalyzer:
                     to_graph_key = g_key
                 else:
                     g = self.graphs_pool[g_key]
+                    # g = do_prepare_before_merge(g, g.graph["name"])
                     g = do_graph_relabel_before_merge(g, g.graph["name"])
 
                     to_graph_name = self.graphs_pool[to_graph_key].graph["name"]
 
                     if to_graph is None:
                         to_graph = self.graphs_pool[to_graph_key]
-                        to_graph = do_graph_relabel_before_merge(to_graph, to_graph_name)
+                        to_graph = do_prepare_before_merge(to_graph, to_graph_name)
+                        # debug_get_graph_png(to_graph, "to_graph".format(chain_idx), dot=True)
+                        # to_graph = do_graph_relabel_before_merge(to_graph, to_graph_name)
 
                     pos_at_to_graph = "{}@{}".format(to_graph_name, str(to_graph_key).split("@")[-1])
                     to_graph = do_merge_graph1_to_graph2(g, to_graph, pos_at_to_graph)
                     to_graph_key = g_key
 
-            debug_get_graph_png(to_graph, "合并_{}".format(chain_idx))
+            debug_get_graph_png(to_graph, "_easy_合并chain_{}".format(chain_idx), dot=True)
+            merged_graphs = self.do_interprocedural_analyze_without_slice_criteria(to_graph)
+            if len(merged_graphs) == 0:
+                pass
+                # debug_get_graph_png(to_graph, "_easy_合并chain_{}".format(chain_idx))
+            else:
+                for key in merged_graphs:
+                    debug_get_graph_png(merged_graphs[key], "合并chain_{}".format(chain_idx), dot=True)
 
-    def do_interprocedural_analyze_without_slice_criteria(self, graph: nx.MultiDiGraph):
+        return merged_graphs
+
+    def do_interprocedural_analyze_without_slice_criteria(self, to_graph: nx.MultiDiGraph):
         """
         图中存在外部函数调用，并且这些外部函数不包含切片准则
         将函数的PDG直接嫁接到原始图表示中
         """
-        for node_id in graph.nodes:
-            node_info = graph.nodes[node_id]
+        expand_info = {}
+        for node_id in to_graph.nodes:
+            node_info = to_graph.nodes[node_id]
             if "called" in node_info:
-                fid = node_info["called"]
-                called_function_info = self.contract_info.get_function_info_by_fid(fid)
-                if called_function_info is None:
+
+                fid = node_info["called"][0]
+                function_info = self.contract_info.get_function_info_by_fid(fid)
+
+                if function_info is None:
                     called_function = self.contract_info.get_function_by_fid(fid)
                     function_info = FunctionInfo(self.contract_info, called_function)
 
-                    # 全套大保健，需要优化
-                    control_flow_analyzer = ControlFlowAnalyzer(self.contract_info, function_info)
-                    data_flow_analyzer = DataFlowAnalyzer(self.contract_info, function_info)
-                    inter_analyzer = InterproceduralAnalyzer(self.contract_info, function_info)
-                    graph_constructor = CodeGraphConstructor(self.contract_info, function_info)
+                # 目标函数名
+                called_function_name = function_info.name
 
-                    control_flow_analyzer.do_control_dependency_analyze()  # 控制流分析
-                    data_flow_analyzer.do_data_semantic_analyze()  # 数据语义分析
-                    inter_analyzer.do_interprocedural_analyze_for_state_def()  # 过程间全局变量数据流分析
-                    function_info.construct_dependency_graph()  # 语义分析完之后进行数据增强，为切片做准备
+                # 全套大保健，需要优化
+                control_flow_analyzer = ControlFlowAnalyzer(self.contract_info, function_info)
+                data_flow_analyzer = DataFlowAnalyzer(self.contract_info, function_info)
+                inter_analyzer = InterproceduralAnalyzer(self.contract_info, function_info)
+                graph_constructor = CodeGraphConstructor(self.contract_info, function_info)
 
-                    # graphs_map = graph_constructor.do_code_slice_by_criterias_type(criteria_type="external")  # 切片
+                control_flow_analyzer.do_control_dependency_analyze()  # 控制流分析
+                data_flow_analyzer.do_data_semantic_analyze()  # 数据语义分析
+                inter_analyzer.do_interprocedural_analyze_for_state_def()  # 过程间全局变量数据流分析
+                function_info.construct_dependency_graph()  # 语义分析完之后进行数据增强，为切片做准备
 
+                graph = graph_constructor.do_code_create_without_slice()
+                graph = do_prepare_before_merge(graph, called_function_name)
+                merged_graph = do_merge_graph1_to_graph2(graph, to_graph, node_id)
+
+                # debug_get_graph_png(merged_graph, "112233")
+
+                expand_info[node_id] = merged_graph
+
+        return expand_info

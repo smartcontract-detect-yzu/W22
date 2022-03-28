@@ -126,7 +126,7 @@ class FunctionInfo:
         self.can_send_ether = function.can_send_eth()
         self.function = function
         self.fid = function.id
-        self.name = function.name
+        self.name: str = function.name.__str__()
         self.visibility = function.visibility
 
         # 函数调用链: 上级函数链 [[chain1], [chain2], [chain3]]

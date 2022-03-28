@@ -12,6 +12,7 @@ EXAMPLE_PERFIX = "examples/ponzi/"
 
 
 class ContractInfo:
+
     def __init__(self, contract: Contract):
         self.name = contract.name
         self.contract = contract

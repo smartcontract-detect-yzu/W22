@@ -11,8 +11,26 @@ from ponzi_detector.info_analyze.function_analyze import FunctionInfo
 from queue import LifoQueue
 
 
-def add_graph_node_info(graph: nx.MultiDiGraph, id, key, value):
-    node = graph.nodes[id]
+def graph_clean_up(graph: nx.DiGraph):
+    # 孤儿节点删除
+    for node_id in graph.nodes:
+        if graph.in_degree(node_id) == 0 and graph.out_degree(node_id) == 0:
+            graph.remove_node(node_id)
+
+    # TODO: BUG: entry-->entry 循环的bug暂时规避
+    to_remove_edges = []
+    for u, v in graph.edges():
+
+        if u == v:
+            label = graph.nodes[u]["label"]
+            if label == "ENTRY" or label == "EXIT":
+                to_remove_edges.append((u,v))
+                # print("u:{} v:{} label:{}".format(u, v, label))
+
+    graph.remove_edges_from(to_remove_edges)
+
+def add_graph_node_info(graph: nx.MultiDiGraph, idx, key, value):
+    node = graph.nodes[idx]
     if key not in node:
         node[key] = value
     else:
@@ -31,11 +49,12 @@ def _get_cfg_from_pdg(pdg: nx.MultiDiGraph):
 
 def _add_entry_point_for_graph(graph: nx.MultiDiGraph):
     entry_points = []
+
     name = graph.graph["name"]
     for node_id in graph.nodes:
         if graph.in_degree(node_id) == 0:  # 入口节点
             entry_points.append(node_id)
-    graph.add_node("{}@entry".format(name), label="entry")
+    graph.add_node("{}@entry".format(name), label="ENTRY")
 
     for entry_point in entry_points:
         graph.add_edge("{}@entry".format(name), entry_point)
@@ -45,11 +64,12 @@ def _add_entry_point_for_graph(graph: nx.MultiDiGraph):
 
 def _add_exit_point_for_graph(graph: nx.MultiDiGraph):
     exit_points = []
+
     name = graph.graph["name"]
     for node_id in graph.nodes:
-        if graph.out_degree(node_id) == 0:  # 入口节点
+        if graph.out_degree(node_id) == 0:  # 出口节点
             exit_points.append(node_id)
-    graph.add_node("{}@exit".format(name), label="entry")
+    graph.add_node("{}@exit".format(name), label="EXIT")
 
     for exit_point in exit_points:
         graph.add_edge(exit_point, "{}@exit".format(name))
@@ -62,16 +82,37 @@ def do_graph_relabel_before_merge(graph: nx.MultiDiGraph, prefix: str):
     将两个图合并之前，需要先修改图的node id
     避免两个图的node id出现相同的情况
     """
+    graph.graph["relabel"] = "{}@".format(prefix)
     return nx.relabel_nodes(graph, lambda x: "{}@{}".format(prefix, x))
 
 
+def do_prepare_before_merge(graph: nx.MultiDiGraph, prefix: str):
+    """
+    将两个图合并之前，需要先修改图的node id
+    避免两个图的node id出现相同的情况
+    """
+    graph.graph["relabel"] = "{}@".format(prefix)
+    g = nx.relabel_nodes(graph, lambda x: "{}@{}".format(prefix, x))
+
+    g = _get_cfg_from_pdg(g)  # 原始操作在CFG上完成
+    g = _add_entry_point_for_graph(g)
+    g = _add_exit_point_for_graph(g)
+
+    return g
+
+
 def do_merge_graph1_to_graph2(graph: nx.MultiDiGraph, to_graph: nx.MultiDiGraph, pos_at_to_graph):
+    if "relabel" not in graph.graph or "relabel" not in to_graph.graph:
+        raise RuntimeError("请先进行do_graph_relabel_before_merge，再进行merge操作")
+
     # 原始操作在CFG上完成
     g1 = _get_cfg_from_pdg(graph)
     g1 = _add_entry_point_for_graph(g1)
     g1 = _add_exit_point_for_graph(g1)
+    debug_get_graph_png(g1, "g1", dot=True)
 
-    g2 = _get_cfg_from_pdg(to_graph)
+    g2 = to_graph
+    debug_get_graph_png(g2, "g2", dot=True)
 
     sources = []
     for source, _ in g2.in_edges(pos_at_to_graph):
@@ -85,6 +126,10 @@ def do_merge_graph1_to_graph2(graph: nx.MultiDiGraph, to_graph: nx.MultiDiGraph,
     to_name = g2.graph["name"]
 
     joint_graph: nx.MultiDiGraph = nx.union(g1, g2)
+    joint_graph.graph["name"] = "{}@{}@{}_".format(g2.graph["name"], g1.graph["name"], pos_at_to_graph)
+    # joint_graph.graph["name"] = "{}".format(g2.graph["name"])
+    joint_graph.graph["relabel"] = "{}_{}".format(g1.graph["relabel"], g2.graph["relabel"])
+
     for src in sources:
         joint_graph.add_edge(src, "{}@entry".format(name))
 
@@ -93,16 +138,8 @@ def do_merge_graph1_to_graph2(graph: nx.MultiDiGraph, to_graph: nx.MultiDiGraph,
 
     joint_graph.remove_node(pos_at_to_graph)
 
-    # joint_graph: nx.MultiDiGraph = nx.union(g1, g2, rename=("{}@".format(name), "{}@".format(to_name)))
-    #
-    # for src in sources:
-    #     joint_graph.add_edge("{}@{}".format(to_name, src), "{}@entry".format(name))
-    #     print(" {} -> {}".format("{}@{}".format(to_name, src), "{}@entry".format(name)))
-    #
-    # for target in targets:
-    #     joint_graph.add_edge("{}@exit".format(name), "{}@{}".format(to_name, target))
-    #
-    # joint_graph.remove_node("{}@{}".format(to_name, pos_at_to_graph))
+    # 规避 https://github.com/smartcontract-detect-yzu/slither/issues/9
+    graph_clean_up(joint_graph)
 
     return joint_graph
 
@@ -469,7 +506,7 @@ class CodeGraphConstructor:
 
                 # print("from {} to {}".format(node_id, first_id))
                 # 所有的叶子节点 --> 函数本身的 entry point
-                sliced_pdg.add_edge(node_id, first_id, color="yellow", label="re_enter")
+                sliced_pdg.add_edge(node_id, first_id, color="yellow", label="re_enter", type="re_enter")
 
                 if node_id not in stmts_var_info_maps or first_id not in stmts_var_info_maps:
                     # 新增语句 缺少数据流信息，暂不进行分析
@@ -559,5 +596,5 @@ class CodeGraphConstructor:
                 f.write(json.dumps(graph_info))
 
     def do_code_create_without_slice(self):
-        pass
 
+        return self.function_info.cfg
