@@ -183,6 +183,9 @@ class FunctionInfo:
     def get_fid(self):
         return self.fid
 
+    def get_transaction_stmts(self):
+        return self.transaction_stmts
+
     def _get_msg_value_stmt(self, stmt):
 
         if "msg.value" in stmt.expression.__str__():
@@ -304,8 +307,10 @@ class FunctionInfo:
             called_infos = []
 
             for internal_call in stmt_info.internal_calls:
-                called_infos.append(internal_call.id)
-                # print("\t\t内部调用{} {}".format(internal_call.name, internal_call.id))
+                if isinstance(internal_call, Function):
+                    called_infos.append(internal_call.id)
+                else:
+                    print("单纯内部调用{}".format(internal_call.name))
 
             self.stmt_internal_call[stmt_info.node_id] = called_infos
 
@@ -391,14 +396,19 @@ class FunctionInfo:
                 pass
 
             else:  # 防止出现调用函数的情况
-                self.transaction_stmts[str(stmt.node_id)] = {
-                    "to": to,
-                    "eth": eth,
-                    "exp": stmt.expression.__str__()
-                }
-                print("=== 切片准则：{} at {}@{} ===".format(stmt.expression, self.name, stmt.node_id))
-                print("发送以太币 {} 到 {}\n".format(eth, to))
-                print("变量使用: {}".format(self.stmts_var_info_maps[str(stmt.node_id)]))
+
+                if to in self.const_var_init:  # 防止出现交易对象是常数的情况
+                    print("交易对象是常数：{}".format(self.const_var_init[to]))
+
+                else:
+                    self.transaction_stmts[str(stmt.node_id)] = {
+                        "to": to,
+                        "eth": eth,
+                        "exp": stmt.expression.__str__()
+                    }
+                    print("=== 切片准则：{} at {}@{} ===".format(stmt.expression, self.name, stmt.node_id))
+                    print("发送以太币 {} 到 {}\n".format(eth, to))
+                    print("变量使用: {}".format(self.stmts_var_info_maps[str(stmt.node_id)]))
 
     def __if_loop_struct(self, stmt, stack):
 
