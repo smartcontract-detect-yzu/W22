@@ -19,7 +19,7 @@ def _data_flow_reorder(current_stmt_vars):
     return def_vars + use_vars
 
 
-def _get_ddg_edges(data_dependency_relations):
+def _get_ddg_edges(data_dependency_relations, type):
     duplicate = {}
     ddg_edges = []
 
@@ -31,7 +31,7 @@ def _get_ddg_edges(data_dependency_relations):
         key = "{}-{}".format(edge_info["from"], edge_info["to"])
         if key not in duplicate:
             duplicate[key] = 1
-            ddg_edges.append((edge_info["from"], edge_info["to"], {'color': "green", "type": "data_dependency"}))
+            ddg_edges.append((edge_info["from"], edge_info["to"], {'color': "green", "type": type}))
 
     # print("DEBUG 数据依赖：", ddg_edges)
     return ddg_edges
@@ -50,6 +50,7 @@ class DataFlowAnalyzer:
         # 数据相关语义边：初始为None, 初始化后赋值为[]
         self.data_flow_edges = None  # 数据流边
         self.data_dependency_edges = None  # 数据依赖边
+        self.reverse_data_dependency_edges = None  # 反向全局变量数据依赖边
         self.loop_data_dependency_edges = None  # 循环体数据依赖关系增强
 
         self.transaction_states = None  # 交易语句涉及的全局变量
@@ -172,7 +173,7 @@ class DataFlowAnalyzer:
                             edge_info = {"from": chain_node["id"], "to": last_def}
                             data_dependency_relations.append(edge_info)
 
-        ddg_edges = _get_ddg_edges(data_dependency_relations)
+        ddg_edges = _get_ddg_edges(data_dependency_relations, "data_dependency")
         self.data_dependency_edges = ddg_edges
         return ddg_edges
 
@@ -185,10 +186,14 @@ class DataFlowAnalyzer:
 
         var_def_use_chain = {}
         data_dependency_relations = []
-        for stmt in path[:-1]:  # 去尾，避免 EXIT_POINT
-            stmt_id = str(stmt)
-            stmt_var_infos = stmts_var_info_maps[stmt_id]
 
+        for stmt in path:
+
+            stmt_id = str(stmt)
+            if stmt_id == 'EXIT_POINT':  # 避免 EXIT_POINT  不能统一去尾
+                continue
+
+            stmt_var_infos = stmts_var_info_maps[stmt_id]
             for var_info in stmt_var_infos:
                 for var_name in var_info["list"]:
                     info = {"id": stmt_id, "var_type": var_info["type"], "op_type": var_info["op_type"]}
@@ -262,6 +267,27 @@ class DataFlowAnalyzer:
         self.function_info.transaction_states = self.transaction_states
         return trans_stats
 
+    ################################################################
+    # 函数内 交易相关全局变量反向数据依赖关系分析                           #
+    # https://github.com/smartcontract-detect-yzu/slither/issues/6  #
+    #################################################################
+    def reverse_data_dependency_for_transaction_state(self):
+
+        trans_states = self.trans_state_append_criteria
+        cfg = self.function_info.simple_cfg
+        reverse_relations = []
+
+        for trans_stmt in trans_states:
+            state_related_stmts = trans_states[trans_stmt]
+            print(state_related_stmts)
+            for state_related_stmt in state_related_stmts:
+                trans_state_paths = nx.all_simple_paths(cfg, source="0", target=str(state_related_stmt))
+                for trans_state_path in trans_state_paths:
+                    reverse_relations += self.get_data_dependency_relations_by_path(reversed(trans_state_path))
+
+        reverse_ddg_edges = _get_ddg_edges(reverse_relations, "re_data_dependency")
+        self.data_dependency_edges += reverse_ddg_edges
+
     ###########################################################
     # 函数内 交易涉及全局变量修改语句加入切片准则 (state_criteria_add)#
     ###########################################################
@@ -287,6 +313,7 @@ class DataFlowAnalyzer:
                         dup[state] = 1
                         criteria_append[transaction_stmt].append(state_def_stmts[state])
 
+        print("criteria_append :", criteria_append)
         self.trans_state_append_criteria = criteria_append
         self.function_info.append_criterias = criteria_append
         return criteria_append
@@ -331,7 +358,9 @@ class DataFlowAnalyzer:
         self.transaction_state_vars_analyze()  # 交易相关全局变量数据使用分析
         self.transaction_state_criteria_add()  # 交易相关全局变量数据依赖分析，生成新的切片准则
 
-        self.loop_data_dependency_relation_enhance()
+        self.reverse_data_dependency_for_transaction_state()  # 交易相关全局变量反向数据依赖分析
+
+        self.loop_data_dependency_relation_enhance()  # 循环体内部数据依赖
 
         if self.data_flow_edges is None:
             raise RuntimeError("数据流未分析")
