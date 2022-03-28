@@ -134,15 +134,21 @@ if __name__ == '__main__':
                     inter_analyzer = InterproceduralAnalyzer(contract_info, function_info)
 
                     # 为当前函数创建代码图表示构建
-                    slice_scissors = CodeGraphConstructor(contract_info, function_info)
+                    code_constructor = CodeGraphConstructor(contract_info, function_info)
 
                     control_flow_analyzer.do_control_dependency_analyze()  # 控制流分析
                     data_flow_analyzer.do_data_semantic_analyze()  # 数据语义分析
-                    inter_analyzer.do_interprocedural_state_analyze()  # 过程间全局变量数据流分析
+                    inter_analyzer.do_interprocedural_analyze_for_state_def()  # 过程间全局变量数据流分析
 
                     # 语义分析完之后进行数据增强，为切片做准备
                     function_info.construct_dependency_graph()
 
                     # 切片
-                    slice_scissors.do_code_slice_by_function_criterias()
+                    code_constructor.do_code_slice_by_internal_all_criterias()
                     function_info.debug_png_for_graph("sliced_pdg")
+
+                    flag, _ = inter_analyzer.do_need_analyze_callee()
+                    if flag is True:
+                        chains = function_info.get_callee_chain()
+                        inter_analyzer.graphs_pool_init()
+                        inter_analyzer.do_interprocedural_analyze_for_call_chain(chains[1])
