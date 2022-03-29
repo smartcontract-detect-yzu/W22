@@ -569,6 +569,16 @@ class FunctionInfo:
     # 结构体赋值展开                        #
     ######################################
     def struct_assign_stmt_expand(self, external_stmt_info):
+        """
+        将结构体赋值语句展开:
+        ==原始语句:
+            queue.push(Deposit(msg.sender,uint128(msg.value),uint128(msg.value * MULTIPLIER / 100)))
+        ==展开后:
+            Deposit.depositor = msg.sender
+            Deposit.deposit = msg.value
+            Deposit.expect = msg.value * MULTIPLIER / 100
+            queue.push(Deposit)
+        """
 
         structs_info = self.contract_info.structs_info
         state_var_declare_function_map = self.contract_info.state_var_declare_function_map

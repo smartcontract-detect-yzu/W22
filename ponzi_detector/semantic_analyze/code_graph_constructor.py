@@ -307,6 +307,67 @@ def do_slice(graph, reserve_nodes):
     return sliced_graph
 
 
+def _add_external_stmts_to_a_graph(graph, external_stmts, external_id, previous_id, current_id):
+    """
+    对于给定的图graph
+    在 previous_id之后嫁接上外部节点集合external_stmts
+    并且新增节点的id使用external_id自增
+
+    入参：
+    external_id --> 新增节点的id，自增1
+    previous_id --> 上上一次新增的节点
+    current_id -->  上一次新增的节点，为了本次添加能对接上去
+
+    previous_id --> current_id --> <wait to add>
+    """
+    first_id = None
+    for external_node in reversed(external_stmts):
+
+        if "expand" in external_node:
+            for expand_stmt in external_node["expand"]:
+
+                new_id = "{}@{}".format(str(external_id), "tag")
+                external_id += 1
+
+                if previous_id is None:  # 第一次增加节点，之前从没有
+                    first_id = new_id
+                    previous_id = new_id
+                    current_id = new_id
+                else:
+                    previous_id = current_id  # 接到上次添加的节点
+                    current_id = new_id
+
+                graph.add_node(new_id,
+                               label=expand_stmt,
+                               expression=expand_stmt,
+                               type=external_node["type"])
+
+                if previous_id != current_id:
+                    graph.add_edge(previous_id, current_id, color="black")
+        else:
+            # print("外部节点: {}".format(external_node))
+            external_id += 1
+            new_id = "{}@{}".format(str(external_id), "tag")
+
+            if previous_id is None:
+                first_id = new_id
+                previous_id = new_id
+                current_id = new_id
+            else:
+                previous_id = current_id
+                current_id = new_id
+
+            graph.add_node(new_id,
+                           label=external_node["expression"],
+                           expression=external_node["expression"],
+                           type=external_node["type"])
+
+            if previous_id != current_id:
+                graph.add_edge(previous_id, current_id, color="black")
+
+    return first_id, current_id
+
+
 # 代码图表示构建器
 class CodeGraphConstructor:
     def __init__(self, contract_info: ContractInfo, function_info: FunctionInfo):
@@ -401,20 +462,21 @@ class CodeGraphConstructor:
 
     def _const_var_filter_by_sliced_graph(self, sliced_pdg):
 
-        candidate_const_var = []
+        candidate_const_var = {}
 
         const_init = self.function_info.const_var_init
+
         for graph_node in sliced_pdg.nodes:
 
-            if "input_" in graph_node:
+            if "input_" in graph_node:  # 入参跳过
                 continue
 
             var_infos = self.function_info.stmts_var_info_maps[str(graph_node)]
             for var_info in var_infos:
                 if "list" in var_info:
                     for var in var_info["list"]:
-                        if str(var) in const_init:
-                            candidate_const_var.append(str(var))
+                        if str(var) in const_init and str(var) not in candidate_const_var:
+                            candidate_const_var[str(var)] = 1
 
         return candidate_const_var
 
@@ -430,7 +492,6 @@ class CodeGraphConstructor:
         first_id = current_id = previous_id = None
 
         # 外部节点来源1：const_init
-
         const_init = self.function_info.const_var_init
         candidate_const_var = self._const_var_filter_by_sliced_graph(sliced_pdg)  # Note: 需要判断当前图表示经过切片后剩余的节点究竟涉及那些常数
         for const_var in candidate_const_var:
@@ -438,13 +499,13 @@ class CodeGraphConstructor:
             new_id = "{}@{}".format(str(external_id), "tag")
             external_id += 1
 
-            if previous_id is None:
-                first_id = new_id
+            if previous_id is None:  # 第一次新增节点
+                first_id = new_id  # 第一个节点
                 previous_id = new_id
                 current_id = new_id
             else:
-                previous_id = current_id
-                current_id = new_id
+                previous_id = current_id  # 上一个循环新增的节点
+                current_id = new_id  # 本次新增节点
 
             sliced_pdg.add_node(new_id,
                                 label=const_init[const_var],
@@ -454,53 +515,30 @@ class CodeGraphConstructor:
             if previous_id != current_id:
                 sliced_pdg.add_edge(previous_id, current_id, color="black")
 
+        # 外部节点来源2：外部修改了全局变量
+        with_external_sliced_pdgs_map = {}
         external_state_map = self.function_info.external_state_def_nodes_map
         if criteria in external_state_map:
-            for external_node in reversed(external_state_map[criteria]):
 
-                if "expand" in external_node:
-                    for expand_stmt in external_node["expand"]:
+            # 如果当前函数的交易相关全局变量存在被多个外部函数修改的情况，需要生成多个图表示
+            external_nodes_map_for_write_functions = external_state_map[criteria]
+            for write_fid in external_nodes_map_for_write_functions:
+                sliced_pdg_with_external = nx.MultiDiGraph(sliced_pdg)  # 创建备份
+                external_stmts = external_nodes_map_for_write_functions[write_fid]
+                tmp_first_id, tmp_last_id = _add_external_stmts_to_a_graph(sliced_pdg_with_external,
+                                                                           external_stmts,
+                                                                           external_id,
+                                                                           previous_id,
+                                                                           current_id)
 
-                        new_id = "{}@{}".format(str(external_id), "tag")
-                        external_id += 1
+                graph_1st_id = first_id if tmp_first_id is None else tmp_first_id
+                with_external_sliced_pdgs_map[write_fid] = {
+                    "graph": sliced_pdg_with_external,
+                    "first_id": graph_1st_id,
+                    "current_id": tmp_last_id
+                }
 
-                        if previous_id is None:
-                            first_id = new_id
-                            previous_id = new_id
-                            current_id = new_id
-                        else:
-                            previous_id = current_id
-                            current_id = new_id
-
-                        sliced_pdg.add_node(new_id,
-                                            label=expand_stmt,
-                                            expression=expand_stmt,
-                                            type=external_node["type"])
-
-                        if previous_id != current_id:
-                            sliced_pdg.add_edge(previous_id, current_id, color="black")
-                else:
-                    # print("外部节点: {}".format(external_node))
-                    external_id += 1
-                    new_id = "{}@{}".format(str(external_id), "tag")
-
-                    if previous_id is None:
-                        first_id = new_id
-                        previous_id = new_id
-                        current_id = new_id
-                    else:
-                        previous_id = current_id
-                        current_id = new_id
-
-                    sliced_pdg.add_node(new_id,
-                                        label=external_node["expression"],
-                                        expression=external_node["expression"],
-                                        type=external_node["type"])
-
-                    if previous_id != current_id:
-                        sliced_pdg.add_edge(previous_id, current_id, color="black")
-
-        return first_id, current_id
+        return first_id, current_id, with_external_sliced_pdgs_map
 
     def _add_reenter_edges(self, sliced_pdg, first_id):
 
@@ -590,11 +628,14 @@ class CodeGraphConstructor:
 
             # 入函数间分析器池
 
-            # TODO 外部节点
-            new_first_id, external_last_id = self._add_external_nodes(sliced_pdg, criteria)
+            print("===========开始分析外部节点===============")
+
+            # 外部节点
+            new_first_id, external_last_id, graphs_with_external_map = self._add_external_nodes(sliced_pdg, criteria)
             if external_last_id is not None:
                 sliced_pdg.add_edge(external_last_id, first_node, color="black")
 
+            # NOTE: 对于原始的sliced_pdg进行补全
             # reentry edge 重入边，保存一个函数可以执行多次的语义
             if new_first_id is not None:
                 self._add_reenter_edges(sliced_pdg, new_first_id)
@@ -605,6 +646,29 @@ class CodeGraphConstructor:
             graph_info, file_name = save_graph_to_json_format(sliced_cfg, criteria)
             with open(file_name, "w+") as f:
                 f.write(json.dumps(graph_info))
+
+            if len(graphs_with_external_map) != 0:  # 如果没有外部展开节点（没有外部节点\只有全局变量初始化节点），则依旧使用旧的PDG
+
+                for write_fname in graphs_with_external_map:
+
+                    graph_with_external_info = graphs_with_external_map[write_fname]
+
+                    new_slice_pdg = graph_with_external_info["graph"]
+                    new_first_id = graph_with_external_info["first_id"]
+                    new_last_id = graph_with_external_info["current_id"]
+
+                    new_slice_pdg.add_edge(new_last_id, first_node, color="black")  # 新增信息和原始图结合
+                    self._add_reenter_edges(new_slice_pdg, new_first_id)  # reentry edge 重入边，保存一个函数可以执行多次的语义
+
+                    new_key = "{}_with_{}".format(criteria, write_fname)
+
+                    self.slice_graphs[new_key] = new_slice_pdg
+                    self.function_info.sliced_pdg[new_key] = new_slice_pdg
+
+                    # 保存为json格式
+                    graph_info, file_name = save_graph_to_json_format(sliced_cfg, new_key)
+                    with open(file_name, "w+") as f:
+                        f.write(json.dumps(graph_info))
 
     def do_code_create_without_slice(self):
 

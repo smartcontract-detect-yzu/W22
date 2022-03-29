@@ -207,8 +207,7 @@ class InterproceduralAnalyzer:
 
         for trans_criteria in transaction_states:  # 交易相关全局变量作为准则
 
-            external_nodes_map[trans_criteria] = []
-            print("external_nodes_map :{} {}".format(trans_criteria, external_nodes_map[trans_criteria]))
+            external_nodes_map_for_write_functions = {}
             for transaction_state in transaction_states[trans_criteria]:
                 for trans_stat_var in transaction_state["vars"]:
                     duplicate.clear()
@@ -243,6 +242,9 @@ class InterproceduralAnalyzer:
                             if write_fun.full_name == this_function.full_name:
                                 continue  # 过滤非当前函数
 
+                            if write_fun.id is None:
+                                continue  # 全局变量初始化函数,在其他地方已经分析过了
+                            
                             print("\n外部写全局变量函数{}分析........".format(write_fun.full_name))
                             write_func_info = FunctionInfo(self.contract_info, write_fun)
 
@@ -252,7 +254,13 @@ class InterproceduralAnalyzer:
 
                                 self.function_info.struct_assign_stmt_expand(info)
 
-                                external_nodes_map[trans_criteria].append(info)
+                                # 保存外部语句信息
+                                if write_func_info.name not in external_nodes_map_for_write_functions:
+                                    external_nodes_map_for_write_functions[write_func_info.name] = [info]
+                                else:
+                                    external_nodes_map_for_write_functions[write_func_info.name].append(info)
+
+                                # external_nodes_map[trans_criteria].append(info)
 
                                 # 这些语句又使用了那些全局变量来修改current_var, 进行下一次的分析
                                 for var_info in info["info"]:
@@ -262,6 +270,9 @@ class InterproceduralAnalyzer:
                                                 # print("\t\t下一个变量{}".format(var))
                                                 duplicate[var] = 1
                                                 stack.append(var)
+
+            if len(external_nodes_map_for_write_functions) > 0:  # 没有则不需要
+                external_nodes_map[trans_criteria] = external_nodes_map_for_write_functions
 
         self.external_state_def_nodes_map = external_nodes_map
         self.function_info.external_state_def_nodes_map = external_nodes_map
