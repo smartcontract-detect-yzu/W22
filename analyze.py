@@ -63,30 +63,42 @@ if __name__ == '__main__':
                     inter_analyzer = InterproceduralAnalyzer(contract_info, function_info)  # 过程间分析器
                     code_constructor = CodeGraphConstructor(contract_info, function_info)  # 为当前函数创建代码图表示构建
 
+                    print("=======语义分析=========")
+
                     control_flow_analyzer.do_control_dependency_analyze()  # 控制流分析
                     data_flow_analyzer.do_data_semantic_analyze()  # 数据语义分析
                     inter_analyzer.do_interprocedural_analyze_for_state_def()  # 过程间全局变量数据流分析
+
+                    print("=======构建程序依赖图=========")
 
                     # 语义分析完之后进行数据增强，为切片做准备
                     function_info.construct_dependency_graph()
                     function_info.debug_png_for_graph(graph_type="pdg")
 
+                    print("=======开始进行切片=========")
+
                     # 切片
                     code_constructor.do_code_slice_by_internal_all_criterias()
                     function_info.debug_png_for_graph("sliced_pdg")
+
+                    print("=======开始进行过程间分析=========")
 
                     # 过程间分析
                     flag, _ = inter_analyzer.do_need_analyze_callee()
                     if flag is True:
                         chains = function_info.get_callee_chain()
+
                         inter_analyzer.graphs_pool_init()  # 初始化图池，为函数间图合并做准备
-                        inter_analyzer.do_interprocedural_analyze_for_call_chain(chains[1])
+
+                        for chain in chains:
+                            inter_analyzer.do_interprocedural_analyze_for_call_chain(chain)  # 根据调用链进行过程间分析
 
     if dataset is not None:
 
         data_set = DataSet(dataset)  # 数据集
 
         if operate == "asm":
+
             # 将数据集中的sol文件通过solc 编译成bin文件
             # 再利用evm disasm进行编译成opcdoe文件
             data_set.get_asm_and_opcode_for_dataset(pass_tag=1)
@@ -102,4 +114,4 @@ if __name__ == '__main__':
             data_set.prepare_for_xgboost()
 
         elif operate == "analyze":
-            pass
+            data_set.do_analyze(pass_tag=0)
