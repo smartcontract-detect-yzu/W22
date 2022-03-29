@@ -83,6 +83,11 @@ class DataSet:
 
     def get_asm_for_dataset_from_bin(self, pass_tag=0):
 
+        """
+        数据集为非源码数据集，而是编译后的字节码数据集
+        直接利用 evm disasm 进行反编译
+        """
+
         dataset_prefix_list, analyze_prefix_list, cnt = self.get_work_dirs()
         for i in range(cnt):
 
@@ -97,7 +102,8 @@ class DataSet:
                         address = file_name.split(".bin")[0]
                         analyze_dir = analyze_prefix + address
 
-                        self.ponzi_file_names.append(analyze_dir)
+                        # 全部作为非旁氏合约样本
+                        self.no_ponzi_file_names.append(analyze_dir)
 
                         if not os.path.exists(analyze_dir):
                             os.mkdir(analyze_dir)
@@ -226,3 +232,48 @@ class DataSet:
 
         with open("xgboost_dataset_{}.txt".format(self.name), "w+") as f:
             f.writelines(dataset_lines)
+
+    def do_analyze(self, pass_tag=1):
+
+        dataset_prefix_list, analyze_prefix_list, cnt = self.get_work_dirs()
+        for i in range(cnt):
+
+            dataset_prefix = dataset_prefix_list[i]
+            analyze_prefix = analyze_prefix_list[i]
+
+            g = os.walk(dataset_prefix)
+            for path, dir_list, file_list in g:
+                for file_name in file_list:
+                    if file_name.endswith(".sol"):  # 目前仅限solidity文件
+                        src_file = os.path.join(path, file_name)
+
+                        address = file_name.split(".sol")[0]
+                        analyze_dir = analyze_prefix + address
+
+                        if not os.path.exists(analyze_dir):
+                            os.mkdir(analyze_dir)
+
+                        if not os.path.exists(analyze_dir + "/" + file_name):
+                            shutil.copy(src_file, analyze_dir)
+
+                        done_file = analyze_dir + "/done_ok.txt"
+                        pass_file = analyze_dir + "/pass.txt"
+
+                        if os.path.exists(pass_file):
+                            continue
+
+                        if os.path.exists(done_file) and pass_tag:
+                            print("========={}===========".format(file_name))
+                            continue
+                        else:
+
+                            if os.path.exists(done_file):
+                                os.remove(done_file)
+
+                            print("\033[0;31;40m\t开始分析: {} \033[0m".format(file_name))
+                            solfile_analyzer = SolFileAnalyzer(file_name, analyze_dir)
+                            solfile_analyzer.do_chdir()
+                            solfile_analyzer.do_analyze_a_file()
+                            with open("done_ok.txt", "w+") as f:
+                                f.write("done")
+                            solfile_analyzer.revert_chdir()

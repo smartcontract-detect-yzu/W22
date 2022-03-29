@@ -89,6 +89,8 @@ class InterproceduralAnalyzer:
                 self.fun_criteria_pair[last] = target_fun["fid"]
             last = target_fun["fid"]
 
+        print("函数间分析：函数切片对", self.fun_criteria_pair)
+
         # 构建图
         # 1.图初始化
         path_graph = nx.DiGraph()
@@ -162,15 +164,20 @@ class InterproceduralAnalyzer:
         说明t受到了其callee的影响
         """
 
+        # https://github.com/smartcontract-detect-yzu/slither/issues/11#issue-1184776553
+        if self.function_info.visibility == "public":
+            return False, None
+
         input_params_info = self.function_info.get_input_params()
         graphs_infos = self.function_info.get_sliced_pdg()
 
         for params_name in input_params_info:
-            graph_id = input_params_info[params_name]["key"]
+            input_param_graph_id = input_params_info[params_name]["key"]
             for criteria in graphs_infos:
                 g: nx.DiGraph = graphs_infos[criteria]
-                if graph_id in g.nodes:
-                    print("需要进行跨函数分析： {} ".format(criteria))
+
+                if input_param_graph_id in g.nodes:  # 如果入参在函数的依赖图中
+                    print("需要进行跨函数分析： {} {}".format(criteria, g.nodes[criteria]["label"]))
                     return True, criteria
 
         return False, None
@@ -236,6 +243,7 @@ class InterproceduralAnalyzer:
                             if write_fun.full_name == this_function.full_name:
                                 continue  # 过滤非当前函数
 
+                            print("\n外部写全局变量函数{}分析........".format(write_fun.full_name))
                             write_func_info = FunctionInfo(self.contract_info, write_fun)
 
                             # 记录下该函数中修改current_var的语句
@@ -312,7 +320,14 @@ class InterproceduralAnalyzer:
         """
         图中存在外部函数调用，并且这些外部函数不包含切片准则
         将函数的PDG直接嫁接到原始图表示中
+        function A {
+            call function B  -- 展开
+        }
+
         """
+
+        print("内部调用函数展开......")
+
         expand_info = {}
         for node_id in to_graph.nodes:
             node_info = to_graph.nodes[node_id]

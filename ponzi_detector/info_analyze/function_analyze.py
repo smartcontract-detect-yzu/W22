@@ -310,8 +310,8 @@ class FunctionInfo:
                 if isinstance(internal_call, Function):
                     called_infos.append(internal_call.id)
                 else:
-                    print("单纯内部调用{}".format(internal_call.name))
-
+                    # print("单纯内部调用{}".format(internal_call.name))
+                    pass
             self.stmt_internal_call[stmt_info.node_id] = called_infos
 
             # 并将信息保存到cfg节点
@@ -398,8 +398,8 @@ class FunctionInfo:
             else:  # 防止出现调用函数的情况
 
                 if to in self.const_var_init:  # 防止出现交易对象是常数的情况
-                    print("交易对象是常数：{}".format(self.const_var_init[to]))
-
+                    ## print("交易对象是常数：{}".format(self.const_var_init[to]))
+                    pass
                 else:
                     self.transaction_stmts[str(stmt.node_id)] = {
                         "to": to,
