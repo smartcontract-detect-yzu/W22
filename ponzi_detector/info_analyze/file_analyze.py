@@ -50,13 +50,16 @@ def _select_solc_version(version_info):
 
 # 文件分析器
 class SolFileAnalyzer:
-    def __init__(self, file_name: str, work_path: str):
+    def __init__(self, file_name: str, work_path: str, file_type="sol"):
 
         self.file_name = file_name
         self.work_path = work_path
         self.pwd = None
 
-        self.opcode_file = file_name.split(".sol")[0] + ".evm"
+        if file_type == "sol":
+            self.opcode_file = file_name.split(".sol")[0] + ".evm"
+        else:
+            self.opcode_file = file_name
 
         self.contract_opcode_files = {}
 
@@ -81,7 +84,38 @@ class SolFileAnalyzer:
     def revert_chdir(self):
         os.chdir(self.pwd)  # 切换工作目录
 
+    def get_asm_from_bin(self):
+
+        if os.path.exists("asm_done.txt"):
+            return
+
+        contract_name = self.file_name.split(".bin")[0]
+
+        # 去除.old_asm文件第一行,写入.asm文件
+        with open("{}.old_asm".format(contract_name), 'w+') as asm_file:
+            subprocess.call(["evm", "disasm", "{}.bin".format(contract_name)], stdout=asm_file)
+
+        with open("{}.old_asm".format(contract_name), 'r') as fin:
+            data = fin.read().splitlines(True)
+
+        with open("{}.asm".format(contract_name), 'w') as fout:
+            fout.writelines(data[1:])
+
+        os.remove("{}.old_asm".format(contract_name))
+
+        self.contract_opcode_files[contract_name] = "{}.bin".format(contract_name)
+        self.contract_asm_files[contract_name] = "{}.asm".format(contract_name)
+
+        with open("asm_done.txt", "w+") as f:
+            f.write("1")
+
     def get_opcode_and_asm_file(self):
+
+        """
+        1. solc --bin-runtime   xxx.sol > xxx.evm
+        2. xxx.evm > xxx.bin    编译出的evm文件包含除bytecode之外的内容，需要此步进行删除
+        3. evm disasm xxx.bin > xxx.asm
+        """
 
         if os.path.exists("asm_done.txt"):
             return
@@ -194,8 +228,3 @@ class SolFileAnalyzer:
             f.write(json.dumps(info))
 
         return
-
-
-
-
-
