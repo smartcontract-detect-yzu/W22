@@ -7,6 +7,7 @@ from ponzi_detector.info_analyze.function_analyze import FunctionInfo
 from ponzi_detector.semantic_analyze.control_flow_analyzer import ControlFlowAnalyzer
 from ponzi_detector.semantic_analyze.data_flow_analyzer import DataFlowAnalyzer
 from ponzi_detector.info_analyze.file_analyze import SolFileAnalyzer
+from ponzi_detector.solidity_dataset import DataSet
 from ponzi_detector.semantic_analyze.interprocedural_analyzer import InterproceduralAnalyzer
 from ponzi_detector.semantic_analyze.code_graph_constructor import CodeGraphConstructor
 from slither import Slither
@@ -15,16 +16,18 @@ from slither import Slither
 def argParse():
     parser = argparse.ArgumentParser(description='manual to this script')
 
-    parser.add_argument('-t', type=str, default=None)
+    parser.add_argument('-d', type=str, default=None)
     parser.add_argument('-n', type=str, default=None)
+    parser.add_argument('-op', type=str, default="p")
 
     args = parser.parse_args()
-    return args.t, args.n
+    return args.d, args.n, args.op
 
 
 if __name__ == '__main__':
 
-    target, name = argParse()
+    dataset, name, operate = argParse()
+
     if name is not None:
 
         test_path = "examples/ponzi/"
@@ -33,7 +36,11 @@ if __name__ == '__main__':
                 os.remove(os.path.join(test_path, file))
 
         file_analyzer = SolFileAnalyzer(file_name=name, work_path=test_path)
+
+        file_analyzer.do_chdir()
         file_analyzer.do_file_analyze_prepare()  # 解析前的准备工作
+        file_analyzer.get_opcode_and_asm_file()
+        file_analyzer.get_opcode_frequency_feature()
 
         slither = Slither(name)
         for contract in slither.contracts:
@@ -74,3 +81,15 @@ if __name__ == '__main__':
                         chains = function_info.get_callee_chain()
                         inter_analyzer.graphs_pool_init()  # 初始化图池，为函数间图合并做准备
                         inter_analyzer.do_interprocedural_analyze_for_call_chain(chains[1])
+
+    if dataset is not None:
+
+        data_set = DataSet(dataset)
+
+        if operate == "asm":
+            data_set.get_asm_and_opcode_for_dataset(pass_tag=0)
+
+        elif operate == "clean":
+            data_set.clean_up()
+
+        
