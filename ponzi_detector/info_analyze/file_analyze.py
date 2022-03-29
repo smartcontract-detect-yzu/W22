@@ -1,4 +1,5 @@
 import argparse
+import json
 import os
 import shutil
 import subprocess
@@ -53,6 +54,7 @@ class SolFileAnalyzer:
 
         self.file_name = file_name
         self.work_path = work_path
+        self.pwd = None
 
         self.opcode_file = file_name.split(".sol")[0] + ".evm"
 
@@ -60,19 +62,29 @@ class SolFileAnalyzer:
 
         self.contract_asm_files = {}
 
+        self.opcode_cnt = {}
+        self.opcode_total_cnt = 0
+        self.opcode_frequency = {}
+
         self.solc_version = None
 
     def do_file_analyze_prepare(self):
-
-        os.chdir(self.work_path)  # 切换工作目录
 
         self._parse_solc_version()  # 解析编译器版本 必须在工作目录下
 
         self._select_compiler()  # 更改编译器版本
 
-        self.get_opcode_and_disasm_file()  # 生成asm 和 bin文件
+    def do_chdir(self):
+        self.pwd = os.getcwd()
+        os.chdir(self.work_path)  # 切换工作目录
 
-    def get_opcode_and_disasm_file(self):
+    def revert_chdir(self):
+        os.chdir(self.pwd)  # 切换工作目录
+
+    def get_opcode_and_asm_file(self):
+
+        if os.path.exists("asm_done.txt"):
+            return
 
         with open(self.opcode_file, 'w+') as f:
             subprocess.check_call(["solc", "--bin-runtime", self.file_name], stdout=f)
@@ -112,6 +124,11 @@ class SolFileAnalyzer:
                     code_flag = 1
                     code_cnt = 2  # 空两行
 
+        with open("asm_done.txt", "w+") as f:
+            f.write("1")
+
+        return
+
     def _select_compiler(self):
         print("========={} V: {}".format(self.file_name, self.solc_version))
         subprocess.check_call(["solc-select", "use", self.solc_version])
@@ -150,3 +167,35 @@ class SolFileAnalyzer:
 
             self.solc_version = version_resault
             return version_resault
+
+    def get_opcode_frequency_feature(self):
+
+        if os.path.exists("frequency.json"):
+            return
+
+        for contract_name in self.contract_asm_files:
+            file_name = self.contract_asm_files[contract_name]
+            with open(file_name, "r") as f:
+                for line in f.readlines():
+
+                    if "not defined" in line:
+                        continue
+
+                    else:
+                        opcode = line.split(":")[1].split("\n")[0][1:].split(" ")[0]
+                        self.opcode_total_cnt += 1
+                        if opcode not in self.opcode_cnt:
+                            self.opcode_cnt[opcode] = 1
+                        else:
+                            self.opcode_cnt[opcode] += 1
+
+        info = {"total": self.opcode_total_cnt, "opcode_cnt": self.opcode_cnt}
+        with open("frequency.json", "w+") as f:
+            f.write(json.dumps(info))
+
+        return
+
+
+
+
+
