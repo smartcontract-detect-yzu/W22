@@ -84,12 +84,22 @@ if __name__ == '__main__':
 
     if dataset is not None:
 
-        data_set = DataSet(dataset)
+        data_set = DataSet(dataset)  # 数据集
 
         if operate == "asm":
-            data_set.get_asm_and_opcode_for_dataset(pass_tag=0)
+            # 将数据集中的sol文件通过solc 编译成bin文件
+            # 再利用evm disasm进行编译成opcdoe文件
+            data_set.get_asm_and_opcode_for_dataset(pass_tag=1)
+            data_set.label_file_analyze()
+            data_set.prepare_for_xgboost()  # 生成xgboost格式的数据集
 
         elif operate == "clean":
             data_set.clean_up()
 
-        
+        elif operate == "bin":
+            # 针对全是编译后的bin文件类型数据集
+            data_set.get_asm_for_dataset_from_bin()
+            data_set.prepare_for_xgboost()
+
+        elif operate == "analyze":
+            pass
