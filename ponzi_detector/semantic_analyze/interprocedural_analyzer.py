@@ -23,7 +23,7 @@ class InterproceduralAnalyzer:
         self.external_state_def_nodes_map = None
 
         # 过程间函数信息存放
-        self.fun_criteria_pair = {}
+        # self.fun_criteria_pair = {}
         self.interprocedural_function_infos: Dict[int, FunctionInfo] = {}
 
         self.intra_fun_result: Dict[str, List[str]] = {}  # 函数内分析结果
@@ -42,12 +42,14 @@ class InterproceduralAnalyzer:
 
             self.graphs_pool[key] = sliced_graphs_map[criteria]
 
-    def _do_analyze_for_target_function(self, fid, criteria):
+    def _do_analyze_for_target_function(self, fid, criteria_content):
 
         """
         根据给定的切片准则，对函数进行切片
         并且不进行外部依赖分析
         返回切片完成后的图表示
+
+        入参： criteria_name: 切片准则必须包含的字符串内容
         """
 
         function_info = self.contract_info.get_function_info_by_fid(fid)
@@ -55,7 +57,7 @@ class InterproceduralAnalyzer:
             function = self.contract_info.get_function_by_fid(fid)
             function_info = FunctionInfo(self.contract_info, function)
 
-        function_info.get_external_criteria(criteria)
+        function_info.get_external_criteria_by_content(criteria_content)
 
         # 全套大保健，需要优化
         control_flow_analyzer = ControlFlowAnalyzer(self.contract_info, function_info)
@@ -67,7 +69,9 @@ class InterproceduralAnalyzer:
         data_flow_analyzer.do_data_semantic_analyze()  # 数据语义分析
         # inter_analyzer.do_interprocedural_state_analyze()  # 过程间全局变量数据流分析
         function_info.construct_dependency_graph()  # 语义分析完之后进行数据增强，为切片做准备
-        graphs_map = graph_constructor.do_code_slice_by_criterias_type(criteria_type="external")  # 切片
+
+        # 切片准则为外部函数调用的切片图表示构建
+        graphs_map = graph_constructor.do_code_slice_by_criterias_type(criteria_content, criteria_type="external")
 
         return graphs_map
 
@@ -77,19 +81,23 @@ class InterproceduralAnalyzer:
         通过图构建切片粒度过程间调用链
         一个函数中可能包含多个切片准则
         函数名@切片准则@切片位置
-        f1@c1@1  -- f2@c2@1 -- f3@c3@1 -- f4@c4@1
-        f1@c1@2  -- f2@c2@2 -- f3@c3@3
-                 -- f2@c2@3
+
+        entry  -- f1@c1@1  -- f2@c2@1 -- f3@c3@1 -- f4@c4@1 -- exit
+               -- f1@c1@2  -- f2@c2@2 -- f3@c3@3
+                           -- f2@c2@3
+
         """
 
+        print("调用链：{}".format(chain))
+        fun_criteria_pair = {}
         # 定义函数，切片准则对 <function id, criteria function id>
         last = None
         for level, target_fun in enumerate(chain):
             if last is not None:
-                self.fun_criteria_pair[last] = target_fun["fid"]
+                fun_criteria_pair[last] = target_fun["fid"]
             last = target_fun["fid"]
 
-        print("函数间分析：函数切片对", self.fun_criteria_pair)
+        print("函数间分析：函数切片对", fun_criteria_pair)
 
         # 构建图
         # 1.图初始化
@@ -100,11 +108,11 @@ class InterproceduralAnalyzer:
 
         tmp = []
         leaf_function_name = None  # 调用图叶子节点
-        for level, target_fid in enumerate(self.fun_criteria_pair):
+        for level, target_fid in enumerate(fun_criteria_pair):
 
             level_info = []
             tmp.append(level_info)
-            criteria_fid = self.fun_criteria_pair[target_fid]
+            criteria_fid = fun_criteria_pair[target_fid]
             callee_function = self.contract_info.get_function_by_fid(target_fid)
             criteria_function = self.contract_info.get_function_by_fid(criteria_fid)
             leaf_function_name = criteria_function.name
@@ -136,7 +144,7 @@ class InterproceduralAnalyzer:
             path_graph.add_node(str(key))
         tmp.append(leaf_info)
 
-        level = len(self.fun_criteria_pair)
+        level = len(fun_criteria_pair)
         for from_node in tmp[level - 1]:
             for to_node in tmp[level]:
                 print("from: {} -> to:{}".format(from_node, to_node))
@@ -165,7 +173,8 @@ class InterproceduralAnalyzer:
         """
 
         # https://github.com/smartcontract-detect-yzu/slither/issues/11#issue-1184776553
-        if self.function_info.visibility == "public":
+        if self.function_info.visibility == "public" \
+                or self.function_info.visibility == "external":
             return False, None
 
         input_params_info = self.function_info.get_input_params()
@@ -244,7 +253,7 @@ class InterproceduralAnalyzer:
 
                             if write_fun.id is None:
                                 continue  # 全局变量初始化函数,在其他地方已经分析过了
-                            
+
                             print("\n外部写全局变量函数{}分析........".format(write_fun.full_name))
                             write_func_info = FunctionInfo(self.contract_info, write_fun)
 
@@ -278,52 +287,61 @@ class InterproceduralAnalyzer:
         self.function_info.external_state_def_nodes_map = external_nodes_map
         return external_nodes_map
 
-    def do_interprocedural_analyze_for_call_chain(self, chain):
+    def do_interprocedural_analyze_for_call_chain(self, chain, idx):
+
+        """
+        合并调用链上所有函数的CFG
+        for graph in chain：
+            to_graph = Merge graph to to_graph
+        """
 
         merged_graphs = None
-
+        removed_edges = None
         fid = self.function_info.get_fid()
         if fid not in self.interprocedural_function_infos:
             self.interprocedural_function_infos[fid] = self.function_info  # leaf
 
         # 根据给定的调用链构建所有的过程间分析路径
+        # 一条调用链可能存在多种路径
+        print("调用链：{} {}".format(idx, chain))
         path_graph = self._construct_slice_call_chain_graph(chain)
-        debug_get_graph_png(path_graph, "函数间调用关系路径图")
+        debug_get_graph_png(path_graph, "{}_函数间调用关系路径图".format(idx))
 
         # 进行图合并
+
         paths = nx.all_simple_paths(path_graph, source="entry", target="exit")
         for chain_idx, path in enumerate(list(paths)):
 
-            to_graph_key = to_graph = None
+            merged_graph_name = to_graph_key = to_graph = None
             for idx, g_key in enumerate(path[1:-1]):
 
                 if to_graph_key is None:
+                    merged_graph_name = g_key
                     to_graph_key = g_key
                 else:
+                    merged_graph_name += "_{}".format(g_key)
                     g = self.graphs_pool[g_key]
-                    # g = do_prepare_before_merge(g, g.graph["name"])
                     g = do_graph_relabel_before_merge(g, g.graph["name"])
 
                     to_graph_name = self.graphs_pool[to_graph_key].graph["name"]
 
                     if to_graph is None:
                         to_graph = self.graphs_pool[to_graph_key]
-                        to_graph = do_prepare_before_merge(to_graph, to_graph_name)
-                        # debug_get_graph_png(to_graph, "to_graph".format(chain_idx), dot=True)
-                        # to_graph = do_graph_relabel_before_merge(to_graph, to_graph_name)
+                        to_graph, removed_edges = do_prepare_before_merge(to_graph, to_graph_name)
 
                     pos_at_to_graph = "{}@{}".format(to_graph_name, str(to_graph_key).split("@")[-1])
+                    print("merge {} to {}".format(g.graph["name"], to_graph.graph["name"]))
                     to_graph = do_merge_graph1_to_graph2(g, to_graph, pos_at_to_graph)
                     to_graph_key = g_key
 
-            debug_get_graph_png(to_graph, "_easy_合并chain_{}".format(chain_idx), dot=True)
-            merged_graphs = self.do_interprocedural_analyze_without_slice_criteria(to_graph)
-            if len(merged_graphs) == 0:
-                pass
-                # debug_get_graph_png(to_graph, "_easy_合并chain_{}".format(chain_idx))
-            else:
-                for key in merged_graphs:
-                    debug_get_graph_png(merged_graphs[key], "合并chain_{}".format(chain_idx), dot=True)
+            # 当前path合并后的结果
+            to_graph.graph["name"] = merged_graph_name
+            to_graph.add_edges_from(removed_edges)
+
+            # 将图中剩余的内部调用展开
+            merged_graph = self.do_interprocedural_analyze_without_slice_criteria(to_graph)
+            merged_graph.graph["name"] = "Expand_" + merged_graph_name
+            debug_get_graph_png(merged_graph, "合并chain_{}".format(chain_idx), dot=False)
 
         return merged_graphs
 
@@ -337,16 +355,14 @@ class InterproceduralAnalyzer:
 
         """
 
-        print("内部调用函数展开......")
-
-        expand_info = {}
         for node_id in to_graph.nodes:
+
+            # Note: 图中当前节点为函数调用，需要进行展开
             node_info = to_graph.nodes[node_id]
             if "called" in node_info:
 
                 fid = node_info["called"][0]
                 function_info = self.contract_info.get_function_info_by_fid(fid)
-
                 if function_info is None:
                     called_function = self.contract_info.get_function_by_fid(fid)
                     function_info = FunctionInfo(self.contract_info, called_function)
@@ -365,12 +381,19 @@ class InterproceduralAnalyzer:
                 inter_analyzer.do_interprocedural_analyze_for_state_def()  # 过程间全局变量数据流分析
                 function_info.construct_dependency_graph()  # 语义分析完之后进行数据增强，为切片做准备
 
-                graph = graph_constructor.do_code_create_without_slice()
-                graph = do_prepare_before_merge(graph, called_function_name)
-                merged_graph = do_merge_graph1_to_graph2(graph, to_graph, node_id)
+                graph = graph_constructor.do_code_create_without_slice()  # 构图
 
-                # debug_get_graph_png(merged_graph, "112233")
+                graph, removed_semantic_edges = do_prepare_before_merge(graph, called_function_name)
+                to_graph = do_merge_graph1_to_graph2(graph, to_graph, node_id)  # 内部函数调用展开
+                to_graph.add_edges_from(removed_semantic_edges)
 
-                expand_info[node_id] = merged_graph
+        return to_graph
 
-        return expand_info
+    def do_inter_function_call_expand(self):
+
+        # 所有的切片
+        sliced_graphs = self.function_info.sliced_pdg
+
+        for criteria in sliced_graphs:
+            graph = sliced_graphs[criteria]
+            self.do_interprocedural_analyze_without_slice_criteria(graph)

@@ -39,13 +39,17 @@ def add_graph_node_info(graph: nx.MultiDiGraph, idx, key, value):
 
 
 def _get_cfg_from_pdg(pdg: nx.MultiDiGraph):
+    semantic_edges = []
+
     # 获得切片之后的控制流图 sliced_cfg
     cfg = nx.MultiDiGraph(pdg)
     cfg.graph["name"] = cfg.graph["name"]
     for u, v, k, d in pdg.edges(data=True, keys=True):
         if "type" in d:
+            semantic_edges.append((u, v, d))
             cfg.remove_edge(u, v, k)
-    return cfg
+
+    return cfg, semantic_edges
 
 
 def _add_entry_point_for_graph(graph: nx.MultiDiGraph):
@@ -95,11 +99,11 @@ def do_prepare_before_merge(graph: nx.MultiDiGraph, prefix: str):
     graph.graph["relabel"] = "{}@".format(prefix)
     g = nx.relabel_nodes(graph, lambda x: "{}@{}".format(prefix, x))
 
-    g = _get_cfg_from_pdg(g)  # 原始操作在CFG上完成
+    g, semantic_edges = _get_cfg_from_pdg(g)  # 原始操作在CFG上完成
     g = _add_entry_point_for_graph(g)
     g = _add_exit_point_for_graph(g)
 
-    return g
+    return g, semantic_edges
 
 
 def do_merge_graph1_to_graph2(graph: nx.MultiDiGraph, to_graph: nx.MultiDiGraph, pos_at_to_graph):
@@ -107,13 +111,13 @@ def do_merge_graph1_to_graph2(graph: nx.MultiDiGraph, to_graph: nx.MultiDiGraph,
         raise RuntimeError("请先进行do_graph_relabel_before_merge，再进行merge操作")
 
     # 原始操作在CFG上完成
-    g1 = _get_cfg_from_pdg(graph)
+    g1, semantic_edges = _get_cfg_from_pdg(graph)
     g1 = _add_entry_point_for_graph(g1)
     g1 = _add_exit_point_for_graph(g1)
-    debug_get_graph_png(g1, "g1", dot=True)
+    # debug_get_graph_png(g1, "g1", dot=True)
 
     g2 = to_graph
-    debug_get_graph_png(g2, "g2", dot=True)
+    # debug_get_graph_png(g2, "g2", dot=True)
 
     sources = []
     for source, _ in g2.in_edges(pos_at_to_graph):
@@ -127,8 +131,7 @@ def do_merge_graph1_to_graph2(graph: nx.MultiDiGraph, to_graph: nx.MultiDiGraph,
     to_name = g2.graph["name"]
 
     joint_graph: nx.MultiDiGraph = nx.union(g1, g2)
-    joint_graph.graph["name"] = "{}@{}@{}_".format(g2.graph["name"], g1.graph["name"], pos_at_to_graph)
-    # joint_graph.graph["name"] = "{}".format(g2.graph["name"])
+    joint_graph.graph["name"] = g2.graph["name"]
     joint_graph.graph["relabel"] = "{}_{}".format(g1.graph["relabel"], g2.graph["relabel"])
 
     for src in sources:
@@ -141,6 +144,13 @@ def do_merge_graph1_to_graph2(graph: nx.MultiDiGraph, to_graph: nx.MultiDiGraph,
 
     # 规避 https://github.com/smartcontract-detect-yzu/slither/issues/9
     graph_clean_up(joint_graph)
+
+    # 语义边还原
+    for edge in semantic_edges:
+        u, v, d = edge
+        if u in joint_graph.nodes and v in joint_graph.nodes:
+            # print("语义边还原： from {}  to {} with {}".format(u, v, d))
+            joint_graph.add_edge(u, v, color=d["color"], type=d["type"])
 
     return joint_graph
 
@@ -577,9 +587,15 @@ class CodeGraphConstructor:
                             if var in previous_def:
                                 sliced_pdg.add_edge(first_id, node_id, color="green", type="data_dependency")
 
-    def do_code_slice_by_criterias_type(self, criteria_type="external"):
-
-        criterias = self.function_info.get_criteria_by_type(criteria_type)
+    def do_code_slice_by_criterias_type(self, criteria_content, criteria_type="external"):
+        """
+        根据切片类型进行切片造成：
+        入参：
+        criteria_content --> 外部切片关键词，只在 criteria_type="external"时使用
+                     --> 保证能够在所有的外部切片准则中准确找到本次需要的切片
+                     --> 一般时外部调用函数名 foo1 { foo2(criteria_key) }
+        """
+        criterias = self.function_info.get_criterias_by_criteria_content(criteria_content, criteria_type)
         for criteria in criterias:
             # 计算需要保留的节点
             reserved_nodes = self.reserved_nodes_for_a_criteria(criteria, criteria_type="external")
@@ -599,7 +615,16 @@ class CodeGraphConstructor:
 
     def do_code_slice_by_internal_all_criterias(self):
         """
-        单函数分析
+        单函数分析，根据函数内部的切片准则进行切片
+        内部切片准则：
+        1. 交易语句
+        2. 涉及的全局变量
+        3. msg.value
+
+        并在切片的基础上进行外部函数语义增强
+        外部增强来源：
+        1. 外部函数对交易相关全局变量修改
+        2.交易相关的常数初始化
         """
 
         # 切片之前的准备工作
@@ -642,15 +667,15 @@ class CodeGraphConstructor:
             else:
                 self._add_reenter_edges(sliced_pdg, first_node)
 
-            # 保存为json格式
-            graph_info, file_name = save_graph_to_json_format(sliced_cfg, criteria)
-            with open(file_name, "w+") as f:
-                f.write(json.dumps(graph_info))
+            if len(graphs_with_external_map) == 0:
+                # 保存为json格式
+                graph_info, file_name = save_graph_to_json_format(sliced_cfg, criteria)
+                with open(file_name, "w+") as f:
+                    f.write(json.dumps(graph_info))
 
             if len(graphs_with_external_map) != 0:  # 如果没有外部展开节点（没有外部节点\只有全局变量初始化节点），则依旧使用旧的PDG
 
                 for write_fname in graphs_with_external_map:
-
                     graph_with_external_info = graphs_with_external_map[write_fname]
 
                     new_slice_pdg = graph_with_external_info["graph"]
@@ -672,4 +697,21 @@ class CodeGraphConstructor:
 
     def do_code_create_without_slice(self):
 
-        return self.function_info.cfg
+        new_edges = []
+        duplicate = {}
+
+        g = nx.MultiDiGraph(self.function_info.cfg)
+        semantic_edges = self.function_info.semantic_edges
+        for semantic_type in semantic_edges:
+            for edge in semantic_edges[semantic_type]:
+                if str(edge[0]) in g.nodes and str(edge[1]) in g.nodes:
+                    g_edges = g.edges(edge[0], edge[1])
+                    for already_edge in g_edges:
+                        if "type" not in already_edge or already_edge["type"] != edge[2]["type"]:
+                            key = "{}-{}-{}".format(edge[0], edge[1], edge[2]["type"])
+                            if key not in duplicate:
+                                duplicate[key] = 1
+                                new_edges.append(edge)
+
+        g.add_edges_from(new_edges)
+        return g

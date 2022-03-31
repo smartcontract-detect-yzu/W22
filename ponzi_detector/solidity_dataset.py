@@ -45,7 +45,7 @@ class DataSet:
 
         self.name = name
         self.label_json = {}
-
+        self.json_file_name = "slice_record_{}.json".format(name)
         self._get_label_json_file()
 
         self.ponzi_file_names = []  # 数据集正样本集合
@@ -190,7 +190,13 @@ class DataSet:
             g = os.walk(analyze_prefix)
             for path, dir_list, file_list in g:
                 for file_name in file_list:
-                    if file_name.endswith(".asm") or file_name.endswith(".bin") or file_name.endswith(".evm"):
+                    if file_name.endswith(".asm") \
+                            or file_name.endswith(".json") \
+                            or file_name.endswith(".bin") \
+                            or file_name.endswith(".dot") \
+                            or file_name.endswith(".png") \
+                            or file_name.endswith(".txt") \
+                            or file_name.endswith(".evm"):
                         src_file = os.path.join(path, file_name)
                         os.remove(src_file)
 
@@ -235,6 +241,7 @@ class DataSet:
 
     def do_analyze(self, pass_tag=1):
 
+        dataset_infos = {}
         dataset_prefix_list, analyze_prefix_list, cnt = self.get_work_dirs()
         for i in range(cnt):
 
@@ -273,7 +280,25 @@ class DataSet:
                             print("\033[0;31;40m\t开始分析: {} \033[0m".format(file_name))
                             solfile_analyzer = SolFileAnalyzer(file_name, analyze_dir)
                             solfile_analyzer.do_chdir()
-                            solfile_analyzer.do_analyze_a_file()
+
+                            # 字节码特征
+                            solfile_analyzer.get_opcode_and_asm_file()
+                            solfile_analyzer.get_opcode_frequency_feature()
+
+                            # 源代码语义特征
+                            slice_infos = solfile_analyzer.do_analyze_a_file()
+                            info = {
+                                "addre": solfile_analyzer.addre,
+                                "slice": slice_infos
+                            }
+                            dataset_infos[solfile_analyzer.addre] = info
+
                             with open("done_ok.txt", "w+") as f:
                                 f.write("done")
+
                             solfile_analyzer.revert_chdir()
+                    else:
+                        path_file_name = os.path.join(path, file_name)
+                        os.remove(path_file_name)
+
+        return dataset_infos

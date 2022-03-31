@@ -54,6 +54,7 @@ class SolFileAnalyzer:
     def __init__(self, file_name: str, work_path: str, file_type="sol"):
 
         self.file_name = file_name
+        self.addre = file_name.strip(".sol")
         self.work_path = work_path
         self.pwd = None
 
@@ -234,7 +235,7 @@ class SolFileAnalyzer:
         """
         进行solidity文件分析
         """
-
+        analyze_result = []
         slither = Slither(self.file_name)
         for contract in slither.contracts:
 
@@ -272,5 +273,9 @@ class SolFileAnalyzer:
                     if flag is True:
                         inter_analyzer.graphs_pool_init()  # 初始化图池，为函数间图合并做准备
                         chains = function_info.get_callee_chain()
-                        for chain in chains:
-                            inter_analyzer.do_interprocedural_analyze_for_call_chain(chain)
+                        for idx, chain in enumerate(chains):
+                            inter_analyzer.do_interprocedural_analyze_for_call_chain(chain, idx)
+
+            analyze_result += contract_info.get_contract_info()
+
+        return analyze_result

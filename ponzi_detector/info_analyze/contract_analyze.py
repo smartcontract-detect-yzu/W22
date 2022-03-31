@@ -19,6 +19,9 @@ class ContractInfo:
 
         self.function_info_map = {}
 
+        # 当合约包含的切片内容
+        self.sliced_infos = []
+
         # 合约内部定义的结构体信息 <结构体名称, StructureContract>
         self.structs_info = {}
 
@@ -143,11 +146,16 @@ class ContractInfo:
 
         self.call_graph = call_graph
 
+    def load_slices_infos(self, infos):
+        self.sliced_infos += infos
+
     def contract_info_analyze(self):
         self._struct_info()  # 获得结构体信息
         self._stat_vars_info_in_contract()  # 获得结构体信息
         self._functions_with_transaction_call()
-        self._construct_call_graph()
+
+        self._construct_call_graph()  # 函数调用图
+        self.debug_get_call_graph()
 
     def debug_get_call_graph(self):
 
@@ -215,3 +223,7 @@ class ContractInfo:
             return self.function_info_map[fid]
 
         return None
+
+    def get_contract_info(self):
+
+        return self.sliced_infos

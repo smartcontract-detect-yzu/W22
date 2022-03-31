@@ -303,19 +303,23 @@ class FunctionInfo:
 
         if len(stmt_info.internal_calls) != 0:
 
-            # print("EXPR:{}".format(stmt_info.expression.__str__()))
+            # print("====当前语句存在函数调用 EXPR:{}".format(stmt_info.expression.__str__()))
             called_infos = []
 
             for internal_call in stmt_info.internal_calls:
                 if isinstance(internal_call, Function):
+                    # print("====函数调用左边：{}".format([str(v) for v in stmt_info.variables_written]))
                     called_infos.append(internal_call.id)
                 else:
                     # print("单纯内部调用{}".format(internal_call.name))
                     pass
-            self.stmt_internal_call[stmt_info.node_id] = called_infos
 
-            # 并将信息保存到cfg节点
-            self.cfg.nodes[str(stmt_info.node_id)]["called"] = called_infos
+            if len(called_infos) != 0:  # 当存在外部调用时
+
+                self.stmt_internal_call[stmt_info.node_id] = called_infos
+
+                # 并将信息保存到cfg节点
+                self.cfg.nodes[str(stmt_info.node_id)]["called"] = called_infos
 
     def __stmt_var_info(self, stmt_info: Node):
 
@@ -504,6 +508,23 @@ class FunctionInfo:
         # 简化原始cfg: 删除循环边, 添加exit节点
         self.__construct_simple_cfg(simple_cfg, remove_edges)
 
+        # 向contract结构注册函数的切片
+        self._register_slice_infos()
+
+    def _register_slice_infos(self):
+
+        slices_infos = []
+        contract_name = self.contract_info.name
+        function_name = self.name
+        name_prefix = "{}_{}".format(contract_name, function_name)
+
+        for criteria in self.transaction_stmts:
+            name = "{}_{}".format(name_prefix, criteria)
+            exp = self.function.nodes[self.node_id_2_idx[int(criteria)]].expression.__str__()
+            slices_infos.append({"name": name, "exp": exp})
+
+        self.contract_info.load_slices_infos(slices_infos)
+
     def loop_body_extreact(self, criteria):
         """
         循环体执行
@@ -650,10 +671,17 @@ class FunctionInfo:
         self.criterias = self.transaction_stmts
         self.criterias_msg = self.msg_value_stmt
 
-    def get_criteria_by_type(self, criteria_type):
+    def get_criterias_by_criteria_content(self, criteria_content, criteria_type):
+
+        external_criterias = []
 
         if criteria_type is "external":
-            return self.external_criterias
+            for stmt_id in self.external_criterias:
+                external_criteria = self.external_criterias[stmt_id]
+                if external_criteria["external_call"] == criteria_content:
+                    external_criterias.append(stmt_id)
+
+        return external_criterias
 
     #######################################
     # 获得当前函数的图表示                    #
@@ -708,18 +736,18 @@ class FunctionInfo:
         print("\n======DEBUG: VAR_INFO at {}======".format(cfg_id))
 
     #######################################
-    # 判断指定的切片准则再函数中的位置           #
+    # 判断指定的切片准则内容在函数中的位置           #
     #######################################
-    def get_external_criteria(self, criteria):
+    def get_external_criteria_by_content(self, criteria_content):
 
         for idx, stmt in enumerate(self.function.nodes):
 
-            if stmt.can_send_eth() and criteria in stmt.expression.__str__():
+            if stmt.can_send_eth() and criteria_content in stmt.expression.__str__():
 
                 if self.external_criterias is None:
                     self.external_criterias = {}
 
                 self.external_criterias[str(stmt.node_id)] = {
-                    "external_call": criteria,
+                    "external_call": criteria_content,
                     "exp": stmt.expression.__str__()
                 }
