@@ -331,6 +331,34 @@ def _add_external_stmts_to_a_graph(graph, external_stmts, external_id, previous_
     previous_id --> current_id --> <wait to add>
     """
     first_id = None
+
+    # NOTE: 1. 外部函数依赖的常数定义
+    for external_node in reversed(external_stmts):
+
+        external_const_vars_init = external_node["const_init"]
+        if len(external_const_vars_init) != 0:
+            for external_const_var in external_const_vars_init:
+
+                new_id = "{}@{}".format(str(external_id), "tag")
+                external_id += 1
+
+                if previous_id is None:  # 第一次增加节点，之前从没有
+                    first_id = new_id
+                    previous_id = new_id
+                    current_id = new_id
+                else:
+                    previous_id = current_id  # 接到上次添加的节点
+                    current_id = new_id
+
+                graph.add_node(new_id,
+                               label=external_const_vars_init[external_const_var],
+                               expression=external_const_vars_init[external_const_var],
+                               type="VAR INIT")
+
+                if previous_id != current_id:
+                    graph.add_edge(previous_id, current_id, color="black")
+
+    # NOTE: 2. 外部函数
     for external_node in reversed(external_stmts):
 
         if "expand" in external_node:
@@ -490,6 +518,9 @@ class CodeGraphConstructor:
 
         return candidate_const_var
 
+    def _const_var_filter_by_stmts(self, external_stmts):
+        pass
+
     def _add_external_nodes(self, sliced_pdg, criteria):
 
         """
@@ -505,6 +536,11 @@ class CodeGraphConstructor:
         const_init = self.function_info.const_var_init
         candidate_const_var = self._const_var_filter_by_sliced_graph(sliced_pdg)  # Note: 需要判断当前图表示经过切片后剩余的节点究竟涉及那些常数
         for const_var in candidate_const_var:
+
+            # Note: 初始化为0不需要加入图中，没有意义
+            if "0" == const_init[const_var].__str__().split(" = ")[1]:
+                # print("变量初始化信息：{}", const_init[const_var])
+                continue
 
             new_id = "{}@{}".format(str(external_id), "tag")
             external_id += 1
@@ -534,6 +570,7 @@ class CodeGraphConstructor:
             external_nodes_map_for_write_functions = external_state_map[criteria]
             for write_fid in external_nodes_map_for_write_functions:
                 sliced_pdg_with_external = nx.MultiDiGraph(sliced_pdg)  # 创建备份
+
                 external_stmts = external_nodes_map_for_write_functions[write_fid]
                 tmp_first_id, tmp_last_id = _add_external_stmts_to_a_graph(sliced_pdg_with_external,
                                                                            external_stmts,
@@ -547,6 +584,8 @@ class CodeGraphConstructor:
                     "first_id": graph_1st_id,
                     "current_id": tmp_last_id
                 }
+
+                debug_get_graph_png(sliced_pdg_with_external, "{}_debug".format(write_fid))
 
         return first_id, current_id, with_external_sliced_pdgs_map
 
@@ -651,8 +690,6 @@ class CodeGraphConstructor:
             self.slice_graphs[criteria] = sliced_pdg
             self.function_info.sliced_pdg[criteria] = sliced_pdg
 
-            # 入函数间分析器池
-
             print("===========开始分析外部节点===============")
 
             # 外部节点
@@ -667,13 +704,13 @@ class CodeGraphConstructor:
             else:
                 self._add_reenter_edges(sliced_pdg, first_node)
 
+            # 如果没有外部展开节点（没有外部节点\只有全局变量初始化节点），则依旧使用旧的PDG
             if len(graphs_with_external_map) == 0:
-                # 保存为json格式
                 graph_info, file_name = save_graph_to_json_format(sliced_cfg, criteria)
                 with open(file_name, "w+") as f:
                     f.write(json.dumps(graph_info))
 
-            if len(graphs_with_external_map) != 0:  # 如果没有外部展开节点（没有外部节点\只有全局变量初始化节点），则依旧使用旧的PDG
+            if len(graphs_with_external_map) != 0:
 
                 for write_fname in graphs_with_external_map:
                     graph_with_external_info = graphs_with_external_map[write_fname]

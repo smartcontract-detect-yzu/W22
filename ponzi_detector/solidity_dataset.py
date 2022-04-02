@@ -60,7 +60,7 @@ class DataSet:
 
         else:
             json_name = "labeled_slice_record_{}.json".format(self.name)
-            self.label_json[json_name] = json_name
+            self.label_json[self.name] = json_name
 
     def get_work_dirs(self):
 
@@ -212,15 +212,18 @@ class DataSet:
             with open(prefix + json_file, "r") as f:
                 print("filename: {}".format(json_file))
                 dataset_info = json.load(f)
+                is_ponzi = 0
                 for file_name in dataset_info:
-
+                    print(" label filename:", file_name)
                     contract_info = dataset_info[file_name]
                     if "slice" in contract_info:
                         for slice_info in contract_info["slice"]:
                             if "tag" in slice_info:
                                 self.ponzi_file_names.append(analyze_prefix + "{}/".format(dataset_type) + file_name)
+                                is_ponzi = 1
                                 break
-                        self.no_ponzi_file_names.append(analyze_prefix + "{}/".format(dataset_type) + file_name)
+                        if is_ponzi == 0:
+                            self.no_ponzi_file_names.append(analyze_prefix + "{}/".format(dataset_type) + file_name)
 
         print("样本量：{}".format(len(self.ponzi_file_names)))
 
@@ -240,6 +243,13 @@ class DataSet:
             f.writelines(dataset_lines)
 
     def do_analyze(self, pass_tag=1):
+
+        """
+        进行数据集分析
+
+        返回值：
+          当前数据集的切片信息，以map形式返回
+        """
 
         dataset_infos = {}
         dataset_prefix_list, analyze_prefix_list, cnt = self.get_work_dirs()
@@ -281,11 +291,11 @@ class DataSet:
                             solfile_analyzer = SolFileAnalyzer(file_name, analyze_dir)
                             solfile_analyzer.do_chdir()
 
-                            # 字节码特征
+                            # 字节码特征提取
                             solfile_analyzer.get_opcode_and_asm_file()
                             solfile_analyzer.get_opcode_frequency_feature()
 
-                            # 源代码语义特征
+                            # 源代码语义特征分析
                             slice_infos = solfile_analyzer.do_analyze_a_file()
                             info = {
                                 "addre": solfile_analyzer.addre,

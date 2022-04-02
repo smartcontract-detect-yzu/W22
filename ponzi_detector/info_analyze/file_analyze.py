@@ -239,12 +239,14 @@ class SolFileAnalyzer:
         slither = Slither(self.file_name)
         for contract in slither.contracts:
 
-            contract_info = ContractInfo(contract)  # 合约内容提取
+            contract_info = ContractInfo(contract)  # 1.合约信息抽取
             for function in contract.functions:
 
+                # 只分析存在交易行为的函数
                 if function.can_send_eth():
                     function_info = FunctionInfo(contract_info, function)  # 函数对象
-                    if not function_info.has_trans_stmts():  # print("当前函数没有直接调用 .send 或者 .trans, 暂时不进行下一步分析")
+                    if not function_info.has_trans_stmts():
+                        # print("当前函数没有直接调用 .send 或者 .trans, 暂时不进行下一步分析")
                         continue
 
                     print("\n##########{}##############".format(self.file_name))
@@ -254,18 +256,16 @@ class SolFileAnalyzer:
                     control_flow_analyzer = ControlFlowAnalyzer(contract_info, function_info)  # 当前函数的控制流分析器
                     data_flow_analyzer = DataFlowAnalyzer(contract_info, function_info)  # 当前函数的数据流分析器
                     inter_analyzer = InterproceduralAnalyzer(contract_info, function_info)  # 过程间分析器
-                    code_constructor = CodeGraphConstructor(contract_info, function_info)  # 为当前函数创建代码图表示构建
+                    code_constructor = CodeGraphConstructor(contract_info, function_info)  # 代码图表示构建器
 
                     control_flow_analyzer.do_control_dependency_analyze()  # 控制流分析
-                    data_flow_analyzer.do_data_semantic_analyze()  # 数据语义分析
+                    data_flow_analyzer.do_data_semantic_analyze()  # 数据流分析
                     inter_analyzer.do_interprocedural_analyze_for_state_def()  # 过程间全局变量数据流分析
 
-                    # 语义分析完之后进行数据增强，为切片做准备
-                    function_info.construct_dependency_graph()
+                    function_info.construct_dependency_graph()  # 构建PDG，为切片准备
                     function_info.debug_png_for_graph(graph_type="pdg")
 
-                    # 切片
-                    code_constructor.do_code_slice_by_internal_all_criterias()
+                    code_constructor.do_code_slice_by_internal_all_criterias() # 切片
                     function_info.debug_png_for_graph("sliced_pdg")
 
                     # 过程间分析

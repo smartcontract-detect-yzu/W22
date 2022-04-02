@@ -193,11 +193,11 @@ class InterproceduralAnalyzer:
 
     def do_interprocedural_analyze_for_state_def(self):
         """
-        Parameters:
-        this_function -- 当前函数的信息
-        transaction_states -- 当前函数依赖中交易行为依赖的全局变量
-        state_var_write_function_map -- 当前智能合约中全局变量修改操作和函数的对应表
-        state_var_declare_function_map -- 当前智能合约中全局变量声明操作和函数的对应表
+        过程间全局变量数据流分析：
+            storage VAR
+            function A { VAR = 1}
+            function B {b = var}
+        存在一个跨函数数据流分析 function A --> function B
 
         Return：
         external_nodes_map - <交易相关全局变量, [交易相关全局变量修改函数]>
@@ -212,20 +212,21 @@ class InterproceduralAnalyzer:
 
         # 跨函数交易依赖全局变量修改分析
         duplicate = {}
-        external_nodes_map = {}  # <key:交易语句, value:外部函数语句>
+        external_nodes_map = {}  # <key:交易语句, value:外部函数的语句相关信息>
 
         for trans_criteria in transaction_states:  # 交易相关全局变量作为准则
 
             external_nodes_map_for_write_functions = {}
-            for transaction_state in transaction_states[trans_criteria]:
-                for trans_stat_var in transaction_state["vars"]:
+            for transaction_state in transaction_states[trans_criteria]:  # 交易语句究竟涉及哪些全局变量
+                for trans_stat_var in transaction_state["vars"]:  # 遍历全部全局变量
+
                     duplicate.clear()
+
                     stack = [trans_stat_var]
                     duplicate[trans_stat_var] = 1
                     while len(stack) != 0:
 
                         current_var = stack.pop()
-
                         if current_var in state_var_write_function_map:
                             write_funs = state_var_write_function_map[current_var]
 
@@ -235,17 +236,16 @@ class InterproceduralAnalyzer:
                                 # 此处表示该全局变量只做了声明，没有赋值 （e.g. char [] m;）
                                 # print("\t\tDEC_EXP:{}".format(state_var_declare_function_map[current_var]["exp"]))
                                 continue
-
                             elif "fun" in state_var_declare_function_map[current_var]:
                                 write_funs = [state_var_declare_function_map[current_var]["fun"]]
                                 # print("\t\tDEC_FUN:{}".format(state_var_declare_function_map[current_var]["fun"].name))
-
                             else:
                                 raise RuntimeError("全局变量缺乏定义和修改")
 
                         else:
                             raise RuntimeError("全局变量缺乏定义和修改")
 
+                        # 当前全局变量可能被多个外部函数修改
                         for write_fun in write_funs:
 
                             if write_fun.full_name == this_function.full_name:
@@ -261,6 +261,13 @@ class InterproceduralAnalyzer:
                             def_var_infos = write_func_info.get_state_var_def_stmts_info(current_var)
                             for info in def_var_infos:
 
+                                # 保存外部连接
+                                if "ex_data_dep" not in info:
+                                    info["ex_data_dep"] = [trans_criteria]
+                                else:
+                                    info["ex_data_dep"].append(trans_criteria)
+
+                                # 结构体赋值展开
                                 self.function_info.struct_assign_stmt_expand(info)
 
                                 # 保存外部语句信息
@@ -268,8 +275,6 @@ class InterproceduralAnalyzer:
                                     external_nodes_map_for_write_functions[write_func_info.name] = [info]
                                 else:
                                     external_nodes_map_for_write_functions[write_func_info.name].append(info)
-
-                                # external_nodes_map[trans_criteria].append(info)
 
                                 # 这些语句又使用了那些全局变量来修改current_var, 进行下一次的分析
                                 for var_info in info["info"]:

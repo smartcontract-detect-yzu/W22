@@ -158,15 +158,15 @@ class ControlFlowAnalyzer:
         for from_node in self.control_dep_relations:
             to_node = self.control_dep_relations[from_node]["to"]
 
-            # NOTE: 控制依赖边方向和控制流边方向相反
+            # NOTE: 控制依赖边方向和控制流边方向相反（if(A) {B}: B -依赖于->A）
             if not self._control_dependency_fliter(from_node, to_node):
                 cdg_edges.append((from_node, to_node, {'color': "red", "type": "ctrl_dependency"}))
             else:
                 # print("过滤控制流边{}-{}".format(from_node, to_node))
                 pass
 
-        self.control_dep_edges = cdg_edges
-        self.function_info.semantic_edges["ctrl_dep"] = self.control_dep_edges
+        self.control_dep_edges = cdg_edges  # 结果保存在当前控制流分析器中
+        self.function_info.semantic_edges["ctrl_dep"] = self.control_dep_edges  # 结果保存在当前函数信息中
 
     ###############################
     #  生成当前函数的控制依赖边        #

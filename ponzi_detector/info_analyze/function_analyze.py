@@ -1,5 +1,6 @@
 import os
 import subprocess
+from typing import Dict, List
 import networkx as nx
 import networkx.drawing.nx_pydot as nx_dot
 
@@ -170,6 +171,14 @@ class FunctionInfo:
 
         # 初始化
         self.function_info_analyze()
+
+    def add_semantic_edges(self, semantic_type, edges: List):
+
+        if semantic_type not in self.semantic_edges:
+            self.semantic_edges[semantic_type] = edges
+        else:
+            for edge in edges:
+                self.semantic_edges[semantic_type].append(edge)
 
     def get_callee_chain(self):
         return self.callee_chains
@@ -567,18 +576,27 @@ class FunctionInfo:
     def get_state_var_def_stmts_info(self, state_var):
 
         state_var_related_stmts_infos = []
-
+        state_declare_info = self.contract_info.state_var_declare_function_map
         if state_var in self.state_def_stmts:
             stmt_ids = self.state_def_stmts[state_var]
 
             for stmt_id in stmt_ids:
-                var_info = self.stmts_var_info_maps[str(stmt_id)]
+                vars_infos = self.stmts_var_info_maps[str(stmt_id)]
+
+                const_init = {}
+                for vars_info in vars_infos:
+                    if vars_info["type"] == 'state' and vars_info["op_type"] == 'use':
+                        for v in vars_info["list"]:
+                            if str(v) in state_declare_info and "full_expr" in state_declare_info[str(v)]:
+                                const_init[str(v)] = state_declare_info[str(v)]["full_expr"]
+
                 current_node = self.function.nodes[stmt_id]
                 state_var_related_stmts_infos.append({
                     "state_var": state_var,
                     "expression": current_node.expression.__str__(),
                     "type": current_node.type.__str__(),
-                    "info": var_info,
+                    "info": vars_infos,
+                    "const_init": const_init,
                     "fun": self.function,
                     "func_name": self.name,
                     "node": current_node
@@ -650,14 +668,10 @@ class FunctionInfo:
             raise RuntimeError("ERROR: PDG缺少控制依赖")
         if "data_dep" not in self.semantic_edges:
             raise RuntimeError("ERROR: PDG缺少数据依赖")
-        if "loop_data_dep" not in self.semantic_edges:
-            raise RuntimeError("ERROR: PDG缺少循环体数据依赖")
 
         self.pdg = nx.MultiDiGraph(self.cfg)
         for semantic_type in self.semantic_edges:
-            if semantic_type == "ctrl_dep" \
-                    or semantic_type == "data_dep" \
-                    or semantic_type == "loop_data_dep":
+            if semantic_type == "ctrl_dep" or semantic_type == "data_dep":
                 self.pdg.add_edges_from(self.semantic_edges[semantic_type])
 
     #######################################

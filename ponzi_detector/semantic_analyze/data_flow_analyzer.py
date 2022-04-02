@@ -5,6 +5,10 @@ from ponzi_detector.info_analyze.function_analyze import FunctionInfo
 
 
 def _data_flow_reorder(current_stmt_vars):
+    """
+    调整当前语句变量使用情况分析顺序
+    保证：先分析def 再分析use
+    """
     use_vars = []
     def_vars = []
 
@@ -19,7 +23,7 @@ def _data_flow_reorder(current_stmt_vars):
     return def_vars + use_vars
 
 
-def _get_ddg_edges(data_dependency_relations, type):
+def _get_ddg_edges(data_dependency_relations, edge_type):
     duplicate = {}
     ddg_edges = []
 
@@ -31,7 +35,7 @@ def _get_ddg_edges(data_dependency_relations, type):
         key = "{}-{}".format(edge_info["from"], edge_info["to"])
         if key not in duplicate:
             duplicate[key] = 1
-            ddg_edges.append((edge_info["from"], edge_info["to"], {'color': "green", "type": type}))
+            ddg_edges.append((edge_info["from"], edge_info["to"], {'color': "green", "type": edge_type}))
 
     # print("DEBUG 数据依赖：", ddg_edges)
     return ddg_edges
@@ -72,36 +76,42 @@ class DataFlowAnalyzer:
         def_info = {}
         use_info = {}
 
+        # 便利所有可能CFG路径
         cfg = self.function_info.simple_cfg
         cfg_paths = nx.all_simple_paths(cfg, source="0", target="EXIT_POINT")
         for cfg_path in cfg_paths:
-            def_info.clear()
-            use_info.clear()
 
-            # [{"list": rechecked_read_state_vars, "type": "state", "op_type": "use"}]
+            def_info.clear()  # 当路径变量定义信息
+            use_info.clear()  # 当路径变量使用信息
+
+            # NOTE: 逆向分析每条CFG执行路径，从叶子向根部分析
             for from_node in reversed(cfg_path):
 
                 if from_node == 'EXIT_POINT':
                     continue
 
+                # 语句变量信息： [{"list": rechecked_read_state_vars, "type": "state", "op_type": "use"}]
                 _current_stmt_vars = self.function_info.stmts_var_info_maps[from_node]
                 current_stmt_vars = _data_flow_reorder(_current_stmt_vars)  # 调整顺序：先分析def 后分析use
                 for var_info in current_stmt_vars:
 
                     # 如果当前语句有写操作，查询之前语句对该变量是否有读操作
-                    # 写变量：该变量出读操作栈
                     if var_info["op_type"] == "def":
                         for var in var_info["list"]:
 
                             if var in use_info:
                                 for to_node in use_info[var]:
 
+                                    # 避免自循环 a += 1
                                     if from_node == to_node:
                                         continue
 
+                                    # 数据流: def_var flow to use_var
                                     key = "{}-{}".format(from_node, to_node)
                                     if key not in duplicate:
-                                        duplicate[key] = 1
+
+                                        duplicate[key] = 1  # 去重
+
                                         if to_node not in data_flow_map:
                                             data_flow_map[to_node] = [from_node]
                                         else:
@@ -115,7 +125,7 @@ class DataFlowAnalyzer:
 
                             def_info[var] = from_node
 
-                    # 读变量：压栈
+                    # 读变量：压栈，等待被def时分析
                     if var_info["op_type"] == "use":
                         for var in var_info["list"]:
 
@@ -124,10 +134,10 @@ class DataFlowAnalyzer:
                             else:
                                 use_info[var].append(from_node)
 
-        self.data_flow_edges = data_flow_edges
+        # 保存
         self.data_flow_map = data_flow_map
-
-        # return data_flow_edges, data_flow_map
+        self.data_flow_edges = data_flow_edges
+        self.function_info.semantic_edges["data_flow"] = self.data_flow_edges
 
     #######################################################
     # 函数内 数据依赖分析                                   #
@@ -174,8 +184,11 @@ class DataFlowAnalyzer:
                             data_dependency_relations.append(edge_info)
 
         ddg_edges = _get_ddg_edges(data_dependency_relations, "data_dependency")
+
+        # 保存
         self.data_dependency_edges = ddg_edges
-        return ddg_edges
+        self.function_info.add_semantic_edges("data_dep", ddg_edges)
+        # self.function_info.semantic_edges["data_dep"] += self.data_flow_edges
 
     #######################################################
     # 函数内 根据给定执行路径进行数据依赖分析                    #
@@ -225,34 +238,36 @@ class DataFlowAnalyzer:
 
         """
         分析交易语句涉及的全局变量：
-        在数据流的基础上提取交易语句涉及的全局变量的数据流
-        在数据流中寻找涉及的所有全局变量
+        在数据流的基础上提取交易语句涉及的全局变量的数据流, 并在数据流中寻找涉及的所有全局变量
 
-        Note: 只需要分析那些交易行为使用的全局变量，过程中定义的不用管
-
+        Note: 只需要分析那些交易行为使用的全局变量，过程中定义（def or write）的全局变量不用分析
         只分析如下情况的数据流：
             (注) var_info["type"] == "state":
             var_info["op_type"] == "use" and var_info["type"] == "state":
-
         """
+
+        trans_stats = {}
 
         stmts_var_info_maps = self.function_info.stmts_var_info_maps
         data_flow_map = self.data_flow_map
         transaction_stmts = self.function_info.transaction_stmts
 
-        trans_stats = {}
-
+        # 遍历函数中所有交易语句
         for trans_stmt in transaction_stmts:
-            stack = [trans_stmt]
+
             trans_state_infos = []
+
+            # DFS搜索数据流图，寻找所有与交易语句相关数据信息
+            stack = [trans_stmt]
             while len(stack) != 0:
+
                 to_id = stack.pop()
                 if to_id in data_flow_map:
                     for from_id in data_flow_map[to_id]:
 
                         stmt_var_infos = stmts_var_info_maps[from_id]
                         for var_info in stmt_var_infos:
-                            # if var_info["type"] == "state":
+
                             # NOTE: 只需要分析那些交易行为使用的全局变量，过程中定义的不用管
                             if var_info["op_type"] == "use" and var_info["type"] == "state":
                                 trans_state_infos.append({"vars": var_info["list"], "stmt_id": from_id})
@@ -265,7 +280,6 @@ class DataFlowAnalyzer:
 
         self.transaction_states = trans_stats
         self.function_info.transaction_states = self.transaction_states
-        return trans_stats
 
     ################################################################
     # 函数内 交易相关全局变量反向数据依赖关系分析                           #
@@ -273,27 +287,41 @@ class DataFlowAnalyzer:
     #################################################################
     def reverse_data_dependency_for_transaction_state(self):
 
+        """
+        全局变量的修改存在本次修改会影响下次执行的情况：
+        storage A;
+        function {1:a = A, 2:do send, 3:A = 1}
+        数据存在 3->1 的逆向影响
+        """
+
         trans_states = self.trans_state_append_criteria
         cfg = self.function_info.simple_cfg
         reverse_relations = []
 
         for trans_stmt in trans_states:
             state_related_stmts = trans_states[trans_stmt]
-            print(state_related_stmts)
+
+            # print(state_related_stmts)
             for state_related_stmt in state_related_stmts:
+
+                # 寻找执行路径，并进行反向分析
                 trans_state_paths = nx.all_simple_paths(cfg, source="0", target=str(state_related_stmt))
                 for trans_state_path in trans_state_paths:
                     reverse_relations += self.get_data_dependency_relations_by_path(reversed(trans_state_path))
 
         reverse_ddg_edges = _get_ddg_edges(reverse_relations, "re_data_dependency")
+
+        # 保存
         self.data_dependency_edges += reverse_ddg_edges
+        self.function_info.add_semantic_edges("data_dep", reverse_ddg_edges)
+        # self.function_info.semantic_edges["data_dep"] += reverse_ddg_edges
 
     ###########################################################
     # 函数内 交易涉及全局变量修改语句加入切片准则 (state_criteria_add)#
     ###########################################################
     def transaction_state_criteria_add(self):
         """
-        交易相关全局变量写语句，加入切片准则
+        寻找函数内修改了交易相关全局变量，作为切片准则
         """
 
         dup = {}
@@ -309,11 +337,13 @@ class DataFlowAnalyzer:
 
                 states = state_info["vars"]
                 for state in states:
+
+                    # 当前交易相关全局变量被修改，加入切片准则
                     if state in state_def_stmts and state not in dup:
                         dup[state] = 1
                         criteria_append[transaction_stmt].append(state_def_stmts[state])
 
-        print("criteria_append :", criteria_append)
+        # print("criteria_append :", criteria_append)
         self.trans_state_append_criteria = criteria_append
         self.function_info.append_criterias = criteria_append
         return criteria_append
@@ -322,6 +352,7 @@ class DataFlowAnalyzer:
     # 函数内 循环体内数据流增强                                #
     #######################################################
     def loop_data_dependency_relation_enhance(self):
+
         duplicate = {}
         ddg_edges = []
 
@@ -345,21 +376,22 @@ class DataFlowAnalyzer:
                         )
 
         self.loop_data_dependency_edges = ddg_edges
-        return ddg_edges
+        self.function_info.add_semantic_edges("data_dep", ddg_edges)
+        # self.function_info.semantic_edges["data_dep"] += self.loop_data_dependency_edges
 
     #######################################################
     # 函数内 循环体内数据流增强                                #
     #######################################################
     def do_data_semantic_analyze(self):
+        """
+        数据流相关语义分析
+        """
 
         self.data_flow_analyze()  # 数据流分析
         self.data_dependency_analyze()  # 数据依赖分析
-
         self.transaction_state_vars_analyze()  # 交易相关全局变量数据使用分析
         self.transaction_state_criteria_add()  # 交易相关全局变量数据依赖分析，生成新的切片准则
-
         self.reverse_data_dependency_for_transaction_state()  # 交易相关全局变量反向数据依赖分析
-
         self.loop_data_dependency_relation_enhance()  # 循环体内部数据依赖
 
         if self.data_flow_edges is None:
@@ -370,9 +402,5 @@ class DataFlowAnalyzer:
 
         if self.loop_data_dependency_edges is None:
             raise RuntimeError("循环体数据依赖为分析")
-
-        self.function_info.semantic_edges["data_flow"] = self.data_flow_edges
-        self.function_info.semantic_edges["data_dep"] = self.data_dependency_edges
-        self.function_info.semantic_edges["loop_data_dep"] = self.loop_data_dependency_edges
 
         return self.data_flow_edges, self.data_dependency_edges, self.loop_data_dependency_edges
