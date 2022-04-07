@@ -291,6 +291,9 @@ class DataSet:
                             solfile_analyzer = SolFileAnalyzer(file_name, analyze_dir)
                             solfile_analyzer.do_chdir()
 
+                            # 解析编译器版本，并修改编译器版本
+                            solfile_analyzer.do_file_analyze_prepare()
+
                             # 字节码特征提取
                             solfile_analyzer.get_opcode_and_asm_file()
                             solfile_analyzer.get_opcode_frequency_feature()

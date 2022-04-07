@@ -20,6 +20,7 @@ class ContractInfo:
         self.function_info_map = {}
 
         # 当合约包含的切片内容
+        self.dup_sliced_infos = {}  # 去重
         self.sliced_infos = []
 
         # 合约内部定义的结构体信息 <结构体名称, StructureContract>
@@ -57,6 +58,7 @@ class ContractInfo:
 
         for function in self.contract.functions:
 
+            print("[列表] 函数名：{}  fid:{}".format(function.name, function.id))
             self.fid_2_function[function.id] = function
 
             # 全局变量定义
@@ -146,7 +148,15 @@ class ContractInfo:
 
         self.call_graph = call_graph
 
+    def duplicate_slice(self, key):
+        if key not in self.dup_sliced_infos:
+            self.dup_sliced_infos[key] = 1
+            return False
+        else:
+            return True
+
     def load_slices_infos(self, infos):
+
         self.sliced_infos += infos
 
     def contract_info_analyze(self):
@@ -155,7 +165,7 @@ class ContractInfo:
         self._functions_with_transaction_call()
 
         self._construct_call_graph()  # 函数调用图
-        self.debug_get_call_graph()
+        # self.debug_get_call_graph()
 
     def debug_get_call_graph(self):
 
@@ -215,7 +225,14 @@ class ContractInfo:
         return ret_call_chain
 
     def get_function_by_fid(self, fid: str):
-        return self.fid_2_function[fid]
+        """
+        如果被调用函数时modify
+        则没有fid
+        """
+        if fid in self.fid_2_function:
+            return self.fid_2_function[fid]
+        else:
+            return None
 
     def get_function_info_by_fid(self, fid: str):
 

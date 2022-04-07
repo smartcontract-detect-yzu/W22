@@ -1,8 +1,11 @@
+from random import random
+
 import networkx as nx
 from typing import Dict, List
 from ponzi_detector.info_analyze.contract_analyze import ContractInfo
 from ponzi_detector.info_analyze.function_analyze import FunctionInfo
-from ponzi_detector.semantic_analyze.code_graph_constructor import CodeGraphConstructor, do_prepare_before_merge
+from ponzi_detector.semantic_analyze.code_graph_constructor import CodeGraphConstructor, do_prepare_before_merge, \
+    get_graph_from_pdg_by_type, merge_graph_from_a_to_b, get_cfg_from_pdg
 from ponzi_detector.semantic_analyze.code_graph_constructor import do_merge_graph1_to_graph2
 from ponzi_detector.semantic_analyze.code_graph_constructor import debug_get_graph_png
 from ponzi_detector.semantic_analyze.code_graph_constructor import do_graph_relabel_before_merge
@@ -10,6 +13,32 @@ from ponzi_detector.semantic_analyze.control_flow_analyzer import ControlFlowAna
 
 # 过程间分析器
 from ponzi_detector.semantic_analyze.data_flow_analyzer import DataFlowAnalyzer
+
+
+def do_need_merge_to_callee_by_graph(pdg: nx.MultiDiGraph, criteria):
+    """
+    根据给定的pdg和切片准则判断当前函数是否需要进行函数间分析
+
+    function A（input a）{
+
+        function B(a) # 切片准则与入参存在数据依赖关系
+    }
+
+    需要将当前函数与其调用者合并
+    """
+
+    ddg, _ = get_graph_from_pdg_by_type(pdg, "ddg")
+    input_params = []
+    for node_id in ddg.nodes:
+        if "type" in ddg.nodes[node_id] and "INPUT_PARAM" == ddg.nodes[node_id]["type"]:
+            input_params.append(node_id)
+
+    for param_node_id in input_params:
+        ddg_paths = nx.all_simple_paths(ddg, source=criteria, target=param_node_id)
+        if len(list(ddg_paths)) != 0:
+            return True
+
+    return False
 
 
 class InterproceduralAnalyzer:
@@ -26,19 +55,29 @@ class InterproceduralAnalyzer:
         # self.fun_criteria_pair = {}
         self.interprocedural_function_infos: Dict[int, FunctionInfo] = {}
 
-        self.intra_fun_result: Dict[str, List[str]] = {}  # 函数内分析结果
-        self.graphs_pool: Dict[str, nx.MultiDiGraph] = {}  # 图池：包含函数内、函数间分析结果
+        # 函数间分析结果
+        self.inter_procedure_fun_result: Dict[str, List[str]] = {}
+
+        # 图池：包含函数内、函数间分析结果
+        # 图池的初始化在构建调用链时进行赋值
+        self.graphs_pool: Dict[str, nx.MultiDiGraph] = {}
 
     def graphs_pool_init(self):
 
         name = self.function_info.name.__str__()
         sliced_graphs_map = self.function_info.get_sliced_pdg()  # 内部函数切片
+
+        """
+        将已经切片完成的图表示加入图池中
+        """
         for criteria in sliced_graphs_map:
+
+            # function_name @ 切片准则名称 @ 切片准则ID
             key = "{}@{}@{}".format(name, "solidity_call", criteria)
-            if name not in self.intra_fun_result:
-                self.intra_fun_result[name] = [key]
+            if name not in self.inter_procedure_fun_result:
+                self.inter_procedure_fun_result[name] = [key]
             else:
-                self.intra_fun_result[name].append(key)
+                self.inter_procedure_fun_result[name].append(key)
 
             self.graphs_pool[key] = sliced_graphs_map[criteria]
 
@@ -135,7 +174,7 @@ class InterproceduralAnalyzer:
                                 path_graph.add_edge(from_node, to_node)
 
         # 图池中寻找最后函数
-        keys = self.intra_fun_result[leaf_function_name]
+        keys = self.inter_procedure_fun_result[leaf_function_name]
         leaf_info = []
         print("keys: {}".format(keys))
         for key in keys:
@@ -170,6 +209,9 @@ class InterproceduralAnalyzer:
         func t(input a)
             .send(a)
         说明t受到了其callee的影响
+
+        1. 获得当前函数的数据依赖图
+        2. 分析数据依赖路径
         """
 
         # https://github.com/smartcontract-detect-yzu/slither/issues/11#issue-1184776553
@@ -179,16 +221,22 @@ class InterproceduralAnalyzer:
 
         input_params_info = self.function_info.get_input_params()
         graphs_infos = self.function_info.get_sliced_pdg()
+        trans_stmts = self.function_info.get_transaction_stmts()
 
-        for params_name in input_params_info:
-            input_param_graph_id = input_params_info[params_name]["key"]
-            for criteria in graphs_infos:
-                g: nx.DiGraph = graphs_infos[criteria]
+        # 根据不同切片准则切片得到的图表示
+        for criteria in graphs_infos:
 
-                if input_param_graph_id in g.nodes:  # 如果入参在函数的依赖图中
-                    print("需要进行跨函数分析： {} {}".format(criteria, g.nodes[criteria]["label"]))
-                    return True, criteria
+            g: nx.MultiDiGraph = graphs_infos[criteria]
+            ddg, _ = get_graph_from_pdg_by_type(g, "ddg")
 
+            for params_name in input_params_info:  # 遍历所有入参
+                input_param_graph_id = input_params_info[params_name]["key"]
+                if input_param_graph_id in ddg.nodes:  # 如果入参在函数的依赖图中
+
+                    # 进一步判断transaction statement使用与入参存在data dependency关系
+                    ddg_paths = nx.all_simple_paths(ddg, source=criteria, target=input_param_graph_id)
+                    if len(list(ddg_paths)) != 0:
+                        return True, criteria
         return False, None
 
     def do_interprocedural_analyze_for_state_def(self):
@@ -296,59 +344,75 @@ class InterproceduralAnalyzer:
 
         """
         合并调用链上所有函数的CFG
-        for graph in chain：
-            to_graph = Merge graph to to_graph
+        chain = {function A, function B, function C, current_function}
+
+        for <graph> in reversed(chain)：
+            <to_graph> = Merge <graph> to <to_graph>
+
+
         """
 
         merged_graphs = None
         removed_edges = None
+        target_name = self.function_info.name
         fid = self.function_info.get_fid()
         if fid not in self.interprocedural_function_infos:
             self.interprocedural_function_infos[fid] = self.function_info  # leaf
 
         # 根据给定的调用链构建所有的过程间分析路径
         # 一条调用链可能存在多种路径
-        print("调用链：{} {}".format(idx, chain))
         path_graph = self._construct_slice_call_chain_graph(chain)
-        debug_get_graph_png(path_graph, "{}_函数间调用关系路径图".format(idx))
 
         # 进行图合并
-
         paths = nx.all_simple_paths(path_graph, source="entry", target="exit")
         for chain_idx, path in enumerate(list(paths)):
 
-            merged_graph_name = to_graph_key = to_graph = None
-            for idx, g_key in enumerate(path[1:-1]):
+            """
+            从后向前分析：
+             如果当前分析对象的切片准则不收到入参的控制，则立刻停止函数见分析
+             function A {call B {call C {<>.send}} }
+            """
 
-                if to_graph_key is None:
-                    merged_graph_name = g_key
-                    to_graph_key = g_key
+            merge_from_graph = None
+            merge_to_graph = None
+
+            print("\n调用函数关系：", list(reversed(path[1:-1])))
+            for idx, current_graph_key in enumerate(list(reversed(path[1:-1]))):
+
+                if merge_from_graph is None:
+                    merge_from_graph = self.graphs_pool[current_graph_key]  # 被调用函数
+
                 else:
-                    merged_graph_name += "_{}".format(g_key)
-                    g = self.graphs_pool[g_key]
-                    g = do_graph_relabel_before_merge(g, g.graph["name"])
 
-                    to_graph_name = self.graphs_pool[to_graph_key].graph["name"]
+                    # 准备
+                    merge_from_graph_name = merge_from_graph.graph["name"]
+                    merge_from_graph, merge_from_graph_removed_edges = do_prepare_before_merge(merge_from_graph,
+                                                                                               merge_from_graph_name)
 
-                    if to_graph is None:
-                        to_graph = self.graphs_pool[to_graph_key]
-                        to_graph, removed_edges = do_prepare_before_merge(to_graph, to_graph_name)
+                    # 调用者
+                    merge_to_graph = self.graphs_pool[current_graph_key]
+                    merge_to_graph_name = merge_to_graph.graph["name"]
 
-                    pos_at_to_graph = "{}@{}".format(to_graph_name, str(to_graph_key).split("@")[-1])
-                    print("merge {} to {}".format(g.graph["name"], to_graph.graph["name"]))
-                    to_graph = do_merge_graph1_to_graph2(g, to_graph, pos_at_to_graph)
-                    to_graph_key = g_key
+                    # 合并
+                    where_to_merge = "{}@{}".format(merge_to_graph_name, str(current_graph_key).split("@")[-1])
+                    merge_to_graph, merge_to_graph_removed_edges = do_prepare_before_merge(merge_to_graph,
+                                                                                           merge_to_graph_name)
+                    merged_new_graph, map_to = merge_graph_from_a_to_b(merge_from_graph,
+                                                                       merge_to_graph,
+                                                                       where_to_merge,
+                                                                       target_name)
 
-            # 当前path合并后的结果
-            to_graph.graph["name"] = merged_graph_name
-            to_graph.add_edges_from(removed_edges)
+                    # debug_get_graph_png(merged_new_graph, "merge_{}_to_{}_at_{}_{}"
+                    #                     .format(merge_from_graph_name, merge_to_graph_name,
+                    #                             where_to_merge, chain_idx))
 
-            # 将图中剩余的内部调用展开
-            merged_graph = self.do_interprocedural_analyze_without_slice_criteria(to_graph)
-            merged_graph.graph["name"] = "Expand_" + merged_graph_name
-            debug_get_graph_png(merged_graph, "合并chain_{}".format(chain_idx), dot=False)
+                    # 判断当前函数current_graph_key是否需要与其父函数合并
+                    flag = do_need_merge_to_callee_by_graph(merge_to_graph, where_to_merge)
+                    if flag is False:
+                        break
 
-        return merged_graphs
+                    # 合并的图表示合并到上层的调用者中
+                    merge_from_graph = merged_new_graph
 
     def do_interprocedural_analyze_without_slice_criteria(self, to_graph: nx.MultiDiGraph):
         """
@@ -365,6 +429,8 @@ class InterproceduralAnalyzer:
             # Note: 图中当前节点为函数调用，需要进行展开
             node_info = to_graph.nodes[node_id]
             if "called" in node_info:
+
+                print("内部调用:{}".format(node_info))
 
                 fid = node_info["called"][0]
                 function_info = self.contract_info.get_function_info_by_fid(fid)
@@ -388,17 +454,50 @@ class InterproceduralAnalyzer:
 
                 graph = graph_constructor.do_code_create_without_slice()  # 构图
 
+                print("内部函数合并：merge {} to {}".format(graph.graph["name"], to_graph.graph["name"]))
                 graph, removed_semantic_edges = do_prepare_before_merge(graph, called_function_name)
                 to_graph = do_merge_graph1_to_graph2(graph, to_graph, node_id)  # 内部函数调用展开
                 to_graph.add_edges_from(removed_semantic_edges)
 
         return to_graph
 
-    def do_inter_function_call_expand(self):
+    def _internal_call_merge(self, to_graph):
+        """
+        展开cfg中那些进行内部函数调用的节点
+        """
+        for node_id in to_graph.nodes:
 
-        # 所有的切片
-        sliced_graphs = self.function_info.sliced_pdg
+            node_info = to_graph.nodes[node_id]
+            if "called" in node_info:
+                called_fid = node_info["called"][0]  # 调用函数的fid
+                real_params = node_info["called_params"]["real_params"]  # 调用函数的实参
+                assign_rets = node_info["called_params"]["assign_rets"]  # 调用函数的返回值
 
-        for criteria in sliced_graphs:
-            graph = sliced_graphs[criteria]
-            self.do_interprocedural_analyze_without_slice_criteria(graph)
+                function_info = self.contract_info.get_function_info_by_fid(called_fid)
+                if function_info is None:
+                    called_function = self.contract_info.get_function_by_fid(called_fid)
+                    print("INTERNAL_CALL 外部函数调用名称：{}".format(called_function.name.__str__()))
+                    function_info = FunctionInfo(self.contract_info, called_function)
+
+                # 目标函数名
+                called_function_name = function_info.name
+
+                # 全套大保健，需要优化
+                control_flow_analyzer = ControlFlowAnalyzer(self.contract_info, function_info)
+                data_flow_analyzer = DataFlowAnalyzer(self.contract_info, function_info)
+                inter_analyzer = InterproceduralAnalyzer(self.contract_info, function_info)
+                graph_constructor = CodeGraphConstructor(self.contract_info, function_info)
+
+                control_flow_analyzer.do_control_dependency_analyze()  # 控制流分析
+                data_flow_analyzer.do_data_semantic_analyze()  # 数据语义分析
+                inter_analyzer.do_interprocedural_analyze_for_state_def()  # 过程间全局变量数据流分析
+                function_info.construct_dependency_graph()  # 语义分析完之后进行数据增强，为切片做准备
+
+                graph = graph_constructor.do_code_create_without_slice()  # 构图
+
+                print("内部函数合并：merge {} to {}".format(graph.graph["name"], to_graph.graph["name"]))
+                graph, removed_semantic_edges = do_prepare_before_merge(graph, called_function_name)
+                to_graph, _ = merge_graph_from_a_to_b(graph, to_graph, node_id, called_function_name)
+                to_graph.add_edges_from(removed_semantic_edges)
+
+

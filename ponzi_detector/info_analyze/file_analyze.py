@@ -2,6 +2,7 @@ import argparse
 import json
 import os
 import shutil
+from rich import print as rprint
 import subprocess
 
 from ponzi_detector.info_analyze.contract_analyze import ContractInfo
@@ -10,9 +11,12 @@ from ponzi_detector.semantic_analyze.control_flow_analyzer import ControlFlowAna
 from ponzi_detector.semantic_analyze.data_flow_analyzer import DataFlowAnalyzer
 from ponzi_detector.semantic_analyze.code_graph_constructor import CodeGraphConstructor
 from ponzi_detector.semantic_analyze.interprocedural_analyzer import InterproceduralAnalyzer
+from ponzi_detector.semantic_analyze.intraprocedural_analyzer import IntraprocedureAnalyzer
 from slither import Slither
 
 versions = ['0', '0.1.7', '0.2.2', '0.3.6', '0.4.26', '0.5.17', '0.6.12', '0.7.6', '0.8.6']
+
+shutdown_interprocedural_analyze = 1
 
 
 def _select_solc_version(version_info):
@@ -191,7 +195,7 @@ class SolFileAnalyzer:
                         mini = last_version
                         version_resault = v
 
-                    print("version_resault:{}".format(version_resault))
+                    print("[INFO] SOL VERSION:{}\n".format(version_resault))
                     self.solc_version = version_resault
                     return version_resault
 
@@ -231,7 +235,7 @@ class SolFileAnalyzer:
 
         return
 
-    def do_analyze_a_file(self):
+    def do_analyze_a_file(self, test_mode=0):
         """
         进行solidity文件分析
         """
@@ -255,26 +259,28 @@ class SolFileAnalyzer:
 
                     control_flow_analyzer = ControlFlowAnalyzer(contract_info, function_info)  # 当前函数的控制流分析器
                     data_flow_analyzer = DataFlowAnalyzer(contract_info, function_info)  # 当前函数的数据流分析器
+                    intra_analyzer = IntraprocedureAnalyzer(contract_info, function_info)
                     inter_analyzer = InterproceduralAnalyzer(contract_info, function_info)  # 过程间分析器
                     code_constructor = CodeGraphConstructor(contract_info, function_info)  # 代码图表示构建器
 
                     control_flow_analyzer.do_control_dependency_analyze()  # 控制流分析
                     data_flow_analyzer.do_data_semantic_analyze()  # 数据流分析
+                    intra_analyzer.do_intra_procedure_analyze()  # 过程内分析
                     inter_analyzer.do_interprocedural_analyze_for_state_def()  # 过程间全局变量数据流分析
 
                     function_info.construct_dependency_graph()  # 构建PDG，为切片准备
-                    function_info.debug_png_for_graph(graph_type="pdg")
+                    code_constructor.do_code_slice_by_internal_all_criterias()  # 切片
 
-                    code_constructor.do_code_slice_by_internal_all_criterias() # 切片
-                    function_info.debug_png_for_graph("sliced_pdg")
-
-                    # 过程间分析
-                    flag, _ = inter_analyzer.do_need_analyze_callee()
-                    if flag is True:
-                        inter_analyzer.graphs_pool_init()  # 初始化图池，为函数间图合并做准备
-                        chains = function_info.get_callee_chain()
-                        for idx, chain in enumerate(chains):
-                            inter_analyzer.do_interprocedural_analyze_for_call_chain(chain, idx)
+                    # 过程间分析,暂不开启
+                    if test_mode:
+                        flag, _ = inter_analyzer.do_need_analyze_callee()
+                        if flag is True:
+                            print("\n\n<<<<<<<<<<<<<<<<<<<<<<<过程间分析>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
+                            inter_analyzer.graphs_pool_init()  # 初始化图池，为函数间图合并做准备
+                            chains = function_info.get_callee_chain()
+                            for idx, chain in enumerate(chains):
+                                print("\n>>>>>>调用链：{} {}".format(idx, chain))
+                                inter_analyzer.do_interprocedural_analyze_for_call_chain(chain, idx)
 
             analyze_result += contract_info.get_contract_info()
 

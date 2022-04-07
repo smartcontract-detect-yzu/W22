@@ -9,6 +9,25 @@ from slither.core.declarations.function import Function
 from slither.core.cfg.node import NodeType, Node
 
 
+def _assign_to_zero(stmt_expression):
+    # a = 0
+    if " = " in stmt_expression:
+        if "0" == stmt_expression.split(" = ")[1]:
+            return True
+
+    return False
+
+
+def _get_real_parameters(expression: str):
+    real_parameters = None
+
+    temp1 = expression.split("(")[1].split(")")[0]
+    if len(temp1) != 0:
+        real_parameters = temp1.split(",")
+
+    return real_parameters
+
+
 def _new_struct(node, structs_info):
     for ir in node.irs:
 
@@ -151,7 +170,10 @@ class FunctionInfo:
         # 交易全局变量，需要通过数据流分析器获取
         self.transaction_states = None  # <交易语句, [交易涉及的全部全局变量]>
 
-        # 外部函数修改全局变量语句集合
+        # 函数内调用分析, cfg节点为调用外部函数
+        self.intra_function_result_at_cfg = {}
+
+        # 函数间：外部函数修改全局变量语句集合
         self.external_state_def_nodes_map = None
 
         # 切片准则
@@ -164,6 +186,10 @@ class FunctionInfo:
         self.cfg = None
         self.simple_cfg = None
         self.pdg = None
+
+        # 切片后的图表示
+        # key1: 交易语句ID，也就是criteria，无外部全局变量写和常数初始化
+        # key2: tag@交易语句ID_with_外部写函数: 构建函数调用图时加入的
         self.sliced_pdg = {}
 
         # 不同的语义边
@@ -171,6 +197,9 @@ class FunctionInfo:
 
         # 初始化
         self.function_info_analyze()
+
+    def register_intra_fun(self, node_id, info):
+        self.intra_function_result_at_cfg[node_id] = info
 
     def add_semantic_edges(self, semantic_type, edges: List):
 
@@ -208,13 +237,15 @@ class FunctionInfo:
         self.function.cfg_to_dot(cfg_dot_file)
 
         cfg: nx.DiGraph = nx.drawing.nx_agraph.read_dot(cfg_dot_file)
-        os.remove(cfg_dot_file)
+        # os.remove(cfg_dot_file)
         cfg.graph["name"] = self.function.name
         cfg.graph["contract_name"] = self.contract_info.name
 
         for node in self.function.nodes:
             cfg_node = cfg.nodes[str(node.node_id)]
             cfg_node["expression"] = node.expression.__str__()
+            if cfg_node["expression"] is None:
+                cfg_node["expression"] = cfg_node["label"]
             cfg_node["type"] = node.type.__str__()
             cfg_node["fid"] = self.fid
             cfg_node["node_id"] = node.node_id
@@ -312,9 +343,7 @@ class FunctionInfo:
 
         if len(stmt_info.internal_calls) != 0:
 
-            # print("====当前语句存在函数调用 EXPR:{}".format(stmt_info.expression.__str__()))
             called_infos = []
-
             for internal_call in stmt_info.internal_calls:
                 if isinstance(internal_call, Function):
                     # print("====函数调用左边：{}".format([str(v) for v in stmt_info.variables_written]))
@@ -325,10 +354,25 @@ class FunctionInfo:
 
             if len(called_infos) != 0:  # 当存在外部调用时
 
+                expression = stmt_info.expression.__str__()
+                real_params = _get_real_parameters(expression)
+                assign_rets = [str(v) for v in stmt_info.variables_written]
+                call_params_info = {
+                    "real_params": real_params,
+                    "assign_rets": assign_rets
+                }
+
+                print("\n外部调用信息：{}".format(stmt_info.expression.__str__()))
+                print("实参：{}".format(real_params))
+                print("返回值：{}".format(assign_rets))
+
                 self.stmt_internal_call[stmt_info.node_id] = called_infos
 
                 # 并将信息保存到cfg节点
+                print("cfg id:{}  [{}] 内部调用：{} {}".format(str(stmt_info.node_id), self.name, internal_call.name,
+                                                          internal_call.id))
                 self.cfg.nodes[str(stmt_info.node_id)]["called"] = called_infos
+                self.cfg.nodes[str(stmt_info.node_id)]["called_params"] = call_params_info
 
     def __stmt_var_info(self, stmt_info: Node):
 
@@ -419,9 +463,10 @@ class FunctionInfo:
                         "eth": eth,
                         "exp": stmt.expression.__str__()
                     }
-                    print("=== 切片准则：{} at {}@{} ===".format(stmt.expression, self.name, stmt.node_id))
+                    print("\n=== 切片准则：{} at {}@{} ===".format(stmt.expression, self.name, stmt.node_id))
                     print("发送以太币 {} 到 {}\n".format(eth, to))
                     print("变量使用: {}".format(self.stmts_var_info_maps[str(stmt.node_id)]))
+                    print("=============================================================\n")
 
     def __if_loop_struct(self, stmt, stack):
 
@@ -495,7 +540,7 @@ class FunctionInfo:
         stack = []
         remove_edges = []
 
-        for id, stmt in enumerate(self.function.nodes):
+        for idx, stmt in enumerate(self.function.nodes):
             # 语句的变量使用情况
             self.__stmt_var_info(stmt)
 
@@ -530,7 +575,8 @@ class FunctionInfo:
         for criteria in self.transaction_stmts:
             name = "{}_{}".format(name_prefix, criteria)
             exp = self.function.nodes[self.node_id_2_idx[int(criteria)]].expression.__str__()
-            slices_infos.append({"name": name, "exp": exp})
+            if self.contract_info.duplicate_slice(name) is not True:
+                slices_infos.append({"name": name, "exp": exp})
 
         self.contract_info.load_slices_infos(slices_infos)
 
@@ -581,8 +627,13 @@ class FunctionInfo:
             stmt_ids = self.state_def_stmts[state_var]
 
             for stmt_id in stmt_ids:
-                vars_infos = self.stmts_var_info_maps[str(stmt_id)]
 
+                expr = self.function.nodes[stmt_id].expression.__str__()
+                if _assign_to_zero(expr):
+                    # 赋值为0
+                    continue
+
+                vars_infos = self.stmts_var_info_maps[str(stmt_id)]
                 const_init = {}
                 for vars_info in vars_infos:
                     if vars_info["type"] == 'state' and vars_info["op_type"] == 'use':
@@ -591,6 +642,7 @@ class FunctionInfo:
                                 const_init[str(v)] = state_declare_info[str(v)]["full_expr"]
 
                 current_node = self.function.nodes[stmt_id]
+                print("外部写全局变量语句：{}".format(current_node.expression.__str__()))
                 state_var_related_stmts_infos.append({
                     "state_var": state_var,
                     "expression": current_node.expression.__str__(),
@@ -646,18 +698,22 @@ class FunctionInfo:
     ######################################
     def function_info_analyze(self):
 
+        print("【START:函数预处理】函数预处理：{}".format(self.name))
+
         self.cfg = self._get_function_cfg()
 
         # 将函数入参作为语义补充到原始cfg中
         self._get_function_input_params()
         self._add_input_params_to_cfg()
-        # self.debug_png_for_graph("cfg")
+
+        self.debug_png_for_graph("cfg")
 
         self._get_node_id_2_cfg_id()
         self._preprocess_function()
         self._get_call_chain()
         self.contract_info.function_info_map[self.fid] = self
 
+        print("【END:函数预处理】函数预处理：{}".format(self.name))
     ######################################
     # 函数依赖图                           #
     ######################################
@@ -689,7 +745,7 @@ class FunctionInfo:
 
         external_criterias = []
 
-        if criteria_type is "external":
+        if criteria_type == "external":
             for stmt_id in self.external_criterias:
                 external_criteria = self.external_criterias[stmt_id]
                 if external_criteria["external_call"] == criteria_content:
