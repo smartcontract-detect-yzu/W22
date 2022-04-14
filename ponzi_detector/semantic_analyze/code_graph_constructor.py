@@ -43,18 +43,27 @@ def add_graph_node_info(graph: nx.MultiDiGraph, idx, key, value):
 
 def get_graph_from_pdg_by_type(pdg: nx.MultiDiGraph, graph_type):
     removed_edges = []
-    type_key = None
+    g = nx.MultiDiGraph(pdg)
 
     if graph_type == "ddg":
         type_key = "data_dependency"
 
-    # 获得切片之后的控制流图 sliced_cfg
-    g = nx.MultiDiGraph(pdg)
-    g.graph["name"] = g.graph["name"]
-    for u, v, k, d in pdg.edges(data=True, keys=True):
-        if "type" not in d or d["type"] != type_key:
-            removed_edges.append((u, v, d))
-            g.remove_edge(u, v, k)
+        # 获得切片之后的控制流图 sliced_cfg
+        g.graph["name"] = pdg.graph["name"]
+        for u, v, k, d in pdg.edges(data=True, keys=True):
+            if "type" not in d or d["type"] != type_key:
+                removed_edges.append((u, v, d))
+                g.remove_edge(u, v, k)
+
+    if graph_type == "pdg":
+        type_key = "data_flow"
+
+        g.graph["name"] = pdg.graph["name"]
+        for u, v, k, d in pdg.edges(data=True, keys=True):
+            if "type" not in d \
+                    or (d["type"] != "data_dependency" and d["type"] != "ctrl_dependency"):
+                removed_edges.append((u, v, d))
+                g.remove_edge(u, v, k)
 
     graph_clean_up(g)
     return g, removed_edges
@@ -292,6 +301,8 @@ def save_graph_to_json_format(graph, key):
         graph_id += 1
         cfg_id = node
         print("node:{} {}".format(node, graph.nodes[node]))
+        if len(graph.nodes[node]) == 0:
+            continue
         type = graph.nodes[node]["type"]
 
         if graph.nodes[node]["expression"] == "None":
@@ -536,10 +547,12 @@ def _add_external_stmts_to_a_graph(graph, external_stmts, external_id, previous_
 
 # 代码图表示构建器
 class CodeGraphConstructor:
-    def __init__(self, contract_info: ContractInfo, function_info: FunctionInfo):
+    def __init__(self, contract_info: ContractInfo, function_info: FunctionInfo, mode=0):
 
         self.function_info = function_info
         self.contract_info = contract_info
+
+        self.test_mode = mode
 
         self.slice_graphs = {}
         self.external_node_id = {}
@@ -659,7 +672,7 @@ class CodeGraphConstructor:
 
         external_id = 0
         first_id = current_id = previous_id = None
-
+        init_expr_duplicate = {}
         # 外部节点来源1：const_init
         const_init = self.function_info.const_var_init
         candidate_const_var = self._const_var_filter_by_sliced_graph(sliced_pdg)  # Note: 需要判断当前图表示经过切片后剩余的节点究竟涉及那些常数
@@ -667,7 +680,9 @@ class CodeGraphConstructor:
 
             # Note: 初始化为0不需要加入图中，没有意义
             stmt_expression = const_init[const_var].__str__()
-            if " = " in stmt_expression and "0" == stmt_expression.split(" = ")[1]:
+            if (" = " in stmt_expression and "0" == stmt_expression.split(" = ")[1]) \
+                    or "++" in stmt_expression \
+                    or "+=" in stmt_expression:
                 # print("变量初始化信息：{}", const_init[const_var])
                 continue
 
@@ -783,13 +798,20 @@ class CodeGraphConstructor:
 
     def do_intra_function_call_graph(self, sliced_pdg):
 
+        has_intra_flag = 0
+
         intra_infos = self.function_info.intra_function_result_at_cfg
         sliced_cfg, removed_pdg_edges = get_cfg_from_pdg(sliced_pdg)
-        print("函数内分析： intra_infos:{}".format(intra_infos))
+        # print("函数内分析： intra_infos:{}".format(intra_infos))
+
         for intra_node in intra_infos:
+
             if intra_node in sliced_cfg.nodes:
-                intra_infos = intra_infos[intra_node]
-                intra_function_info: FunctionInfo = intra_infos["function_info"]
+
+                has_intra_flag = 1
+
+                intra_info = intra_infos[str(intra_node)]
+                intra_function_info: FunctionInfo = intra_info["function_info"]
                 intra_function_spdg = intra_function_info.pdg
                 intra_function_name = intra_function_info.name
                 merge_from_graph, merge_from_graph_removed_edges = do_prepare_before_merge(intra_function_spdg,
@@ -813,6 +835,9 @@ class CodeGraphConstructor:
                                 need_to_recover_edges.append((u, new_v, d))
                 sliced_cfg.add_edges_from(need_to_recover_edges)
 
+        if has_intra_flag == 0:
+            return has_intra_flag, sliced_pdg, None
+
         first_node = None
         for node in sliced_cfg.nodes:
             if sliced_cfg.in_degree(node) == 0:
@@ -821,7 +846,7 @@ class CodeGraphConstructor:
 
         debug_get_graph_png(sliced_cfg, "{}_with_{}_pdg".format(first_node, sliced_cfg.graph["name"]), dot=True)
 
-        return sliced_cfg, first_node
+        return has_intra_flag, sliced_cfg, first_node
 
     def do_code_slice_by_internal_all_criterias(self):
         """
@@ -862,11 +887,16 @@ class CodeGraphConstructor:
             self.slice_graphs[criteria] = sliced_pdg_without_external
             self.function_info.sliced_pdg[criteria] = sliced_pdg_without_external
 
-            # 输出图片
-            debug_get_graph_png(sliced_pdg, "sliced_pdg_without_external_{}".format(criteria))
-
             # 内部节点展开
-            sliced_pdg, first_node = self.do_intra_function_call_graph(sliced_pdg)
+            if self.test_mode:
+                pdg, _ = get_graph_from_pdg_by_type(sliced_pdg, "pdg")  # 输出pdg
+                debug_get_graph_png(pdg, "sliced_pdg_without_external_{}".format(criteria))
+
+                # 过程间
+                flag, new_sliced_pdg, new_first_node = self.do_intra_function_call_graph(sliced_pdg)
+                if flag == 1:
+                    sliced_pdg = new_sliced_pdg
+                    first_node = new_first_node
 
             if first_node is None:
                 graph_info, file_name = save_graph_to_json_format(sliced_pdg, criteria)
@@ -891,7 +921,8 @@ class CodeGraphConstructor:
                 self._add_reenter_edges(sliced_pdg, first_node)
 
             # 输出图片
-            debug_get_graph_png(sliced_pdg, "sliced_pdg", dot=True)
+            if self.test_mode:
+                debug_get_graph_png(sliced_pdg, "sslice_{}".format(criteria), dot=False)
 
             # 如果没有外部展开节点（没有外部节点\只有全局变量初始化节点），则依旧使用旧的PDG
             if len(graphs_with_external_map) == 0:
@@ -921,7 +952,8 @@ class CodeGraphConstructor:
                         f.write(json.dumps(graph_info))
 
                     # 输出图片
-                    debug_get_graph_png(new_slice_pdg, new_key, dot=True)
+                    if self.test_mode:
+                        debug_get_graph_png(new_slice_pdg, new_key, dot=True)
 
     def do_code_create_without_slice(self):
 

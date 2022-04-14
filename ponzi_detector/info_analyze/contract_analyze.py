@@ -58,7 +58,7 @@ class ContractInfo:
 
         for function in self.contract.functions:
 
-            print("[列表] 函数名：{}  fid:{}".format(function.name, function.id))
+            # print("[列表] 函数名：{}  fid:{}".format(function.name, function.id))
             self.fid_2_function[function.id] = function
 
             # 全局变量定义

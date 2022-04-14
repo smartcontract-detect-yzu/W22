@@ -14,13 +14,23 @@ import logging
 from tqdm import tqdm
 
 PREFIX = "examples/ponzi_src/"
+JSON_PREFIX = "ponzi_detector/dataset/json/"
 EDGE_TYPES = ["cfg_edges", "cdg_edges", "ddg_edges", "dfg_edges"]
+edge_type_2_id = {
+    "cfg_edges": 0,
+    "cdg_edges": 1,
+    "ddg_edges": 2,
+    "dfg_edges": 3
+}
+
 labeled_json_list = {
     "buypool": "labeled_slice_record_buypool.json",
     "deposit": "labeled_slice_record_deposit.json",
     "sad_chain": "labeled_slice_record_sad_chain.json",
     "sad_tree": "labeled_slice_record_sad_tree.json",
-    "xblock_dissecting": "labeled_slice_record_xblock_dissecting.json"
+    "xblock_dissecting": "labeled_slice_record_xblock_dissecting.json",
+    "5900": "labeled_slice_record_5900.json",
+    "no_ponzi": "labeled_slice_record_no_ponzi.json",
 }
 
 
@@ -33,25 +43,38 @@ class PonziDataSet(InMemoryDataset):
                  pre_transform=None,
                  pre_filter=None):
 
+        self.only_ponzi_flag = 0
+
         if dataset_type == "cfg":
             self.type = dataset_type
             self.root = root
             self.raw = "{}/{}".format(root, "raw")
             self.processed = "{}/{}".format(root, "processed")
+
         elif dataset_type == "etherscan":
+            self.only_ponzi_flag = 1
             self.type = dataset_type
-            self.root = root
+            self.root = root + "etherscan"
             self.raw = "{}/{}".format(root, "raw")
-            self.processed = "{}/{}".format(root, "processed")
+            self.processed = "{}/{}".format(root, "processed_etherscan")
+            self.json_list = {"etherscan": "labeled_slice_record_etherscan.json"}
+
         else:
             self.type = "slice"
             self.root = root
             self.raw = "{}/{}".format(root, "raw")
             self.processed = "{}/{}".format(root, "processed")
+            self.json_list = labeled_json_list
+
+        print("构建数据集类型:{}， 执行路径:{}".format(self.type, self.processed_paths))
 
         self.transform = transform
         self.pre_filter = pre_filter
         self.pre_transform = pre_transform
+
+        self.json_id = 0
+        self.file_json_2_id = {}
+        self.id_2_json = {}
 
         super(PonziDataSet, self).__init__(root=root,
                                            transform=transform,
@@ -63,20 +86,16 @@ class PonziDataSet(InMemoryDataset):
     # 返回原始文件列表
     @property
     def raw_file_names(self):
+
         names = []
         cfg_names = {}
 
-        if self.type == "etherscan":
-            g = os.walk(self.raw)
-            for path, dir_list, file_list in g:
-                for file_name in file_list:
-                    if file_name.endswith(".json"):
-                        full_name = "{}/{}".format(self.raw, file_name)
-                        names.append({"name": full_name, "label": 1})
-            return names
+        ponzi_slice_cnt = 0
+        no_ponzi_slice_cnt = 0
 
-        for target in labeled_json_list:
-            json_file = PREFIX + labeled_json_list[target]
+        for target in self.json_list:
+            json_file = JSON_PREFIX + self.json_list[target]
+            print("目标文件:{}".format(json_file))
             with open(json_file, "r") as f:
 
                 dataset_infos = json.load(f)
@@ -88,6 +107,7 @@ class PonziDataSet(InMemoryDataset):
                         continue
 
                     if self.type == "cfg":
+
                         for slice_info in target_infos["slice"]:
                             slice_name = slice_info["name"]
                             slice_split_info = str(slice_name).split("_")
@@ -104,19 +124,40 @@ class PonziDataSet(InMemoryDataset):
                                 sc_target_json = cfg_fun_name + ".json"
                                 full_name = "{}analyze/{}/{}/{}".format(PREFIX, target, sc_target, sc_target_json)
                                 if "tag" in slice_info:
+                                    ponzi_slice_cnt += 1
                                     names.append({"name": full_name, "label": 1})
                                 else:
+                                    no_ponzi_slice_cnt += 1
                                     names.append({"name": full_name, "label": 0})
                     else:
+                        json_prefix_map = {}
                         for slice_info in target_infos["slice"]:
-                            sc_target_json = slice_info["name"] + ".json"
-                            full_name = "{}analyze/{}/{}/{}".format(PREFIX, target, sc_target, sc_target_json)
+                            prefix_json = slice_info["name"]
                             if "tag" in slice_info:
-                                names.append({"name": full_name, "label": 1})
+                                json_prefix_map[prefix_json] = 1
                             else:
-                                names.append({"name": full_name, "label": 0})
+                                json_prefix_map[prefix_json] = 0
+
+                        sc_target_path = "{}analyze/{}/{}/".format(PREFIX, target, sc_target)
+                        for file_name in os.listdir(sc_target_path):
+                            if str(file_name).endswith(".json"):
+
+                                # labeled jason: contract_function_sliceid -> contract_function_sliceid_external<>
+                                sc_fun_slice = str(file_name).split(".json")[0]
+                                for json_prefix in json_prefix_map:
+                                    if json_prefix in sc_fun_slice:
+                                        json_file_name = sc_target_path + sc_fun_slice + ".json"
+                                        label = json_prefix_map[json_prefix]
+                                        if label == 1:
+                                            ponzi_slice_cnt += 1
+                                            names.append({"name": json_file_name, "label": label, "address":sc_target})
+                                        else:
+                                            if not self.only_ponzi_flag:
+                                                no_ponzi_slice_cnt += 1
+                                                names.append({"name": json_file_name, "label": label, "address":sc_target})
 
         print("庞氏合约样本数量: {}".format(len(names)))
+        print("正样本个数：{}  负样本个数：{}".format(ponzi_slice_cnt, no_ponzi_slice_cnt))
         return names
 
     # 返回需要跳过的文件列表
@@ -125,15 +166,18 @@ class PonziDataSet(InMemoryDataset):
         return ['data.pt']
 
     def process(self):
+
         ponzi_cnt = no_ponzi_cnt = 0
         infercode = infer_code_init()
         data_list = []
+
         with tqdm(total=len(self.raw_file_names)) as pbar:
             for sample_info in self.raw_file_names:
 
                 pbar.update(1)
                 json_file_name = sample_info["name"]
                 lable = sample_info["label"]
+                address = sample_info["address"]
                 if lable == 1:
                     ponzi_cnt += 1
                     y = [1, 0]  # [ponzi, no_ponzi]
@@ -145,7 +189,7 @@ class PonziDataSet(InMemoryDataset):
 
                     json_graph = json.load(f)
                     node_vectors = []
-                    edge_dup = {}
+                    tmp_edge_attr = {}
                     src = []
                     dst = []
 
@@ -165,15 +209,34 @@ class PonziDataSet(InMemoryDataset):
                                 to_id = cfg_edge_info["to"]
                                 key = "{}_{}".format(from_id, to_id)
 
-                                if key not in edge_dup:
-                                    edge_dup[key] = 1
+                                if key not in tmp_edge_attr:
+                                    edge_feature = [0, 0, 0, 0]
+                                    edge_feature[edge_type_2_id[edge_type]] = 1
+                                    tmp_edge_attr[key] = edge_feature
                                     src.append(from_id)
                                     dst.append(to_id)
 
+                                else:
+                                    edge_feature = tmp_edge_attr[key]
+                                    edge_feature[edge_type_2_id[edge_type]] = 1
+                                    tmp_edge_attr[key] = edge_feature
+
+                edge_attr = []
+                for u, v in zip(src, dst):
+                    key = "{}_{}".format(u, v)
+                    edge_attr.append(tmp_edge_attr[key])
+
                 x = torch.tensor(node_vectors, dtype=torch.float)
                 y = torch.tensor([y], dtype=torch.float)
+
+                edge_attr = torch.tensor(edge_attr, dtype=torch.float)
                 edge_index = torch.tensor([src, dst], dtype=torch.long)
-                data = Data(x=x, edge_index=edge_index, y=y)
+
+                self.json_id += 1
+                self.file_json_2_id[json_file_name] = self.json_id
+                self.id_2_json[self.json_id] = json_file_name
+
+                data = Data(x=x, edge_index=edge_index, edge_attr=edge_attr, y=y, address=address, json=json_file_name)
                 data_list.append(data)
 
         if self.pre_filter is not None:
@@ -219,7 +282,6 @@ dataset_info = {
     }
 }
 if __name__ == '__main__':
-
     d_type = "sliced"
     root_dir = dataset_info[d_type]["root"]
 

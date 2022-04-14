@@ -140,7 +140,9 @@ def debug_get_graph_png(graph: nx.Graph, postfix, cur_dir):
 
 class FunctionInfo:
 
-    def __init__(self, contract_info: ContractInfo, function: Function):
+    def __init__(self, contract_info: ContractInfo, function: Function, test_mode=0):
+
+        self.test_mode = test_mode
 
         self.contract_info = contract_info
         self.can_send_ether = function.can_send_eth()
@@ -241,8 +243,13 @@ class FunctionInfo:
         cfg.graph["name"] = self.function.name
         cfg.graph["contract_name"] = self.contract_info.name
 
+        if len(cfg.nodes) == 0:
+            return None
+
         for node in self.function.nodes:
             cfg_node = cfg.nodes[str(node.node_id)]
+            new_label = "ID:{} {}".format(str(node.node_id), cfg_node["label"])
+            cfg_node["label"] = new_label
             cfg_node["expression"] = node.expression.__str__()
             if cfg_node["expression"] is None:
                 cfg_node["expression"] = cfg_node["label"]
@@ -369,8 +376,7 @@ class FunctionInfo:
                 self.stmt_internal_call[stmt_info.node_id] = called_infos
 
                 # 并将信息保存到cfg节点
-                print("cfg id:{}  [{}] 内部调用：{} {}".format(str(stmt_info.node_id), self.name, internal_call.name,
-                                                          internal_call.id))
+                print("cfg id:{}  [{}] 内部调用：{}".format(str(stmt_info.node_id), self.name, internal_call.name))
                 self.cfg.nodes[str(stmt_info.node_id)]["called"] = called_infos
                 self.cfg.nodes[str(stmt_info.node_id)]["called_params"] = call_params_info
 
@@ -470,7 +476,7 @@ class FunctionInfo:
 
     def __if_loop_struct(self, stmt, stack):
 
-        if stmt.type == NodeType.IF:
+        if stmt.type == NodeType.IF or stmt.type == NodeType.IFLOOP:
             stack.append(str(stmt.node_id))
             self.if_stmts.append(str(stmt.node_id))
 
@@ -541,6 +547,10 @@ class FunctionInfo:
         remove_edges = []
 
         for idx, stmt in enumerate(self.function.nodes):
+
+            if self.test_mode:
+                print("EXPR:{} at {} is {}".format(stmt.expression.__str__(), stmt.node_id, stmt.type.__str__()))
+
             # 语句的变量使用情况
             self.__stmt_var_info(stmt)
 
@@ -706,7 +716,8 @@ class FunctionInfo:
         self._get_function_input_params()
         self._add_input_params_to_cfg()
 
-        self.debug_png_for_graph("cfg")
+        if self.test_mode:
+            self.debug_png_for_graph("cfg")
 
         self._get_node_id_2_cfg_id()
         self._preprocess_function()
@@ -714,6 +725,7 @@ class FunctionInfo:
         self.contract_info.function_info_map[self.fid] = self
 
         print("【END:函数预处理】函数预处理：{}".format(self.name))
+
     ######################################
     # 函数依赖图                           #
     ######################################
@@ -776,8 +788,14 @@ class FunctionInfo:
 
         if graph_type == "pdg":
             if self.pdg is not None:
-                g = self.pdg
+
                 # print("name = {}  {}".format(g.graph["name"], g.graph["contract_name"]))
+                removed_edges = []
+                g = nx.MultiDiGraph(self.pdg)
+                for u, v, k, d in g.edges(data=True, keys=True):
+                    if "type" not in d:
+                        removed_edges.append((u, v, k))
+                g.remove_edges_from(removed_edges)
                 debug_get_graph_png(g, graph_type, cur_dir=True)
             else:
                 raise RuntimeError("pdg 为空")

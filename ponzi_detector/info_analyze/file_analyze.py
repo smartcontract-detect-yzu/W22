@@ -235,6 +235,20 @@ class SolFileAnalyzer:
 
         return
 
+    def do_filter_contract(self):
+        """
+        判断当前合约是否具有交易功能
+        """
+        slither = Slither(self.file_name)
+        for contract in slither.contracts:
+
+            for function in contract.functions:
+                if function.can_send_eth():
+                    # 只分析存在交易行为的函数
+                    return True
+
+        return False
+
     def do_analyze_a_file(self, test_mode=0):
         """
         进行solidity文件分析
@@ -248,7 +262,7 @@ class SolFileAnalyzer:
 
                 # 只分析存在交易行为的函数
                 if function.can_send_eth():
-                    function_info = FunctionInfo(contract_info, function)  # 函数对象
+                    function_info = FunctionInfo(contract_info, function, test_mode=test_mode)  # 函数对象
                     if not function_info.has_trans_stmts():
                         # print("当前函数没有直接调用 .send 或者 .trans, 暂时不进行下一步分析")
                         continue
@@ -259,16 +273,19 @@ class SolFileAnalyzer:
 
                     control_flow_analyzer = ControlFlowAnalyzer(contract_info, function_info)  # 当前函数的控制流分析器
                     data_flow_analyzer = DataFlowAnalyzer(contract_info, function_info)  # 当前函数的数据流分析器
-                    intra_analyzer = IntraprocedureAnalyzer(contract_info, function_info)
                     inter_analyzer = InterproceduralAnalyzer(contract_info, function_info)  # 过程间分析器
-                    code_constructor = CodeGraphConstructor(contract_info, function_info)  # 代码图表示构建器
+                    code_constructor = CodeGraphConstructor(contract_info, function_info, mode=test_mode)  # 代码图表示构建器
 
                     control_flow_analyzer.do_control_dependency_analyze()  # 控制流分析
                     data_flow_analyzer.do_data_semantic_analyze()  # 数据流分析
-                    intra_analyzer.do_intra_procedure_analyze()  # 过程内分析
                     inter_analyzer.do_interprocedural_analyze_for_state_def()  # 过程间全局变量数据流分析
 
+                    if test_mode:
+                        intra_analyzer = IntraprocedureAnalyzer(contract_info, function_info)
+                        intra_analyzer.do_intra_procedure_analyze()  # 过程内分析
+
                     function_info.construct_dependency_graph()  # 构建PDG，为切片准备
+                    # function_info.debug_png_for_graph("pdg")
                     code_constructor.do_code_slice_by_internal_all_criterias()  # 切片
 
                     # 过程间分析,暂不开启
