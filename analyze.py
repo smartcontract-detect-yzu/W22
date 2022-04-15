@@ -1,16 +1,10 @@
 import argparse
+import json
 import os
-import shutil
-import subprocess
-from ponzi_detector.info_analyze.contract_analyze import ContractInfo
-from ponzi_detector.info_analyze.function_analyze import FunctionInfo
-from ponzi_detector.semantic_analyze.control_flow_analyzer import ControlFlowAnalyzer
-from ponzi_detector.semantic_analyze.data_flow_analyzer import DataFlowAnalyzer
+
 from ponzi_detector.info_analyze.file_analyze import SolFileAnalyzer
 from ponzi_detector.solidity_dataset import DataSet
-from ponzi_detector.semantic_analyze.interprocedural_analyzer import InterproceduralAnalyzer
-from ponzi_detector.semantic_analyze.code_graph_constructor import CodeGraphConstructor
-from slither import Slither
+from ponzi_detector.tools import Tools
 
 
 def argParse():
@@ -38,66 +32,26 @@ if __name__ == '__main__':
         file_analyzer = SolFileAnalyzer(file_name=name, work_path=test_path)
 
         file_analyzer.do_chdir()
-        file_analyzer.do_file_analyze_prepare()  # 解析前的准备工作
-        file_analyzer.get_opcode_and_asm_file()
-        file_analyzer.get_opcode_frequency_feature()
+        file_analyzer.do_file_analyze_prepare()  # 环境配置
+        file_infos = file_analyzer.do_analyze_a_file(test_mode=1)
 
-        slither = Slither(name)
-        for contract in slither.contracts:
-
-            contract_info = ContractInfo(contract)
-            for function in contract.functions:
-
-                if function.can_send_eth():
-
-                    function_info = FunctionInfo(contract_info, function)  # 函数对象
-                    if not function_info.has_trans_stmts():  # print("当前函数没有直接调用 .send 或者 .trans, 暂时不进行下一步分析")
-                        continue
-
-                    print("\n########################")
-                    print("开始分析： {}".format(function_info.name))
-                    print("########################\n")
-
-                    control_flow_analyzer = ControlFlowAnalyzer(contract_info, function_info)  # 当前函数的控制流分析器
-                    data_flow_analyzer = DataFlowAnalyzer(contract_info, function_info)  # 当前函数的数据流分析器
-                    inter_analyzer = InterproceduralAnalyzer(contract_info, function_info)  # 过程间分析器
-                    code_constructor = CodeGraphConstructor(contract_info, function_info)  # 为当前函数创建代码图表示构建
-
-                    print("=======语义分析=========")
-
-                    control_flow_analyzer.do_control_dependency_analyze()  # 控制流分析
-                    data_flow_analyzer.do_data_semantic_analyze()  # 数据语义分析
-                    inter_analyzer.do_interprocedural_analyze_for_state_def()  # 过程间全局变量数据流分析
-
-                    print("=======构建程序依赖图=========")
-
-                    # 语义分析完之后进行数据增强，为切片做准备
-                    function_info.construct_dependency_graph()
-                    function_info.debug_png_for_graph(graph_type="pdg")
-
-                    print("=======开始进行切片=========")
-
-                    # 切片
-                    code_constructor.do_code_slice_by_internal_all_criterias()
-                    function_info.debug_png_for_graph("sliced_pdg")
-
-                    print("=======开始进行过程间分析=========")
-
-                    # 过程间分析
-                    flag, _ = inter_analyzer.do_need_analyze_callee()
-                    if flag is True:
-                        chains = function_info.get_callee_chain()
-
-                        inter_analyzer.graphs_pool_init()  # 初始化图池，为函数间图合并做准备
-
-                        for chain in chains:
-                            inter_analyzer.do_interprocedural_analyze_for_call_chain(chain)  # 根据调用链进行过程间分析
+    if operate == "download":
+        tools = Tools()
+        tools.download_from_etherscan_by_list()
 
     if dataset is not None:
 
         data_set = DataSet(dataset)  # 数据集
 
-        if operate == "asm":
+        if operate == "learning":
+            data_set.prepare_dataset_for_learning()
+            data_set.do_learning()
+
+        elif operate == "filter":
+            if dataset == "no_ponzi" or dataset == "dapp_src":
+                data_set.pre_filter_dataset()
+
+        elif operate == "asm":
 
             # 将数据集中的sol文件通过solc 编译成bin文件
             # 再利用evm disasm进行编译成opcdoe文件
@@ -105,13 +59,23 @@ if __name__ == '__main__':
             data_set.label_file_analyze()
             data_set.prepare_for_xgboost()  # 生成xgboost格式的数据集
 
+        elif operate == "static":
+            data_set.dataset_static()
+
         elif operate == "clean":
+            print("清除数据：{}".format(dataset))
             data_set.clean_up()
 
         elif operate == "bin":
             # 针对全是编译后的bin文件类型数据集
-            data_set.get_asm_for_dataset_from_bin()
+            data_set.get_asm_for_dataset_from_bin(pass_tag=1)
             data_set.prepare_for_xgboost()
 
         elif operate == "analyze":
-            data_set.do_analyze(pass_tag=0)
+            print("分析数据集：{}".format(dataset))
+            dataset_info = data_set.do_analyze(pass_tag=1)
+            if len(dataset_info) != 0:
+                with open(data_set.json_file_name, "w+") as f:
+                    json.dump(dataset_info, f)
+        else:
+            print("错误的操作符：{}".format(operate))
