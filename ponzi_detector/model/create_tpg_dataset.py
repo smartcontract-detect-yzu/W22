@@ -31,6 +31,7 @@ labeled_json_list = {
     "xblock_dissecting": "labeled_slice_record_xblock_dissecting.json",
     "5900": "labeled_slice_record_5900.json",
     "no_ponzi": "labeled_slice_record_no_ponzi.json",
+    "dapp_src": "labeled_slice_record_dapp_src.json"
 }
 
 

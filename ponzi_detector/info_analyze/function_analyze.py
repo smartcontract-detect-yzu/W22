@@ -190,8 +190,9 @@ class FunctionInfo:
         self.pdg = None
 
         # 切片后的图表示
-        # key1: 交易语句ID，也就是criteria，无外部全局变量写和常数初始化
-        # key2: tag@交易语句ID_with_外部写函数: 构建函数调用图时加入的
+        # key1: 交易语句ID，也就是criteria，无外部全局变量写和常数初始化;
+        # key2: - tag@交易语句ID_with_外部写函数: 构建函数调用图时加入的;
+        #       - 表明该切片准则数据依赖于某外部调用函数的返回值;
         self.sliced_pdg = {}
 
         # 不同的语义边

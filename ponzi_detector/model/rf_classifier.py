@@ -1,8 +1,11 @@
-from numpy import loadtxt
-from xgboost import XGBClassifier, plot_importance
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score
 import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from numpy import loadtxt
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.datasets import load_wine
+from sklearn.model_selection import train_test_split
 
 seed = 7
 test_size = 0.33
@@ -22,42 +25,32 @@ X_np_train, X_np_test, y_np_train, y_np_test = train_test_split(X_np, Y_np, test
 
 X_train = np.concatenate((X_p_train, X_np_train))
 y_train = np.concatenate((y_p_train, y_np_train))
-# X_train = X_p_train + X_np_train
-# y_train = y_p_train + y_np_train
-
 
 X_test = np.concatenate((X_p_test, X_np_test))
 y_test = np.concatenate((y_p_test, y_np_test))
-# X_test = X_p_test + X_np_test
-# y_test = y_p_test + y_np_test
 
-# 不可视化数据集loss
-# model = XGBClassifier()
-# model.fit(X_train, y_train)
+# 建立模型
+clf = DecisionTreeClassifier(random_state=0)
+rfc = RandomForestClassifier(random_state=0)
+clf = clf.fit(X_train, y_train)
+rfc = rfc.fit(X_train, y_train)
 
-##可视化测试集的loss
-model = XGBClassifier()
-eval_set = [(X_test, y_test)]
-model.fit(X_train, y_train, early_stopping_rounds=10, eval_metric="logloss", eval_set=eval_set, verbose=False)
+# 查看模型效果
+score_c = clf.score(X_test, y_test)
+score_r = rfc.score(X_test, y_test)
 
-y_pred = model.predict(X_test)
-predictions = [round(value) for value in y_pred]
-
-accuracy = accuracy_score(y_test, predictions)
-print("Accuracy: %.2f%%" % (accuracy * 100.0))
+# 打印最后结果
+print("Single Tree:", score_c)
+print("Random Forest:", score_r)
 
 valid_dataset_path = "xgboost_dataset_etherscan.csv"
 valid_dataset = loadtxt(valid_dataset_path, delimiter=",")
 X_valid = valid_dataset[:, 1:]
 Y_valid = valid_dataset[:, 0]
 
-y_valid_pred = model.predict(X_valid)
-predictions = [round(value) for value in y_valid_pred]
+score_c = clf.score(X_valid, Y_valid)
+score_r = rfc.score(X_valid, Y_valid)
 
-accuracy = accuracy_score(Y_valid, predictions)
-print("Accuracy: %.2f%%" % (accuracy * 100.0))
-
-from matplotlib import pyplot
-
-plot_importance(model)
-pyplot.show()
+# 打印最后结果
+print("Single Tree:", score_c)
+print("Random Forest:", score_r)

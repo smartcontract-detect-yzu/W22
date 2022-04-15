@@ -7,6 +7,157 @@ from torch.nn import Linear, BatchNorm1d, ModuleList
 
 torch.manual_seed(8)
 
+from typing import Tuple, Union
+
+import torch
+import torch.nn.functional as F
+from torch import Tensor
+from torch.nn import BatchNorm1d, Linear
+
+from torch_geometric.nn.conv import MessagePassing
+from torch_geometric.typing import Adj, OptTensor, PairTensor
+from torch.nn import Parameter
+import math
+from typing import Any
+
+
+def glorot(value: Any):
+    if isinstance(value, Tensor):
+        stdv = math.sqrt(6.0 / (value.size(-2) + value.size(-1)))
+        value.data.uniform_(-stdv, stdv)
+    else:
+        for v in value.parameters() if hasattr(value, 'parameters') else []:
+            glorot(v)
+        for v in value.buffers() if hasattr(value, 'buffers') else []:
+            glorot(v)
+
+
+class GAL(MessagePassing):
+    def __init__(self, in_features, out_featrues):
+
+        # 进行加权求和
+        super(GAL, self).__init__(aggr='add')
+
+        # 定义attention参数a
+        self.a = torch.nn.Parameter(torch.zeros(size=(2 * out_featrues, 1)))
+        torch.nn.init.xavier_uniform_(self.a.data, gain=1.414)  # 初始化
+
+        # 定义leakyrelu激活函数
+        self.leakyrelu = torch.nn.LeakyReLU()
+        self.linear = torch.nn.Linear(in_features, out_featrues)
+
+    def forward(self, x, edge_index):
+
+        # 特征映射
+        x = self.linear(x)
+        N = x.size()[0]
+        col, row = edge_index
+
+        # 将相邻接点的特征拼接，然后计算e值
+        a_input = torch.cat([x[row], x[col]], dim=1)
+
+        # print('a_input.size', a_input.size())
+
+        # 将规模压缩到一维
+        temp = torch.mm(a_input, self.a).squeeze()
+
+        # print('temp.size', temp.size())
+
+        e = self.leakyrelu(temp)
+
+        # print('e', e)
+        # print('e.size', e.size())
+
+        # e_all为同一个节点与其全部邻居的计算的分数的和，用于计算归一化softmax
+        e_all = torch.zeros(x.size()[0])
+        count = 0
+        for i in col:
+            e_all[i] += e[count]
+            count = count + 1
+
+        # print('e_all', e_all)
+
+        # 计算alpha值
+        for i in range(len(e)):
+            e[i] = math.exp(e[i]) / math.exp(e_all[col[i]])
+
+        # print('attention', e)
+        # print('attention.size', e.size())
+
+        # 传递信息
+        return self.propagate(edge_index, x=x, norm=e)
+
+    def message(self, x_j, norm):
+
+        # print('x_j:', x_j)
+        # print('x_j.size', x_j.size())
+        # print('norm', norm)
+        # print('norm.size', norm.size())
+        # print('norm.view.size', norm.view(-1, 1).size())
+
+        # 计算求和项
+        return norm.view(-1, 1) * x_j
+
+
+class MYGNN(MessagePassing):
+    def __init__(self, channels: Union[int, Tuple[int, int]], dim: int = 0,
+                 aggr: str = 'add', batch_norm: bool = False,
+                 bias: bool = True, **kwargs):
+        super().__init__(aggr=aggr, **kwargs)
+        self.channels = channels
+        self.dim = dim
+        self.batch_norm = batch_norm
+
+        # if isinstance(channels, int):
+        #     channels = (channels, channels)
+
+        # The learnable parameters to compute attention coefficients:
+        # self.att = Parameter(torch.Tensor(1, 1, channels))
+
+
+        # self.attention = GAL(channels, channels)
+
+        self.lin_f = Linear(channels + dim, channels, bias=bias)
+        self.lin_s = Linear(channels + dim, channels, bias=bias)
+        if batch_norm:
+            self.bn = BatchNorm1d(channels)
+        else:
+            self.bn = None
+
+        self.reset_parameters()
+
+    def reset_parameters(self):
+        # glorot(self.att_src)
+        self.lin_f.reset_parameters()
+        self.lin_s.reset_parameters()
+        if self.bn is not None:
+            self.bn.reset_parameters()
+
+    def forward(self, x: Union[Tensor, PairTensor], edge_index: Adj,
+                edge_attr: OptTensor = None) -> Tensor:
+        """"""
+        if isinstance(x, Tensor):
+            x: PairTensor = (x, x)
+
+        # propagate_type: (x: PairTensor, edge_attr: OptTensor)
+        out = self.propagate(edge_index, x=x, edge_attr=edge_attr, size=None)
+        out = out if self.bn is None else self.bn(out)
+        out += x[1]
+
+        # out = self.attention(out, edge_index)
+        return out
+
+    def message(self, x_i, x_j, edge_attr: OptTensor) -> Tensor:
+        if edge_attr is None:
+            z = torch.cat([x_i, x_j], dim=-1)
+        else:
+            # z = torch.cat([x_i, x_j, edge_attr], dim=-1)
+            z = torch.cat([x_i, edge_attr], dim=-1)
+        return self.lin_f(z).sigmoid() * F.softplus(self.lin_s(z))
+
+    def __repr__(self) -> str:
+        return f'{self.__class__.__name__}({self.channels}, dim={self.dim})'
+
 
 class CGCClass(torch.nn.Module):
     def __init__(self, model_params):
@@ -17,16 +168,13 @@ class CGCClass(torch.nn.Module):
         dense_neurons = model_params["MODEL_DENSE_NEURONS"]
         edge_dim = model_params["MODEL_EDGE_DIM"]
         out_channels = model_params["MODEL_OUT_CHANNELS"]
-
+        self.training = True
         self.gnn_layers = ModuleList([])
-
-        # CGC block ??
-        # self.cgc1 = CGConv(feature_size)
 
         # CGC, Transform, BatchNorm block
         for i in range(self.n_layers):
             self.gnn_layers.append(
-                CGConv(feature_size, dim=edge_dim, batch_norm=True)
+                MYGNN(feature_size, dim=edge_dim, batch_norm=True)
             )
 
         # Linear layers
@@ -48,7 +196,7 @@ class CGCClass(torch.nn.Module):
         x = global_max_pool(x, batch)
 
         # Output block
-        x = F.dropout(x, p=0.0, training=self.training)  # dropout_rate
+        x = F.dropout(x, p=self.dropout_rate, training=self.training)  # dropout_rate
         x = torch.relu(self.linear1(x))
         x = self.bn2(x)
         x = self.linear2(x)

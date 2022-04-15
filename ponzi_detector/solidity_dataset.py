@@ -12,6 +12,7 @@ from ponzi_detector.model.graph_neural_network import CGCClass
 from ponzi_detector.tools import OPCODE_MAP
 import wsgiref.validate
 from etherscan.contracts import Contract
+import torchmetrics
 
 DATASET_NAMES = [
     "sad_chain",
@@ -47,7 +48,7 @@ def _get_features_for_xgboost(name, dataset_lines, tag):
                 drop_cnt += opcodes_info[opcode]
                 continue
 
-        # new_total = total - drop_cnt
+        total = total - drop_cnt
         for opcode in OPCODE_MAP:
 
             opcode_id = OPCODE_MAP[opcode]
@@ -371,16 +372,20 @@ class DataSet:
 
     def prepare_for_xgboost(self):
 
-        dataset_lines = []
+        ponzi_dataset_lines = []
+        no_ponzi_dataset_lines = []
 
         for name in self.ponzi_file_names:
-            _get_features_for_xgboost(name, dataset_lines, "1")
+            _get_features_for_xgboost(name, ponzi_dataset_lines, "1")
 
         for name in self.no_ponzi_file_names:
-            _get_features_for_xgboost(name, dataset_lines, "0")
+            _get_features_for_xgboost(name, no_ponzi_dataset_lines, "0")
 
-        with open("xgboost_dataset_{}.csv".format(self.name), "w+") as f:
-            f.writelines(dataset_lines)
+        with open("xgboost_dataset_{}_ponzi.csv".format(self.name), "w+") as f:
+            f.writelines(ponzi_dataset_lines)
+
+        with open("xgboost_dataset_{}_no_ponzi.csv".format(self.name), "w+") as f:
+            f.writelines(no_ponzi_dataset_lines)
 
     def do_analyze(self, pass_tag=1):
 
@@ -508,7 +513,7 @@ class DataSet:
         print("train_size:{}   valid_size:{}".format(train_size, valid_size))
         train_dataset, valid_dataset = torch.utils.data.random_split(self.pyg_dataset, [train_size, valid_size])
 
-        # 训练
+        # 训练数据
         train_off_loader = DataLoader(train_dataset, batch_size=64, shuffle=True)
 
         # 训练参数
@@ -516,10 +521,17 @@ class DataSet:
             "TRAINING_EPOCHS": 64,
             "MODEL_FEAT_SIZE": feature_size,
             "MODEL_LAYERS": 3,
-            "MODEL_DROPOUT_RATE": 0.02,
+            "MODEL_DROPOUT_RATE": 0.03,
             "MODEL_DENSE_NEURONS": 48,  # 100 -> 48
             "MODEL_EDGE_DIM": edge_attr_size,
             "MODEL_OUT_CHANNELS": 2  # 每一类的概率
+        }
+
+        # 优化器参数
+        solver = {
+            "SOLVER_LEARNING_RATE": 0.001,
+            "SOLVER_SGD_MOMENTUM": 0.8,
+            "SOLVER_WEIGHT_DECAY": 0.001
         }
 
         # 构建模型
@@ -527,12 +539,6 @@ class DataSet:
         model = CGCClass(model_params=model_params)
         model = model.to(device)
 
-        # 优化器参数
-        solver = {
-            "SOLVER_LEARNING_RATE": 0.00155,
-            "SOLVER_SGD_MOMENTUM": 0.8,
-            "SOLVER_WEIGHT_DECAY": 0.001
-        }
         optimizer = torch.optim.Adam(model.parameters(),
                                      lr=solver["SOLVER_LEARNING_RATE"],
                                      weight_decay=solver["SOLVER_WEIGHT_DECAY"])
@@ -558,6 +564,12 @@ class DataSet:
             training_loss /= len(train_off_loader.dataset)
             print("epoch {} Training loss: {}".format(epoch, training_loss))
 
+        # 模型训练结果
+        metrics_acc = torchmetrics.Accuracy()
+        metrics_recall = torchmetrics.Recall(average='none', num_classes=2)
+        metrics_precision = torchmetrics.Precision(average='none', num_classes=2)
+        # metrics_f1 = torchmetrics.F1(average="macro", num_classes=2)
+
         # 开始验证
         with torch.no_grad():
             model.eval()
@@ -572,11 +584,26 @@ class DataSet:
                 label = data.y.argmax(dim=1)
                 batch_loss = criterion(out, data.y)
                 correct += int((pred == label).sum())
+
+                metrics_recall(pred, label)
+                metrics_acc(pred, label)
+                metrics_precision(pred, label)
+
                 loss += batch_loss
 
             val_acc = correct / len(valid_off_loader.dataset)
             val_loss = loss / len(valid_off_loader.dataset)
-            print("normal Validation loss: {}\taccuracy:{}".format(val_loss, val_acc))
+            print("\nnormal Validation loss: {}\taccuracy:{}".format(val_loss, val_acc))
+
+            total_acc = metrics_acc.compute()
+            total_recall = metrics_recall.compute()
+            total_precision = metrics_precision.compute()
+            # total_auc = metrics_f1.compute()
+            print("acc:{} recall:{} p:{}".format(total_acc, total_recall, total_precision))
+
+        metrics_acc.reset()
+        metrics_recall.reset()
+        metrics_precision.reset()
 
         # 开始测试
         with torch.no_grad():
@@ -594,17 +621,25 @@ class DataSet:
                 for idx, predict_false in enumerate(torch.ne(pred, label)):
                     if predict_false:
                         file_name = data.json[idx]
-                        print("file_name:{} ".format(file_name))
 
                 correct += int((pred == label).sum())
+
+                metrics_recall(pred, label)
+                metrics_acc(pred, label)
+                metrics_precision(pred, label)
+
                 loss += batch_loss
 
             val_acc = correct / len(test_off_loader.dataset)
             val_loss = loss / len(test_off_loader.dataset)
-            print("normal test loss: {}\taccuracy:{}".format(val_loss, val_acc))
+            print("\nnormal test loss: {}\taccuracy:{}".format(val_loss, val_acc))
+            total_acc = metrics_acc.compute()
+            total_recall = metrics_recall.compute()
+            total_precision = metrics_precision.compute()
+            print("acc:{} recall:{} p:{}".format(total_acc, total_recall, total_precision))
 
-        # 保存模型：
 
+        # 保存模型:
         name = "{}/{}_{}.pt".format(self.model_save_path, "model", str(val_acc)[2:4])
         torch.save(model.state_dict(), name)
 
