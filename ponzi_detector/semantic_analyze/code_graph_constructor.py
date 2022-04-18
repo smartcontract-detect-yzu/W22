@@ -56,7 +56,6 @@ def get_graph_from_pdg_by_type(pdg: nx.MultiDiGraph, graph_type):
                 g.remove_edge(u, v, k)
 
     if graph_type == "pdg":
-        type_key = "data_flow"
 
         g.graph["name"] = pdg.graph["name"]
         for u, v, k, d in pdg.edges(data=True, keys=True):
@@ -292,7 +291,6 @@ def save_graph_to_json_format(graph, key):
     graph_id = 0
 
     file_name = "{}_{}_{}.json".format(graph.graph["contract_name"], graph.graph["name"], key)
-
     print(file_name)
 
     for node in graph.nodes:
@@ -547,12 +545,13 @@ def _add_external_stmts_to_a_graph(graph, external_stmts, external_id, previous_
 
 # 代码图表示构建器
 class CodeGraphConstructor:
-    def __init__(self, contract_info: ContractInfo, function_info: FunctionInfo, mode=0):
+    def __init__(self, contract_info: ContractInfo, function_info: FunctionInfo, mode=0, simple=0):
 
         self.function_info = function_info
         self.contract_info = contract_info
 
-        self.test_mode = mode
+        self.simple = simple  # 简易流程
+        self.test_mode = mode  # 测试模式
 
         self.slice_graphs = {}
         self.external_node_id = {}
@@ -975,3 +974,26 @@ class CodeGraphConstructor:
 
         g.add_edges_from(new_edges)
         return g
+
+    def get_cfg_and_pdg(self):
+
+        if self.function_info.cfg is None:
+            return
+
+        print("开始创建 CFG: {}".format(self.function_info.name))
+        graph_info, file_name = save_graph_to_json_format(self.function_info.cfg, "cfg")
+        with open(file_name, "w+") as f:
+            f.write(json.dumps(graph_info))
+        with open("cfg_done.txt", "w+") as f:
+            f.write("done")
+
+        print("开始创建 PDG: {}".format(self.function_info.name))
+        if self.function_info.pdg is None:
+            self.function_info.construct_dependency_graph()
+        cpg = self.function_info.pdg
+        pdg, _ = get_graph_from_pdg_by_type(cpg, "pdg")  # 输出pdg
+        graph_info, file_name = save_graph_to_json_format(pdg, "pdg")
+        with open(file_name, "w+") as f:
+            f.write(json.dumps(graph_info))
+        with open("pdg_done.txt", "w+") as f:
+            f.write("done")

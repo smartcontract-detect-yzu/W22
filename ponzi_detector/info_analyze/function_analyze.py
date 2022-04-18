@@ -140,9 +140,10 @@ def debug_get_graph_png(graph: nx.Graph, postfix, cur_dir):
 
 class FunctionInfo:
 
-    def __init__(self, contract_info: ContractInfo, function: Function, test_mode=0):
+    def __init__(self, contract_info: ContractInfo, function: Function, test_mode=0, simple=0):
 
-        self.test_mode = test_mode
+        self.simple = simple  # 简易流程
+        self.test_mode = test_mode  # 测试模式
 
         self.contract_info = contract_info
         self.can_send_ether = function.can_send_eth()
@@ -183,6 +184,9 @@ class FunctionInfo:
         self.criterias_msg = None  # msg.value
         self.append_criterias = None  # 交易相关全局变量，依赖数据流分析器 DataFlowAnalyzer
         self.external_criterias = None  # 过程间分析依赖的切片准则
+
+        # 序列化表示:plain source code of function
+        self.psc = []
 
         # 图表示
         self.cfg = None
@@ -381,6 +385,16 @@ class FunctionInfo:
                 self.cfg.nodes[str(stmt_info.node_id)]["called"] = called_infos
                 self.cfg.nodes[str(stmt_info.node_id)]["called_params"] = call_params_info
 
+    def __construct_psc(self, stmt_info: Node):
+
+        expression = stmt_info.expression.__str__()
+
+        if stmt_info.type is NodeType.IF:
+            expression = "if({})".format(stmt_info.expression.__str__())
+
+        if expression is not None:
+            self.psc.append("{}\n".format(expression))
+
     def __stmt_var_info(self, stmt_info: Node):
 
         stmt_var_info = []
@@ -477,7 +491,9 @@ class FunctionInfo:
 
     def __if_loop_struct(self, stmt, stack):
 
-        if stmt.type == NodeType.IF or stmt.type == NodeType.IFLOOP:
+        # 有bug do{}while处理不了
+        # if stmt.type == NodeType.IF or stmt.type == NodeType.IFLOOP:
+        if stmt.type == NodeType.IF:
             stack.append(str(stmt.node_id))
             self.if_stmts.append(str(stmt.node_id))
 
@@ -552,6 +568,9 @@ class FunctionInfo:
             if self.test_mode:
                 print("EXPR:{} at {} is {}".format(stmt.expression.__str__(), stmt.node_id, stmt.type.__str__()))
 
+            # 构建函数的代码序列化表示
+            self.__construct_psc(stmt)
+
             # 语句的变量使用情况
             self.__stmt_var_info(stmt)
 
@@ -564,8 +583,9 @@ class FunctionInfo:
             # 判断当前语句是否存在交易行为
             self.__stmt_call_send(stmt)
 
-            # 匹配 (IF, END_IF) 和 (LOOP, END_LOOP)
-            self.__if_loop_struct(stmt, stack)
+            if self.simple != 1:
+                # 匹配 (IF, END_IF) 和 (LOOP, END_LOOP)
+                self.__if_loop_struct(stmt, stack)
 
             # 寻找(LOOP, END_LOOP), 并记录循环边到remove_edges
             self.__loop_pair(stmt, simple_cfg, remove_edges)
@@ -713,19 +733,26 @@ class FunctionInfo:
 
         self.cfg = self._get_function_cfg()
 
-        # 将函数入参作为语义补充到原始cfg中
-        self._get_function_input_params()
-        self._add_input_params_to_cfg()
+        if self.cfg is None:
+            return 1
+
+        if self.simple != 1:
+            self._get_function_input_params()  # 提取函数入参
+            self._add_input_params_to_cfg()  # 将函数入参作为语义补充到原始cfg中
 
         if self.test_mode:
             self.debug_png_for_graph("cfg")
 
         self._get_node_id_2_cfg_id()
         self._preprocess_function()
-        self._get_call_chain()
+
+        if self.simple != 1:
+            self._get_call_chain()
+
         self.contract_info.function_info_map[self.fid] = self
 
         print("【END:函数预处理】函数预处理：{}".format(self.name))
+        return 0
 
     ######################################
     # 函数依赖图                           #
@@ -742,6 +769,15 @@ class FunctionInfo:
         for semantic_type in self.semantic_edges:
             if semantic_type == "ctrl_dep" or semantic_type == "data_dep":
                 self.pdg.add_edges_from(self.semantic_edges[semantic_type])
+
+    ######################################
+    # 函数序列化表示生成                     #
+    ######################################
+    def save_psc_to_file(self):
+        psc_file_name = "{}_{}_{}.txt".format(self.contract_info.name, self.name, "psc")
+        with open(psc_file_name, "w+") as f:
+            for line_info in self.psc:
+                f.write(line_info)
 
     #######################################
     # 获得所有的切片准则                     #

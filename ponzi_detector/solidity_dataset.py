@@ -24,8 +24,23 @@ DATASET_NAMES = [
 ]
 
 NO_PONZI_DATASET_NAMES = [
-    "no_ponzi"
+    "no_ponzi",
+    "dapp_src"
 ]
+
+PONZI_JSON_MAP = {
+    "buypool": "labeled_slice_record_buypool.json",
+    "deposit": "labeled_slice_record_deposit.json",
+    "sad_chain": "labeled_slice_record_sad_chain.json",
+    "sad_tree": "labeled_slice_record_sad_tree.json",
+    "xblock_dissecting": "labeled_slice_record_xblock_dissecting.json",
+    "5900": "labeled_slice_record_5900.json"
+}
+
+NO_PONZI_JSON_MAP = {
+    "no_ponzi": "labeled_slice_record_no_ponzi.json",
+    "dapp_src": "labeled_slice_record_dapp_src.json"
+}
 
 
 def _get_features_for_xgboost(name, dataset_lines, tag):
@@ -66,6 +81,65 @@ def _get_features_for_xgboost(name, dataset_lines, tag):
         dataset_lines.append(info_str)
 
 
+def calculate_metrics(preds, labels, ponzi_label=0):
+    TP = FP = TN = FN = 0
+
+    for batch_preds, batch_labels in zip(preds, labels):
+        for pred, label in zip(batch_preds, batch_labels):
+
+            if label == ponzi_label:
+                if pred == label:
+                    TP += 1
+                else:
+                    FP += 1
+            else:
+                if pred == label:
+                    TN += 1
+                else:
+                    FN += 1
+
+    total_data_num = TP + TN + FP + FN
+    acc = (TP + TN) / (TP + TN + FP + FN)
+    recall = TP / (TP + FN)
+    precision = TP / (TP + FP)
+    f1 = 2 * (precision * recall) / (precision + recall)
+
+    return acc, recall, precision, f1, total_data_num
+
+
+def do_valid(dataset, model, device):
+    # 开始验证
+    with torch.no_grad():
+        model.eval()
+        valid_off_loader = DataLoader(dataset, batch_size=64, shuffle=True)
+        valid_preds = []
+        valid_labels = []
+        correct = 0.
+        loss = 0.
+        criterion = torch.nn.CrossEntropyLoss()
+        for data in valid_off_loader:
+            data = data.to(device)
+            out = model(data)
+
+            pred = out.argmax(dim=1)
+            label = data.y.argmax(dim=1)
+
+            valid_preds.append(pred)
+            valid_labels.append(label)
+
+            batch_loss = criterion(out, data.y)
+            correct += int((pred == label).sum())
+
+            loss += batch_loss
+
+        val_acc = correct / len(valid_off_loader.dataset)
+        val_loss = loss / len(valid_off_loader.dataset)
+        print("\nnormal Validation loss: {}\taccuracy:{}".format(val_loss, val_acc))
+
+        acc, recall, precision, f1, total_num = calculate_metrics(valid_preds, valid_labels)
+        print("total:{} \n结果指标\tacc:{} recall:{} precision:{} f1:{}".format(total_num, acc, recall, precision, f1))
+
+
 class DataSet:
 
     def __init__(self, name="all"):
@@ -87,6 +161,9 @@ class DataSet:
         self.pyg_test_dataset = None  # PYG etherscan数据集，用于测试
         self.pyg_test_dataset_2_file = {}
         self.model_save_path = "./ponzi_detector/dataset/saved_model/"
+
+        self.ponzi_cfg_filer_json = "ponzi_cfg_function.json"
+        self.no_ponzi_cfg_filer_json = "no_ponzi_cfg_function.json"
 
     def _get_label_json_file(self):
 
@@ -110,13 +187,45 @@ class DataSet:
             analyze_prefixs.append("examples/ponzi_src/analyze/{}/".format(self.name))
             cnt = 1
         else:
-            for name in zip(DATASET_NAMES, NO_PONZI_DATASET_NAMES):
-                dataset_prefixs.append("{}{}/".format(self.labeled_json_dir, name))
+
+            for name in DATASET_NAMES:
+                dataset_prefixs.append("{}{}/".format("./examples/ponzi_src/", name))
+                analyze_prefixs.append("examples/ponzi_src/analyze/{}/".format(name))
+
+            for name in NO_PONZI_DATASET_NAMES:
+                dataset_prefixs.append("{}{}/".format("./examples/ponzi_src/", name))
                 analyze_prefixs.append("examples/ponzi_src/analyze/{}/".format(name))
 
             cnt = len(dataset_prefixs)
 
         return dataset_prefixs, analyze_prefixs, cnt
+
+    def get_work_dirs_with_name(self):
+
+        names = []
+        dataset_prefixs = []
+        analyze_prefixs = []
+
+        if self.name != "all":
+            names.append(self.name)
+            dataset_prefixs.append("{}{}/".format("./examples/ponzi_src/", self.name))
+            analyze_prefixs.append("examples/ponzi_src/analyze/{}/".format(self.name))
+            cnt = 1
+        else:
+
+            for name in DATASET_NAMES:
+                names.append(name)
+                dataset_prefixs.append("{}{}/".format("./examples/ponzi_src/", name))
+                analyze_prefixs.append("examples/ponzi_src/analyze/{}/".format(name))
+
+            for name in NO_PONZI_DATASET_NAMES:
+                names.append(name)
+                dataset_prefixs.append("{}{}/".format("./examples/ponzi_src/", name))
+                analyze_prefixs.append("examples/ponzi_src/analyze/{}/".format(name))
+
+            cnt = len(dataset_prefixs)
+
+        return names, dataset_prefixs, analyze_prefixs, cnt
 
     def pre_filter_dataset(self):
         """
@@ -387,6 +496,80 @@ class DataSet:
         with open("xgboost_dataset_{}_no_ponzi.csv".format(self.name), "w+") as f:
             f.writelines(no_ponzi_dataset_lines)
 
+    def do_analyze_for_cfg_pdg(self, pass_tag=1):
+
+        self.ponzi_cfg_filer_json = "ponzi_cfg_function.json"
+        self.no_ponzi_cfg_filer_json = "no_ponzi_cfg_function.json"
+
+        with open(self.ponzi_cfg_filer_json) as f:
+            ponzi_cfg_filter = json.load(f)
+
+        with open(self.no_ponzi_cfg_filer_json) as f:
+            no_ponzi_cfg_filter = json.load(f)
+
+        names, dataset_prefix_list, analyze_prefix_list, cnt = self.get_work_dirs_with_name()
+        for i in range(cnt):
+            dataset_name = names[i]
+            dataset_prefix = dataset_prefix_list[i]
+            analyze_prefix = analyze_prefix_list[i]
+
+            # 构建过滤器
+            if dataset_name in ponzi_cfg_filter:
+                dataset_filters = ponzi_cfg_filter[dataset_name]
+            else:
+                dataset_filters = no_ponzi_cfg_filter[dataset_name]
+
+            g = os.walk(dataset_prefix)
+            for path, dir_list, file_list in g:
+                for file_name in file_list:
+                    print(file_name)
+                    if file_name.endswith(".sol"):  # 目前仅限solidity文件
+                        file_name_without_sol = str(file_name).split(".sol")[0]
+
+                        print(file_name_without_sol)
+                        if file_name_without_sol in dataset_filters:
+
+                            file_filters = dataset_filters[file_name_without_sol]
+                            src_file = os.path.join(path, file_name)
+
+                            address = file_name.split(".sol")[0]
+                            analyze_dir = analyze_prefix + address
+
+                            if not os.path.exists(analyze_dir):
+                                os.mkdir(analyze_dir)
+
+                            if not os.path.exists(analyze_dir + "/" + file_name):
+                                shutil.copy(src_file, analyze_dir)
+
+                            cfg_done_file = analyze_dir + "/cfg_done.txt"
+                            pdg_done_file = analyze_dir + "/pdg_done.txt"
+                            if pass_tag and os.path.exists(cfg_done_file) and os.path.exists(pdg_done_file):
+                                print("========={}===========".format(file_name))
+                                continue
+                            else:
+
+                                if os.path.exists(cfg_done_file):
+                                    os.remove(cfg_done_file)
+
+                                if os.path.exists(pdg_done_file):
+                                    os.remove(pdg_done_file)
+
+                                print("\033[0;31;40m\t开始分析: {} \033[0m".format(file_name))
+                                print("过滤器：{}".format(file_filters))
+                                solfile_analyzer = SolFileAnalyzer(file_name, analyze_dir, cfg_filter=file_filters)
+
+                                # 切换工作目录
+                                solfile_analyzer.do_chdir()
+
+                                # 解析编译器版本，并修改编译器版本
+                                solfile_analyzer.do_file_analyze_prepare()
+
+                                # 获得cfg和pdg
+                                solfile_analyzer.do_analyze_a_file_for_cfg_pdg()
+
+                                # 恢复工作目录
+                                solfile_analyzer.revert_chdir()
+
     def do_analyze(self, pass_tag=1):
 
         """
@@ -534,6 +717,27 @@ class DataSet:
             "SOLVER_WEIGHT_DECAY": 0.001
         }
 
+        # # # 训练参数
+        # model_params = {
+        #     "TRAINING_EPOCHS": 84,
+        #     "MODEL_FEAT_SIZE": feature_size,
+        #     "MODEL_LAYERS": 3,
+        #     "MODEL_DROPOUT_RATE": 0.1,
+        #     "MODEL_DENSE_NEURONS": 48,  # 100 -> 48
+        #     "MODEL_EDGE_DIM": edge_attr_size,
+        #     "MODEL_OUT_CHANNELS": 2  # 每一类的概率
+        # }
+        #
+        # # 优化器参数
+        # solver = {
+        #     "SOLVER_LEARNING_RATE": 0.001,
+        #     "SOLVER_SGD_MOMENTUM": 0.8,
+        #     "SOLVER_WEIGHT_DECAY": 0.001
+        # }
+
+        print(model_params)
+        print(solver)
+
         # 构建模型
         device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
         model = CGCClass(model_params=model_params)
@@ -562,32 +766,30 @@ class DataSet:
                 optimizer.step()
 
             training_loss /= len(train_off_loader.dataset)
-            print("epoch {} Training loss: {}".format(epoch, training_loss))
-
-        # 模型训练结果
-        metrics_acc = torchmetrics.Accuracy()
-        metrics_recall = torchmetrics.Recall(average='none', num_classes=2)
-        metrics_precision = torchmetrics.Precision(average='none', num_classes=2)
-        # metrics_f1 = torchmetrics.F1(average="macro", num_classes=2)
+            if epoch % 10 == 0 or epoch == (epochs - 1):
+                print("epoch {} Training loss: {}".format(epoch, training_loss))
 
         # 开始验证
         with torch.no_grad():
             model.eval()
             valid_off_loader = DataLoader(valid_dataset, batch_size=64, shuffle=True)
+            valid_preds = []
+            valid_labels = []
             correct = 0.
             loss = 0.
             criterion = torch.nn.CrossEntropyLoss()
             for data in valid_off_loader:
                 data = data.to(device)
                 out = model(data)
+
                 pred = out.argmax(dim=1)
                 label = data.y.argmax(dim=1)
+
+                valid_preds.append(pred)
+                valid_labels.append(label)
+
                 batch_loss = criterion(out, data.y)
                 correct += int((pred == label).sum())
-
-                metrics_recall(pred, label)
-                metrics_acc(pred, label)
-                metrics_precision(pred, label)
 
                 loss += batch_loss
 
@@ -595,28 +797,29 @@ class DataSet:
             val_loss = loss / len(valid_off_loader.dataset)
             print("\nnormal Validation loss: {}\taccuracy:{}".format(val_loss, val_acc))
 
-            total_acc = metrics_acc.compute()
-            total_recall = metrics_recall.compute()
-            total_precision = metrics_precision.compute()
-            # total_auc = metrics_f1.compute()
-            print("acc:{} recall:{} p:{}".format(total_acc, total_recall, total_precision))
-
-        metrics_acc.reset()
-        metrics_recall.reset()
-        metrics_precision.reset()
+            acc, recall, precision, f1, total_num = calculate_metrics(valid_preds, valid_labels)
+            print("total:{} \n结果指标\tacc:{} recall:{} precision:{} f1:{}".format(total_num, acc, recall, precision, f1))
 
         # 开始测试
         with torch.no_grad():
             model.eval()
             test_off_loader = DataLoader(self.pyg_test_dataset, batch_size=64, shuffle=True)
+            test_preds = []
+            test_labels = []
             correct = 0.
             loss = 0.
             criterion = torch.nn.CrossEntropyLoss()
             for data in test_off_loader:
+
                 data = data.to(device)
                 out = model(data)
+
                 pred = out.argmax(dim=1)
                 label = data.y.argmax(dim=1)
+
+                test_preds.append(pred)
+                test_labels.append(label)
+
                 batch_loss = criterion(out, data.y)
                 for idx, predict_false in enumerate(torch.ne(pred, label)):
                     if predict_false:
@@ -624,24 +827,81 @@ class DataSet:
 
                 correct += int((pred == label).sum())
 
-                metrics_recall(pred, label)
-                metrics_acc(pred, label)
-                metrics_precision(pred, label)
-
                 loss += batch_loss
 
             val_acc = correct / len(test_off_loader.dataset)
             val_loss = loss / len(test_off_loader.dataset)
             print("\nnormal test loss: {}\taccuracy:{}".format(val_loss, val_acc))
-            total_acc = metrics_acc.compute()
-            total_recall = metrics_recall.compute()
-            total_precision = metrics_precision.compute()
-            print("acc:{} recall:{} p:{}".format(total_acc, total_recall, total_precision))
 
+            acc, recall, precision, f1, total_num = calculate_metrics(test_preds, test_labels)
+            print("total:{} \n结果指标\tacc:{} recall:{} precision:{} f1:{}".format(total_num, acc, recall, precision, f1))
 
         # 保存模型:
         name = "{}/{}_{}.pt".format(self.model_save_path, "model", str(val_acc)[2:4])
         torch.save(model.state_dict(), name)
+
+    def prepare_for_cfg_dataset(self, label):
+
+        all_cfg_infos = {}
+        cfg_names = {}
+        function_cnt = 0
+
+        if label == "ponzi":
+            json_file_name = "ponzi_cfg_function.json"
+            datasets_map = PONZI_JSON_MAP
+        else:
+            json_file_name = "no_ponzi_cfg_function.json"
+            datasets_map = NO_PONZI_JSON_MAP
+
+        for dataset_name in datasets_map:
+
+            dataset_cfg_infos = {}
+            all_cfg_infos[dataset_name] = dataset_cfg_infos
+
+            json_file = self.labeled_json_dir + datasets_map[dataset_name]
+            print("目标文件:{}".format(json_file))
+
+            with open(json_file, "r") as f:
+
+                dataset_infos = json.load(f)
+                for file_name in dataset_infos:
+
+                    if file_name not in dataset_cfg_infos:
+                        dataset_cfg_infos[file_name] = {}
+
+                    cfg_names.clear()
+                    target_infos = dataset_infos[file_name]
+
+                    if "slice" not in target_infos:
+                        continue
+
+                    for slice_info in target_infos["slice"]:
+
+                        if label == "no_ponzi" or "tag" in slice_info:
+
+                            slice_name = slice_info["name"]
+                            slice_split_info = str(slice_name).split("_")
+
+                            func_name = slice_split_info[-2]  # 倒数第二个是函数名
+
+                            contract_name = ""
+                            for part_name in slice_split_info[:-2]:  # 之前的都是合约名
+                                contract_name += "{}_".format(part_name)
+                            contract_name = contract_name[:-1]
+
+                            if contract_name not in dataset_cfg_infos[file_name]:
+                                dataset_cfg_infos[file_name][contract_name] = []
+
+                            cfg_fun_name = contract_name + func_name + "_cfg"
+                            if cfg_fun_name not in cfg_names:
+                                cfg_names[cfg_fun_name] = 1
+                                function_cnt += 1
+                                dataset_cfg_infos[file_name][contract_name].append(func_name)
+
+        print("{} 函数样本数量: {}".format(label, function_cnt))
+
+        with open(json_file_name, "w+") as f:
+            f.write(json.dumps(all_cfg_infos))
 
     def prepare_dataset_for_learning(self):
         """

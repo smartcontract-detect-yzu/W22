@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 # -*- coding: utf-8 -*-
 import os.path
+import shutil
 import urllib
 import time
 
@@ -8,8 +9,10 @@ import random
 from urllib.error import HTTPError, URLError
 from urllib.request import ProxyHandler
 import urllib.request;
+
+import numpy as np
+import torch
 from bs4 import BeautifulSoup
-import requests
 
 OPCODE_MAP = {
     "STOP": 1,
@@ -168,6 +171,30 @@ def crawl_url_by_get(url, proxy=None, enable_proxy=False):
         return None
 
 
+def calculate_metrics(preds, labels, ponzi_label=0):
+    TP = FP = TN = FN = 0
+
+    for batch_preds, batch_labels in zip(preds, labels):
+        for pred, label in zip(batch_preds, batch_labels):
+
+            if label == ponzi_label:
+                if pred == label:
+                    TP += 1
+                else:
+                    FP += 1
+            else:
+                if pred == label:
+                    TN += 1
+                else:
+                    FN += 1
+
+    total_data_num = TP + TN + FP + FN
+    acc = (TP + TN) / (TP + TN + FP + FN)
+    recall = TP / (TP + FN)
+    precision = TP / (TP + FP)
+    f1 = 2 * (precision * recall) / (precision + recall)
+
+
 # 代码图表示构建器
 class Tools:
     def __init__(self, address=None):
@@ -249,3 +276,112 @@ class Tools:
             except TypeError:
                 print("报错，等待再次拉起")
                 time.sleep(5)
+
+
+def is_ponzi_sbt(dir_name):
+    dst_prefix = "../SBT_transform/is_ponzi/"
+    walk = list(os.walk(dir_name))
+    for path, dir_list, file_list in walk:
+        for f in file_list:
+            if str(f).endswith("sol"):
+                id = str(f).split(".sol")[0]
+                dir_name = "contract{}".format(id)
+                dst_dir = dst_prefix + dir_name
+                if not os.path.exists(dst_dir):
+                    os.mkdir(dst_dir)
+                src = os.path.join(path, f)
+                shutil.copy(src, dst_dir)
+
+
+def is_no_ponzi_sbt(dir_name, type):
+    file_idx = 1
+    file_name_idx_map = {}
+
+    dst_prefix = "../SBT_transform/{}/".format(type)
+
+    walk = list(os.walk(dir_name))
+    for path, dir_list, file_list in walk:
+        for f in file_list:
+            if str(f).endswith("sol"):
+                address = str(f).split(".sol")[0]
+                if address not in file_name_idx_map:
+                    file_name_idx_map[address] = file_idx
+                    file_idx += 1
+
+                dir_name = "{}{}".format(type, file_name_idx_map[address])
+                dst_dir = dst_prefix + dir_name
+                if not os.path.exists(dst_dir):
+                    os.mkdir(dst_dir)
+                src = os.path.join(path, f)
+                shutil.copy(src, dst_dir)
+
+
+def sbt_dataset():
+    p1 = "../SBT_transform/is_ponzi_sbt"
+    no_p1 = "../SBT_transform/dapp_sbt"
+    no_p2 = "../SBT_transform/is_no_ponzi_sbt"
+
+    p_target = "../SBT_transform/dataset/ponzi_sbt/"
+    np_target = "../SBT_transform/dataset/no_ponzi_sbt/"
+
+    walk = list(os.walk(p1))
+    for path, dir_list, file_list in walk:
+        for f in file_list:
+            if str(f).endswith(".sol"):
+                src = os.path.join(path, f)
+                shutil.copy(src, p_target)
+
+    walk = list(os.walk(no_p2))
+    for path, dir_list, file_list in walk:
+        for f in file_list:
+            if str(f).endswith(".sol"):
+                src = os.path.join(path, f)
+                shutil.copy(src, np_target)
+
+    walk = list(os.walk(no_p1))
+    for path, dir_list, file_list in walk:
+        for f in file_list:
+            if str(f).endswith(".sol"):
+                src = os.path.join(path, f)
+                shutil.copy(src, np_target)
+
+
+def sbt_to_vectors():
+    # ponzi_sbt_dir = "../SBT_transform/dataset/ponzi_sbt/"
+    no_ponzi_sbt_dir = "../SBT_transform/dataset/no_ponzi_sbt/"
+
+    import logging
+    from infercode.client.infercode_client import InferCodeClient
+    logging.basicConfig(level=logging.INFO)
+    os.environ['CUDA_VISIBLE_DEVICES'] = "-1"  # Change from -1 to 0 to enable GPU
+    infercode = InferCodeClient(language="solidity")
+    infercode.init_from_config()
+
+    walk = list(os.walk(no_ponzi_sbt_dir))
+    for path, dir_list, file_list in walk:
+        for file_name in file_list:
+            if str(file_name).endswith(".sol"):
+                src = os.path.join(path, file_name)
+                with open(src, "r") as f:
+
+                    text = f.readline()
+                    tokens = str(text).split(" ")
+
+                    tokens_features = []
+                    np.array(tokens_features)
+                    for token in tokens:
+                        if len(token) != 0:
+                            v = infercode.encode([token])  # note：infercode一次解析长度小于5
+                            tokens_features.append(v)
+
+                    tokens = torch.Tensor(tokens_features)
+                    pt_name = str(file_name).split(".sol")[0] + ".pt"
+                    dst = os.path.join(path, pt_name)
+                    torch.save(tokens, dst)
+
+
+if __name__ == '__main__':
+    # is_ponzi_sbt("ponzi_detector/dataset/src/")
+    # is_no_ponzi_sbt("examples/ponzi_src/analyze/dapp_src", "dapp")
+    # sbt_dataset()
+    sbt_to_vectors()

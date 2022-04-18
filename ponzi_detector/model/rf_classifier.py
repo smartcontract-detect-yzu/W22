@@ -6,9 +6,17 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.datasets import load_wine
 from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+from sklearn.metrics import recall_score
+from sklearn.metrics import precision_score
+from sklearn.metrics import f1_score
 
-seed = 7
-test_size = 0.33
+# seed = 2
+# test_size = 0.35
+
+
+seed = 2
+test_size = 0.35
 
 # dataset_path = "../dataset/dataset_001.csv"
 ponzi_dataset_path = "xgboost_dataset_all_ponzi.csv"
@@ -29,19 +37,22 @@ y_train = np.concatenate((y_p_train, y_np_train))
 X_test = np.concatenate((X_p_test, X_np_test))
 y_test = np.concatenate((y_p_test, y_np_test))
 
-# 建立模型
+# 训练集
 clf = DecisionTreeClassifier(random_state=0)
 rfc = RandomForestClassifier(random_state=0)
 clf = clf.fit(X_train, y_train)
 rfc = rfc.fit(X_train, y_train)
 
-# 查看模型效果
+# 验证集结果
 score_c = clf.score(X_test, y_test)
 score_r = rfc.score(X_test, y_test)
 
-# 打印最后结果
-print("Single Tree:", score_c)
-print("Random Forest:", score_r)
+y_pred = rfc.predict(X_test)
+print("\n大数据集结果：acc:{} recall:{} pre:{} f1:{}".format(
+    score_r,
+    recall_score(y_test, y_pred),
+    precision_score(y_test, y_pred),
+    f1_score(y_test, y_pred)))
 
 valid_dataset_path = "xgboost_dataset_etherscan.csv"
 valid_dataset = loadtxt(valid_dataset_path, delimiter=",")
@@ -51,6 +62,10 @@ Y_valid = valid_dataset[:, 0]
 score_c = clf.score(X_valid, Y_valid)
 score_r = rfc.score(X_valid, Y_valid)
 
-# 打印最后结果
-print("Single Tree:", score_c)
-print("Random Forest:", score_r)
+# 测试集结果
+y_pred = rfc.predict(X_valid)
+print("\n小数据集结果：acc:{} recall:{} pre:{} f1:{}".format(
+    score_r,
+    recall_score(Y_valid, y_pred),
+    precision_score(Y_valid, y_pred),
+    f1_score(Y_valid, y_pred)))

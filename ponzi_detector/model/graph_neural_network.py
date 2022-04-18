@@ -4,7 +4,7 @@ from torch_geometric.nn import global_max_pool, global_mean_pool
 from torch_geometric.loader import DataLoader
 import torch.nn.functional as F
 from torch.nn import Linear, BatchNorm1d, ModuleList
-
+from imblearn.over_sampling import SMOTE
 torch.manual_seed(8)
 
 from typing import Tuple, Union
@@ -114,7 +114,6 @@ class MYGNN(MessagePassing):
         # The learnable parameters to compute attention coefficients:
         # self.att = Parameter(torch.Tensor(1, 1, channels))
 
-
         # self.attention = GAL(channels, channels)
 
         self.lin_f = Linear(channels + dim, channels, bias=bias)
@@ -180,11 +179,12 @@ class CGCClass(torch.nn.Module):
         # Linear layers
         self.linear1 = Linear(feature_size, dense_neurons)  # 100 48
         self.bn2 = BatchNorm1d(dense_neurons)
-        self.linear2 = Linear(dense_neurons, out_channels)  # 48 48
+        self.smote = SMOTE(random_state=42)
+        self.linear2 = Linear(dense_neurons, out_channels)  # 48 2
 
     def forward(self, data):
 
-        x, edge_index, edge_attr, batch = data.x, data.edge_index, data.edge_attr, data.batch
+        x, y, edge_index, edge_attr, batch = data.x, data.y, data.edge_index, data.edge_attr, data.batch
 
         # Initial CGC ??
         # x = self.cgc1(x, edge_index, edge_attr)
@@ -203,7 +203,7 @@ class CGCClass(torch.nn.Module):
 
         if torch.isnan(torch.mean(self.linear2.weight)):
             raise RuntimeError("Exploding gradients. Tune learning rate")
-
+        
         x = torch.sigmoid(x)  # 二分类，输出约束在(0, 1)
         return x
 

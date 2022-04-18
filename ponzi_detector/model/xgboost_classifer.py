@@ -1,11 +1,13 @@
 from numpy import loadtxt
 from xgboost import XGBClassifier, plot_importance
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score
+from sklearn.metrics import accuracy_score, recall_score, precision_score, f1_score
 import numpy as np
 
-seed = 7
-test_size = 0.33
+seed = 4
+test_size = 0.3
+
+print("{} {}".format(seed, test_size))
 
 # dataset_path = "../dataset/dataset_001.csv"
 ponzi_dataset_path = "xgboost_dataset_all_ponzi.csv"
@@ -36,7 +38,7 @@ y_test = np.concatenate((y_p_test, y_np_test))
 # model.fit(X_train, y_train)
 
 ##可视化测试集的loss
-model = XGBClassifier()
+model = XGBClassifier(learning_rate=0.01, objective='binary:logistic', seed=27)
 eval_set = [(X_test, y_test)]
 model.fit(X_train, y_train, early_stopping_rounds=10, eval_metric="logloss", eval_set=eval_set, verbose=False)
 
@@ -44,6 +46,10 @@ y_pred = model.predict(X_test)
 predictions = [round(value) for value in y_pred]
 
 accuracy = accuracy_score(y_test, predictions)
+recall = recall_score(y_test, predictions)
+precision = precision_score(y_test, predictions)
+f1 = f1_score(y_test, predictions)
+print("\n大数据集结果：acc:{} recall:{} pre:{} f1:{}".format(accuracy, recall, precision, f1))
 print("Accuracy: %.2f%%" % (accuracy * 100.0))
 
 valid_dataset_path = "xgboost_dataset_etherscan.csv"
@@ -55,9 +61,12 @@ y_valid_pred = model.predict(X_valid)
 predictions = [round(value) for value in y_valid_pred]
 
 accuracy = accuracy_score(Y_valid, predictions)
+recall = recall_score(Y_valid, predictions)
+precision = precision_score(Y_valid, predictions)
+f1 = f1_score(Y_valid, predictions)
+print("\n小数据集结果：acc:{} recall:{} pre:{} f1:{}".format(accuracy, recall, precision, f1))
 print("Accuracy: %.2f%%" % (accuracy * 100.0))
 
-from matplotlib import pyplot
-
-plot_importance(model)
-pyplot.show()
+# from matplotlib import pyplot
+# plot_importance(model)
+# pyplot.show()

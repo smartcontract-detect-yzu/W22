@@ -55,7 +55,7 @@ def _select_solc_version(version_info):
 
 # 文件分析器
 class SolFileAnalyzer:
-    def __init__(self, file_name: str, work_path: str, file_type="sol"):
+    def __init__(self, file_name: str, work_path: str, file_type="sol", cfg_filter=None):
 
         self.file_name = file_name
         self.addre = file_name.strip(".sol")
@@ -66,6 +66,11 @@ class SolFileAnalyzer:
             self.opcode_file = file_name.split(".sol")[0] + ".evm"
         else:
             self.opcode_file = file_name
+
+        if cfg_filter is not None:
+            self.cfg_filter = cfg_filter
+        else:
+            self.cfg_filter = None
 
         self.contract_opcode_files = {}
 
@@ -302,3 +307,47 @@ class SolFileAnalyzer:
             analyze_result += contract_info.get_contract_info()
 
         return analyze_result
+
+    def do_analyze_a_file_for_cfg_pdg(self):
+
+        if self.cfg_filter is None:
+            return
+
+        print("使用过滤器：", self.cfg_filter)
+        slither = Slither(self.file_name)
+        for contract in slither.contracts:
+
+            # 构建过滤器
+            contract_filter = {}
+            if contract.name in self.cfg_filter:
+                print("匹配到过滤器合约：{}".format(contract.name))
+                for target_function in self.cfg_filter[contract.name]:
+                    contract_filter[target_function] = 1
+            else:
+                continue
+
+            contract_info = ContractInfo(contract)  # 1.合约信息抽取
+            for function in contract.functions:
+
+                if function.name in contract_filter:
+
+                    print("【********】开始分析： {}".format(function.name))
+
+                    # 简易流程，目标是获得CFG 和 PDG
+                    function_info = FunctionInfo(contract_info, function, test_mode=0, simple=1)  # 函数对象
+                    if function_info.cfg is None:
+                        continue  # 没有cfg
+
+                    control_flow_analyzer = ControlFlowAnalyzer(contract_info, function_info)  # 当前函数的控制流分析器
+                    data_flow_analyzer = DataFlowAnalyzer(contract_info, function_info)  # 当前函数的数据流分析器
+                    code_constructor = CodeGraphConstructor(contract_info, function_info, mode=0)  # 代码图表示构建器
+
+                    # PDG分析
+                    control_flow_analyzer.do_control_dependency_analyze()  # 控制流分析
+                    data_flow_analyzer.do_data_semantic_analyze()  # 数据流分析
+
+                    # 获得psc表示
+                    function_info.save_psc_to_file()
+
+                    # 获得CFG和PDG
+                    code_constructor.get_cfg_and_pdg()
