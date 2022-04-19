@@ -1,0 +1,4053 @@
+{
+	"100cbbbcf73530965b70ba308d594c3e2698f262_MaticPool": {
+		"addre": "100cbbbcf73530965b70ba308d594c3e2698f262_MaticPool",
+		"slice": [
+			{
+				"name": "MaticPool_payReferral_9",
+				"exp": "sent = address(uint160(referer)).send(level_price_local)"
+			},
+			{
+				"tag": "1",
+				"name": "MaticPool_buyPool1_11",
+				"exp": "sent = address(uint160(pool1Currentuser)).send(pool1_price)"
+			},
+			{
+				"tag": "1",
+				"name": "MaticPool_buyPool2_11",
+				"exp": "sent = address(uint160(pool2Currentuser)).send(pool2_price)"
+			},
+			{
+				"tag": "1",
+				"name": "MaticPool_buyPool3_11",
+				"exp": "sent = address(uint160(pool3Currentuser)).send(pool3_price)"
+			},
+			{
+				"tag": "1",
+				"name": "MaticPool_buyPool4_11",
+				"exp": "sent = address(uint160(pool4Currentuser)).send(pool4_price)"
+			},
+			{
+				"tag": "1",
+				"name": "MaticPool_buyPool5_11",
+				"exp": "sent = address(uint160(pool5Currentuser)).send(pool5_price)"
+			},
+			{
+				"tag": "1",
+				"name": "MaticPool_buyPool6_10",
+				"exp": "sent = address(uint160(pool6Currentuser)).send(pool6_price)"
+			},
+			{
+				"tag": "1",
+				"name": "MaticPool_buyPool7_11",
+				"exp": "sent = address(uint160(pool7Currentuser)).send(pool7_price)"
+			},
+			{
+				"tag": "1",
+				"name": "MaticPool_buyPool8_11",
+				"exp": "sent = address(uint160(pool8Currentuser)).send(pool8_price)"
+			},
+			{
+				"tag": "1",
+				"name": "MaticPool_buyPool9_11",
+				"exp": "sent = address(uint160(pool9Currentuser)).send(pool9_price)"
+			},
+			{
+				"tag": "1",
+				"name": "MaticPool_buyPool10_11",
+				"exp": "sent = address(uint160(pool10Currentuser)).send(pool10_price)"
+			},
+			{
+				"tag": "1",
+				"name": "MaticPool_buyPool11_11",
+				"exp": "sent = address(uint160(pool11Currentuser)).send(pool11_price)"
+			},
+			{
+				"tag": "1",
+				"name": "MaticPool_buyPool12_11",
+				"exp": "sent = address(uint160(pool12Currentuser)).send(pool12_price)"
+			},
+			{
+				"tag": "1",
+				"name": "MaticPool_buyPool13_11",
+				"exp": "sent = address(uint160(pool13Currentuser)).send(pool13_price)"
+			},
+			{
+				"tag": "1",
+				"name": "MaticPool_buyPool14_11",
+				"exp": "sent = address(uint160(pool14Currentuser)).send(pool14_price)"
+			},
+			{
+				"tag": "1",
+				"name": "MaticPool_buyPool15_11",
+				"exp": "sent = address(uint160(pool15Currentuser)).send(pool15_price)"
+			},
+			{
+				"name": "MaticPool_sendBalance_1",
+				"exp": "! address(uint160(ownerWallet)).send(getEthBalance())"
+			}
+		]
+	},
+	"f56aeeba4c9307805513888cfb75eb5883e761a0_BullRun": {
+		"addre": "f56aeeba4c9307805513888cfb75eb5883e761a0_BullRun",
+		"slice": [
+			{
+				"name": "BullRun_payReferral_9",
+				"exp": "sent = address(uint160(referer)).send(level_price_local)"
+			},
+			{
+				"tag": "1",
+				"name": "BullRun_buyPool1_11",
+				"exp": "sent = address(uint160(pool1Currentuser)).send(pool1_price)"
+			},
+			{
+				"tag": "1",
+				"name": "BullRun_buyPool2_12",
+				"exp": "sent = address(uint160(pool2Currentuser)).send(pool2_price)"
+			},
+			{
+				"tag": "1",
+				"name": "BullRun_buyPool3_12",
+				"exp": "sent = address(uint160(pool3Currentuser)).send(pool3_price)"
+			},
+			{
+				"tag": "1",
+				"name": "BullRun_buyPool4_12",
+				"exp": "sent = address(uint160(pool4Currentuser)).send(pool4_price)"
+			},
+			{
+				"tag": "1",
+				"name": "BullRun_buyPool5_12",
+				"exp": "sent = address(uint160(pool5Currentuser)).send(pool5_price)"
+			},
+			{
+				"tag": "1",
+				"name": "BullRun_buyPool6_11",
+				"exp": "sent = address(uint160(pool6Currentuser)).send(pool6_price)"
+			},
+			{
+				"tag": "1",
+				"name": "BullRun_buyPool7_12",
+				"exp": "sent = address(uint160(pool7Currentuser)).send(pool7_price)"
+			},
+			{
+				"tag": "1",
+				"name": "BullRun_buyPool8_12",
+				"exp": "sent = address(uint160(pool8Currentuser)).send(pool8_price)"
+			},
+			{
+				"tag": "1",
+				"name": "BullRun_buyPool9_12",
+				"exp": "sent = address(uint160(pool9Currentuser)).send(pool9_price)"
+			},
+			{
+				"tag": "1",
+				"name": "BullRun_buyPool10_12",
+				"exp": "sent = address(uint160(pool10Currentuser)).send(pool10_price)"
+			},
+			{
+				"name": "BullRun_sendBalance_1",
+				"exp": "! address(uint160(ownerWallet)).send(getEthBalance())"
+			}
+		]
+	},
+	"TGAYUq6GEConL96N4BXQMdTLALcGtcvBBk_Tronmatrix": {
+		"addre": "TGAYUq6GEConL96N4BXQMdTLALcGtcvBBk_Tronmatrix",
+		"slice": [
+			{
+				"name": "Tronmatrix_payReferral_5",
+				"exp": "address(uint160(referer)).transfer(level_price_local)"
+			},
+			{
+				"tag": "1",
+				"name": "Tronmatrix_buyPool1_10",
+				"exp": "address(uint160(pool1Currentuser)).transfer(pool1_price)"
+			},
+			{
+				"tag": "1",
+				"name": "Tronmatrix_buyPool2_11",
+				"exp": "address(uint160(pool2Currentuser)).transfer(pool2_price)"
+			},
+			{
+				"tag": "1",
+				"name": "Tronmatrix_buyPool3_11",
+				"exp": "address(uint160(pool3Currentuser)).transfer(pool3_price)"
+			},
+			{
+				"tag": "1",
+				"name": "Tronmatrix_buyPool4_11",
+				"exp": "address(uint160(pool4Currentuser)).transfer(pool4_price)"
+			},
+			{
+				"tag": "1",
+				"name": "Tronmatrix_buyPool5_11",
+				"exp": "address(uint160(pool5Currentuser)).transfer(pool5_price)"
+			},
+			{
+				"tag": "1",
+				"name": "Tronmatrix_buyPool6_11",
+				"exp": "address(uint160(pool6Currentuser)).transfer(pool6_price)"
+			},
+			{
+				"tag": "1",
+				"name": "Tronmatrix_buyPool7_11",
+				"exp": "address(uint160(pool7Currentuser)).transfer(pool7_price)"
+			},
+			{
+				"tag": "1",
+				"name": "Tronmatrix_buyPool8_11",
+				"exp": "address(uint160(pool8Currentuser)).transfer(pool8_price)"
+			}
+		]
+	},
+	"TVQVJoDRRKV3AwDQQNwryDNVW53qVxWuFc_WorldPools": {
+		"addre": "TVQVJoDRRKV3AwDQQNwryDNVW53qVxWuFc_WorldPools",
+		"slice": [
+			{
+				"name": "WorldPools_Trans_3",
+				"exp": "_address.transfer(amounts)"
+			},
+			{
+				"name": "WorldPools_buyPool1_20",
+				"exp": "sent = address(uint160(pool1Currentuser)).send(pool1_price)"
+			},
+			{
+				"name": "WorldPools_buyPool1_32",
+				"exp": "sent = address(uint160(spreferer)).send(pool1_price)"
+			},
+			{
+				"name": "WorldPools_buyPool1_38",
+				"exp": "sent = address(uint160(userList[_referrerID])).send(pool1_price)"
+			},
+			{
+				"name": "WorldPools_buyPool1_44",
+				"exp": "sent = address(uint160(ownerWallet)).send(pool1_price)"
+			},
+			{
+				"tag": "1",
+				"name": "WorldPools_buyPool2_12",
+				"exp": "sent = address(uint160(pool2Currentuser)).send(pool2_price)"
+			},
+			{
+				"tag": "1",
+				"name": "WorldPools_buyPool3_12",
+				"exp": "sent = address(uint160(pool3Currentuser)).send(pool3_price)"
+			},
+			{
+				"tag": "1",
+				"name": "WorldPools_buyPool4_12",
+				"exp": "sent = address(uint160(pool4Currentuser)).send(pool4_price)"
+			},
+			{
+				"tag": "1",
+				"name": "WorldPools_buyPool5_12",
+				"exp": "sent = address(uint160(pool5Currentuser)).send(pool5_price)"
+			},
+			{
+				"tag": "1",
+				"name": "WorldPools_buyPool6_12",
+				"exp": "sent = address(uint160(pool6Currentuser)).send(pool6_price)"
+			},
+			{
+				"tag": "1",
+				"name": "WorldPools_buyPool7_12",
+				"exp": "sent = address(uint160(pool7Currentuser)).send(pool7_price)"
+			},
+			{
+				"tag": "1",
+				"name": "WorldPools_buyPool8_12",
+				"exp": "sent = address(uint160(pool8Currentuser)).send(pool8_price)"
+			},
+			{
+				"name": "WorldPools_sendBalance_1",
+				"exp": "! address(uint160(ownerWallet)).send(getTrxBalance())"
+			},
+			{
+				"name": "WorldPools_withdrawSafe_6",
+				"exp": "msg.sender.transfer(amtToTransfer)"
+			}
+		]
+	},
+	"e063492f3d2f23ebb588c379c39fa077a459dd92_Autopool": {
+		"addre": "e063492f3d2f23ebb588c379c39fa077a459dd92_Autopool",
+		"slice": [
+			{
+				"name": "Autopool_payReferral_9",
+				"exp": "sent = address(uint160(referer)).send(level_price_local)"
+			},
+			{
+				"tag": "1",
+				"name": "Autopool_buyPool1_11",
+				"exp": "sent = address(uint160(pool1Currentuser)).send(pool1_price)"
+			},
+			{
+				"tag": "1",
+				"name": "Autopool_buyPool2_11",
+				"exp": "sent = address(uint160(pool2Currentuser)).send(pool2_price)"
+			},
+			{
+				"tag": "1",
+				"name": "Autopool_buyPool3_11",
+				"exp": "sent = address(uint160(pool3Currentuser)).send(pool3_price)"
+			},
+			{
+				"tag": "1",
+				"name": "Autopool_buyPool4_11",
+				"exp": "sent = address(uint160(pool4Currentuser)).send(pool4_price)"
+			},
+			{
+				"tag": "1",
+				"name": "Autopool_buyPool5_11",
+				"exp": "sent = address(uint160(pool5Currentuser)).send(pool5_price)"
+			},
+			{
+				"tag": "1",
+				"name": "Autopool_buyPool6_10",
+				"exp": "sent = address(uint160(pool6Currentuser)).send(pool6_price)"
+			},
+			{
+				"tag": "1",
+				"name": "Autopool_buyPool7_11",
+				"exp": "sent = address(uint160(pool7Currentuser)).send(pool7_price)"
+			},
+			{
+				"tag": "1",
+				"name": "Autopool_buyPool8_11",
+				"exp": "sent = address(uint160(pool8Currentuser)).send(pool8_price)"
+			},
+			{
+				"tag": "1",
+				"name": "Autopool_buyPool9_11",
+				"exp": "sent = address(uint160(pool9Currentuser)).send(pool9_price)"
+			},
+			{
+				"tag": "1",
+				"name": "Autopool_buyPool10_11",
+				"exp": "sent = address(uint160(pool10Currentuser)).send(pool10_price)"
+			},
+			{
+				"name": "Autopool_sendBalance_1",
+				"exp": "! address(uint160(ownerWallet)).send(getEthBalance())"
+			}
+		]
+	},
+	"TQmf3C1CmLryEWSHJqfXf4bMNNEUN7xypM_PoolRisingStar": {
+		"addre": "TQmf3C1CmLryEWSHJqfXf4bMNNEUN7xypM_PoolRisingStar",
+		"slice": [
+			{
+				"name": "PoolRisingStar_payReferral_5",
+				"exp": "address(uint160(referer)).transfer(level_price_local)"
+			},
+			{
+				"tag": "1",
+				"name": "PoolRisingStar_buyPool1_10",
+				"exp": "address(uint160(pool1Currentuser)).transfer(pool1_price)"
+			},
+			{
+				"tag": "1",
+				"name": "PoolRisingStar_buyPool2_11",
+				"exp": "address(uint160(pool2Currentuser)).transfer(pool2_price)"
+			},
+			{
+				"tag": "1",
+				"name": "PoolRisingStar_buyPool3_11",
+				"exp": "address(uint160(pool3Currentuser)).transfer(pool3_price)"
+			},
+			{
+				"tag": "1",
+				"name": "PoolRisingStar_buyPool4_11",
+				"exp": "address(uint160(pool4Currentuser)).transfer(pool4_price)"
+			},
+			{
+				"tag": "1",
+				"name": "PoolRisingStar_buyPool5_11",
+				"exp": "address(uint160(pool5Currentuser)).transfer(pool5_price)"
+			},
+			{
+				"tag": "1",
+				"name": "PoolRisingStar_buyPool6_11",
+				"exp": "address(uint160(pool6Currentuser)).transfer(pool6_price)"
+			},
+			{
+				"tag": "1",
+				"name": "PoolRisingStar_buyPool7_11",
+				"exp": "address(uint160(pool7Currentuser)).transfer(pool7_price)"
+			},
+			{
+				"tag": "1",
+				"name": "PoolRisingStar_buyPool8_11",
+				"exp": "address(uint160(pool8Currentuser)).transfer(pool8_price)"
+			},
+			{
+				"tag": "1",
+				"name": "PoolRisingStar_buyPool9_11",
+				"exp": "address(uint160(pool9Currentuser)).transfer(pool9_price)"
+			},
+			{
+				"tag": "1",
+				"name": "PoolRisingStar_buyPool10_11",
+				"exp": "address(uint160(pool10Currentuser)).transfer(pool10_price)"
+			},
+			{
+				"tag": "1",
+				"name": "PoolRisingStar_buyPool11_11",
+				"exp": "address(uint160(pool11Currentuser)).transfer(pool11_price)"
+			},
+			{
+				"tag": "1",
+				"name": "PoolRisingStar_buyPool12_11",
+				"exp": "address(uint160(pool12Currentuser)).transfer(pool12_price)"
+			}
+		]
+	},
+	"TUETmXutWAcZUS87en6xBe6AZuYDYq5vLj_FastPool": {
+		"addre": "TUETmXutWAcZUS87en6xBe6AZuYDYq5vLj_FastPool",
+		"slice": [
+			{
+				"name": "FastPool_Trans_3",
+				"exp": "_address.transfer(amounts)"
+			},
+			{
+				"tag": "1",
+				"name": "FastPool_buyPool1_20",
+				"exp": "sent = address(uint160(pool1Currentuser)).send(pool1_price)"
+			},
+			{
+				"name": "FastPool_buyPool1_32",
+				"exp": "sent = address(uint160(spreferer)).send(pool1_price)"
+			},
+			{
+				"name": "FastPool_buyPool1_38",
+				"exp": "sent = address(uint160(userList[_referrerID])).send(pool1_price)"
+			},
+			{
+				"name": "FastPool_buyPool1_44",
+				"exp": "sent = address(uint160(ownerWallet)).send(pool1_price)"
+			},
+			{
+				"tag": "1",
+				"name": "FastPool_buyPool2_12",
+				"exp": "sent = address(uint160(pool2Currentuser)).send(pool2_price)"
+			},
+			{
+				"tag": "1",
+				"name": "FastPool_buyPool3_12",
+				"exp": "sent = address(uint160(pool3Currentuser)).send(pool3_price)"
+			},
+			{
+				"tag": "1",
+				"name": "FastPool_buyPool4_12",
+				"exp": "sent = address(uint160(pool4Currentuser)).send(pool4_price)"
+			},
+			{
+				"tag": "1",
+				"name": "FastPool_buyPool5_12",
+				"exp": "sent = address(uint160(pool5Currentuser)).send(pool5_price)"
+			},
+			{
+				"tag": "1",
+				"name": "FastPool_buyPool6_12",
+				"exp": "sent = address(uint160(pool6Currentuser)).send(pool6_price)"
+			},
+			{
+				"tag": "1",
+				"name": "FastPool_buyPool7_12",
+				"exp": "sent = address(uint160(pool7Currentuser)).send(pool7_price)"
+			},
+			{
+				"tag": "1",
+				"name": "FastPool_buyPool8_12",
+				"exp": "sent = address(uint160(pool8Currentuser)).send(pool8_price)"
+			},
+			{
+				"tag": "1",
+				"name": "FastPool_buyPool9_12",
+				"exp": "sent = address(uint160(pool9Currentuser)).send(pool9_price)"
+			},
+			{
+				"tag": "1",
+				"name": "FastPool_buyPool10_12",
+				"exp": "sent = address(uint160(pool10Currentuser)).send(pool10_price)"
+			},
+			{
+				"tag": "1",
+				"name": "FastPool_buyPool11_12",
+				"exp": "sent = address(uint160(pool11Currentuser)).send(pool11_price)"
+			},
+			{
+				"tag": "1",
+				"name": "FastPool_buyPool12_12",
+				"exp": "sent = address(uint160(pool12Currentuser)).send(pool12_price)"
+			},
+			{
+				"tag": "1",
+				"name": "FastPool_buyPool13_12",
+				"exp": "sent = address(uint160(pool13Currentuser)).send(pool13_price)"
+			},
+			{
+				"name": "FastPool_sendBalance_1",
+				"exp": "! address(uint160(ownerWallet)).send(getTrxBalance())"
+			},
+			{
+				"name": "FastPool_withdrawSafe_6",
+				"exp": "msg.sender.transfer(amtToTransfer)"
+			}
+		]
+	},
+	"TQpxohWjPJtba6TUVZtgov1yqbS6yMCrYX_FP50": {
+		"addre": "TQpxohWjPJtba6TUVZtgov1yqbS6yMCrYX_FP50",
+		"slice": [
+			{
+				"name": "FP50_payReferral_5",
+				"exp": "address(uint160(referer)).transfer(level_price_local)"
+			},
+			{
+				"tag": "1",
+				"name": "FP50_buyPool1_10",
+				"exp": "address(uint160(pool1Currentuser)).transfer(pool1_price)"
+			},
+			{
+				"tag": "1",
+				"name": "FP50_buyPool2_11",
+				"exp": "address(uint160(pool2Currentuser)).transfer(pool2_price)"
+			},
+			{
+				"tag": "1",
+				"name": "FP50_buyPool3_11",
+				"exp": "address(uint160(pool3Currentuser)).transfer(pool3_price)"
+			},
+			{
+				"tag": "1",
+				"name": "FP50_buyPool4_11",
+				"exp": "address(uint160(pool4Currentuser)).transfer(pool4_price)"
+			},
+			{
+				"tag": "1",
+				"name": "FP50_buyPool5_11",
+				"exp": "address(uint160(pool5Currentuser)).transfer(pool5_price)"
+			},
+			{
+				"tag": "1",
+				"name": "FP50_buyPool6_11",
+				"exp": "address(uint160(pool6Currentuser)).transfer(pool6_price)"
+			},
+			{
+				"tag": "1",
+				"name": "FP50_buyPool7_11",
+				"exp": "address(uint160(pool7Currentuser)).transfer(pool7_price)"
+			},
+			{
+				"tag": "1",
+				"name": "FP50_buyPool8_11",
+				"exp": "address(uint160(pool8Currentuser)).transfer(pool8_price)"
+			},
+			{
+				"tag": "1",
+				"name": "FP50_buyPool9_11",
+				"exp": "address(uint160(pool9Currentuser)).transfer(pool9_price)"
+			},
+			{
+				"tag": "1",
+				"name": "FP50_buyPool10_11",
+				"exp": "address(uint160(pool10Currentuser)).transfer(pool10_price)"
+			},
+			{
+				"tag": "1",
+				"name": "FP50_buyPool11_11",
+				"exp": "address(uint160(pool11Currentuser)).transfer(pool11_price)"
+			},
+			{
+				"tag": "1",
+				"name": "FP50_buyPool12_11",
+				"exp": "address(uint160(pool12Currentuser)).transfer(pool12_price)"
+			}
+		]
+	},
+	"TXZAbewjaLYeSrKZqk9Nh4KVWSmVpguTkb_MegaPool": {
+		"addre": "TXZAbewjaLYeSrKZqk9Nh4KVWSmVpguTkb_MegaPool",
+		"slice": [
+			{
+				"name": "MegaPool_payReferral_5",
+				"exp": "address(uint160(referer)).transfer(level_price_local)"
+			},
+			{
+				"tag": "1",
+				"name": "MegaPool_buyPool1_10",
+				"exp": "address(uint160(pool1Currentuser)).transfer(pool1_price)"
+			},
+			{
+				"tag": "1",
+				"name": "MegaPool_buyPool2_11",
+				"exp": "address(uint160(pool2Currentuser)).transfer(pool2_price)"
+			},
+			{
+				"tag": "1",
+				"name": "MegaPool_buyPool3_11",
+				"exp": "address(uint160(pool3Currentuser)).transfer(pool3_price)"
+			},
+			{
+				"tag": "1",
+				"name": "MegaPool_buyPool4_11",
+				"exp": "address(uint160(pool4Currentuser)).transfer(pool4_price)"
+			},
+			{
+				"tag": "1",
+				"name": "MegaPool_buyPool5_11",
+				"exp": "address(uint160(pool5Currentuser)).transfer(pool5_price)"
+			},
+			{
+				"tag": "1",
+				"name": "MegaPool_buyPool6_11",
+				"exp": "address(uint160(pool6Currentuser)).transfer(pool6_price)"
+			},
+			{
+				"tag": "1",
+				"name": "MegaPool_buyPool7_11",
+				"exp": "address(uint160(pool7Currentuser)).transfer(pool7_price)"
+			},
+			{
+				"tag": "1",
+				"name": "MegaPool_buyPool8_11",
+				"exp": "address(uint160(pool8Currentuser)).transfer(pool8_price)"
+			}
+		]
+	},
+	"TELQP2eJnyKbdLRx4sQDtobJPP4WLSma9a_Avenio": {
+		"addre": "TELQP2eJnyKbdLRx4sQDtobJPP4WLSma9a_Avenio",
+		"slice": [
+			{
+				"name": "Avenio_payReferral_11",
+				"exp": "sent = address(uint160(referer)).send(level_price_local)"
+			},
+			{
+				"name": "Avenio_payReferral_16",
+				"exp": "sent = address(uint160(ownerWallet)).send(level_price_local)"
+			},
+			{
+				"tag": "1",
+				"name": "Avenio_buyPool1_24",
+				"exp": "sent = address(uint160(pool1Currentuser)).send(poolshare)"
+			},
+			{
+				"name": "Avenio_buyPool1_35",
+				"exp": "sent = address(uint160(spreferer)).send(pool_sp_share)"
+			},
+			{
+				"tag": "1",
+				"name": "Avenio_buyPool2_16",
+				"exp": "sent = address(uint160(pool2Currentuser)).send(poolshare)"
+			},
+			{
+				"name": "Avenio_buyPool2_27",
+				"exp": "sent = address(uint160(spreferer)).send(pool_sp_share)"
+			},
+			{
+				"tag": "1",
+				"name": "Avenio_buyPool3_16",
+				"exp": "sent = address(uint160(pool3Currentuser)).send(poolshare)"
+			},
+			{
+				"name": "Avenio_buyPool3_27",
+				"exp": "sent = address(uint160(spreferer)).send(pool_sp_share)"
+			},
+			{
+				"tag": "1",
+				"name": "Avenio_buyPool4_16",
+				"exp": "sent = address(uint160(pool4Currentuser)).send(poolshare)"
+			},
+			{
+				"name": "Avenio_buyPool4_27",
+				"exp": "sent = address(uint160(spreferer)).send(pool_sp_share)"
+			},
+			{
+				"tag": "1",
+				"name": "Avenio_buyPool5_16",
+				"exp": "sent = address(uint160(pool5Currentuser)).send(poolshare)"
+			},
+			{
+				"name": "Avenio_buyPool5_27",
+				"exp": "sent = address(uint160(spreferer)).send(pool_sp_share)"
+			},
+			{
+				"tag": "1",
+				"name": "Avenio_buyPool6_16",
+				"exp": "sent = address(uint160(pool6Currentuser)).send(poolshare)"
+			},
+			{
+				"name": "Avenio_buyPool6_27",
+				"exp": "sent = address(uint160(spreferer)).send(pool_sp_share)"
+			},
+			{
+				"tag": "1",
+				"name": "Avenio_buyPool7_16",
+				"exp": "sent = address(uint160(pool7Currentuser)).send(poolshare)"
+			},
+			{
+				"name": "Avenio_buyPool7_27",
+				"exp": "sent = address(uint160(spreferer)).send(pool_sp_share)"
+			},
+			{
+				"tag": "1",
+				"name": "Avenio_buyPool8_16",
+				"exp": "sent = address(uint160(pool8Currentuser)).send(poolshare)"
+			},
+			{
+				"name": "Avenio_buyPool8_27",
+				"exp": "sent = address(uint160(spreferer)).send(pool_sp_share)"
+			},
+			{
+				"tag": "1",
+				"name": "Avenio_buyPool9_16",
+				"exp": "sent = address(uint160(pool9Currentuser)).send(poolshare)"
+			},
+			{
+				"name": "Avenio_buyPool9_27",
+				"exp": "sent = address(uint160(spreferer)).send(pool_sp_share)"
+			},
+			{
+				"tag": "1",
+				"name": "Avenio_buyPool10_16",
+				"exp": "sent = address(uint160(pool10Currentuser)).send(poolshare)"
+			},
+			{
+				"name": "Avenio_buyPool10_27",
+				"exp": "sent = address(uint160(spreferer)).send(pool_sp_share)"
+			},
+			{
+				"name": "Avenio_sendBalance_1",
+				"exp": "! address(uint160(ownerWallet)).send(getTrxBalance())"
+			},
+			{
+				"name": "Avenio_withdrawSafe_6",
+				"exp": "msg.sender.transfer(amtToTransfer)"
+			}
+		]
+	},
+	"TKNe5hofL9YsEA1qmVYpx9F35yX9zdbtaV_PeoplesDreams": {
+		"note": "TBD",
+		"addre": "TKNe5hofL9YsEA1qmVYpx9F35yX9zdbtaV_PeoplesDreams",
+		"slice": [
+			{
+				"name": "PeoplesDreams_payReferral_5",
+				"exp": "senduse = address(uint160(_addrOwner)).send(comisionSpo)"
+			},
+			{
+				"name": "PeoplesDreams_payReferral_6",
+				"exp": "sent = address(uint160(referer)).send(comisionSpo)"
+			},
+			{
+				"name": "PeoplesDreams_buyPool1_11",
+				"exp": "address(uint160(pool1Currentuser)).send(address(this).balance + pool1_price - address(this).balance)"
+			},
+			{
+				"name": "PeoplesDreams_buyPool2_11",
+				"exp": "address(uint160(pool2Currentuser)).send(address(this).balance + pool2_price - address(this).balance)"
+			},
+			{
+				"name": "PeoplesDreams_buyPool2_20",
+				"exp": "address(uint160(pool2Currentuser)).send(address(this).balance + pool2_price - address(this).balance)"
+			},
+			{
+				"name": "PeoplesDreams_buyPool2_23",
+				"exp": "address(uint160(pool2Currentuser)).send(address(this).balance + pool2_price - address(this).balance)"
+			},
+			{
+				"name": "PeoplesDreams_buyPool3_12",
+				"exp": "address(uint160(pool3Currentuser)).send(address(this).balance + pool3_price - address(this).balance)"
+			},
+			{
+				"name": "PeoplesDreams_buyPool3_21",
+				"exp": "address(uint160(pool3Currentuser)).send(address(this).balance + pool3_price - address(this).balance)"
+			},
+			{
+				"name": "PeoplesDreams_buyPool3_24",
+				"exp": "address(uint160(pool3Currentuser)).send(address(this).balance + pool3_price - address(this).balance)"
+			},
+			{
+				"name": "PeoplesDreams_buyPool4_12",
+				"exp": "address(uint160(pool4Currentuser)).send(address(this).balance + pool4_price - address(this).balance)"
+			},
+			{
+				"name": "PeoplesDreams_buyPool4_21",
+				"exp": "address(uint160(pool4Currentuser)).send(address(this).balance + pool4_price - address(this).balance)"
+			},
+			{
+				"name": "PeoplesDreams_buyPool4_24",
+				"exp": "address(uint160(pool4Currentuser)).send(address(this).balance + pool4_price - address(this).balance)"
+			},
+			{
+				"name": "PeoplesDreams_buyPool5_12",
+				"exp": "address(uint160(pool5Currentuser)).send(address(this).balance + pool5_price - address(this).balance)"
+			},
+			{
+				"name": "PeoplesDreams_buyPool5_21",
+				"exp": "address(uint160(pool5Currentuser)).send(address(this).balance + pool5_price - address(this).balance)"
+			},
+			{
+				"name": "PeoplesDreams_buyPool5_24",
+				"exp": "address(uint160(pool5Currentuser)).send(address(this).balance + pool5_price - address(this).balance)"
+			},
+			{
+				"name": "PeoplesDreams_buyPool6_11",
+				"exp": "address(uint160(pool6Currentuser)).send(address(this).balance + pool6_price - address(this).balance)"
+			},
+			{
+				"name": "PeoplesDreams_buyPool6_14",
+				"exp": "address(uint160(pool6Currentuser)).send(address(this).balance + pool6_price - address(this).balance)"
+			},
+			{
+				"name": "PeoplesDreams_buyPool6_17",
+				"exp": "address(uint160(pool6Currentuser)).send(address(this).balance + pool6_dif - address(this).balance)"
+			},
+			{
+				"name": "PeoplesDreams_buyPool6_18",
+				"exp": "DreamsownerWallet.transfer(comisionSpo)"
+			}
+		]
+	},
+	"TW9bkzyTrEmRmwvuYPrsFSPHcvAuwpvf73_MillionTron": {
+		"addre": "TW9bkzyTrEmRmwvuYPrsFSPHcvAuwpvf73_MillionTron",
+		"slice": [
+			{
+				"name": "MillionTron_payReferral_9",
+				"exp": "sent = address(uint160(referer)).send(level_price_local)"
+			},
+			{
+				"tag": "1",
+				"name": "MillionTron_buyPool1_10",
+				"exp": "address(uint160(pool1Currentuser)).transfer(pool1_price)"
+			},
+			{
+				"tag": "1",
+				"name": "MillionTron_buyPool2_11",
+				"exp": "address(uint160(pool2Currentuser)).transfer(pool2_price)"
+			},
+			{
+				"tag": "1",
+				"name": "MillionTron_buyPool3_11",
+				"exp": "address(uint160(pool3Currentuser)).transfer(pool3_price)"
+			},
+			{
+				"tag": "1",
+				"name": "MillionTron_buyPool4_11",
+				"exp": "address(uint160(pool4Currentuser)).transfer(pool4_price)"
+			},
+			{
+				"tag": "1",
+				"name": "MillionTron_buyPool5_11",
+				"exp": "address(uint160(pool5Currentuser)).transfer(pool5_price)"
+			},
+			{
+				"tag": "1",
+				"name": "MillionTron_buyPool6_11",
+				"exp": "address(uint160(pool6Currentuser)).transfer(pool6_price)"
+			},
+			{
+				"tag": "1",
+				"name": "MillionTron_buyPool7_11",
+				"exp": "address(uint160(pool7Currentuser)).transfer(pool7_price)"
+			},
+			{
+				"tag": "1",
+				"name": "MillionTron_buyPool8_11",
+				"exp": "address(uint160(pool8Currentuser)).transfer(pool8_price)"
+			},
+			{
+				"tag": "1",
+				"name": "MillionTron_buyPool9_11",
+				"exp": "address(uint160(pool9Currentuser)).transfer(pool9_price)"
+			},
+			{
+				"tag": "1",
+				"name": "MillionTron_buyPool10_11",
+				"exp": "address(uint160(pool10Currentuser)).transfer(pool10_price)"
+			},
+			{
+				"name": "MillionTron_sendBalance_1",
+				"exp": "! address(uint160(ownerWallet)).send(getEthBalance())"
+			}
+		]
+	},
+	"5b81fcd0832c1e9ec02441aa6cd8522a7520fcd2_WhiningHorse": {
+		"addre": "5b81fcd0832c1e9ec02441aa6cd8522a7520fcd2_WhiningHorse",
+		"slice": [
+			{
+				"name": "WhiningHorse_payReferral_9",
+				"exp": "sent = address(uint160(referer)).send(level_price_local)"
+			},
+			{
+				"tag": "1",
+				"name": "WhiningHorse_buyPool1_11",
+				"exp": "sent = address(uint160(pool1Currentuser)).send(pool1_price)"
+			},
+			{
+				"tag": "1",
+				"name": "WhiningHorse_buyPool2_12",
+				"exp": "sent = address(uint160(pool2Currentuser)).send(pool2_price)"
+			},
+			{
+				"tag": "1",
+				"name": "WhiningHorse_buyPool3_12",
+				"exp": "sent = address(uint160(pool3Currentuser)).send(pool3_price)"
+			},
+			{
+				"tag": "1",
+				"name": "WhiningHorse_buyPool4_12",
+				"exp": "sent = address(uint160(pool4Currentuser)).send(pool4_price)"
+			},
+			{
+				"tag": "1",
+				"name": "WhiningHorse_buyPool5_12",
+				"exp": "sent = address(uint160(pool5Currentuser)).send(pool5_price)"
+			},
+			{
+				"tag": "1",
+				"name": "WhiningHorse_buyPool6_11",
+				"exp": "sent = address(uint160(pool6Currentuser)).send(pool6_price)"
+			},
+			{
+				"tag": "1",
+				"name": "WhiningHorse_buyPool7_12",
+				"exp": "sent = address(uint160(pool7Currentuser)).send(pool7_price)"
+			},
+			{
+				"tag": "1",
+				"name": "WhiningHorse_buyPool8_12",
+				"exp": "sent = address(uint160(pool8Currentuser)).send(pool8_price)"
+			},
+			{
+				"tag": "1",
+				"name": "WhiningHorse_buyPool9_12",
+				"exp": "sent = address(uint160(pool9Currentuser)).send(pool9_price)"
+			},
+			{
+				"tag": "1",
+				"name": "WhiningHorse_buyPool10_12",
+				"exp": "sent = address(uint160(pool10Currentuser)).send(pool10_price)"
+			},
+			{
+				"name": "WhiningHorse_sendBalance_1",
+				"exp": "! address(uint160(ownerWallet)).send(getEthBalance())"
+			}
+		]
+	},
+	"TCAD7Dz96KYZ7gaFAuPmU7PB2LMn1dicQs_TrxP2P": {
+		"note": "TBD",
+		"addre": "TCAD7Dz96KYZ7gaFAuPmU7PB2LMn1dicQs_TrxP2P",
+		"slice": [
+			{
+				"name": "TrxP2P_payReferral_6",
+				"exp": "sent = address(uint160(referer)).send(level_price_local)"
+			},
+			{
+				"name": "TrxP2P_productReferral_9",
+				"exp": "sent = address(uint160(referer)).send(level_price_local)"
+			},
+			{
+				"name": "TrxP2P_sendPayment_18",
+				"exp": "sent = address(uint160(poolCurrentuser)).send(amount)"
+			},
+			{
+				"name": "TrxP2P_sendPayment_27",
+				"exp": "sent = address(uint160(poolCurrentuser)).send(amountPending)"
+			},
+			{
+				"name": "TrxP2P_sendPayment2_18",
+				"exp": "sent = address(uint160(poolCurrentuser)).send(amount)"
+			},
+			{
+				"name": "TrxP2P_sendPayment2_27",
+				"exp": "sent = address(uint160(poolCurrentuser)).send(amountPending)"
+			},
+			{
+				"name": "TrxP2P_sendBalance_1",
+				"exp": "! address(uint160(ownerWallet)).send(getEthBalance())"
+			}
+		]
+	},
+	"TEQr9QAWwS3sCNbySmnrMqCzG4ZdYReZVz_XOXO": {
+		"addre": "TEQr9QAWwS3sCNbySmnrMqCzG4ZdYReZVz_XOXO",
+		"slice": [
+			{
+				"name": "XOXO_payReferral_22",
+				"exp": "sent = address(uint160(referer)).send(level_price_local)"
+			},
+			{
+				"name": "XOXO_payReferral_27",
+				"exp": "sent = address(uint160(ownerWallet)).send(level_price_local)"
+			},
+			{
+				"tag": "1",
+				"name": "XOXO_buyPool1_15",
+				"exp": "sent = address(uint160(pool1Currentuser)).send(poolshare)"
+			},
+			{
+				"name": "XOXO_buyPool1_16",
+				"exp": "sent = address(uint160(spreferer)).send(pool_sp_share)"
+			},
+			{
+				"tag": "1",
+				"name": "XOXO_buyPool2_16",
+				"exp": "sent = address(uint160(pool2Currentuser)).send(poolshare)"
+			},
+			{
+				"name": "XOXO_buyPool2_17",
+				"exp": "sent = address(uint160(spreferer)).send(pool_sp_share)"
+			},
+			{
+				"tag": "1",
+				"name": "XOXO_buyPool3_16",
+				"exp": "sent = address(uint160(pool3Currentuser)).send(poolshare)"
+			},
+			{
+				"name": "XOXO_buyPool3_17",
+				"exp": "sent = address(uint160(spreferer)).send(pool_sp_share)"
+			},
+			{
+				"tag": "1",
+				"name": "XOXO_buyPool4_16",
+				"exp": "sent = address(uint160(pool4Currentuser)).send(poolshare)"
+			},
+			{
+				"name": "XOXO_buyPool4_17",
+				"exp": "sent = address(uint160(spreferer)).send(pool_sp_share)"
+			},
+			{
+				"tag": "1",
+				"name": "XOXO_buyPool5_16",
+				"exp": "sent = address(uint160(pool5Currentuser)).send(poolshare)"
+			},
+			{
+				"name": "XOXO_buyPool5_17",
+				"exp": "sent = address(uint160(spreferer)).send(pool_sp_share)"
+			},
+			{
+				"tag": "1",
+				"name": "XOXO_buyPool6_16",
+				"exp": "sent = address(uint160(pool6Currentuser)).send(poolshare)"
+			},
+			{
+				"name": "XOXO_buyPool6_17",
+				"exp": "sent = address(uint160(spreferer)).send(pool_sp_share)"
+			},
+			{
+				"tag": "1",
+				"name": "XOXO_buyPool7_16",
+				"exp": "sent = address(uint160(pool7Currentuser)).send(poolshare)"
+			},
+			{
+				"name": "XOXO_buyPool7_17",
+				"exp": "sent = address(uint160(spreferer)).send(pool_sp_share)"
+			},
+			{
+				"tag": "1",
+				"name": "XOXO_buyPool8_16",
+				"exp": "sent = address(uint160(pool8Currentuser)).send(poolshare)"
+			},
+			{
+				"name": "XOXO_buyPool8_17",
+				"exp": "sent = address(uint160(spreferer)).send(pool_sp_share)"
+			},
+			{
+				"name": "XOXO_sendBalance_1",
+				"exp": "! address(uint160(ownerWallet)).send(getTrxBalance())"
+			}
+		]
+	},
+	"TQPJS5zEdMV6JxVUfo93HbYYBVG6Dm2dwo_TronPool": {
+		"addre": "TQPJS5zEdMV6JxVUfo93HbYYBVG6Dm2dwo_TronPool",
+		"slice": [
+			{
+				"name": "TronPool_payReferral_5",
+				"exp": "address(uint160(referer)).transfer(level_price_local)"
+			},
+			{
+				"tag": "1",
+				"name": "TronPool_buyPool1_10",
+				"exp": "address(uint160(pool1Currentuser)).transfer(pool1_price)"
+			},
+			{
+				"tag": "1",
+				"name": "TronPool_buyPool2_11",
+				"exp": "address(uint160(pool2Currentuser)).transfer(pool2_price)"
+			},
+			{
+				"tag": "1",
+				"name": "TronPool_buyPool3_11",
+				"exp": "address(uint160(pool3Currentuser)).transfer(pool3_price)"
+			},
+			{
+				"tag": "1",
+				"name": "TronPool_buyPool4_11",
+				"exp": "address(uint160(pool4Currentuser)).transfer(pool4_price)"
+			},
+			{
+				"tag": "1",
+				"name": "TronPool_buyPool5_11",
+				"exp": "address(uint160(pool5Currentuser)).transfer(pool5_price)"
+			},
+			{
+				"tag": "1",
+				"name": "TronPool_buyPool6_11",
+				"exp": "address(uint160(pool6Currentuser)).transfer(pool6_price)"
+			},
+			{
+				"tag": "1",
+				"name": "TronPool_buyPool7_11",
+				"exp": "address(uint160(pool7Currentuser)).transfer(pool7_price)"
+			},
+			{
+				"tag": "1",
+				"name": "TronPool_buyPool8_11",
+				"exp": "address(uint160(pool8Currentuser)).transfer(pool8_price)"
+			},
+			{
+				"tag": "1",
+				"name": "TronPool_buyPool9_11",
+				"exp": "address(uint160(pool9Currentuser)).transfer(pool9_price)"
+			},
+			{
+				"tag": "1",
+				"name": "TronPool_buyPool10_11",
+				"exp": "address(uint160(pool10Currentuser)).transfer(pool10_price)"
+			},
+			{
+				"tag": "1",
+				"name": "TronPool_buyPool11_11",
+				"exp": "address(uint160(pool11Currentuser)).transfer(pool11_price)"
+			},
+			{
+				"tag": "1",
+				"name": "TronPool_buyPool12_11",
+				"exp": "address(uint160(pool12Currentuser)).transfer(pool12_price)"
+			}
+		]
+	},
+	"TCz38RcgHtBf97Rf49PhUMAWqtGXUvBCoj_StarPool": {
+		"addre": "TCz38RcgHtBf97Rf49PhUMAWqtGXUvBCoj_StarPool",
+		"slice": [
+			{
+				"name": "StarPool_payReferral_5",
+				"exp": "address(uint160(referer)).transfer(level_price_local)"
+			},
+			{
+				"tag": "1",
+				"name": "StarPool_buyPool1_10",
+				"exp": "address(uint160(pool1Currentuser)).transfer(pool1_price)"
+			},
+			{
+				"tag": "1",
+				"name": "StarPool_buyPool2_11",
+				"exp": "address(uint160(pool2Currentuser)).transfer(pool2_price)"
+			},
+			{
+				"tag": "1",
+				"name": "StarPool_buyPool3_11",
+				"exp": "address(uint160(pool3Currentuser)).transfer(pool3_price)"
+			},
+			{
+				"tag": "1",
+				"name": "StarPool_buyPool4_11",
+				"exp": "address(uint160(pool4Currentuser)).transfer(pool4_price)"
+			},
+			{
+				"tag": "1",
+				"name": "StarPool_buyPool5_11",
+				"exp": "address(uint160(pool5Currentuser)).transfer(pool5_price)"
+			},
+			{
+				"tag": "1",
+				"name": "StarPool_buyPool6_11",
+				"exp": "address(uint160(pool6Currentuser)).transfer(pool6_price)"
+			},
+			{
+				"tag": "1",
+				"name": "StarPool_buyPool7_11",
+				"exp": "address(uint160(pool7Currentuser)).transfer(pool7_price)"
+			},
+			{
+				"tag": "1",
+				"name": "StarPool_buyPool8_11",
+				"exp": "address(uint160(pool8Currentuser)).transfer(pool8_price)"
+			},
+			{
+				"tag": "1",
+				"name": "StarPool_buyPool9_11",
+				"exp": "address(uint160(pool9Currentuser)).transfer(pool9_price)"
+			},
+			{
+				"tag": "1",
+				"name": "StarPool_buyPool10_11",
+				"exp": "address(uint160(pool10Currentuser)).transfer(pool10_price)"
+			},
+			{
+				"tag": "1",
+				"name": "StarPool_buyPool11_11",
+				"exp": "address(uint160(pool11Currentuser)).transfer(pool11_price)"
+			},
+			{
+				"tag": "1",
+				"name": "StarPool_buyPool12_11",
+				"exp": "address(uint160(pool12Currentuser)).transfer(pool12_price)"
+			}
+		]
+	},
+	"TFsN8zeTr38rUjbw2z1BBjkUpmTCZj2r96_TronPool": {
+		"addre": "TFsN8zeTr38rUjbw2z1BBjkUpmTCZj2r96_TronPool",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "TronPool_buyPool1_19",
+				"exp": "sent = address(uint160(pool1Currentuser)).send(pool1_price)"
+			},
+			{
+				"name": "TronPool_buyPool1_31",
+				"exp": "sent = address(uint160(spreferer)).send(pool1_price)"
+			},
+			{
+				"name": "TronPool_buyPool1_37",
+				"exp": "sent = address(uint160(userList[_referrerID])).send(pool1_price)"
+			},
+			{
+				"name": "TronPool_buyPool1_43",
+				"exp": "sent = address(uint160(ownerWallet)).send(pool1_price)"
+			},
+			{
+				"name": "TronPool_buyPool1_49",
+				"exp": "FeeAddress.transfer((msg.value.mul(5)).div(100))"
+			},
+			{
+				"tag": "1",
+				"name": "TronPool_buyPool2_12",
+				"exp": "sent = address(uint160(pool2Currentuser)).send(pool2_price)"
+			},
+			{
+				"name": "TronPool_buyPool2_23",
+				"exp": "FeeAddress.transfer((pool2_price.mul(5)).div(100))"
+			},
+			{
+				"tag": "1",
+				"name": "TronPool_buyPool3_12",
+				"exp": "sent = address(uint160(pool3Currentuser)).send(pool3_price)"
+			},
+			{
+				"name": "TronPool_buyPool3_23",
+				"exp": "FeeAddress.transfer((pool3_price.mul(5)).div(100))"
+			},
+			{
+				"tag": "1",
+				"name": "TronPool_buyPool4_12",
+				"exp": "sent = address(uint160(pool4Currentuser)).send(pool4_price)"
+			},
+			{
+				"name": "TronPool_buyPool4_23",
+				"exp": "FeeAddress.transfer((pool4_price.mul(5)).div(100))"
+			},
+			{
+				"tag": "1",
+				"name": "TronPool_buyPool5_12",
+				"exp": "sent = address(uint160(pool5Currentuser)).send(pool5_price)"
+			},
+			{
+				"name": "TronPool_buyPool5_23",
+				"exp": "FeeAddress.transfer((pool5_price.mul(5)).div(100))"
+			},
+			{
+				"tag": "1",
+				"name": "TronPool_buyPool6_12",
+				"exp": "sent = address(uint160(pool6Currentuser)).send(pool6_price)"
+			},
+			{
+				"name": "TronPool_buyPool6_23",
+				"exp": "FeeAddress.transfer((pool6_price.mul(5)).div(100))"
+			},
+			{
+				"tag": "1",
+				"name": "TronPool_buyPool7_12",
+				"exp": "sent = address(uint160(pool7Currentuser)).send(pool7_price)"
+			},
+			{
+				"name": "TronPool_buyPool7_23",
+				"exp": "FeeAddress.transfer((pool7_price.mul(5)).div(100))"
+			},
+			{
+				"tag": "1",
+				"name": "TronPool_buyPool8_12",
+				"exp": "sent = address(uint160(pool8Currentuser)).send(pool8_price)"
+			},
+			{
+				"name": "TronPool_buyPool8_23",
+				"exp": "FeeAddress.transfer((pool8_price.mul(5)).div(100))"
+			},
+			{
+				"tag": "1",
+				"name": "TronPool_buyPool9_12",
+				"exp": "sent = address(uint160(pool9Currentuser)).send(pool9_price)"
+			},
+			{
+				"name": "TronPool_buyPool9_23",
+				"exp": "FeeAddress.transfer((pool9_price.mul(5)).div(100))"
+			},
+			{
+				"name": "TronPool_sendBalance_1",
+				"exp": "! address(uint160(ownerWallet)).send(getTrxBalance())"
+			},
+			{
+				"name": "TronPool_withdrawSafe_6",
+				"exp": "msg.sender.transfer(amtToTransfer)"
+			}
+		]
+	},
+	"d2ee27d7ca6099a5722026b707bbc55fa7299836_MarsPool": {
+		"addre": "d2ee27d7ca6099a5722026b707bbc55fa7299836_MarsPool",
+		"slice": [
+			{
+				"name": "MarsPool_payReferral_5",
+				"exp": "address(uint160(referer)).transfer(level_price_local)"
+			}
+		]
+	},
+	"6e1763f80ab9780f345264d72d9bf8bcd1f24f71_TigersLine": {
+		"addre": "6e1763f80ab9780f345264d72d9bf8bcd1f24f71_TigersLine",
+		"slice": [
+			{
+				"name": "TigersLine_payReferral_9",
+				"exp": "sent = address(uint160(referer)).send(level_price_local)"
+			},
+			{
+				"tag": "1",
+				"name": "TigersLine_buyPool1_11",
+				"exp": "sent = address(uint160(pool1Currentuser)).send(pool1_price)"
+			},
+			{
+				"tag": "1",
+				"name": "TigersLine_buyPool2_12",
+				"exp": "sent = address(uint160(pool2Currentuser)).send(pool2_price)"
+			},
+			{
+				"tag": "1",
+				"name": "TigersLine_buyPool3_12",
+				"exp": "sent = address(uint160(pool3Currentuser)).send(pool3_price)"
+			},
+			{
+				"tag": "1",
+				"name": "TigersLine_buyPool4_12",
+				"exp": "sent = address(uint160(pool4Currentuser)).send(pool4_price)"
+			},
+			{
+				"tag": "1",
+				"name": "TigersLine_buyPool5_12",
+				"exp": "sent = address(uint160(pool5Currentuser)).send(pool5_price)"
+			},
+			{
+				"tag": "1",
+				"name": "TigersLine_buyPool6_11",
+				"exp": "sent = address(uint160(pool6Currentuser)).send(pool6_price)"
+			},
+			{
+				"tag": "1",
+				"name": "TigersLine_buyPool7_12",
+				"exp": "sent = address(uint160(pool7Currentuser)).send(pool7_price)"
+			},
+			{
+				"tag": "1",
+				"name": "TigersLine_buyPool8_12",
+				"exp": "sent = address(uint160(pool8Currentuser)).send(pool8_price)"
+			},
+			{
+				"tag": "1",
+				"name": "TigersLine_buyPool9_12",
+				"exp": "sent = address(uint160(pool9Currentuser)).send(pool9_price)"
+			},
+			{
+				"tag": "1",
+				"name": "TigersLine_buyPool10_12",
+				"exp": "sent = address(uint160(pool10Currentuser)).send(pool10_price)"
+			},
+			{
+				"name": "TigersLine_sendBalance_1",
+				"exp": "! address(uint160(ownerWallet)).send(getEthBalance())"
+			}
+		]
+	},
+	"eac834c498240e46d5c8e8e70d2a18bcaa0f2bed_ETHShare": {
+		"addre": "eac834c498240e46d5c8e8e70d2a18bcaa0f2bed_ETHShare",
+		"slice": [
+			{
+				"name": "ETHShare_payReferral_6",
+				"exp": "sent = address(uint160(referer)).send(level_price_local)"
+			},
+			{
+				"tag": "1",
+				"name": "ETHShare_buyPool1_10",
+				"exp": "sent = address(uint160(pool1Currentuser)).send(pool1_price)"
+			},
+			{
+				"tag": "1",
+				"name": "ETHShare_buyPool2_10",
+				"exp": "sent = address(uint160(pool2Currentuser)).send(pool2_price)"
+			},
+			{
+				"tag": "1",
+				"name": "ETHShare_buyPool3_10",
+				"exp": "sent = address(uint160(pool3Currentuser)).send(pool3_price)"
+			},
+			{
+				"tag": "1",
+				"name": "ETHShare_buyPool4_10",
+				"exp": "sent = address(uint160(pool4Currentuser)).send(pool4_price)"
+			},
+			{
+				"tag": "1",
+				"name": "ETHShare_buyPool5_10",
+				"exp": "sent = address(uint160(pool5Currentuser)).send(pool5_price)"
+			},
+			{
+				"tag": "1",
+				"name": "ETHShare_buyPool6_10",
+				"exp": "sent = address(uint160(pool6Currentuser)).send(pool6_price)"
+			},
+			{
+				"tag": "1",
+				"name": "ETHShare_buyPool7_10",
+				"exp": "sent = address(uint160(pool7Currentuser)).send(pool7_price)"
+			},
+			{
+				"tag": "1",
+				"name": "ETHShare_buyPool8_10",
+				"exp": "sent = address(uint160(pool8Currentuser)).send(pool8_price)"
+			},
+			{
+				"tag": "1",
+				"name": "ETHShare_buyPool9_10",
+				"exp": "sent = address(uint160(pool9Currentuser)).send(pool9_price)"
+			},
+			{
+				"tag": "1",
+				"name": "ETHShare_buyPool10_10",
+				"exp": "sent = address(uint160(pool10Currentuser)).send(pool10_price)"
+			},
+			{
+				"name": "ETHShare_sendBalance_1",
+				"exp": "! address(uint160(ownerWallet)).send(getEthBalance())"
+			}
+		]
+	},
+	"TLezEadk4GgydxctXh12RQXtrpWoXrhq5N_TronStormPro": {
+		"addre": "TLezEadk4GgydxctXh12RQXtrpWoXrhq5N_TronStormPro",
+		"slice": [
+			{
+				"name": "TronStormPro_payReferral_10",
+				"exp": "sent = address(uint160(referer)).send(level_price_local)"
+			},
+			{
+				"name": "TronStormPro_payPoolReferral_70",
+				"exp": "sent = address(uint160(referer)).send(level_price_local)"
+			},
+			{
+				"tag": "1",
+				"name": "TronStormPro_buyPool1_19",
+				"exp": "sent = address(uint160(pool1Currentuser)).send((pool1_price * 90) / 100)"
+			},
+			{
+				"tag": "1",
+				"name": "TronStormPro_buyPool2_21",
+				"exp": "sent = address(uint160(pool2Currentuser)).send((pool2_price * 90) / 100)"
+			},
+			{
+				"tag": "1",
+				"name": "TronStormPro_buyPool3_21",
+				"exp": "sent = address(uint160(pool3Currentuser)).send((pool3_price * 90) / 100)"
+			},
+			{
+				"tag": "1",
+				"name": "TronStormPro_buyPool4_21",
+				"exp": "sent = address(uint160(pool4Currentuser)).send((pool4_price * 90) / 100)"
+			},
+			{
+				"tag": "1",
+				"name": "TronStormPro_buyPool5_21",
+				"exp": "sent = address(uint160(pool5Currentuser)).send((pool5_price * 90) / 100)"
+			},
+			{
+				"tag": "1",
+				"name": "TronStormPro_buyPool6_21",
+				"exp": "sent = address(uint160(pool6Currentuser)).send((pool6_price * 90) / 100)"
+			},
+			{
+				"tag": "1",
+				"name": "TronStormPro_buyPool7_21",
+				"exp": "sent = address(uint160(pool7Currentuser)).send((pool7_price * 90) / 100)"
+			},
+			{
+				"tag": "1",
+				"name": "TronStormPro_buyPool8_21",
+				"exp": "sent = address(uint160(pool8Currentuser)).send((pool8_price * 90) / 100)"
+			},
+			{
+				"tag": "1",
+				"name": "TronStormPro_buyPool9_21",
+				"exp": "sent = address(uint160(pool9Currentuser)).send((pool9_price * 90) / 100)"
+			},
+			{
+				"tag": "1",
+				"name": "TronStormPro_buyPool10_20",
+				"exp": "sent = address(uint160(pool10Currentuser)).send((pool10_price * 90) / 100)"
+			},
+			{
+				"name": "TronStormPro_sendBalancePoolRef_1",
+				"exp": "! address(uint160(ownerWallet)).send(amount)"
+			},
+			{
+				"name": "TronStormPro_sendBalance_1",
+				"exp": "address(uint160(ownerWallet)).transfer(getTRXBalance())"
+			},
+			{
+				"name": "TronStormPro_sendBalanceToOwner_1",
+				"exp": "! address(uint160(ownerWallet)).send(getTRXBalance())"
+			}
+		]
+	},
+	"TLbJUnZh8XMbQLCKbB42UPHrVJPTfHCu8U_Zero2Hero55": {
+		"addre": "TLbJUnZh8XMbQLCKbB42UPHrVJPTfHCu8U_Zero2Hero55",
+		"slice": [
+			{
+				"name": "Zero2Hero55_Trans_3",
+				"exp": "_address.transfer(amounts)"
+			},
+			{
+				"tag": "1",
+				"name": "Zero2Hero55_buyPool1_20",
+				"exp": "sent = address(uint160(pool1Currentuser)).send(pool1_price)"
+			},
+			{
+				"name": "Zero2Hero55_buyPool1_32",
+				"exp": "sent = address(uint160(spreferer)).send(pool1_price)"
+			},
+			{
+				"name": "Zero2Hero55_buyPool1_38",
+				"exp": "sent = address(uint160(userList[_referrerID])).send(pool1_price)"
+			},
+			{
+				"name": "Zero2Hero55_buyPool1_44",
+				"exp": "sent = address(uint160(ownerWallet)).send(pool1_price)"
+			},
+			{
+				"tag": "1",
+				"name": "Zero2Hero55_buyPool2_12",
+				"exp": "sent = address(uint160(pool2Currentuser)).send(pool2_price)"
+			},
+			{
+				"tag": "1",
+				"name": "Zero2Hero55_buyPool3_12",
+				"exp": "sent = address(uint160(pool3Currentuser)).send(pool3_price)"
+			},
+			{
+				"tag": "1",
+				"name": "Zero2Hero55_buyPool4_12",
+				"exp": "sent = address(uint160(pool4Currentuser)).send(pool4_price)"
+			},
+			{
+				"tag": "1",
+				"name": "Zero2Hero55_buyPool5_12",
+				"exp": "sent = address(uint160(pool5Currentuser)).send(pool5_price)"
+			},
+			{
+				"tag": "1",
+				"name": "Zero2Hero55_buyPool6_12",
+				"exp": "sent = address(uint160(pool6Currentuser)).send(pool6_price)"
+			},
+			{
+				"name": "Zero2Hero55_sendBalance_1",
+				"exp": "! address(uint160(ownerWallet)).send(getTrxBalance())"
+			},
+			{
+				"name": "Zero2Hero55_withdrawSafe_6",
+				"exp": "msg.sender.transfer(amtToTransfer)"
+			}
+		]
+	},
+	"TCKiomFQ3VsSZ8Fc1vaYZePYeadTWGtn1D_TronJackpots_V2": {
+		"addre": "TCKiomFQ3VsSZ8Fc1vaYZePYeadTWGtn1D_TronJackpots_V2",
+		"slice": [
+			{
+				"name": "TronJackpots_V2_sendBalance_3",
+				"exp": "! address(uint160(ownerWallet)).send(ContractBalance)"
+			},
+			{
+				"name": "TronJackpots_V2_withdrawSafe_6",
+				"exp": "msg.sender.transfer(amtToTransfer)"
+			}
+		]
+	},
+	"452915842bf1246941089fb6e39acf2655c4334c_Monstering": {
+		"addre": "452915842bf1246941089fb6e39acf2655c4334c_Monstering",
+		"slice": [
+			{
+				"name": "Monstering_payPoolReferral_11",
+				"exp": "sent = address(uint160(referer)).send(pool_payment_amount)"
+			},
+			{
+				"name": "Monstering_payPoolReferral_29",
+				"exp": "address(uint160(ownerWallet)).send(pool_payment_amount)"
+			},
+			{
+				"tag": "1",
+				"name": "Monstering_buyPool1_28",
+				"exp": "sent = address(uint160(pool1users[pool1Currentuser].user)).send(20000000000000000)"
+			},
+			{
+				"name": "Monstering_buyPool1_40",
+				"exp": "s = address(uint160(ownerWallet)).send(20000000000000000 * (6 - temp_i))"
+			},
+			{
+				"tag": "1",
+				"name": "Monstering_buyPool2_27",
+				"exp": "sent = address(uint160(pool2users[pool2Currentuser].user)).send(100000000000000000)"
+			},
+			{
+				"name": "Monstering_buyPool2_39",
+				"exp": "s = address(uint160(ownerWallet)).send(100000000000000000 * (3 - temp_i))"
+			},
+			{
+				"tag": "1",
+				"name": "Monstering_buyPool3_38",
+				"exp": "sent = address(uint160(pool3users[pool3Currentuser].user)).send(200000000000000000)"
+			},
+			{
+				"name": "Monstering_buyPool3_50",
+				"exp": "s = address(uint160(ownerWallet)).send(200000000000000000 * (3 - temp_i))"
+			},
+			{
+				"tag": "1",
+				"name": "Monstering_luckydrawPool1_9",
+				"exp": "sent = address(uint160(pool1users[pool1Currentuser].user)).send(30000000000000000)"
+			},
+			{
+				"tag": "1",
+				"name": "Monstering_luckydrawPool2_9",
+				"exp": "sent = address(uint160(pool2users[pool2Currentuser].user)).send(75000000000000000)"
+			},
+			{
+				"tag": "1",
+				"name": "Monstering_luckydrawPool3_9",
+				"exp": "sent = address(uint160(pool3users[pool3Currentuser].user)).send(150000000000000000)"
+			},
+			{
+				"name": "Monstering_sendBalance_2",
+				"exp": "! address(uint160(ownerWallet)).send(getEthBalance())"
+			},
+			{
+				"name": "Monstering_sendPendingBalance_4",
+				"exp": "! address(uint160(ownerWallet)).send(amount)"
+			}
+		]
+	},
+	"TFTxbDQo1Y674rZUFxhntNwY4rkyByiW5Z_EPlusTron": {
+		"addre": "TFTxbDQo1Y674rZUFxhntNwY4rkyByiW5Z_EPlusTron",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "EPlusTron_buyPool1_20",
+				"exp": "sent = address(uint160(pool1Currentuser)).send(pool1_price)"
+			},
+			{
+				"name": "EPlusTron_buyPool1_32",
+				"exp": "sent = address(uint160(spreferer)).send(pool1_price)"
+			},
+			{
+				"name": "EPlusTron_buyPool1_38",
+				"exp": "sent = address(uint160(userList[_referrerID])).send(pool1_price)"
+			},
+			{
+				"name": "EPlusTron_buyPool1_44",
+				"exp": "sent = address(uint160(ownerWallet)).send(pool1_price)"
+			},
+			{
+				"tag": "1",
+				"name": "EPlusTron_buyPool2_12",
+				"exp": "sent = address(uint160(pool2Currentuser)).send(pool2_price)"
+			},
+			{
+				"tag": "1",
+				"name": "EPlusTron_buyPool3_12",
+				"exp": "sent = address(uint160(pool3Currentuser)).send(pool3_price)"
+			},
+			{
+				"tag": "1",
+				"name": "EPlusTron_buyPool4_12",
+				"exp": "sent = address(uint160(pool4Currentuser)).send(pool4_price)"
+			},
+			{
+				"tag": "1",
+				"name": "EPlusTron_buyPool5_12",
+				"exp": "sent = address(uint160(pool5Currentuser)).send(pool5_price)"
+			},
+			{
+				"tag": "1",
+				"name": "EPlusTron_buyPool6_12",
+				"exp": "sent = address(uint160(pool6Currentuser)).send(pool6_price)"
+			},
+			{
+				"tag": "1",
+				"name": "EPlusTron_buyPool7_12",
+				"exp": "sent = address(uint160(pool7Currentuser)).send(pool7_price)"
+			},
+			{
+				"tag": "1",
+				"name": "EPlusTron_buyPool8_12",
+				"exp": "sent = address(uint160(pool8Currentuser)).send(pool8_price)"
+			},
+			{
+				"tag": "1",
+				"name": "EPlusTron_buyPool9_12",
+				"exp": "sent = address(uint160(pool9Currentuser)).send(pool9_price)"
+			},
+			{
+				"name": "EPlusTron_sendBalance_1",
+				"exp": "! address(uint160(ownerWallet)).send(getTrxBalance())"
+			},
+			{
+				"name": "EPlusTron_withdrawSafe_6",
+				"exp": "msg.sender.transfer(amtToTransfer)"
+			}
+		]
+	},
+	"TKtvsVvf9UUAyhb3teydzsbeKh3d8rnaEa_TronCamp": {
+		"addre": "TKtvsVvf9UUAyhb3teydzsbeKh3d8rnaEa_TronCamp",
+		"slice": [
+			{
+				"name": "TronCamp_payReferral_6",
+				"exp": "sent = address(uint160(referer)).send(level_price_local)"
+			},
+			{
+				"name": "TronCamp_productReferral_9",
+				"exp": "sent = address(uint160(referer)).send(level_price_local)"
+			},
+			{
+				"tag": "1",
+				"name": "TronCamp_sendPayment_18",
+				"exp": "sent = address(uint160(poolCurrentuser)).send(amount)"
+			},
+			{
+				"tag": "1",
+				"name": "TronCamp_sendPayment_27",
+				"exp": "sent = address(uint160(poolCurrentuser)).send(amountPending)"
+			},
+			{
+				"tag": "1",
+				"name": "TronCamp_sendPayment2_18",
+				"exp": "sent = address(uint160(poolCurrentuser)).send(amount)"
+			},
+			{
+				"tag": "1",
+				"name": "TronCamp_sendPayment2_27",
+				"exp": "sent = address(uint160(poolCurrentuser)).send(amountPending)"
+			},
+			{
+				"name": "TronCamp_sendBalance_1",
+				"exp": "! address(uint160(ownerWallet)).send(getEthBalance())"
+			}
+		]
+	},
+	"97438b2a8D5cea628B8F616CA2E4E895defAcF32_OneID10": {
+		"addre": "97438b2a8D5cea628B8F616CA2E4E895defAcF32_OneID10",
+		"slice": [
+			{
+				"name": "OneID10_payReferral_9",
+				"exp": "sent = address(uint160(referer)).send(level_price_local)"
+			},
+			{
+				"tag": "1",
+				"name": "OneID10_buyPool1_11",
+				"exp": "sent = address(uint160(pool1Currentuser)).send(pool1_price)"
+			},
+			{
+				"tag": "1",
+				"name": "OneID10_buyPool2_12",
+				"exp": "sent = address(uint160(pool2Currentuser)).send(pool2_price)"
+			},
+			{
+				"tag": "1",
+				"name": "OneID10_buyPool3_12",
+				"exp": "sent = address(uint160(pool3Currentuser)).send(pool3_price)"
+			},
+			{
+				"tag": "1",
+				"name": "OneID10_buyPool4_12",
+				"exp": "sent = address(uint160(pool4Currentuser)).send(pool4_price)"
+			},
+			{
+				"tag": "1",
+				"name": "OneID10_buyPool5_12",
+				"exp": "sent = address(uint160(pool5Currentuser)).send(pool5_price)"
+			},
+			{
+				"tag": "1",
+				"name": "OneID10_buyPool6_11",
+				"exp": "sent = address(uint160(pool6Currentuser)).send(pool6_price)"
+			},
+			{
+				"tag": "1",
+				"name": "OneID10_buyPool7_12",
+				"exp": "sent = address(uint160(pool7Currentuser)).send(pool7_price)"
+			},
+			{
+				"tag": "1",
+				"name": "OneID10_buyPool8_12",
+				"exp": "sent = address(uint160(pool8Currentuser)).send(pool8_price)"
+			},
+			{
+				"tag": "1",
+				"name": "OneID10_buyPool9_12",
+				"exp": "sent = address(uint160(pool9Currentuser)).send(pool9_price)"
+			},
+			{
+				"tag": "1",
+				"name": "OneID10_buyPool10_12",
+				"exp": "sent = address(uint160(pool10Currentuser)).send(pool10_price)"
+			},
+			{
+				"name": "OneID10_sendBalance_1",
+				"exp": "! address(uint160(ownerWallet)).send(getEthBalance())"
+			}
+		]
+	},
+	"9126d3c136efff2bfc99ba70b79cae32a797f835_MaticPool": {
+		"addre": "9126d3c136efff2bfc99ba70b79cae32a797f835_MaticPool",
+		"slice": [
+			{
+				"name": "MaticPool_payReferral_9",
+				"exp": "sent = address(uint160(referer)).send(level_price_local)"
+			},
+			{
+				"tag": "1",
+				"name": "MaticPool_buyPool1_11",
+				"exp": "sent = address(uint160(pool1Currentuser)).send(pool1_price)"
+			},
+			{
+				"tag": "1",
+				"name": "MaticPool_buyPool2_11",
+				"exp": "sent = address(uint160(pool2Currentuser)).send(pool2_price)"
+			},
+			{
+				"tag": "1",
+				"name": "MaticPool_buyPool3_11",
+				"exp": "sent = address(uint160(pool3Currentuser)).send(pool3_price)"
+			},
+			{
+				"tag": "1",
+				"name": "MaticPool_buyPool4_11",
+				"exp": "sent = address(uint160(pool4Currentuser)).send(pool4_price)"
+			},
+			{
+				"tag": "1",
+				"name": "MaticPool_buyPool5_11",
+				"exp": "sent = address(uint160(pool5Currentuser)).send(pool5_price)"
+			},
+			{
+				"tag": "1",
+				"name": "MaticPool_buyPool6_10",
+				"exp": "sent = address(uint160(pool6Currentuser)).send(pool6_price)"
+			},
+			{
+				"tag": "1",
+				"name": "MaticPool_buyPool7_11",
+				"exp": "sent = address(uint160(pool7Currentuser)).send(pool7_price)"
+			},
+			{
+				"tag": "1",
+				"name": "MaticPool_buyPool8_11",
+				"exp": "sent = address(uint160(pool8Currentuser)).send(pool8_price)"
+			},
+			{
+				"tag": "1",
+				"name": "MaticPool_buyPool9_11",
+				"exp": "sent = address(uint160(pool9Currentuser)).send(pool9_price)"
+			},
+			{
+				"tag": "1",
+				"name": "MaticPool_buyPool10_11",
+				"exp": "sent = address(uint160(pool10Currentuser)).send(pool10_price)"
+			},
+			{
+				"tag": "1",
+				"name": "MaticPool_buyPool11_11",
+				"exp": "sent = address(uint160(pool11Currentuser)).send(pool11_price)"
+			},
+			{
+				"tag": "1",
+				"name": "MaticPool_buyPool12_11",
+				"exp": "sent = address(uint160(pool12Currentuser)).send(pool12_price)"
+			},
+			{
+				"tag": "1",
+				"name": "MaticPool_buyPool13_11",
+				"exp": "sent = address(uint160(pool13Currentuser)).send(pool13_price)"
+			},
+			{
+				"tag": "1",
+				"name": "MaticPool_buyPool14_11",
+				"exp": "sent = address(uint160(pool14Currentuser)).send(pool14_price)"
+			},
+			{
+				"tag": "1",
+				"name": "MaticPool_buyPool15_11",
+				"exp": "sent = address(uint160(pool15Currentuser)).send(pool15_price)"
+			},
+			{
+				"name": "MaticPool_sendBalance_1",
+				"exp": "! address(uint160(ownerWallet)).send(getEthBalance())"
+			}
+		]
+	},
+	"ecc98c128e9d2155a58b9e30e22bc2c8f69f105e_BullRun": {
+		"addre": "ecc98c128e9d2155a58b9e30e22bc2c8f69f105e_BullRun",
+		"slice": [
+			{
+				"name": "BullRun_payReferral_26",
+				"exp": "sent = address(uint160(referer)).send(level_price_local)"
+			},
+			{
+				"name": "BullRun_buyPool1_14",
+				"exp": "address(uint160(referer)).transfer(price_for_ref)"
+			},
+			{
+				"name": "BullRun_buyPool1_29",
+				"exp": "sent = address(uint160(ownerWallet)).send(temp)"
+			},
+			{
+				"tag": "1",
+				"name": "BullRun_buyPool1_34",
+				"exp": "Payment = address(uint160(addr)).send(temp)"
+			},
+			{
+				"name": "BullRun_buyPool2_14",
+				"exp": "address(uint160(referer)).send(price_for_ref)"
+			},
+			{
+				"name": "BullRun_buyPool2_29",
+				"exp": "sent = address(uint160(ownerWallet)).send(temp)"
+			},
+			{
+				"tag": "1",
+				"name": "BullRun_buyPool2_34",
+				"exp": "Payment = address(uint160(addr)).send(temp)"
+			},
+			{
+				"name": "BullRun_buyPool3_14",
+				"exp": "address(uint160(referer)).send(price_for_ref)"
+			},
+			{
+				"name": "BullRun_buyPool3_29",
+				"exp": "sent = address(uint160(ownerWallet)).send(temp)"
+			},
+			{
+				"tag": "1",
+				"name": "BullRun_buyPool3_34",
+				"exp": "Payment = address(uint160(addr)).send(temp)"
+			},
+			{
+				"name": "BullRun_buyPool4_14",
+				"exp": "address(uint160(referer)).send(price_for_ref)"
+			},
+			{
+				"name": "BullRun_buyPool4_29",
+				"exp": "sent = address(uint160(ownerWallet)).send(temp)"
+			},
+			{
+				"tag": "1",
+				"name": "BullRun_buyPool4_34",
+				"exp": "Payment = address(uint160(addr)).send(temp)"
+			},
+			{
+				"name": "BullRun_buyPool5_14",
+				"exp": "address(uint160(referer)).send(price_for_ref)"
+			},
+			{
+				"name": "BullRun_buyPool5_29",
+				"exp": "sent = address(uint160(ownerWallet)).send(temp)"
+			},
+			{
+				"tag": "1",
+				"name": "BullRun_buyPool5_34",
+				"exp": "Payment = address(uint160(addr)).send(temp)"
+			},
+			{
+				"name": "BullRun_buyPool6_14",
+				"exp": "address(uint160(referer)).send(price_for_ref)"
+			},
+			{
+				"name": "BullRun_buyPool6_29",
+				"exp": "sent = address(uint160(ownerWallet)).send(temp)"
+			},
+			{
+				"tag": "1",
+				"name": "BullRun_buyPool6_34",
+				"exp": "Payment = address(uint160(addr)).send(temp)"
+			},
+			{
+				"name": "BullRun_buyPool7_14",
+				"exp": "address(uint160(referer)).send(price_for_ref)"
+			},
+			{
+				"name": "BullRun_buyPool7_29",
+				"exp": "sent = address(uint160(ownerWallet)).send(temp)"
+			},
+			{
+				"tag": "1",
+				"name": "BullRun_buyPool7_34",
+				"exp": "Payment = address(uint160(addr)).send(temp)"
+			},
+			{
+				"name": "BullRun_buyPool8_14",
+				"exp": "address(uint160(referer)).send(price_for_ref)"
+			},
+			{
+				"name": "BullRun_buyPool8_29",
+				"exp": "sent = address(uint160(ownerWallet)).send(temp)"
+			},
+			{
+				"tag": "1",
+				"name": "BullRun_buyPool8_34",
+				"exp": "Payment = address(uint160(addr)).send(temp)"
+			},
+			{
+				"name": "BullRun_buyPool9_14",
+				"exp": "address(uint160(referer)).send(price_for_ref)"
+			},
+			{
+				"name": "BullRun_buyPool9_29",
+				"exp": "sent = address(uint160(ownerWallet)).send(temp)"
+			},
+			{
+				"tag": "1",
+				"name": "BullRun_buyPool9_34",
+				"exp": "Payment = address(uint160(addr)).send(temp)"
+			},
+			{
+				"name": "BullRun_buyPool10_14",
+				"exp": "address(uint160(referer)).send(price_for_ref)"
+			},
+			{
+				"name": "BullRun_buyPool10_29",
+				"exp": "sent = address(uint160(ownerWallet)).send(temp)"
+			},
+			{
+				"tag": "1",
+				"name": "BullRun_buyPool10_34",
+				"exp": "Payment = address(uint160(addr)).send(temp)"
+			},
+			{
+				"name": "BullRun_buyPool11_14",
+				"exp": "address(uint160(referer)).send(price_for_ref)"
+			},
+			{
+				"name": "BullRun_buyPool11_29",
+				"exp": "sent = address(uint160(ownerWallet)).send(temp)"
+			},
+			{
+				"tag": "1",
+				"name": "BullRun_buyPool11_34",
+				"exp": "Payment = address(uint160(addr)).send(temp)"
+			},
+			{
+				"name": "BullRun_buyPool12_14",
+				"exp": "address(uint160(referer)).send(price_for_ref)"
+			},
+			{
+				"name": "BullRun_buyPool12_29",
+				"exp": "sent = address(uint160(ownerWallet)).send(temp)"
+			},
+			{
+				"tag": "1",
+				"name": "BullRun_buyPool12_34",
+				"exp": "Payment = address(uint160(addr)).send(temp)"
+			},
+			{
+				"name": "BullRun_sendBalance_1",
+				"exp": "! address(uint160(ownerWallet)).send(getEthBalance())"
+			},
+			{
+				"name": "BullRun_sendBalance_2",
+				"exp": "address(uint160(ownerWallet)).transfer(getEthBalance())"
+			}
+		]
+	},
+	"TVL8AmuqEwdgb69PVmg27Qp2mFQyhmP5Qm_MagicPool": {
+		"addre": "TVL8AmuqEwdgb69PVmg27Qp2mFQyhmP5Qm_MagicPool",
+		"slice": [
+			{
+				"name": "MagicPool_Trans_3",
+				"exp": "_address.transfer(amounts)"
+			},
+			{
+				"tag": "1",
+				"name": "MagicPool_buyPool1_20",
+				"exp": "sent = address(uint160(pool1Currentuser)).send(pool1_price)"
+			},
+			{
+				"name": "MagicPool_buyPool1_32",
+				"exp": "sent = address(uint160(spreferer)).send(pool1_price)"
+			},
+			{
+				"name": "MagicPool_buyPool1_38",
+				"exp": "sent = address(uint160(userList[_referrerID])).send(pool1_price)"
+			},
+			{
+				"name": "MagicPool_buyPool1_44",
+				"exp": "sent = address(uint160(ownerWallet)).send(pool1_price)"
+			},
+			{
+				"tag": "1",
+				"name": "MagicPool_buyPool2_12",
+				"exp": "sent = address(uint160(pool2Currentuser)).send(pool2_price)"
+			},
+			{
+				"tag": "1",
+				"name": "MagicPool_buyPool3_12",
+				"exp": "sent = address(uint160(pool3Currentuser)).send(pool3_price)"
+			},
+			{
+				"tag": "1",
+				"name": "MagicPool_buyPool4_12",
+				"exp": "sent = address(uint160(pool4Currentuser)).send(pool4_price)"
+			},
+			{
+				"tag": "1",
+				"name": "MagicPool_buyPool5_12",
+				"exp": "sent = address(uint160(pool5Currentuser)).send(pool5_price)"
+			},
+			{
+				"tag": "1",
+				"name": "MagicPool_buyPool6_12",
+				"exp": "sent = address(uint160(pool6Currentuser)).send(pool6_price)"
+			},
+			{
+				"tag": "1",
+				"name": "MagicPool_buyPool7_12",
+				"exp": "sent = address(uint160(pool7Currentuser)).send(pool7_price)"
+			},
+			{
+				"tag": "1",
+				"name": "MagicPool_buyPool8_12",
+				"exp": "sent = address(uint160(pool8Currentuser)).send(pool8_price)"
+			},
+			{
+				"name": "MagicPool_sendBalance_1",
+				"exp": "! address(uint160(ownerWallet)).send(getTrxBalance())"
+			},
+			{
+				"name": "MagicPool_withdrawSafe_6",
+				"exp": "msg.sender.transfer(amtToTransfer)"
+			}
+		]
+	},
+	"893e861a0615f66475c8151bd4a9c348111b0c5e_CyberBull": {
+		"addre": "893e861a0615f66475c8151bd4a9c348111b0c5e_CyberBull",
+		"slice": [
+			{
+				"name": "CyberBull_payReferral_9",
+				"exp": "sent = address(uint160(referer)).send(level_price_local)"
+			},
+			{
+				"tag": "1",
+				"name": "CyberBull_buyPool1_11",
+				"exp": "sent = address(uint160(pool1Currentuser)).send(pool1_price)"
+			},
+			{
+				"tag": "1",
+				"name": "CyberBull_buyPool2_12",
+				"exp": "sent = address(uint160(pool2Currentuser)).send(pool2_price)"
+			},
+			{
+				"tag": "1",
+				"name": "CyberBull_buyPool3_12",
+				"exp": "sent = address(uint160(pool3Currentuser)).send(pool3_price)"
+			},
+			{
+				"tag": "1",
+				"name": "CyberBull_buyPool4_12",
+				"exp": "sent = address(uint160(pool4Currentuser)).send(pool4_price)"
+			},
+			{
+				"tag": "1",
+				"name": "CyberBull_buyPool5_12",
+				"exp": "sent = address(uint160(pool5Currentuser)).send(pool5_price)"
+			},
+			{
+				"tag": "1",
+				"name": "CyberBull_buyPool6_11",
+				"exp": "sent = address(uint160(pool6Currentuser)).send(pool6_price)"
+			},
+			{
+				"tag": "1",
+				"name": "CyberBull_buyPool7_12",
+				"exp": "sent = address(uint160(pool7Currentuser)).send(pool7_price)"
+			},
+			{
+				"tag": "1",
+				"name": "CyberBull_buyPool8_12",
+				"exp": "sent = address(uint160(pool8Currentuser)).send(pool8_price)"
+			},
+			{
+				"tag": "1",
+				"name": "CyberBull_buyPool9_12",
+				"exp": "sent = address(uint160(pool9Currentuser)).send(pool9_price)"
+			},
+			{
+				"tag": "1",
+				"name": "CyberBull_buyPool10_12",
+				"exp": "sent = address(uint160(pool10Currentuser)).send(pool10_price)"
+			},
+			{
+				"name": "CyberBull_sendBalance_1",
+				"exp": "! address(uint160(ownerWallet)).send(getEthBalance())"
+			}
+		]
+	},
+	"TNTKGgAhSDuwC3RraxeDdLwn1RKZZaa1UV_TronStorm": {
+		"addre": "TNTKGgAhSDuwC3RraxeDdLwn1RKZZaa1UV_TronStorm",
+		"slice": [
+			{
+				"name": "TronStorm_payReferral_10",
+				"exp": "sent = address(uint160(referer)).send(level_price_local)"
+			},
+			{
+				"name": "TronStorm_payPoolReferral_70",
+				"exp": "sent = address(uint160(referer)).send(level_price_local)"
+			},
+			{
+				"tag": "1",
+				"name": "TronStorm_buyPool1_18",
+				"exp": "sent = address(uint160(pool1Currentuser)).send((pool1_price * 90) / 100)"
+			},
+			{
+				"tag": "1",
+				"name": "TronStorm_buyPool2_20",
+				"exp": "sent = address(uint160(pool2Currentuser)).send((pool2_price * 90) / 100)"
+			},
+			{
+				"tag": "1",
+				"name": "TronStorm_buyPool3_20",
+				"exp": "sent = address(uint160(pool3Currentuser)).send((pool3_price * 90) / 100)"
+			},
+			{
+				"tag": "1",
+				"name": "TronStorm_buyPool4_19",
+				"exp": "sent = address(uint160(pool4Currentuser)).send((pool4_price * 90) / 100)"
+			},
+			{
+				"tag": "1",
+				"name": "TronStorm_buyPool5_20",
+				"exp": "sent = address(uint160(pool5Currentuser)).send((pool5_price * 90) / 100)"
+			},
+			{
+				"tag": "1",
+				"name": "TronStorm_buyPool6_20",
+				"exp": "sent = address(uint160(pool6Currentuser)).send((pool6_price * 90) / 100)"
+			},
+			{
+				"tag": "1",
+				"name": "TronStorm_buyPool7_20",
+				"exp": "sent = address(uint160(pool7Currentuser)).send((pool7_price * 90) / 100)"
+			},
+			{
+				"tag": "1",
+				"name": "TronStorm_buyPool8_20",
+				"exp": "sent = address(uint160(pool8Currentuser)).send((pool8_price * 90) / 100)"
+			},
+			{
+				"tag": "1",
+				"name": "TronStorm_buyPool9_20",
+				"exp": "sent = address(uint160(pool9Currentuser)).send((pool9_price * 90) / 100)"
+			},
+			{
+				"tag": "1",
+				"name": "TronStorm_buyPool10_19",
+				"exp": "sent = address(uint160(pool10Currentuser)).send((pool10_price * 90) / 100)"
+			},
+			{
+				"name": "TronStorm_sendBalancePoolRef_1",
+				"exp": "! address(uint160(ownerWallet)).send(amount)"
+			},
+			{
+				"name": "TronStorm_sendBalance_1",
+				"exp": "address(uint160(ownerWallet)).transfer(getTRXBalance())"
+			},
+			{
+				"name": "TronStorm_sendBalanceToOwner_1",
+				"exp": "! address(uint160(ownerWallet)).send(getTRXBalance())"
+			}
+		]
+	},
+	"TZ1szFiVk7QZXJsmX4BxHc4u97ZPLkneA5_Tron_matrix": {
+		"addre": "TZ1szFiVk7QZXJsmX4BxHc4u97ZPLkneA5_Tron_matrix",
+		"slice": [
+			{
+				"name": "Tron_matrix_payReferral_5",
+				"exp": "address(uint160(referer)).transfer(level_price_local)"
+			},
+			{
+				"tag": "1",
+				"name": "Tron_matrix_buyPool1_10",
+				"exp": "address(uint160(pool1Currentuser)).transfer(pool1_price)"
+			},
+			{
+				"tag": "1",
+				"name": "Tron_matrix_buyPool2_11",
+				"exp": "address(uint160(pool2Currentuser)).transfer(pool2_price)"
+			},
+			{
+				"tag": "1",
+				"name": "Tron_matrix_buyPool3_11",
+				"exp": "address(uint160(pool3Currentuser)).transfer(pool3_price)"
+			},
+			{
+				"tag": "1",
+				"name": "Tron_matrix_buyPool4_11",
+				"exp": "address(uint160(pool4Currentuser)).transfer(pool4_price)"
+			},
+			{
+				"tag": "1",
+				"name": "Tron_matrix_buyPool5_11",
+				"exp": "address(uint160(pool5Currentuser)).transfer(pool5_price)"
+			},
+			{
+				"tag": "1",
+				"name": "Tron_matrix_buyPool6_11",
+				"exp": "address(uint160(pool6Currentuser)).transfer(pool6_price)"
+			},
+			{
+				"tag": "1",
+				"name": "Tron_matrix_buyPool7_11",
+				"exp": "address(uint160(pool7Currentuser)).transfer(pool7_price)"
+			},
+			{
+				"tag": "1",
+				"name": "Tron_matrix_buyPool8_11",
+				"exp": "address(uint160(pool8Currentuser)).transfer(pool8_price)"
+			}
+		]
+	},
+	"TL26bwt1jRF9PWGDm9DUMBBabUnXkQX3dY_MarsPool": {
+		"addre": "TL26bwt1jRF9PWGDm9DUMBBabUnXkQX3dY_MarsPool",
+		"slice": [
+			{
+				"name": "MarsPool_payReferral_5",
+				"exp": "address(uint160(referer)).transfer(level_price_local)"
+			},
+			{
+				"tag": "1",
+				"name": "MarsPool_buyPool1_10",
+				"exp": "address(uint160(pool1Currentuser)).transfer(pool1_price)"
+			},
+			{
+				"tag": "1",
+				"name": "MarsPool_buyPool2_11",
+				"exp": "address(uint160(pool2Currentuser)).transfer(pool2_price)"
+			},
+			{
+				"tag": "1",
+				"name": "MarsPool_buyPool3_11",
+				"exp": "address(uint160(pool3Currentuser)).transfer(pool3_price)"
+			},
+			{
+				"tag": "1",
+				"name": "MarsPool_buyPool4_11",
+				"exp": "address(uint160(pool4Currentuser)).transfer(pool4_price)"
+			},
+			{
+				"tag": "1",
+				"name": "MarsPool_buyPool5_11",
+				"exp": "address(uint160(pool5Currentuser)).transfer(pool5_price)"
+			},
+			{
+				"tag": "1",
+				"name": "MarsPool_buyPool6_11",
+				"exp": "address(uint160(pool6Currentuser)).transfer(pool6_price)"
+			},
+			{
+				"tag": "1",
+				"name": "MarsPool_buyPool7_11",
+				"exp": "address(uint160(pool7Currentuser)).transfer(pool7_price)"
+			},
+			{
+				"tag": "1",
+				"name": "MarsPool_buyPool8_11",
+				"exp": "address(uint160(pool8Currentuser)).transfer(pool8_price)"
+			},
+			{
+				"tag": "1",
+				"name": "MarsPool_buyPool9_11",
+				"exp": "address(uint160(pool9Currentuser)).transfer(pool9_price)"
+			},
+			{
+				"tag": "1",
+				"name": "MarsPool_buyPool10_11",
+				"exp": "address(uint160(pool10Currentuser)).transfer(pool10_price)"
+			},
+			{
+				"tag": "1",
+				"name": "MarsPool_buyPool11_11",
+				"exp": "address(uint160(pool11Currentuser)).transfer(pool11_price)"
+			},
+			{
+				"tag": "1",
+				"name": "MarsPool_buyPool12_11",
+				"exp": "address(uint160(pool12Currentuser)).transfer(pool12_price)"
+			}
+		]
+	},
+	"c899eecb920c2d27cabdb97c3e7624227cabb5d1_MarsPool": {
+		"addre": "c899eecb920c2d27cabdb97c3e7624227cabb5d1_MarsPool",
+		"slice": [
+			{
+				"name": "MarsPool_payReferral_5",
+				"exp": "address(uint160(referer)).transfer(level_price_local)"
+			}
+		]
+	},
+	"87b895151c931a84a561b81ce0e065a134e0f901_BullRun": {
+		"addre": "87b895151c931a84a561b81ce0e065a134e0f901_BullRun",
+		"slice": [
+			{
+				"name": "BullRun_payReferral_9",
+				"exp": "sent = address(uint160(referer)).send(level_price_local)"
+			},
+			{
+				"tag": "1",
+				"name": "BullRun_buyPool1_11",
+				"exp": "sent = address(uint160(pool1Currentuser)).send(pool1_price)"
+			},
+			{
+				"tag": "1",
+				"name": "BullRun_buyPool2_12",
+				"exp": "sent = address(uint160(pool2Currentuser)).send(pool2_price)"
+			},
+			{
+				"tag": "1",
+				"name": "BullRun_buyPool3_12",
+				"exp": "sent = address(uint160(pool3Currentuser)).send(pool3_price)"
+			},
+			{
+				"tag": "1",
+				"name": "BullRun_buyPool4_12",
+				"exp": "sent = address(uint160(pool4Currentuser)).send(pool4_price)"
+			},
+			{
+				"tag": "1",
+				"name": "BullRun_buyPool5_12",
+				"exp": "sent = address(uint160(pool5Currentuser)).send(pool5_price)"
+			},
+			{
+				"tag": "1",
+				"name": "BullRun_buyPool6_11",
+				"exp": "sent = address(uint160(pool6Currentuser)).send(pool6_price)"
+			},
+			{
+				"tag": "1",
+				"name": "BullRun_buyPool7_12",
+				"exp": "sent = address(uint160(pool7Currentuser)).send(pool7_price)"
+			},
+			{
+				"tag": "1",
+				"name": "BullRun_buyPool8_12",
+				"exp": "sent = address(uint160(pool8Currentuser)).send(pool8_price)"
+			},
+			{
+				"tag": "1",
+				"name": "BullRun_buyPool9_12",
+				"exp": "sent = address(uint160(pool9Currentuser)).send(pool9_price)"
+			},
+			{
+				"tag": "1",
+				"name": "BullRun_buyPool10_12",
+				"exp": "sent = address(uint160(pool10Currentuser)).send(pool10_price)"
+			},
+			{
+				"name": "BullRun_sendBalance_1",
+				"exp": "! address(uint160(ownerWallet)).send(getEthBalance())"
+			}
+		]
+	},
+	"TUVY1ZjYAHrofmPmkaCAF6GwX85t1hdVuC_XOXO": {
+		"addre": "TUVY1ZjYAHrofmPmkaCAF6GwX85t1hdVuC_XOXO",
+		"slice": [
+			{
+				"name": "XOXO_payReferral_22",
+				"exp": "sent = address(uint160(referer)).send(level_price_local)"
+			},
+			{
+				"name": "XOXO_payReferral_27",
+				"exp": "sent = address(uint160(ownerWallet)).send(level_price_local)"
+			},
+			{
+				"tag": "1",
+				"name": "XOXO_buyPool1_15",
+				"exp": "sent = address(uint160(pool1Currentuser)).send(poolshare)"
+			},
+			{
+				"name": "XOXO_buyPool1_16",
+				"exp": "sent = address(uint160(spreferer)).send(pool_sp_share)"
+			},
+			{
+				"tag": "1",
+				"name": "XOXO_buyPool2_16",
+				"exp": "sent = address(uint160(pool2Currentuser)).send(poolshare)"
+			},
+			{
+				"name": "XOXO_buyPool2_17",
+				"exp": "sent = address(uint160(spreferer)).send(pool_sp_share)"
+			},
+			{
+				"tag": "1",
+				"name": "XOXO_buyPool3_16",
+				"exp": "sent = address(uint160(pool3Currentuser)).send(poolshare)"
+			},
+			{
+				"name": "XOXO_buyPool3_17",
+				"exp": "sent = address(uint160(spreferer)).send(pool_sp_share)"
+			},
+			{
+				"tag": "1",
+				"name": "XOXO_buyPool4_16",
+				"exp": "sent = address(uint160(pool4Currentuser)).send(poolshare)"
+			},
+			{
+				"name": "XOXO_buyPool4_17",
+				"exp": "sent = address(uint160(spreferer)).send(pool_sp_share)"
+			},
+			{
+				"tag": "1",
+				"name": "XOXO_buyPool5_16",
+				"exp": "sent = address(uint160(pool5Currentuser)).send(poolshare)"
+			},
+			{
+				"name": "XOXO_buyPool5_17",
+				"exp": "sent = address(uint160(spreferer)).send(pool_sp_share)"
+			},
+			{
+				"tag": "1",
+				"name": "XOXO_buyPool6_16",
+				"exp": "sent = address(uint160(pool6Currentuser)).send(poolshare)"
+			},
+			{
+				"name": "XOXO_buyPool6_17",
+				"exp": "sent = address(uint160(spreferer)).send(pool_sp_share)"
+			},
+			{
+				"tag": "1",
+				"name": "XOXO_buyPool7_16",
+				"exp": "sent = address(uint160(pool7Currentuser)).send(poolshare)"
+			},
+			{
+				"name": "XOXO_buyPool7_17",
+				"exp": "sent = address(uint160(spreferer)).send(pool_sp_share)"
+			},
+			{
+				"tag": "1",
+				"name": "XOXO_buyPool8_16",
+				"exp": "sent = address(uint160(pool8Currentuser)).send(poolshare)"
+			},
+			{
+				"name": "XOXO_buyPool8_17",
+				"exp": "sent = address(uint160(spreferer)).send(pool_sp_share)"
+			},
+			{
+				"name": "XOXO_withdrawbala_2",
+				"exp": "msg.sender.transfer(_amount)"
+			},
+			{
+				"name": "XOXO_sendBalance_1",
+				"exp": "! address(uint160(ownerWallet)).send(getTrxBalance())"
+			},
+			{
+				"name": "XOXO_withdraw_1",
+				"exp": "address(uint160(ownerWallet)).transfer(address(this).balance)"
+			}
+		]
+	},
+	"TVjaYN1qkxTJCEEfT2puGwJ1HgLe86tT8X_TigersTron": {
+		"addre": "TVjaYN1qkxTJCEEfT2puGwJ1HgLe86tT8X_TigersTron",
+		"slice": [
+			{
+				"name": "TigersTron_payReferral_5",
+				"exp": "address(uint160(referer)).transfer(level_price_local)"
+			},
+			{
+				"tag": "1",
+				"name": "TigersTron_buyPool1_10",
+				"exp": "address(uint160(pool1Currentuser)).transfer(pool1_price)"
+			},
+			{
+				"tag": "1",
+				"name": "TigersTron_buyPool2_11",
+				"exp": "address(uint160(pool2Currentuser)).transfer(pool2_price)"
+			},
+			{
+				"tag": "1",
+				"name": "TigersTron_buyPool3_11",
+				"exp": "address(uint160(pool3Currentuser)).transfer(pool3_price)"
+			},
+			{
+				"tag": "1",
+				"name": "TigersTron_buyPool4_11",
+				"exp": "address(uint160(pool4Currentuser)).transfer(pool4_price)"
+			},
+			{
+				"tag": "1",
+				"name": "TigersTron_buyPool5_11",
+				"exp": "address(uint160(pool5Currentuser)).transfer(pool5_price)"
+			},
+			{
+				"tag": "1",
+				"name": "TigersTron_buyPool6_11",
+				"exp": "address(uint160(pool6Currentuser)).transfer(pool6_price)"
+			},
+			{
+				"tag": "1",
+				"name": "TigersTron_buyPool7_11",
+				"exp": "address(uint160(pool7Currentuser)).transfer(pool7_price)"
+			},
+			{
+				"tag": "1",
+				"name": "TigersTron_buyPool8_11",
+				"exp": "address(uint160(pool8Currentuser)).transfer(pool8_price)"
+			},
+			{
+				"tag": "1",
+				"name": "TigersTron_buyPool9_11",
+				"exp": "address(uint160(pool9Currentuser)).transfer(pool9_price)"
+			},
+			{
+				"tag": "1",
+				"name": "TigersTron_buyPool10_11",
+				"exp": "address(uint160(pool10Currentuser)).transfer(pool10_price)"
+			},
+			{
+				"tag": "1",
+				"name": "TigersTron_buyPool11_11",
+				"exp": "address(uint160(pool11Currentuser)).transfer(pool11_price)"
+			},
+			{
+				"tag": "1",
+				"name": "TigersTron_buyPool12_11",
+				"exp": "address(uint160(pool12Currentuser)).transfer(pool12_price)"
+			}
+		]
+	},
+	"TPwkgXUsozDeq8u45rU71GBJ25ah5c917r_UltraTurboMoney": {
+		"addre": "TPwkgXUsozDeq8u45rU71GBJ25ah5c917r_UltraTurboMoney",
+		"slice": [
+			{
+				"name": "UltraTurboMoney_payReferral_5",
+				"exp": "address(uint160(referer)).transfer(level_price_local)"
+			},
+			{
+				"tag": "1",
+				"name": "UltraTurboMoney_buyPool1_10",
+				"exp": "address(uint160(pool1Currentuser)).transfer(pool1_price)"
+			},
+			{
+				"tag": "1",
+				"name": "UltraTurboMoney_buyPool2_10",
+				"exp": "address(uint160(pool2Currentuser)).transfer(pool2_price)"
+			},
+			{
+				"tag": "1",
+				"name": "UltraTurboMoney_buyPool3_10",
+				"exp": "address(uint160(pool3Currentuser)).transfer(pool3_price)"
+			},
+			{
+				"tag": "1",
+				"name": "UltraTurboMoney_buyPool4_10",
+				"exp": "address(uint160(pool4Currentuser)).transfer(pool4_price)"
+			},
+			{
+				"tag": "1",
+				"name": "UltraTurboMoney_buyPool5_10",
+				"exp": "address(uint160(pool5Currentuser)).transfer(pool5_price)"
+			},
+			{
+				"tag": "1",
+				"name": "UltraTurboMoney_buyPool6_10",
+				"exp": "address(uint160(pool6Currentuser)).transfer(pool6_price)"
+			},
+			{
+				"tag": "1",
+				"name": "UltraTurboMoney_buyPool7_10",
+				"exp": "address(uint160(pool7Currentuser)).transfer(pool7_price)"
+			},
+			{
+				"tag": "1",
+				"name": "UltraTurboMoney_buyPool8_10",
+				"exp": "address(uint160(pool8Currentuser)).transfer(pool8_price)"
+			}
+		]
+	},
+	"e989caf07ad870c1f059924fc096b00b5c048bb6_EtherAir": {
+		"addre": "e989caf07ad870c1f059924fc096b00b5c048bb6_EtherAir",
+		"slice": [
+			{
+				"name": "EtherAir_payReferral_9",
+				"exp": "sent = address(uint160(referer)).send(level_price_local)"
+			},
+			{
+				"tag": "1",
+				"name": "EtherAir_buyPool1_11",
+				"exp": "sent = address(uint160(pool1Currentuser)).send(pool1_price)"
+			},
+			{
+				"tag": "1",
+				"name": "EtherAir_buyPool2_12",
+				"exp": "sent = address(uint160(pool2Currentuser)).send(pool2_price)"
+			},
+			{
+				"tag": "1",
+				"name": "EtherAir_buyPool3_12",
+				"exp": "sent = address(uint160(pool3Currentuser)).send(pool3_price)"
+			},
+			{
+				"tag": "1",
+				"name": "EtherAir_buyPool4_12",
+				"exp": "sent = address(uint160(pool4Currentuser)).send(pool4_price)"
+			},
+			{
+				"tag": "1",
+				"name": "EtherAir_buyPool5_12",
+				"exp": "sent = address(uint160(pool5Currentuser)).send(pool5_price)"
+			},
+			{
+				"tag": "1",
+				"name": "EtherAir_buyPool6_11",
+				"exp": "sent = address(uint160(pool6Currentuser)).send(pool6_price)"
+			},
+			{
+				"tag": "1",
+				"name": "EtherAir_buyPool7_12",
+				"exp": "sent = address(uint160(pool7Currentuser)).send(pool7_price)"
+			},
+			{
+				"tag": "1",
+				"name": "EtherAir_buyPool8_12",
+				"exp": "sent = address(uint160(pool8Currentuser)).send(pool8_price)"
+			},
+			{
+				"tag": "1",
+				"name": "EtherAir_buyPool9_12",
+				"exp": "sent = address(uint160(pool9Currentuser)).send(pool9_price)"
+			},
+			{
+				"tag": "1",
+				"name": "EtherAir_buyPool10_12",
+				"exp": "sent = address(uint160(pool10Currentuser)).send(pool10_price)"
+			},
+			{
+				"name": "EtherAir_sendBalance_1",
+				"exp": "! address(uint160(ownerWallet)).send(getEthBalance())"
+			}
+		]
+	},
+	"TQwY8qHttA99kWyDdCvFyhkBSYsmWfEfgn_SuperPool1": {
+		"addre": "TQwY8qHttA99kWyDdCvFyhkBSYsmWfEfgn_SuperPool1",
+		"slice": [
+			{
+				"name": "SuperPool1_payReferral_5",
+				"exp": "address(uint160(referer)).transfer(level_price_local)"
+			},
+			{
+				"tag": "1",
+				"name": "SuperPool1_buyPool1_10",
+				"exp": "address(uint160(pool1Currentuser)).transfer(pool1_price)"
+			},
+			{
+				"tag": "1",
+				"name": "SuperPool1_buyPool2_11",
+				"exp": "address(uint160(pool2Currentuser)).transfer(pool2_price)"
+			},
+			{
+				"tag": "1",
+				"name": "SuperPool1_buyPool3_11",
+				"exp": "address(uint160(pool3Currentuser)).transfer(pool3_price)"
+			},
+			{
+				"tag": "1",
+				"name": "SuperPool1_buyPool4_11",
+				"exp": "address(uint160(pool4Currentuser)).transfer(pool4_price)"
+			},
+			{
+				"tag": "1",
+				"name": "SuperPool1_buyPool5_11",
+				"exp": "address(uint160(pool5Currentuser)).transfer(pool5_price)"
+			},
+			{
+				"tag": "1",
+				"name": "SuperPool1_buyPool6_11",
+				"exp": "address(uint160(pool6Currentuser)).transfer(pool6_price)"
+			},
+			{
+				"tag": "1",
+				"name": "SuperPool1_buyPool7_11",
+				"exp": "address(uint160(pool7Currentuser)).transfer(pool7_price)"
+			},
+			{
+				"tag": "1",
+				"name": "SuperPool1_buyPool8_11",
+				"exp": "address(uint160(pool8Currentuser)).transfer(pool8_price)"
+			},
+			{
+				"tag": "1",
+				"name": "SuperPool1_buyPool9_11",
+				"exp": "address(uint160(pool9Currentuser)).transfer(pool9_price)"
+			},
+			{
+				"tag": "1",
+				"name": "SuperPool1_buyPool10_11",
+				"exp": "address(uint160(pool10Currentuser)).transfer(pool10_price)"
+			},
+			{
+				"tag": "1",
+				"name": "SuperPool1_buyPool11_11",
+				"exp": "address(uint160(pool11Currentuser)).transfer(pool11_price)"
+			},
+			{
+				"tag": "1",
+				"name": "SuperPool1_buyPool12_11",
+				"exp": "address(uint160(pool12Currentuser)).transfer(pool12_price)"
+			}
+		]
+	},
+	"TKPbkiF7MVw1RP96afQRrpXBvMVhWKJE4e_TronJackpots": {
+		"addre": "TKPbkiF7MVw1RP96afQRrpXBvMVhWKJE4e_TronJackpots",
+		"slice": [
+			{
+				"name": "TronJackpots_sendBalance_3",
+				"exp": "! address(uint160(ownerWallet)).send(ContractBalance)"
+			},
+			{
+				"name": "TronJackpots_withdrawSafe_6",
+				"exp": "msg.sender.transfer(amtToTransfer)"
+			}
+		]
+	},
+	"TP1b2UDxqbNCLgjei14HLovVBWoEjTmLP3_BullRun": {
+		"note": "TBD",
+		"addre": "TP1b2UDxqbNCLgjei14HLovVBWoEjTmLP3_BullRun",
+		"slice": [
+			{
+				"name": "BullRun_distributeRef_11",
+				"exp": "_affAddr1.transfer(_affRewards)"
+			},
+			{
+				"name": "BullRun_distributeRef_17",
+				"exp": "_affAddr2.transfer(_affRewards)"
+			},
+			{
+				"name": "BullRun_distributeRef_23",
+				"exp": "_affAddr3.transfer(_affRewards)"
+			},
+			{
+				"name": "BullRun_distributeRef_29",
+				"exp": "_affAddr4.transfer(_affRewards)"
+			},
+			{
+				"name": "BullRun_distributeRef_33",
+				"exp": "ownerWallet.transfer(amount)"
+			},
+			{
+				"name": "BullRun_distributeRef_34",
+				"exp": "secondowner.transfer(amount)"
+			},
+			{
+				"name": "BullRun_distributeRef_35",
+				"exp": "thirdOwner.transfer(amount)"
+			},
+			{
+				"name": "BullRun_distributeRef_36",
+				"exp": "fourthOwner.transfer(amount)"
+			},
+			{
+				"name": "BullRun_buyPool1_10",
+				"exp": "sent = address(uint160(pool1Currentuser)).send(pool1_price.sub((pool1_price.mul(10)).div(100)))"
+			},
+			{
+				"name": "BullRun_buyPool2_10",
+				"exp": "sent = address(uint160(pool2Currentuser)).send(pool2_price.sub((pool2_price.mul(10)).div(100)))"
+			},
+			{
+				"name": "BullRun_buyPool3_10",
+				"exp": "sent = address(uint160(pool3Currentuser)).send(pool3_price.sub((pool3_price.mul(10)).div(100)))"
+			},
+			{
+				"name": "BullRun_buyPool4_10",
+				"exp": "sent = address(uint160(pool4Currentuser)).send(pool4_price.sub((pool4_price.mul(10)).div(100)))"
+			},
+			{
+				"name": "BullRun_buyPool5_10",
+				"exp": "sent = address(uint160(pool5Currentuser)).send(pool5_price.sub((pool5_price.mul(10)).div(100)))"
+			},
+			{
+				"name": "BullRun_buyPool6_10",
+				"exp": "sent = address(uint160(pool6Currentuser)).send(pool6_price.sub((pool6_price.mul(10)).div(100)))"
+			},
+			{
+				"name": "BullRun_buyPool7_10",
+				"exp": "sent = address(uint160(pool7Currentuser)).send(pool7_price.sub((pool7_price.mul(10)).div(100)))"
+			},
+			{
+				"name": "BullRun_buyPool8_10",
+				"exp": "sent = address(uint160(pool8Currentuser)).send(pool8_price.sub((pool8_price.mul(10)).div(100)))"
+			},
+			{
+				"name": "BullRun_buyPool9_10",
+				"exp": "sent = address(uint160(pool9Currentuser)).send(pool9_price.sub((pool9_price.mul(10)).div(100)))"
+			},
+			{
+				"name": "BullRun_buyPool10_10",
+				"exp": "sent = address(uint160(pool10Currentuser)).send(pool10_price.sub((pool10_price.mul(10)).div(100)))"
+			},
+			{
+				"name": "BullRun_transferadminmoney_3",
+				"exp": "ownerWallet.transfer(amount)"
+			},
+			{
+				"name": "BullRun_transferadminmoney_4",
+				"exp": "secondowner.transfer(amount)"
+			},
+			{
+				"name": "BullRun_transferadminmoney_5",
+				"exp": "thirdOwner.transfer(amount)"
+			},
+			{
+				"name": "BullRun_transferadminmoney_6",
+				"exp": "fourthOwner.transfer(amount)"
+			}
+		]
+	},
+	"TUnHKvjokY9BskU8toUtpipNUHgsdjwHqx_PoolRun": {
+		"addre": "TUnHKvjokY9BskU8toUtpipNUHgsdjwHqx_PoolRun",
+		"slice": [
+			{
+				"name": "PoolRun_payReferral_9",
+				"exp": "sent = address(uint160(referer)).send(level_price_local)"
+			},
+			{
+				"tag": "1",
+				"name": "PoolRun_buyPool1_10",
+				"exp": "address(uint160(pool1Currentuser)).transfer(pool1_price)"
+			},
+			{
+				"tag": "1",
+				"name": "PoolRun_buyPool2_11",
+				"exp": "address(uint160(pool2Currentuser)).transfer(pool2_price)"
+			},
+			{
+				"tag": "1",
+				"name": "PoolRun_buyPool3_11",
+				"exp": "address(uint160(pool3Currentuser)).transfer(pool3_price)"
+			},
+			{
+				"tag": "1",
+				"name": "PoolRun_buyPool4_11",
+				"exp": "address(uint160(pool4Currentuser)).transfer(pool4_price)"
+			},
+			{
+				"tag": "1",
+				"name": "PoolRun_buyPool5_11",
+				"exp": "address(uint160(pool5Currentuser)).transfer(pool5_price)"
+			},
+			{
+				"tag": "1",
+				"name": "PoolRun_buyPool6_11",
+				"exp": "address(uint160(pool6Currentuser)).transfer(pool6_price)"
+			},
+			{
+				"tag": "1",
+				"name": "PoolRun_buyPool7_11",
+				"exp": "address(uint160(pool7Currentuser)).transfer(pool7_price)"
+			},
+			{
+				"tag": "1",
+				"name": "PoolRun_buyPool8_11",
+				"exp": "address(uint160(pool8Currentuser)).transfer(pool8_price)"
+			},
+			{
+				"tag": "1",
+				"name": "PoolRun_buyPool9_11",
+				"exp": "address(uint160(pool9Currentuser)).transfer(pool9_price)"
+			},
+			{
+				"tag": "1",
+				"name": "PoolRun_buyPool10_11",
+				"exp": "address(uint160(pool10Currentuser)).transfer(pool10_price)"
+			},
+			{
+				"tag": "1",
+				"name": "PoolRun_buyPool11_11",
+				"exp": "address(uint160(pool11Currentuser)).transfer(pool11_price)"
+			},
+			{
+				"tag": "1",
+				"name": "PoolRun_buyPool12_11",
+				"exp": "address(uint160(pool12Currentuser)).transfer(pool12_price)"
+			},
+			{
+				"name": "PoolRun_sendBalance_1",
+				"exp": "! address(uint160(ownerWallet)).send(getEthBalance())"
+			}
+		]
+	},
+	"8cb3a2081962c289036ba5f766681eac616448f8_Etherboss": {
+		"addre": "8cb3a2081962c289036ba5f766681eac616448f8_Etherboss",
+		"slice": [
+			{
+				"name": "Etherboss_payReferral_9",
+				"exp": "sent = address(uint160(referer)).send(level_price_local)"
+			},
+			{
+				"tag": "1",
+				"name": "Etherboss_buyPool1_11",
+				"exp": "sent = address(uint160(pool1Currentuser)).send(pool1_price)"
+			},
+			{
+				"tag": "1",
+				"name": "Etherboss_buyPool2_12",
+				"exp": "sent = address(uint160(pool2Currentuser)).send(pool2_price)"
+			},
+			{
+				"tag": "1",
+				"name": "Etherboss_buyPool3_12",
+				"exp": "sent = address(uint160(pool3Currentuser)).send(pool3_price)"
+			},
+			{
+				"tag": "1",
+				"name": "Etherboss_buyPool4_12",
+				"exp": "sent = address(uint160(pool4Currentuser)).send(pool4_price)"
+			},
+			{
+				"tag": "1",
+				"name": "Etherboss_buyPool5_12",
+				"exp": "sent = address(uint160(pool5Currentuser)).send(pool5_price)"
+			},
+			{
+				"tag": "1",
+				"name": "Etherboss_buyPool6_11",
+				"exp": "sent = address(uint160(pool6Currentuser)).send(pool6_price)"
+			},
+			{
+				"tag": "1",
+				"name": "Etherboss_buyPool7_12",
+				"exp": "sent = address(uint160(pool7Currentuser)).send(pool7_price)"
+			},
+			{
+				"tag": "1",
+				"name": "Etherboss_buyPool8_12",
+				"exp": "sent = address(uint160(pool8Currentuser)).send(pool8_price)"
+			},
+			{
+				"tag": "1",
+				"name": "Etherboss_buyPool9_12",
+				"exp": "sent = address(uint160(pool9Currentuser)).send(pool9_price)"
+			},
+			{
+				"tag": "1",
+				"name": "Etherboss_buyPool10_12",
+				"exp": "sent = address(uint160(pool10Currentuser)).send(pool10_price)"
+			},
+			{
+				"name": "Etherboss_sendBalance_1",
+				"exp": "! address(uint160(ownerWallet)).send(getEthBalance())"
+			}
+		]
+	},
+	"TFaHk8Vk4UqKjjkeuaPW1i6ESSnGcycsb2_TronInfinity": {
+		"addre": "TFaHk8Vk4UqKjjkeuaPW1i6ESSnGcycsb2_TronInfinity",
+		"slice": [
+			{
+				"name": "TronInfinity_buyPool_18",
+				"exp": "upline.transfer(REFERRAL_PERCENTS[i])"
+			},
+			{
+				"name": "TronInfinity_buyPool_26",
+				"exp": "startPooluserList[startPoolactiveUserID].transfer(300)"
+			},
+			{
+				"name": "TronInfinity_buyPool1_10",
+				"exp": "pool1userList[pool1activeUserID].transfer(600)"
+			},
+			{
+				"name": "TronInfinity_buyPool2_10",
+				"exp": "pool2userList[pool2activeUserID].transfer(1200)"
+			},
+			{
+				"name": "TronInfinity_buyPool3_10",
+				"exp": "pool3userList[pool3activeUserID].transfer(2400)"
+			},
+			{
+				"name": "TronInfinity_buyPool4_10",
+				"exp": "pool4userList[pool4activeUserID].transfer(4800)"
+			},
+			{
+				"name": "TronInfinity_buyPool5_10",
+				"exp": "pool5userList[pool5activeUserID].transfer(9600)"
+			},
+			{
+				"name": "TronInfinity_buyPool6_16",
+				"exp": "pool5userList[pool6activeUserID].transfer(57600)"
+			},
+			{
+				"name": "TronInfinity_updation_2",
+				"exp": "owner.transfer(amount.mul(1e6))"
+			}
+		]
+	},
+	"TAnvcsveNGUs3UZieDTbkWB7PqiSGeTgPi_PerfectPool": {
+		"addre": "TAnvcsveNGUs3UZieDTbkWB7PqiSGeTgPi_PerfectPool",
+		"slice": [
+			{
+				"name": "PerfectPool_payReferral_5",
+				"exp": "address(uint160(referer)).transfer(level_price_local)"
+			},
+			{
+				"tag": "1",
+				"name": "PerfectPool_buyPool1_10",
+				"exp": "address(uint160(pool1Currentuser)).transfer(pool1_price)"
+			},
+			{
+				"tag": "1",
+				"name": "PerfectPool_buyPool2_11",
+				"exp": "address(uint160(pool2Currentuser)).transfer(pool2_price)"
+			},
+			{
+				"tag": "1",
+				"name": "PerfectPool_buyPool3_11",
+				"exp": "address(uint160(pool3Currentuser)).transfer(pool3_price)"
+			},
+			{
+				"tag": "1",
+				"name": "PerfectPool_buyPool4_11",
+				"exp": "address(uint160(pool4Currentuser)).transfer(pool4_price)"
+			},
+			{
+				"tag": "1",
+				"name": "PerfectPool_buyPool5_11",
+				"exp": "address(uint160(pool5Currentuser)).transfer(pool5_price)"
+			},
+			{
+				"tag": "1",
+				"name": "PerfectPool_buyPool6_11",
+				"exp": "address(uint160(pool6Currentuser)).transfer(pool6_price)"
+			},
+			{
+				"tag": "1",
+				"name": "PerfectPool_buyPool7_11",
+				"exp": "address(uint160(pool7Currentuser)).transfer(pool7_price)"
+			},
+			{
+				"tag": "1",
+				"name": "PerfectPool_buyPool8_11",
+				"exp": "address(uint160(pool8Currentuser)).transfer(pool8_price)"
+			},
+			{
+				"tag": "1",
+				"name": "PerfectPool_buyPool9_11",
+				"exp": "address(uint160(pool9Currentuser)).transfer(pool9_price)"
+			},
+			{
+				"tag": "1",
+				"name": "PerfectPool_buyPool10_11",
+				"exp": "address(uint160(pool10Currentuser)).transfer(pool10_price)"
+			},
+			{
+				"tag": "1",
+				"name": "PerfectPool_buyPool11_11",
+				"exp": "address(uint160(pool11Currentuser)).transfer(pool11_price)"
+			},
+			{
+				"tag": "1",
+				"name": "PerfectPool_buyPool12_11",
+				"exp": "address(uint160(pool12Currentuser)).transfer(pool12_price)"
+			}
+		]
+	},
+	"THsLYYENu7S3PjWYUcuVDK5wqXtguoxCWy_MagicPool": {
+		"addre": "THsLYYENu7S3PjWYUcuVDK5wqXtguoxCWy_MagicPool",
+		"slice": [
+			{
+				"name": "MagicPool_Trans_3",
+				"exp": "_address.transfer(amounts)"
+			},
+			{
+				"name": "MagicPool_buyPool1_20",
+				"exp": "sent = address(uint160(pool1Currentuser)).send(pool1_price)"
+			},
+			{
+				"name": "MagicPool_buyPool1_32",
+				"exp": "sent = address(uint160(spreferer)).send(pool1_price)"
+			},
+			{
+				"name": "MagicPool_buyPool1_38",
+				"exp": "sent = address(uint160(userList[_referrerID])).send(pool1_price)"
+			},
+			{
+				"name": "MagicPool_buyPool1_44",
+				"exp": "sent = address(uint160(ownerWallet)).send(pool1_price)"
+			},
+			{
+				"tag": "1",
+				"name": "MagicPool_buyPool2_12",
+				"exp": "sent = address(uint160(pool2Currentuser)).send(pool2_price)"
+			},
+			{
+				"tag": "1",
+				"name": "MagicPool_buyPool3_12",
+				"exp": "sent = address(uint160(pool3Currentuser)).send(pool3_price)"
+			},
+			{
+				"tag": "1",
+				"name": "MagicPool_buyPool4_12",
+				"exp": "sent = address(uint160(pool4Currentuser)).send(pool4_price)"
+			},
+			{
+				"tag": "1",
+				"name": "MagicPool_buyPool5_12",
+				"exp": "sent = address(uint160(pool5Currentuser)).send(pool5_price)"
+			},
+			{
+				"tag": "1",
+				"name": "MagicPool_buyPool6_12",
+				"exp": "sent = address(uint160(pool6Currentuser)).send(pool6_price)"
+			},
+			{
+				"tag": "1",
+				"name": "MagicPool_buyPool7_12",
+				"exp": "sent = address(uint160(pool7Currentuser)).send(pool7_price)"
+			},
+			{
+				"tag": "1",
+				"name": "MagicPool_buyPool8_12",
+				"exp": "sent = address(uint160(pool8Currentuser)).send(pool8_price)"
+			},
+			{
+				"name": "MagicPool_sendBalance_1",
+				"exp": "! address(uint160(ownerWallet)).send(getTrxBalance())"
+			},
+			{
+				"name": "MagicPool_withdrawSafe_6",
+				"exp": "msg.sender.transfer(amtToTransfer)"
+			}
+		]
+	},
+	"TK8b4cDqN8BLB2CyY7Us9ZR5tbWsjz4SvL_SmartPool": {
+		"addre": "TK8b4cDqN8BLB2CyY7Us9ZR5tbWsjz4SvL_SmartPool",
+		"slice": [
+			{
+				"name": "SmartPool_payReferral_5",
+				"exp": "address(uint160(referer)).transfer(level_price_local)"
+			},
+			{
+				"tag": "1",
+				"name": "SmartPool_buyPool1_10",
+				"exp": "address(uint160(pool1Currentuser)).transfer(pool1_price)"
+			},
+			{
+				"tag": "1",
+				"name": "SmartPool_buyPool2_11",
+				"exp": "address(uint160(pool2Currentuser)).transfer(pool2_price)"
+			},
+			{
+				"tag": "1",
+				"name": "SmartPool_buyPool3_11",
+				"exp": "address(uint160(pool3Currentuser)).transfer(pool3_price)"
+			},
+			{
+				"tag": "1",
+				"name": "SmartPool_buyPool4_11",
+				"exp": "address(uint160(pool4Currentuser)).transfer(pool4_price)"
+			},
+			{
+				"tag": "1",
+				"name": "SmartPool_buyPool5_11",
+				"exp": "address(uint160(pool5Currentuser)).transfer(pool5_price)"
+			},
+			{
+				"tag": "1",
+				"name": "SmartPool_buyPool6_11",
+				"exp": "address(uint160(pool6Currentuser)).transfer(pool6_price)"
+			},
+			{
+				"tag": "1",
+				"name": "SmartPool_buyPool7_11",
+				"exp": "address(uint160(pool7Currentuser)).transfer(pool7_price)"
+			},
+			{
+				"tag": "1",
+				"name": "SmartPool_buyPool8_11",
+				"exp": "address(uint160(pool8Currentuser)).transfer(pool8_price)"
+			},
+			{
+				"tag": "1",
+				"name": "SmartPool_buyPool9_11",
+				"exp": "address(uint160(pool9Currentuser)).transfer(pool9_price)"
+			},
+			{
+				"tag": "1",
+				"name": "SmartPool_buyPool10_11",
+				"exp": "address(uint160(pool10Currentuser)).transfer(pool10_price)"
+			},
+			{
+				"tag": "1",
+				"name": "SmartPool_buyPool11_11",
+				"exp": "address(uint160(pool11Currentuser)).transfer(pool11_price)"
+			},
+			{
+				"tag": "1",
+				"name": "SmartPool_buyPool12_11",
+				"exp": "address(uint160(pool12Currentuser)).transfer(pool12_price)"
+			}
+		]
+	},
+	"776263f3c4c9c588c431002c75d668192cdfaccb_PoolVine": {
+		"addre": "776263f3c4c9c588c431002c75d668192cdfaccb_PoolVine",
+		"slice": [
+			{
+				"name": "PoolVine_heightPayment_4",
+				"exp": "sent = address(uint160(nextLevel)).send(pay_autopool)"
+			},
+			{
+				"name": "PoolVine_heightPayment_17",
+				"exp": "sent = address(uint160(nextLevel_scope_0)).send(pay_autopool)"
+			},
+			{
+				"name": "PoolVine_autoPool_9",
+				"exp": "sent = address(uint160(userList[i])).send(pay_autopool)"
+			},
+			{
+				"name": "PoolVine_payToCoReferrer_8",
+				"exp": "sent = address(uint160(co_referrer)).send(level_price_local)"
+			},
+			{
+				"name": "PoolVine_checkEvenOrOdd_7",
+				"exp": "sent = address(uint160(first_ref)).send(pay_evn_odd)"
+			},
+			{
+				"name": "PoolVine_checkEvenOrOdd_14",
+				"exp": "sent = address(uint160(referer)).send(pay_evn_odd)"
+			},
+			{
+				"name": "PoolVine_payReferral_9",
+				"exp": "sent = address(uint160(referer)).send(level_price_local)"
+			},
+			{
+				"tag": "1",
+				"name": "PoolVine_buyPool1_13",
+				"exp": "sent = address(uint160(pool1Currentuser)).send(pool1_price)"
+			},
+			{
+				"tag": "1",
+				"name": "PoolVine_buyPool1_19",
+				"exp": "sent = address(uint160(pool1users[pool1Currentuser].parent)).send(pool1_price)"
+			},
+			{
+				"tag": "1",
+				"name": "PoolVine_buyPool2_13",
+				"exp": "sent = address(uint160(pool2Currentuser)).send(pool2_price)"
+			},
+			{
+				"tag": "1",
+				"name": "PoolVine_buyPool2_19",
+				"exp": "sent = address(uint160(pool2users[pool2Currentuser].parent)).send(pool2_price)"
+			},
+			{
+				"tag": "1",
+				"name": "PoolVine_buyPool3_13",
+				"exp": "sent = address(uint160(pool3Currentuser)).send(pool3_price)"
+			},
+			{
+				"tag": "1",
+				"name": "PoolVine_buyPool3_19",
+				"exp": "sent = address(uint160(pool3users[pool3Currentuser].parent)).send(pool3_price)"
+			},
+			{
+				"tag": "1",
+				"name": "PoolVine_buyPool4_13",
+				"exp": "sent = address(uint160(pool4Currentuser)).send(pool4_price)"
+			},
+			{
+				"tag": "1",
+				"name": "PoolVine_buyPool4_19",
+				"exp": "sent = address(uint160(pool4users[pool4Currentuser].parent)).send(pool4_price)"
+			},
+			{
+				"tag": "1",
+				"name": "PoolVine_buyPool5_13",
+				"exp": "sent = address(uint160(pool5Currentuser)).send(pool5_price)"
+			},
+			{
+				"tag": "1",
+				"name": "PoolVine_buyPool5_19",
+				"exp": "sent = address(uint160(pool5users[pool5Currentuser].parent)).send(pool5_price)"
+			},
+			{
+				"tag": "1",
+				"name": "PoolVine_buyPool6_13",
+				"exp": "sent = address(uint160(pool6Currentuser)).send(pool6_price)"
+			},
+			{
+				"tag": "1",
+				"name": "PoolVine_buyPool6_19",
+				"exp": "sent = address(uint160(pool6users[pool6Currentuser].parent)).send(pool6_price)"
+			},
+			{
+				"tag": "1",
+				"name": "PoolVine_buyPool7_12",
+				"exp": "sent = address(uint160(pool7Currentuser)).send(pool7_price)"
+			},
+			{
+				"tag": "1",
+				"name": "PoolVine_buyPool8_12",
+				"exp": "sent = address(uint160(pool8Currentuser)).send(pool8_price)"
+			},
+			{
+				"tag": "1",
+				"name": "PoolVine_buyPool9_12",
+				"exp": "sent = address(uint160(pool9Currentuser)).send(pool9_price)"
+			},
+			{
+				"tag": "1",
+				"name": "PoolVine_buyPool10_12",
+				"exp": "sent = address(uint160(pool10Currentuser)).send(pool10_price)"
+			},
+			{
+				"tag": "1",
+				"name": "PoolVine_buyPool11_12",
+				"exp": "sent = address(uint160(pool11Currentuser)).send(pool11_price)"
+			},
+			{
+				"tag": "1",
+				"name": "PoolVine_buyPool12_12",
+				"exp": "sent = address(uint160(pool12Currentuser)).send(pool12_price)"
+			},
+			{
+				"name": "PoolVine_sendBalance_2",
+				"exp": "! address(uint160(ownerWallet)).send(gettrxBalance())"
+			}
+		]
+	},
+	"TJd7EaR2Dxd2JQuMT7cUcYx78t8CmF6HL1_TronLotto": {
+		"addre": "TJd7EaR2Dxd2JQuMT7cUcYx78t8CmF6HL1_TronLotto",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "TronLotto_buyPool1_44",
+				"exp": "sent = address(uint160(pool1updateuser)).send(pool1_reentry_income)"
+			},
+			{
+				"tag": "1",
+				"name": "TronLotto_buyPool2_39",
+				"exp": "sent = address(uint160(pool2updateuser)).send(pool2_reentry_income)"
+			},
+			{
+				"name": "TronLotto_buyPool2_49",
+				"exp": "sent_scope_0 = address(uint160(pool2updateuser)).send(pool2_exit_income)"
+			},
+			{
+				"tag": "1",
+				"name": "TronLotto_buyPool3_39",
+				"exp": "sent = address(uint160(pool3updateuser)).send(pool3_reentry_income)"
+			},
+			{
+				"name": "TronLotto_buyPool3_49",
+				"exp": "sent_scope_0 = address(uint160(pool3updateuser)).send(pool3_exit_income)"
+			},
+			{
+				"tag": "1",
+				"name": "TronLotto_buyPool4_39",
+				"exp": "sent = address(uint160(pool4updateuser)).send(pool4_reentry_income)"
+			},
+			{
+				"name": "TronLotto_buyPool4_49",
+				"exp": "sent_scope_0 = address(uint160(pool4updateuser)).send(pool4_exit_income)"
+			},
+			{
+				"tag": "1",
+				"name": "TronLotto_buyPool5_39",
+				"exp": "sent = address(uint160(pool5updateuser)).send(pool5_reentry_income)"
+			},
+			{
+				"name": "TronLotto_buyPool5_49",
+				"exp": "sent_scope_0 = address(uint160(pool5updateuser)).send(pool5_exit_income)"
+			},
+			{
+				"tag": "1",
+				"name": "TronLotto_buyPool6_39",
+				"exp": "sent = address(uint160(pool6updateuser)).send(pool6_reentry_income)"
+			},
+			{
+				"name": "TronLotto_buyPool6_49",
+				"exp": "sent_scope_0 = address(uint160(pool6updateuser)).send(pool6_exit_income)"
+			},
+			{
+				"tag": "1",
+				"name": "TronLotto_buyPool7_39",
+				"exp": "sent = address(uint160(pool7updateuser)).send(pool7_reentry_income)"
+			},
+			{
+				"name": "TronLotto_buyPool7_49",
+				"exp": "sent_scope_0 = address(uint160(pool7updateuser)).send(pool7_exit_income)"
+			},
+			{
+				"tag": "1",
+				"name": "TronLotto_buyPool8_39",
+				"exp": "sent = address(uint160(pool8updateuser)).send(pool8_reentry_income)"
+			},
+			{
+				"name": "TronLotto_buyPool8_49",
+				"exp": "sent_scope_0 = address(uint160(pool8updateuser)).send(pool8_exit_income)"
+			},
+			{
+				"tag": "1",
+				"name": "TronLotto_buyPool9_39",
+				"exp": "sent = address(uint160(pool9updateuser)).send(pool9_reentry_income)"
+			},
+			{
+				"name": "TronLotto_buyPool9_49",
+				"exp": "sent_scope_0 = address(uint160(pool9updateuser)).send(pool9_exit_income)"
+			},
+			{
+				"tag": "1",
+				"name": "TronLotto_buyPool10_39",
+				"exp": "sent = address(uint160(pool10updateuser)).send(pool10_reentry_income)"
+			},
+			{
+				"name": "TronLotto_buyPool10_47",
+				"exp": "sent_scope_0 = address(uint160(pool10updateuser)).send(pool10_exit_income)"
+			},
+			{
+				"tag": "1",
+				"name": "TronLotto_Upgrade_34",
+				"exp": "sent = address(uint160(pool2updateuser)).send(pool2_reentry_income)"
+			},
+			{
+				"name": "TronLotto_Upgrade_44",
+				"exp": "sent_scope_0 = address(uint160(pool2updateuser)).send(pool2_exit_income)"
+			},
+			{
+				"name": "TronLotto_Upgrade_64",
+				"exp": "sent_scope_3 = address(uint160(_user)).send(pool3_upgrade_income)"
+			},
+			{
+				"tag": "1",
+				"name": "TronLotto_Upgrade_88",
+				"exp": "sent_scope_4 = address(uint160(pool3updateuser)).send(pool3_reentry_income)"
+			},
+			{
+				"name": "TronLotto_Upgrade_98",
+				"exp": "sent_scope_5 = address(uint160(pool3updateuser)).send(pool3_exit_income)"
+			},
+			{
+				"name": "TronLotto_Upgrade_119",
+				"exp": "sent_scope_8 = address(uint160(_user)).send(pool4_upgrade_income)"
+			},
+			{
+				"tag": "1",
+				"name": "TronLotto_Upgrade_143",
+				"exp": "sent_scope_9 = address(uint160(pool4updateuser)).send(pool4_reentry_income)"
+			},
+			{
+				"name": "TronLotto_Upgrade_153",
+				"exp": "sent_scope_10 = address(uint160(pool4updateuser)).send(pool4_exit_income)"
+			},
+			{
+				"name": "TronLotto_Upgrade_174",
+				"exp": "sent_scope_13 = address(uint160(_user)).send(pool5_upgrade_income)"
+			},
+			{
+				"tag": "1",
+				"name": "TronLotto_Upgrade_198",
+				"exp": "sent_scope_14 = address(uint160(pool5updateuser)).send(pool5_reentry_income)"
+			},
+			{
+				"name": "TronLotto_Upgrade_208",
+				"exp": "sent_scope_15 = address(uint160(pool5updateuser)).send(pool5_exit_income)"
+			},
+			{
+				"name": "TronLotto_Upgrade_229",
+				"exp": "sent_scope_18 = address(uint160(_user)).send(pool6_upgrade_income)"
+			},
+			{
+				"tag": "1",
+				"name": "TronLotto_Upgrade_253",
+				"exp": "sent_scope_19 = address(uint160(pool6updateuser)).send(pool6_reentry_income)"
+			},
+			{
+				"name": "TronLotto_Upgrade_263",
+				"exp": "sent_scope_20 = address(uint160(pool6updateuser)).send(pool6_exit_income)"
+			},
+			{
+				"name": "TronLotto_Upgrade_284",
+				"exp": "sent_scope_23 = address(uint160(_user)).send(pool7_upgrade_income)"
+			},
+			{
+				"tag": "1",
+				"name": "TronLotto_Upgrade_308",
+				"exp": "sent_scope_24 = address(uint160(pool7updateuser)).send(pool7_reentry_income)"
+			},
+			{
+				"name": "TronLotto_Upgrade_318",
+				"exp": "sent_scope_25 = address(uint160(pool7updateuser)).send(pool7_exit_income)"
+			},
+			{
+				"name": "TronLotto_Upgrade_339",
+				"exp": "sent_scope_28 = address(uint160(_user)).send(pool8_upgrade_income)"
+			},
+			{
+				"tag": "1",
+				"name": "TronLotto_Upgrade_363",
+				"exp": "sent_scope_29 = address(uint160(pool8updateuser)).send(pool8_reentry_income)"
+			},
+			{
+				"name": "TronLotto_Upgrade_373",
+				"exp": "sent_scope_30 = address(uint160(pool8updateuser)).send(pool8_exit_income)"
+			},
+			{
+				"name": "TronLotto_Upgrade_394",
+				"exp": "sent_scope_33 = address(uint160(_user)).send(pool9_upgrade_income)"
+			},
+			{
+				"tag": "1",
+				"name": "TronLotto_Upgrade_418",
+				"exp": "sent_scope_34 = address(uint160(pool9updateuser)).send(pool9_reentry_income)"
+			},
+			{
+				"name": "TronLotto_Upgrade_428",
+				"exp": "sent_scope_35 = address(uint160(pool9updateuser)).send(pool9_exit_income)"
+			},
+			{
+				"name": "TronLotto_Upgrade_449",
+				"exp": "sent_scope_38 = address(uint160(_user)).send(pool10_upgrade_income)"
+			},
+			{
+				"tag": "1",
+				"name": "TronLotto_Upgrade_473",
+				"exp": "sent_scope_39 = address(uint160(pool10updateuser)).send(pool10_reentry_income)"
+			},
+			{
+				"name": "TronLotto_Upgrade_481",
+				"exp": "sent_scope_40 = address(uint160(pool10updateuser)).send(pool10_exit_income)"
+			},
+			{
+				"name": "TronLotto_payReferral_5",
+				"exp": "sent = address(uint160(level1referreraddress)).send(sponsorincome)"
+			},
+			{
+				"name": "TronLotto_payReferral_13",
+				"exp": "sent_scope_0 = address(uint160(level2referreraddress)).send(sponsorincome)"
+			},
+			{
+				"name": "TronLotto_payReferral_21",
+				"exp": "sent_scope_1 = address(uint160(level3referreraddress)).send(sponsorincome)"
+			},
+			{
+				"name": "TronLotto_payReferral_29",
+				"exp": "sent_scope_2 = address(uint160(level4referreraddress)).send(sponsorincome)"
+			},
+			{
+				"name": "TronLotto_payReferral_37",
+				"exp": "sent_scope_3 = address(uint160(level5referreraddress)).send(sponsorincome)"
+			},
+			{
+				"name": "TronLotto_payReferral_45",
+				"exp": "sent_scope_4 = address(uint160(level6referreraddress)).send(sponsorincome)"
+			},
+			{
+				"name": "TronLotto_payReferral_53",
+				"exp": "sent_scope_5 = address(uint160(level7referreraddress)).send(sponsorincome)"
+			},
+			{
+				"name": "TronLotto_payReferral_61",
+				"exp": "sent_scope_6 = address(uint160(level8referreraddress)).send(sponsorincome)"
+			},
+			{
+				"name": "TronLotto_payReferral_69",
+				"exp": "sent_scope_7 = address(uint160(level9referreraddress)).send(sponsorincome)"
+			},
+			{
+				"name": "TronLotto_payReferral_77",
+				"exp": "sent_scope_8 = address(uint160(level10referreraddress)).send(sponsorincome)"
+			},
+			{
+				"name": "TronLotto_sendBalance_3",
+				"exp": "! address(uint160(ownerWallet)).send(ContractBalance / 3)"
+			},
+			{
+				"name": "TronLotto_sendBalance_5",
+				"exp": "! address(uint160(createrWallet)).send(ContractBalance * 2 / 3)"
+			},
+			{
+				"name": "TronLotto_withdrawSafe_6",
+				"exp": "msg.sender.transfer(amtToTransfer)"
+			}
+		]
+	},
+	"TCW7t5FLX6VGAoQNobEsJAjMgP4bWYAeao_Tronmatrix": {
+		"addre": "TCW7t5FLX6VGAoQNobEsJAjMgP4bWYAeao_Tronmatrix",
+		"slice": [
+			{
+				"name": "Tronmatrix_payReferral_5",
+				"exp": "address(uint160(referer)).transfer(level_price_local)"
+			},
+			{
+				"tag": "1",
+				"name": "Tronmatrix_buyPool1_10",
+				"exp": "address(uint160(pool1Currentuser)).transfer(pool1_price)"
+			},
+			{
+				"tag": "1",
+				"name": "Tronmatrix_buyPool2_11",
+				"exp": "address(uint160(pool2Currentuser)).transfer(pool2_price)"
+			},
+			{
+				"tag": "1",
+				"name": "Tronmatrix_buyPool3_11",
+				"exp": "address(uint160(pool3Currentuser)).transfer(pool3_price)"
+			},
+			{
+				"tag": "1",
+				"name": "Tronmatrix_buyPool4_11",
+				"exp": "address(uint160(pool4Currentuser)).transfer(pool4_price)"
+			},
+			{
+				"tag": "1",
+				"name": "Tronmatrix_buyPool5_11",
+				"exp": "address(uint160(pool5Currentuser)).transfer(pool5_price)"
+			},
+			{
+				"tag": "1",
+				"name": "Tronmatrix_buyPool6_11",
+				"exp": "address(uint160(pool6Currentuser)).transfer(pool6_price)"
+			},
+			{
+				"tag": "1",
+				"name": "Tronmatrix_buyPool7_11",
+				"exp": "address(uint160(pool7Currentuser)).transfer(pool7_price)"
+			},
+			{
+				"tag": "1",
+				"name": "Tronmatrix_buyPool8_11",
+				"exp": "address(uint160(pool8Currentuser)).transfer(pool8_price)"
+			}
+		]
+	},
+	"TNvhM1u6MQsjqNXVSveUiZUUaUpx5QJRBS_SmartyPool": {
+		"addre": "TNvhM1u6MQsjqNXVSveUiZUUaUpx5QJRBS_SmartyPool",
+		"slice": [
+			{
+				"name": "SmartyPool_payReferral_5",
+				"exp": "address(uint160(referer)).transfer(level_price_local)"
+			},
+			{
+				"tag": "1",
+				"name": "SmartyPool_buyPool1_10",
+				"exp": "address(uint160(pool1Currentuser)).transfer(pool1_price)"
+			},
+			{
+				"tag": "1",
+				"name": "SmartyPool_buyPool2_11",
+				"exp": "address(uint160(pool2Currentuser)).transfer(pool2_price)"
+			},
+			{
+				"tag": "1",
+				"name": "SmartyPool_buyPool3_11",
+				"exp": "address(uint160(pool3Currentuser)).transfer(pool3_price)"
+			},
+			{
+				"tag": "1",
+				"name": "SmartyPool_buyPool4_11",
+				"exp": "address(uint160(pool4Currentuser)).transfer(pool4_price)"
+			},
+			{
+				"tag": "1",
+				"name": "SmartyPool_buyPool5_11",
+				"exp": "address(uint160(pool5Currentuser)).transfer(pool5_price)"
+			},
+			{
+				"tag": "1",
+				"name": "SmartyPool_buyPool6_11",
+				"exp": "address(uint160(pool6Currentuser)).transfer(pool6_price)"
+			},
+			{
+				"tag": "1",
+				"name": "SmartyPool_buyPool7_11",
+				"exp": "address(uint160(pool7Currentuser)).transfer(pool7_price)"
+			},
+			{
+				"tag": "1",
+				"name": "SmartyPool_buyPool8_11",
+				"exp": "address(uint160(pool8Currentuser)).transfer(pool8_price)"
+			},
+			{
+				"tag": "1",
+				"name": "SmartyPool_buyPool9_11",
+				"exp": "address(uint160(pool9Currentuser)).transfer(pool9_price)"
+			},
+			{
+				"tag": "1",
+				"name": "SmartyPool_buyPool10_11",
+				"exp": "address(uint160(pool10Currentuser)).transfer(pool10_price)"
+			},
+			{
+				"tag": "1",
+				"name": "SmartyPool_buyPool11_11",
+				"exp": "address(uint160(pool11Currentuser)).transfer(pool11_price)"
+			},
+			{
+				"tag": "1",
+				"name": "SmartyPool_buyPool12_11",
+				"exp": "address(uint160(pool12Currentuser)).transfer(pool12_price)"
+			}
+		]
+	},
+	"eb414e9a9d9bb1342f0b78202a698da6f331dda7_BullRun": {
+		"addre": "eb414e9a9d9bb1342f0b78202a698da6f331dda7_BullRun",
+		"slice": [
+			{
+				"name": "BullRun_payReferral_26",
+				"exp": "sent = address(uint160(referer)).send(level_price_local)"
+			},
+			{
+				"name": "BullRun_buyPool1_14",
+				"exp": "address(uint160(referer)).transfer(price_for_ref)"
+			},
+			{
+				"name": "BullRun_buyPool1_29",
+				"exp": "sent = address(uint160(ownerWallet)).send(temp)"
+			},
+			{
+				"tag": "1",
+				"name": "BullRun_buyPool1_34",
+				"exp": "Payment = address(uint160(addr)).send(temp)"
+			},
+			{
+				"name": "BullRun_buyPool2_14",
+				"exp": "address(uint160(referer)).send(price_for_ref)"
+			},
+			{
+				"name": "BullRun_buyPool2_29",
+				"exp": "sent = address(uint160(ownerWallet)).send(temp)"
+			},
+			{
+				"tag": "1",
+				"name": "BullRun_buyPool2_34",
+				"exp": "Payment = address(uint160(addr)).send(temp)"
+			},
+			{
+				"name": "BullRun_buyPool3_14",
+				"exp": "address(uint160(referer)).send(price_for_ref)"
+			},
+			{
+				"name": "BullRun_buyPool3_29",
+				"exp": "sent = address(uint160(ownerWallet)).send(temp)"
+			},
+			{
+				"tag": "1",
+				"name": "BullRun_buyPool3_34",
+				"exp": "Payment = address(uint160(addr)).send(temp)"
+			},
+			{
+				"name": "BullRun_buyPool4_14",
+				"exp": "address(uint160(referer)).send(price_for_ref)"
+			},
+			{
+				"name": "BullRun_buyPool4_29",
+				"exp": "sent = address(uint160(ownerWallet)).send(temp)"
+			},
+			{
+				"tag": "1",
+				"name": "BullRun_buyPool4_34",
+				"exp": "Payment = address(uint160(addr)).send(temp)"
+			},
+			{
+				"name": "BullRun_buyPool5_14",
+				"exp": "address(uint160(referer)).send(price_for_ref)"
+			},
+			{
+				"name": "BullRun_buyPool5_29",
+				"exp": "sent = address(uint160(ownerWallet)).send(temp)"
+			},
+			{
+				"tag": "1",
+				"name": "BullRun_buyPool5_34",
+				"exp": "Payment = address(uint160(addr)).send(temp)"
+			},
+			{
+				"name": "BullRun_buyPool6_14",
+				"exp": "address(uint160(referer)).send(price_for_ref)"
+			},
+			{
+				"name": "BullRun_buyPool6_29",
+				"exp": "sent = address(uint160(ownerWallet)).send(temp)"
+			},
+			{
+				"tag": "1",
+				"name": "BullRun_buyPool6_34",
+				"exp": "Payment = address(uint160(addr)).send(temp)"
+			},
+			{
+				"name": "BullRun_buyPool7_14",
+				"exp": "address(uint160(referer)).send(price_for_ref)"
+			},
+			{
+				"name": "BullRun_buyPool7_29",
+				"exp": "sent = address(uint160(ownerWallet)).send(temp)"
+			},
+			{
+				"tag": "1",
+				"name": "BullRun_buyPool7_34",
+				"exp": "Payment = address(uint160(addr)).send(temp)"
+			},
+			{
+				"name": "BullRun_buyPool8_14",
+				"exp": "address(uint160(referer)).send(price_for_ref)"
+			},
+			{
+				"name": "BullRun_buyPool8_29",
+				"exp": "sent = address(uint160(ownerWallet)).send(temp)"
+			},
+			{
+				"tag": "1",
+				"name": "BullRun_buyPool8_34",
+				"exp": "Payment = address(uint160(addr)).send(temp)"
+			},
+			{
+				"name": "BullRun_buyPool9_14",
+				"exp": "address(uint160(referer)).send(price_for_ref)"
+			},
+			{
+				"name": "BullRun_buyPool9_29",
+				"exp": "sent = address(uint160(ownerWallet)).send(temp)"
+			},
+			{
+				"tag": "1",
+				"name": "BullRun_buyPool9_34",
+				"exp": "Payment = address(uint160(addr)).send(temp)"
+			},
+			{
+				"name": "BullRun_buyPool10_14",
+				"exp": "address(uint160(referer)).send(price_for_ref)"
+			},
+			{
+				"name": "BullRun_buyPool10_29",
+				"exp": "sent = address(uint160(ownerWallet)).send(temp)"
+			},
+			{
+				"tag": "1",
+				"name": "BullRun_buyPool10_34",
+				"exp": "Payment = address(uint160(addr)).send(temp)"
+			},
+			{
+				"name": "BullRun_buyPool11_14",
+				"exp": "address(uint160(referer)).send(price_for_ref)"
+			},
+			{
+				"name": "BullRun_buyPool11_29",
+				"exp": "sent = address(uint160(ownerWallet)).send(temp)"
+			},
+			{
+				"tag": "1",
+				"name": "BullRun_buyPool11_34",
+				"exp": "Payment = address(uint160(addr)).send(temp)"
+			},
+			{
+				"name": "BullRun_buyPool12_14",
+				"exp": "address(uint160(referer)).send(price_for_ref)"
+			},
+			{
+				"name": "BullRun_buyPool12_29",
+				"exp": "sent = address(uint160(ownerWallet)).send(temp)"
+			},
+			{
+				"tag": "1",
+				"name": "BullRun_buyPool12_34",
+				"exp": "Payment = address(uint160(addr)).send(temp)"
+			},
+			{
+				"name": "BullRun_sendBalance_1",
+				"exp": "! address(uint160(ownerWallet)).send(getEthBalance())"
+			},
+			{
+				"name": "BullRun_sendBalance_2",
+				"exp": "address(uint160(ownerWallet)).transfer(getEthBalance())"
+			}
+		]
+	},
+	"TKBVy5DUemooLC21sAsCvkY4FfbsQeBhvU_TurboMoney": {
+		"addre": "TKBVy5DUemooLC21sAsCvkY4FfbsQeBhvU_TurboMoney",
+		"slice": [
+			{
+				"name": "TurboMoney_payReferral_5",
+				"exp": "address(uint160(referer)).transfer(level_price_local)"
+			},
+			{
+				"tag": "1",
+				"name": "TurboMoney_buyPool1_10",
+				"exp": "address(uint160(pool1Currentuser)).transfer(pool1_price)"
+			},
+			{
+				"tag": "1",
+				"name": "TurboMoney_buyPool2_11",
+				"exp": "address(uint160(pool2Currentuser)).transfer(pool2_price)"
+			},
+			{
+				"tag": "1",
+				"name": "TurboMoney_buyPool3_11",
+				"exp": "address(uint160(pool3Currentuser)).transfer(pool3_price)"
+			},
+			{
+				"tag": "1",
+				"name": "TurboMoney_buyPool4_11",
+				"exp": "address(uint160(pool4Currentuser)).transfer(pool4_price)"
+			},
+			{
+				"tag": "1",
+				"name": "TurboMoney_buyPool5_11",
+				"exp": "address(uint160(pool5Currentuser)).transfer(pool5_price)"
+			},
+			{
+				"tag": "1",
+				"name": "TurboMoney_buyPool6_11",
+				"exp": "address(uint160(pool6Currentuser)).transfer(pool6_price)"
+			},
+			{
+				"tag": "1",
+				"name": "TurboMoney_buyPool7_11",
+				"exp": "address(uint160(pool7Currentuser)).transfer(pool7_price)"
+			},
+			{
+				"tag": "1",
+				"name": "TurboMoney_buyPool8_11",
+				"exp": "address(uint160(pool8Currentuser)).transfer(pool8_price)"
+			},
+			{
+				"tag": "1",
+				"name": "TurboMoney_buyPool9_11",
+				"exp": "address(uint160(pool9Currentuser)).transfer(pool9_price)"
+			},
+			{
+				"tag": "1",
+				"name": "TurboMoney_buyPool10_11",
+				"exp": "address(uint160(pool10Currentuser)).transfer(pool10_price)"
+			},
+			{
+				"tag": "1",
+				"name": "TurboMoney_buyPool11_11",
+				"exp": "address(uint160(pool11Currentuser)).transfer(pool11_price)"
+			},
+			{
+				"tag": "1",
+				"name": "TurboMoney_buyPool12_11",
+				"exp": "address(uint160(pool12Currentuser)).transfer(pool12_price)"
+			}
+		]
+	}
+}

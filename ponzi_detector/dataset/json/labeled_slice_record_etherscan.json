@@ -1,0 +1,1145 @@
+{
+	"0xc249fe0288e75e47e62b138de8d020c9fee5a9f5": {
+		"note": "TBD",
+		"addre": "0xc249fe0288e75e47e62b138de8d020c9fee5a9f5",
+		"slice": [
+			{
+				"name": "Fever_withdraw_6",
+				"exp": "msg.sender.transfer(balance)"
+			},
+			{
+				"name": "Fever_bounty_5",
+				"exp": "msg.sender.transfer(refBalance)"
+			}
+		]
+	},
+	"0x311f71389e3de68f7b2097ad02c6ad7b2dde4c71": {
+		"note": "TBD",
+		"addre": "0x311f71389e3de68f7b2097ad02c6ad7b2dde4c71",
+		"slice": []
+	},
+	"0x2b22b2c65b185182786f087c1a0035b5ed76bbb7": {
+		"addre": "0x2b22b2c65b185182786f087c1a0035b5ed76bbb7",
+		"slice": [
+			{
+				"name": "Ethernity_payWithReferrer_4",
+				"exp": "_addr.transfer(msg.value / 10)"
+			},
+			{
+				"tag": 1,
+				"name": "Ethernity_withdrawFrom_1",
+				"exp": "result = _addr.send(balanceToWithdraw())"
+			}
+		]
+	},
+	"0x8b7c1450d435f2932e6a7225593d14a4dcf0372d": {
+		"note": "TBD",
+		"addre": "0x8b7c1450d435f2932e6a7225593d14a4dcf0372d",
+		"slice": [
+			{
+				"name": "MinerTokenDaily_withdraw_3",
+				"exp": "msg.sender.transfer(payout)"
+			},
+			{
+				"name": "MinerTokenDaily_rewardReferral_1",
+				"exp": "referrer.transfer(_bonuss)"
+			},
+			{
+				"name": "MinerTokenDaily_exit_8",
+				"exp": "msg.sender.transfer(payoutTotal)"
+			},
+			{
+				"name": "MinerTokenDaily_exit_9",
+				"exp": "msg.sender.transfer(payout)"
+			},
+			{
+				"name": "MinerTokenDaily_withdraw_3",
+				"exp": "msg.sender.transfer(payout)"
+			}
+		]
+	},
+	"0x83fccc659eeeee98ca9764b7b34409347dfbc98b": {
+		"addre": "0x83fccc659eeeee98ca9764b7b34409347dfbc98b",
+		"slice": [
+			{
+				"tag": 1,
+				"name": "ethernity_fallback_6",
+				"exp": "msg.sender.transfer((block.number - paytime[msg.sender]) / 5900 * balance[msg.sender] / 100 * 5)"
+			}
+		]
+	},
+	"0x5233816151d616581993fca4988eea77d01e933d": {
+		"addre": "0x5233816151d616581993fca4988eea77d01e933d",
+		"slice": [
+			{
+				"name": "ETHCutter20_transferReferralFee_2",
+				"exp": "to.transfer(amount)"
+			},
+			{
+				"tag": 1,
+				"name": "ETHCutter20_withdraw_1",
+				"exp": "wallet.transfer(amount)"
+			}
+		]
+	},
+	"0xd6893da3dd6dc91b4957d2d74737c6726f1033d5": {
+		"addre": "0xd6893da3dd6dc91b4957d2d74737c6726f1033d5",
+		"slice": [
+			{
+				"tag": 1,
+				"name": "MAX150_pay_9",
+				"exp": "dep.depositor.transfer(dep.expect)"
+			},
+			{
+				"tag": 1,
+				"name": "MAX150_pay_12",
+				"exp": "dep.depositor.transfer(money)"
+			}
+		]
+	},
+	"0x339150b0851bc5b3c0323789a58cc4e4afb38b37": {
+		"addre": "0x339150b0851bc5b3c0323789a58cc4e4afb38b37",
+		"slice": [
+			{
+				"tag": 1,
+				"name": "EasyInvest10_fallback_3",
+				"exp": "msg.sender.transfer(amount)"
+			}
+		]
+	},
+	"0x7bd83b818fb88239a8ece4c95837dc5746af32cc": {
+		"addre": "0x7bd83b818fb88239a8ece4c95837dc5746af32cc",
+		"slice": [
+			{
+				"tag": 1,
+				"name": "Multiplier2_pay_9",
+				"exp": "dep.depositor.send(dep.expect)"
+			},
+			{
+				"tag": 1,
+				"name": "Multiplier2_pay_12",
+				"exp": "dep.depositor.send(money)"
+			}
+		]
+	},
+	"0xf91446ead6aadd4321602b5790a6db4d6f2a1930": {
+		"addre": "0xf91446ead6aadd4321602b5790a6db4d6f2a1930",
+		"slice": []
+	},
+	"0x13afabf464f7d3e6c7cf0e685181d9da3935e01e": {
+		"addre": "0x13afabf464f7d3e6c7cf0e685181d9da3935e01e",
+		"slice": [
+			{
+				"tag": 1,
+				"name": "Trey_fallback_5",
+				"exp": "kashout.send(getout)"
+			}
+		]
+	},
+	"0x215ce36e90b1b64e6fa2e358305177f8fe5daf25": {
+		"note": "TBD",
+		"addre": "0x215ce36e90b1b64e6fa2e358305177f8fe5daf25",
+		"slice": [
+			{
+				"name": "Revolution2_getMyDividends_8",
+				"exp": "msg.sender.transfer(dividends)"
+			},
+			{
+				"name": "Revolution2_doInvest_19",
+				"exp": "msg.sender.transfer(excess)"
+			}
+		]
+	},
+	"0x9e48a065af4d02257d9c9c83d78e7c06e7bf2449": {
+		"note": "TBD",
+		"addre": "0x9e48a065af4d02257d9c9c83d78e7c06e7bf2449",
+		"slice": []
+	},
+	"0x8fd1a3ea61b1456be58e38b8c1bea49acb84b7fd": {
+		"addre": "0x8fd1a3ea61b1456be58e38b8c1bea49acb84b7fd",
+		"slice": [
+			{
+				"tag": 1,
+				"name": "X2Profit__payout_11",
+				"exp": "addr.transfer(interestPure)"
+			}
+		]
+	},
+	"0xb10ea0d397db942a1083a4af9c6074ab63bc8c8b": {
+		"addre": "0xb10ea0d397db942a1083a4af9c6074ab63bc8c8b",
+		"slice": [
+			{
+				"tag": 1,
+				"name": "SmartHash_fallback_8",
+				"exp": "investor.transfer(depositsPercents)"
+			},
+			{
+				"name": "SmartHash_fallback_14",
+				"exp": "referrer.transfer(admRefPerc)"
+			}
+		]
+	},
+	"0x29bef3878b85522ef2afa541dd7477c9e0a2c122": {
+		"note": "TBD",
+		"addre": "0x29bef3878b85522ef2afa541dd7477c9e0a2c122",
+		"slice": [
+			{
+				"name": "EtherLife_payRewards_11",
+				"exp": "parent.transfer(rewardValue)"
+			},
+			{
+				"name": "EtherLife_payWithdraw_6",
+				"exp": "to.transfer(sum)"
+			}
+		]
+	},
+	"0xdbb6b23520472c5070078cd3e7097b36b001fb57": {
+		"note": "TBD",
+		"addre": "0xdbb6b23520472c5070078cd3e7097b36b001fb57",
+		"slice": [
+			{
+				"name": "TheBigBangOnline_createBet_54",
+				"exp": "result = addressList[betsDatabase[msg.sender].referrerID].send(refToPay)"
+			},
+			{
+				"name": "TheBigBangOnline_payRewardForAddress_23",
+				"exp": "result = _address.send(toPay)"
+			},
+			{
+				"name": "TheBigBangOnline_payRewardForAddress_23",
+				"exp": "result = _address.send(toPay)"
+			},
+			{
+				"name": "TheBigBangOnline_payRewardForAddress_23",
+				"exp": "result = _address.send(toPay)"
+			},
+			{
+				"name": "TheBigBangOnline_payRewardForAddress_23",
+				"exp": "result = _address.send(toPay)"
+			},
+			{
+				"name": "TheBigBangOnline_createBet_54",
+				"exp": "result = addressList[betsDatabase[msg.sender].referrerID].send(refToPay)"
+			},
+			{
+				"name": "TheBigBangOnline_getJackpot_18",
+				"exp": "result = betForJackpot[currJackpotBetID].user.send(winner1ToPay)"
+			},
+			{
+				"name": "TheBigBangOnline_getJackpot_20",
+				"exp": "result = betForJackpot[currJackpotBetID - 1].user.send(winner2ToPay)"
+			},
+			{
+				"name": "TheBigBangOnline_getJackpot_22",
+				"exp": "result = betForJackpot[currJackpotBetID - 2].user.send(winner3ToPay)"
+			},
+			{
+				"name": "TheBigBangOnline_getJackpot_24",
+				"exp": "result = betForJackpot[currJackpotBetID - 3].user.send(winner4ToPay)"
+			},
+			{
+				"name": "TheBigBangOnline_getJackpot_26",
+				"exp": "result = betForJackpot[currJackpotBetID - 4].user.send(winner5ToPay)"
+			},
+			{
+				"name": "TheBigBangOnline_createBet_54",
+				"exp": "result = addressList[betsDatabase[msg.sender].referrerID].send(refToPay)"
+			},
+			{
+				"name": "TheBigBangOnline_createBet_54",
+				"exp": "result = addressList[betsDatabase[msg.sender].referrerID].send(refToPay)"
+			},
+			{
+				"name": "TheBigBangOnline_createBet_54",
+				"exp": "result = addressList[betsDatabase[msg.sender].referrerID].send(refToPay)"
+			},
+			{
+				"name": "TheBigBangOnline_createBet_54",
+				"exp": "result = addressList[betsDatabase[msg.sender].referrerID].send(refToPay)"
+			},
+			{
+				"name": "TheBigBangOnline_createBet_54",
+				"exp": "result = addressList[betsDatabase[msg.sender].referrerID].send(refToPay)"
+			},
+			{
+				"name": "TheBigBangOnline_createBet_54",
+				"exp": "result = addressList[betsDatabase[msg.sender].referrerID].send(refToPay)"
+			},
+			{
+				"name": "TheBigBangOnline_getJackpot_18",
+				"exp": "result = betForJackpot[currJackpotBetID].user.send(winner1ToPay)"
+			},
+			{
+				"name": "TheBigBangOnline_getJackpot_20",
+				"exp": "result = betForJackpot[currJackpotBetID - 1].user.send(winner2ToPay)"
+			},
+			{
+				"name": "TheBigBangOnline_getJackpot_22",
+				"exp": "result = betForJackpot[currJackpotBetID - 2].user.send(winner3ToPay)"
+			},
+			{
+				"name": "TheBigBangOnline_getJackpot_24",
+				"exp": "result = betForJackpot[currJackpotBetID - 3].user.send(winner4ToPay)"
+			},
+			{
+				"name": "TheBigBangOnline_getJackpot_26",
+				"exp": "result = betForJackpot[currJackpotBetID - 4].user.send(winner5ToPay)"
+			},
+			{
+				"name": "TheBigBangOnline_createBet_54",
+				"exp": "result = addressList[betsDatabase[msg.sender].referrerID].send(refToPay)"
+			},
+			{
+				"name": "TheBigBangOnline_createBet_54",
+				"exp": "result = addressList[betsDatabase[msg.sender].referrerID].send(refToPay)"
+			},
+			{
+				"name": "TheBigBangOnline_createBet_54",
+				"exp": "result = addressList[betsDatabase[msg.sender].referrerID].send(refToPay)"
+			},
+			{
+				"name": "TheBigBangOnline_createBet_54",
+				"exp": "result = addressList[betsDatabase[msg.sender].referrerID].send(refToPay)"
+			},
+			{
+				"name": "TheBigBangOnline_createBet_54",
+				"exp": "result = addressList[betsDatabase[msg.sender].referrerID].send(refToPay)"
+			},
+			{
+				"name": "TheBigBangOnline_createBet_54",
+				"exp": "result = addressList[betsDatabase[msg.sender].referrerID].send(refToPay)"
+			},
+			{
+				"name": "TheBigBangOnline_createBet_54",
+				"exp": "result = addressList[betsDatabase[msg.sender].referrerID].send(refToPay)"
+			},
+			{
+				"name": "TheBigBangOnline_createBet_54",
+				"exp": "result = addressList[betsDatabase[msg.sender].referrerID].send(refToPay)"
+			},
+			{
+				"name": "TheBigBangOnline_createBet_54",
+				"exp": "result = addressList[betsDatabase[msg.sender].referrerID].send(refToPay)"
+			},
+			{
+				"name": "TheBigBangOnline_createBet_54",
+				"exp": "result = addressList[betsDatabase[msg.sender].referrerID].send(refToPay)"
+			},
+			{
+				"name": "TheBigBangOnline_createBet_54",
+				"exp": "result = addressList[betsDatabase[msg.sender].referrerID].send(refToPay)"
+			},
+			{
+				"name": "TheBigBangOnline_createBet_54",
+				"exp": "result = addressList[betsDatabase[msg.sender].referrerID].send(refToPay)"
+			},
+			{
+				"name": "TheBigBangOnline_createBet_54",
+				"exp": "result = addressList[betsDatabase[msg.sender].referrerID].send(refToPay)"
+			},
+			{
+				"name": "TheBigBangOnline_createBet_54",
+				"exp": "result = addressList[betsDatabase[msg.sender].referrerID].send(refToPay)"
+			},
+			{
+				"name": "TheBigBangOnline_createBet_54",
+				"exp": "result = addressList[betsDatabase[msg.sender].referrerID].send(refToPay)"
+			},
+			{
+				"name": "TheBigBangOnline_createBet_54",
+				"exp": "result = addressList[betsDatabase[msg.sender].referrerID].send(refToPay)"
+			},
+			{
+				"name": "TheBigBangOnline_createBet_54",
+				"exp": "result = addressList[betsDatabase[msg.sender].referrerID].send(refToPay)"
+			},
+			{
+				"name": "TheBigBangOnline_createBet_54",
+				"exp": "result = addressList[betsDatabase[msg.sender].referrerID].send(refToPay)"
+			},
+			{
+				"name": "TheBigBangOnline_createBet_54",
+				"exp": "result = addressList[betsDatabase[msg.sender].referrerID].send(refToPay)"
+			},
+			{
+				"name": "TheBigBangOnline_createBet_54",
+				"exp": "result = addressList[betsDatabase[msg.sender].referrerID].send(refToPay)"
+			},
+			{
+				"name": "TheBigBangOnline_createBet_54",
+				"exp": "result = addressList[betsDatabase[msg.sender].referrerID].send(refToPay)"
+			},
+			{
+				"name": "TheBigBangOnline_createBet_54",
+				"exp": "result = addressList[betsDatabase[msg.sender].referrerID].send(refToPay)"
+			},
+			{
+				"name": "TheBigBangOnline_createBet_54",
+				"exp": "result = addressList[betsDatabase[msg.sender].referrerID].send(refToPay)"
+			},
+			{
+				"name": "TheBigBangOnline_createBet_54",
+				"exp": "result = addressList[betsDatabase[msg.sender].referrerID].send(refToPay)"
+			},
+			{
+				"name": "TheBigBangOnline_createBet_54",
+				"exp": "result = addressList[betsDatabase[msg.sender].referrerID].send(refToPay)"
+			},
+			{
+				"name": "TheBigBangOnline_createBet_54",
+				"exp": "result = addressList[betsDatabase[msg.sender].referrerID].send(refToPay)"
+			},
+			{
+				"name": "TheBigBangOnline_createBet_54",
+				"exp": "result = addressList[betsDatabase[msg.sender].referrerID].send(refToPay)"
+			},
+			{
+				"name": "TheBigBangOnline_createBet_54",
+				"exp": "result = addressList[betsDatabase[msg.sender].referrerID].send(refToPay)"
+			},
+			{
+				"name": "TheBigBangOnline_createBet_54",
+				"exp": "result = addressList[betsDatabase[msg.sender].referrerID].send(refToPay)"
+			},
+			{
+				"name": "TheBigBangOnline_createBet_54",
+				"exp": "result = addressList[betsDatabase[msg.sender].referrerID].send(refToPay)"
+			},
+			{
+				"name": "TheBigBangOnline_createBet_54",
+				"exp": "result = addressList[betsDatabase[msg.sender].referrerID].send(refToPay)"
+			},
+			{
+				"name": "TheBigBangOnline_createBet_54",
+				"exp": "result = addressList[betsDatabase[msg.sender].referrerID].send(refToPay)"
+			},
+			{
+				"name": "TheBigBangOnline_createBet_54",
+				"exp": "result = addressList[betsDatabase[msg.sender].referrerID].send(refToPay)"
+			},
+			{
+				"name": "TheBigBangOnline_createBet_54",
+				"exp": "result = addressList[betsDatabase[msg.sender].referrerID].send(refToPay)"
+			},
+			{
+				"name": "TheBigBangOnline_createBet_54",
+				"exp": "result = addressList[betsDatabase[msg.sender].referrerID].send(refToPay)"
+			},
+			{
+				"name": "TheBigBangOnline_createBet_54",
+				"exp": "result = addressList[betsDatabase[msg.sender].referrerID].send(refToPay)"
+			},
+			{
+				"name": "TheBigBangOnline_createBet_54",
+				"exp": "result = addressList[betsDatabase[msg.sender].referrerID].send(refToPay)"
+			},
+			{
+				"name": "TheBigBangOnline_createBet_54",
+				"exp": "result = addressList[betsDatabase[msg.sender].referrerID].send(refToPay)"
+			},
+			{
+				"name": "TheBigBangOnline_createBet_54",
+				"exp": "result = addressList[betsDatabase[msg.sender].referrerID].send(refToPay)"
+			},
+			{
+				"name": "TheBigBangOnline_createBet_54",
+				"exp": "result = addressList[betsDatabase[msg.sender].referrerID].send(refToPay)"
+			},
+			{
+				"name": "TheBigBangOnline_createBet_54",
+				"exp": "result = addressList[betsDatabase[msg.sender].referrerID].send(refToPay)"
+			},
+			{
+				"name": "TheBigBangOnline_createBet_54",
+				"exp": "result = addressList[betsDatabase[msg.sender].referrerID].send(refToPay)"
+			},
+			{
+				"name": "TheBigBangOnline_createBet_54",
+				"exp": "result = addressList[betsDatabase[msg.sender].referrerID].send(refToPay)"
+			},
+			{
+				"name": "TheBigBangOnline_createBet_54",
+				"exp": "result = addressList[betsDatabase[msg.sender].referrerID].send(refToPay)"
+			},
+			{
+				"name": "TheBigBangOnline_createBet_54",
+				"exp": "result = addressList[betsDatabase[msg.sender].referrerID].send(refToPay)"
+			},
+			{
+				"name": "TheBigBangOnline_createBet_54",
+				"exp": "result = addressList[betsDatabase[msg.sender].referrerID].send(refToPay)"
+			},
+			{
+				"name": "TheBigBangOnline_createBet_54",
+				"exp": "result = addressList[betsDatabase[msg.sender].referrerID].send(refToPay)"
+			},
+			{
+				"name": "TheBigBangOnline_createBet_54",
+				"exp": "result = addressList[betsDatabase[msg.sender].referrerID].send(refToPay)"
+			},
+			{
+				"name": "TheBigBangOnline_createBet_54",
+				"exp": "result = addressList[betsDatabase[msg.sender].referrerID].send(refToPay)"
+			},
+			{
+				"name": "TheBigBangOnline_createBet_54",
+				"exp": "result = addressList[betsDatabase[msg.sender].referrerID].send(refToPay)"
+			},
+			{
+				"name": "TheBigBangOnline_createBet_54",
+				"exp": "result = addressList[betsDatabase[msg.sender].referrerID].send(refToPay)"
+			},
+			{
+				"name": "TheBigBangOnline_createBet_54",
+				"exp": "result = addressList[betsDatabase[msg.sender].referrerID].send(refToPay)"
+			},
+			{
+				"name": "TheBigBangOnline_createBet_54",
+				"exp": "result = addressList[betsDatabase[msg.sender].referrerID].send(refToPay)"
+			},
+			{
+				"name": "TheBigBangOnline_createBet_54",
+				"exp": "result = addressList[betsDatabase[msg.sender].referrerID].send(refToPay)"
+			},
+			{
+				"name": "TheBigBangOnline_createBet_54",
+				"exp": "result = addressList[betsDatabase[msg.sender].referrerID].send(refToPay)"
+			},
+			{
+				"name": "TheBigBangOnline_createBet_54",
+				"exp": "result = addressList[betsDatabase[msg.sender].referrerID].send(refToPay)"
+			},
+			{
+				"name": "TheBigBangOnline_createBet_54",
+				"exp": "result = addressList[betsDatabase[msg.sender].referrerID].send(refToPay)"
+			}
+		]
+	},
+	"0x82aa987a16deafd8b4fab73ec316f94f4df43020": {
+		"addre": "0x82aa987a16deafd8b4fab73ec316f94f4df43020",
+		"slice": [
+			{
+				"name": "EthCash_V2_fallback_27",
+				"exp": "user.referrer.transfer(bonus)"
+			},
+			{
+				"name": "EthCash_V2_fallback_31",
+				"exp": "msg.sender.transfer(cashback)"
+			},
+			{
+				"tag": 1,
+				"name": "EthCash_V2_payoutSelf_10",
+				"exp": "addr.transfer(amount)"
+			},
+			{
+				"tag": 1,
+				"name": "EthCash_V2_payout_17",
+				"exp": "addr.transfer(amount)"
+			},
+			{
+				"name": "EthCash_V2_fallback_27",
+				"exp": "user.referrer.transfer(bonus)"
+			},
+			{
+				"name": "EthCash_V2_fallback_31",
+				"exp": "msg.sender.transfer(cashback)"
+			},
+			{
+				"name": "EthCash_V2_fallback_27",
+				"exp": "user.referrer.transfer(bonus)"
+			},
+			{
+				"name": "EthCash_V2_fallback_31",
+				"exp": "msg.sender.transfer(cashback)"
+			},
+			{
+				"name": "EthCash_V2_fallback_27",
+				"exp": "user.referrer.transfer(bonus)"
+			},
+			{
+				"name": "EthCash_V2_fallback_31",
+				"exp": "msg.sender.transfer(cashback)"
+			},
+			{
+				"name": "EthCash_V2_fallback_27",
+				"exp": "user.referrer.transfer(bonus)"
+			},
+			{
+				"name": "EthCash_V2_fallback_31",
+				"exp": "msg.sender.transfer(cashback)"
+			},
+			{
+				"name": "EthCash_V2_payoutSelf_10",
+				"exp": "addr.transfer(amount)"
+			}
+		]
+	},
+	"0x7011f3edc7fa43c81440f9f43a6458174113b162": {
+		"note": "TBD",
+		"addre": "0x7011f3edc7fa43c81440f9f43a6458174113b162",
+		"slice": []
+	},
+	"0x24ddd6e7d5cdc29251caa00e46c7f3c738a78070": {
+		"addre": "0x24ddd6e7d5cdc29251caa00e46c7f3c738a78070",
+		"slice": [
+			{
+				"name": "NewSmartPyramid_addReferrer_4",
+				"exp": "x.r(msg.sender).transfer(_value / 20)"
+			},
+			{
+				"name": "NewSmartPyramid_invest_11",
+				"exp": "x.r(msg.sender).transfer(msg.value / 20)"
+			},
+			{
+				"name": "NewSmartPyramid_invest_11",
+				"exp": "x.r(msg.sender).transfer(msg.value / 20)"
+			},
+			{
+				"tag": 1,
+				"name": "NewSmartPyramid_withdraw_10",
+				"exp": "msg.sender.transfer(_payout)"
+			},
+			{
+				"name": "NewSmartPyramid_payDay_18",
+				"exp": "top[i + 1].addr.transfer(money_to)"
+			}
+		]
+	},
+	"0x4b8705b0f740f7b51d746c0f626d06b8cf25814b": {
+		"addre": "0x4b8705b0f740f7b51d746c0f626d06b8cf25814b",
+		"slice": [
+			{
+				"tag": 1,
+				"name": "X2Profit__payout_11",
+				"exp": "addr.transfer(interestPure)"
+			}
+		]
+	},
+	"0xd3ac627abdc1ce6c27c04b37c86e368f754f2995": {
+		"addre": "0xd3ac627abdc1ce6c27c04b37c86e368f754f2995",
+		"slice": [
+			{
+				"tag": 1,
+				"name": "GradualPro_pay_9",
+				"exp": "dep.depositor.transfer(dep.expect)"
+			},
+			{
+				"tag": 1,
+				"name": "GradualPro_pay_12",
+				"exp": "dep.depositor.transfer(money)"
+			}
+		]
+	},
+	"0x7b307c1f0039f5d38770e15f8043b3dd26da5e8f": {
+		"addre": "0x7b307c1f0039f5d38770e15f8043b3dd26da5e8f",
+		"slice": [
+			{
+				"tag": 1,
+				"name": "EasyInvest_fallback_4",
+				"exp": "sender.send(amount)"
+			}
+		]
+	},
+	"0xc0b52b76055c392d67392622ae7737cdb6d42133": {
+		"addre": "0xc0b52b76055c392d67392622ae7737cdb6d42133",
+		"slice": [
+			{
+				"tag": 1,
+				"name": "WallieInvest_fallback_53",
+				"exp": "sender.transfer(amount)"
+			}
+		]
+	},
+	"0x4480451c0aad4b97e837465d3ea618f976970df0": {
+		"addre": "0x4480451c0aad4b97e837465d3ea618f976970df0",
+		"slice": [
+			{
+				"tag": 1,
+				"name": "StarEth_fallback_5",
+				"exp": "msg.sender.transfer(amount)"
+			},
+			{
+				"name": "StarEth_fallback_11",
+				"exp": "sender.transfer(msg.value * refBack / 100)"
+			},
+			{
+				"name": "StarEth_fallback_12",
+				"exp": "Ref.transfer(msg.value * refPercent / 100)"
+			}
+		]
+	},
+	"0x67ad530ecdfd7ac8289362914e88d018e8b3f3f0": {
+		"addre": "0x67ad530ecdfd7ac8289362914e88d018e8b3f3f0",
+		"slice": [
+			{
+				"tag": 1,
+				"name": "BestMultiplier_send_2",
+				"exp": "_receiver.send(_amount)"
+			}
+		]
+	},
+	"0x4e88419be4e8643d98b15f8b6cf9cf3f6ef1fbfd": {
+		"addre": "0x4e88419be4e8643d98b15f8b6cf9cf3f6ef1fbfd",
+		"slice": [
+			{
+				"tag": 1,
+				"name": "MultiplierV2_pay_9",
+				"exp": "dep.depositor.send(dep.expect)"
+			},
+			{
+				"tag": 1,
+				"name": "MultiplierV2_pay_12",
+				"exp": "dep.depositor.send(money)"
+			}
+		]
+	},
+	"0xa38feb7b0aaad949a1b99ff516d4e3ea2e317bbf": {
+		"addre": "0xa38feb7b0aaad949a1b99ff516d4e3ea2e317bbf",
+		"slice": [
+			{
+				"tag": 1,
+				"name": "FastBetMultiplier05eth_pay_9",
+				"exp": "dep.depositor.send(dep.expect)"
+			},
+			{
+				"tag": 1,
+				"name": "FastBetMultiplier05eth_pay_12",
+				"exp": "dep.depositor.send(money)"
+			}
+		]
+	},
+	"0xcd3dc4e19418fe7dad216376ff685760685cee13": {
+		"note": "TBD",
+		"addre": "0xcd3dc4e19418fe7dad216376ff685760685cee13",
+		"slice": [
+			{
+				"name": "CryptoMinerBlock_withdraw_6",
+				"exp": "_customerAddress.transfer(_dividends)"
+			}
+		]
+	},
+	"0xbea72b7da261bb0a488a5d07f01b16516ba2edef": {
+		"addre": "0xbea72b7da261bb0a488a5d07f01b16516ba2edef",
+		"slice": [
+			{
+				"name": "Project424_toReferrer_3",
+				"exp": "_referrer.transfer(_value / 20)"
+			},
+			{
+				"tag": 1,
+				"name": "Project424_withdraw_8",
+				"exp": "msg.sender.transfer(_payout)"
+			}
+		]
+	},
+	"0x3da6d8f14dfcd576c46f9994d8fd94883a8f3fe8": {
+		"addre": "0x3da6d8f14dfcd576c46f9994d8fd94883a8f3fe8",
+		"slice": [
+			{
+				"name": "SmartPyramid_addReferrer_4",
+				"exp": "x.r(msg.sender).transfer(_value / 20)"
+			},
+			{
+				"name": "SmartPyramid_invest_10",
+				"exp": "x.r(msg.sender).transfer(msg.value / 20)"
+			},
+			{
+				"name": "SmartPyramid_invest_10",
+				"exp": "x.r(msg.sender).transfer(msg.value / 20)"
+			},
+			{
+				"tag": 1,
+				"name": "SmartPyramid_withdraw_10",
+				"exp": "msg.sender.transfer(_payout)"
+			},
+			{
+				"name": "SmartPyramid_payDay_9",
+				"exp": "top[i + 1].addr.transfer(2000000000000000000 / 2 ** i)"
+			}
+		]
+	},
+	"0xc601f6938c75c4ca03eaad570701d86e607771db": {
+		"tag": 1,
+		"addre": "0xc601f6938c75c4ca03eaad570701d86e607771db",
+		"slice": [
+			{
+				"name": "Contagion_Count_3",
+				"exp": "Tx[end].txuser.send((Tx[end].txvalue / 1000) * 33)"
+			}
+		]
+	},
+	"0x0135c9a7bff72aa26e1d105ff5000e454e4dde7a": {
+		"addre": "0x0135c9a7bff72aa26e1d105ff5000e454e4dde7a",
+		"slice": [
+			{
+				"name": "EthCashonline_fallback_22",
+				"exp": "owner().transfer(own_com)"
+			},
+			{
+				"name": "EthCashonline_fallback_25",
+				"exp": "user.referrer.transfer(bonus)"
+			},
+			{
+				"name": "EthCashonline_fallback_29",
+				"exp": "msg.sender.transfer(cashback)"
+			},
+			{
+				"tag": 1,
+				"name": "EthCashonline_payout_18",
+				"exp": "addr.transfer(amount)"
+			},
+			{
+				"tag": 1,
+				"name": "EthCashonline_payoutSelf_11",
+				"exp": "addr.transfer(amount)"
+			},
+			{
+				"name": "EthCashonline_fallback_22",
+				"exp": "owner().transfer(own_com)"
+			},
+			{
+				"name": "EthCashonline_fallback_25",
+				"exp": "user.referrer.transfer(bonus)"
+			},
+			{
+				"name": "EthCashonline_fallback_29",
+				"exp": "msg.sender.transfer(cashback)"
+			},
+			{
+				"name": "EthCashonline_fallback_22",
+				"exp": "owner().transfer(own_com)"
+			},
+			{
+				"name": "EthCashonline_fallback_25",
+				"exp": "user.referrer.transfer(bonus)"
+			},
+			{
+				"name": "EthCashonline_fallback_29",
+				"exp": "msg.sender.transfer(cashback)"
+			},
+			{
+				"name": "EthCashonline_fallback_22",
+				"exp": "owner().transfer(own_com)"
+			},
+			{
+				"name": "EthCashonline_fallback_25",
+				"exp": "user.referrer.transfer(bonus)"
+			},
+			{
+				"name": "EthCashonline_fallback_29",
+				"exp": "msg.sender.transfer(cashback)"
+			},
+			{
+				"name": "EthCashonline_fallback_22",
+				"exp": "owner().transfer(own_com)"
+			},
+			{
+				"name": "EthCashonline_fallback_25",
+				"exp": "user.referrer.transfer(bonus)"
+			},
+			{
+				"name": "EthCashonline_fallback_29",
+				"exp": "msg.sender.transfer(cashback)"
+			}
+		]
+	},
+	"0x0513ce8013f27a47a0088ffaac94fbb0fe6309d8": {
+		"addre": "0x0513ce8013f27a47a0088ffaac94fbb0fe6309d8",
+		"slice": [
+			{
+				"tag": 1,
+				"name": "SmartBlockchainPro_fallback_4",
+				"exp": "sender.send(amount)"
+			}
+		]
+	},
+	"0x3df616ee25ba3fa146544ab595f106bff5ac4397": {
+		"addre": "0x3df616ee25ba3fa146544ab595f106bff5ac4397",
+		"slice": [
+			{
+				"tag": 1,
+				"name": "Daily12_fallback_3",
+				"exp": "msg.sender.transfer(amount)"
+			}
+		]
+	},
+	"0x4f3db6d4c97b8248ad5e244e4f619086084f6848": {
+		"note": "TBD",
+		"addre": "0x4f3db6d4c97b8248ad5e244e4f619086084f6848",
+		"slice": [
+			{
+				"name": "SmartContractBank_allocation_4",
+				"exp": "insuranceFundAddress.transfer(msg.value.mul(insurancePercent).div(100))"
+			},
+			{
+				"name": "SmartContractBank_withdraw_22",
+				"exp": "msg.sender.transfer(balance)"
+			},
+			{
+				"name": "MainSale_createTokens_4",
+				"exp": "require(bool)(multisigVault.send(msg.value))"
+			},
+			{
+				"name": "InsuranceFund_fallback_17",
+				"exp": "msg.sender.transfer(payAmount)"
+			}
+		]
+	},
+	"0x9b63e5599f8d7b70f96da0700bde1b4c0d7f35a9": {
+		"note": "TBD",
+		"addre": "0x9b63e5599f8d7b70f96da0700bde1b4c0d7f35a9",
+		"slice": [
+			{
+				"name": "DoubleUp_collectPercent_8",
+				"exp": "msg.sender.transfer(payout)"
+			},
+			{
+				"name": "DoubleUp_makeDeposit_6",
+				"exp": "referrer.transfer(msg.value.mul(referrerPercent).div(100))"
+			},
+			{
+				"name": "DoubleUp_makeDeposit_7",
+				"exp": "msg.sender.transfer(msg.value.mul(referralPercent).div(100))"
+			},
+			{
+				"name": "DoubleUp_returnDeposit_19",
+				"exp": "msg.sender.transfer(withdrawalAmount)"
+			},
+			{
+				"name": "DoubleUp_collectPercent_8",
+				"exp": "msg.sender.transfer(payout)"
+			},
+			{
+				"name": "DoubleUp_collectPercent_8",
+				"exp": "msg.sender.transfer(payout)"
+			},
+			{
+				"name": "DoubleUp_makeDeposit_6",
+				"exp": "referrer.transfer(msg.value.mul(referrerPercent).div(100))"
+			},
+			{
+				"name": "DoubleUp_makeDeposit_7",
+				"exp": "msg.sender.transfer(msg.value.mul(referralPercent).div(100))"
+			}
+		]
+	},
+	"0x536a6ba0d913d5d6a4ce2c6eb7ed0de3c0f0b89e": {
+		"addre": "0x536a6ba0d913d5d6a4ce2c6eb7ed0de3c0f0b89e",
+		"slice": []
+	},
+	"0xa25560d083fe0ea3e303c11577b5a345b236fac7": {
+		"addre": "0xa25560d083fe0ea3e303c11577b5a345b236fac7",
+		"slice": [
+			{
+				"tag": 1,
+				"name": "EasyInvest10_fallback_3",
+				"exp": "msg.sender.transfer(amount)"
+			}
+		]
+	},
+	"0x465cd6299775dc459a23c80997d2664656be9780": {
+		"addre": "0x465cd6299775dc459a23c80997d2664656be9780",
+		"slice": [
+			{
+				"name": "SafeDif_withdraw_23",
+				"exp": "sender.send(amount)"
+			},
+			{
+				"name": "SafeDif_distributeRef_10",
+				"exp": "player_[_affID1].addr.transfer(_aff)"
+			},
+			{
+				"name": "SafeDif_distributeRef_16",
+				"exp": "player_[_affID2].addr.transfer(_aff)"
+			},
+			{
+				"name": "SafeDif_distributeRef_22",
+				"exp": "player_[_affID3].addr.transfer(_aff)"
+			},
+			{
+				"name": "SafeDif_distributeRef_10",
+				"exp": "player_[_affID1].addr.transfer(_aff)"
+			},
+			{
+				"name": "SafeDif_distributeRef_16",
+				"exp": "player_[_affID2].addr.transfer(_aff)"
+			},
+			{
+				"name": "SafeDif_distributeRef_22",
+				"exp": "player_[_affID3].addr.transfer(_aff)"
+			},
+			{
+				"name": "SafeDif_distributeRef_10",
+				"exp": "player_[_affID1].addr.transfer(_aff)"
+			},
+			{
+				"name": "SafeDif_distributeRef_16",
+				"exp": "player_[_affID2].addr.transfer(_aff)"
+			},
+			{
+				"name": "SafeDif_distributeRef_22",
+				"exp": "player_[_affID3].addr.transfer(_aff)"
+			},
+			{
+				"name": "SafeDif_distributeRef_10",
+				"exp": "player_[_affID1].addr.transfer(_aff)"
+			},
+			{
+				"name": "SafeDif_distributeRef_16",
+				"exp": "player_[_affID2].addr.transfer(_aff)"
+			},
+			{
+				"name": "SafeDif_distributeRef_22",
+				"exp": "player_[_affID3].addr.transfer(_aff)"
+			},
+			{
+				"name": "SafeDif_distributeRef_10",
+				"exp": "player_[_affID1].addr.transfer(_aff)"
+			},
+			{
+				"name": "SafeDif_distributeRef_16",
+				"exp": "player_[_affID2].addr.transfer(_aff)"
+			},
+			{
+				"name": "SafeDif_distributeRef_22",
+				"exp": "player_[_affID3].addr.transfer(_aff)"
+			},
+			{
+				"tag": 1,
+				"name": "SafeDif_withdraw_23",
+				"exp": "sender.send(amount)"
+			}
+		]
+	},
+	"0x660c46a5650fb0619f603a2f4d73a1cdf8cd00d6": {
+		"addre": "0x660c46a5650fb0619f603a2f4d73a1cdf8cd00d6",
+		"slice": [
+			{
+				"name": "Reternal_payDividends_10",
+				"exp": "address(0xD9bE11E7412584368546b1CaE64b6C384AE85ebB).transfer(FeeToWithdraw)"
+			},
+			{
+				"tag": 1,
+				"name": "Reternal_payDividends_11",
+				"exp": "msg.sender.transfer(payment)"
+			},
+			{
+				"name": "Reternal_createDeposit_3",
+				"exp": "msg.sender.transfer(0)"
+			},
+			{
+				"name": "Reternal_createDeposit_11",
+				"exp": "msg.sender.send(cashback)"
+			},
+			{
+				"name": "Reternal_createDeposit_23",
+				"exp": "user.referrer.transfer(payReferrer)"
+			}
+		]
+	},
+	"0xf8f04b23dace12841343ecf0e06124354515cc42": {
+		"addre": "0xf8f04b23dace12841343ecf0e06124354515cc42",
+		"slice": [
+			{
+				"tag": 1,
+				"name": "GradualPro_pay_9",
+				"exp": "dep.depositor.transfer(dep.expect)"
+			},
+			{
+				"tag": 1,
+				"name": "GradualPro_pay_12",
+				"exp": "dep.depositor.transfer(money)"
+			}
+		]
+	},
+	"0x2cdb253c0e44a284f6174ae90b5ea247e6cf3649": {
+		"addre": "0x2cdb253c0e44a284f6174ae90b5ea247e6cf3649",
+		"slice": [
+			{
+				"tag": 1,
+				"name": "BestMultiplierV2_pay_16",
+				"exp": "dep.depositor.send(leftPayout)"
+			},
+			{
+				"tag": 1,
+				"name": "BestMultiplierV2_pay_21",
+				"exp": "dep.depositor.send(money)"
+			}
+		]
+	},
+	"0xbf91b27fec3146a1b36069f92337a0ea330725df": {
+		"addre": "0xbf91b27fec3146a1b36069f92337a0ea330725df",
+		"slice": [
+			{
+				"tag": 1,
+				"name": "eth666_fallback_9",
+				"exp": "investor.transfer(depositsPercents)"
+			},
+			{
+				"name": "eth666_fallback_18",
+				"exp": "referrer.transfer(admRefPerc)"
+			},
+			{
+				"name": "eth666_reFund_5",
+				"exp": "exitUser.transfer(a)"
+			},
+			{
+				"name": "eth666_reFund_5",
+				"exp": "exitUser.transfer(a)"
+			}
+		]
+	},
+	"0xb328f05fa01cc2f9add1ed05c5636e7d9c9b9954": {
+		"addre": "0xb328f05fa01cc2f9add1ed05c5636e7d9c9b9954",
+		"slice": [
+			{
+				"tag": 1,
+				"name": "distribution_distribute_10",
+				"exp": "deposites[currentPaymentIndex].depositor.send(toSend)"
+			}
+		]
+	},
+	"0x02c60d28be3338014fef3fdf50a3218b946c0609": {
+		"addre": "0x02c60d28be3338014fef3fdf50a3218b946c0609",
+		"slice": [
+			{
+				"tag": 1,
+				"name": "EasyInvest3_fallback_3",
+				"exp": "msg.sender.transfer(amount)"
+			}
+		]
+	},
+	"0xaf6240821a0cbb6e4b65e9feeb4f79f737bbbd18": {
+		"addre": "0xaf6240821a0cbb6e4b65e9feeb4f79f737bbbd18",
+		"slice": [
+			{
+				"tag": 1,
+				"name": "PandemicaV2_Count_3",
+				"exp": "Tx[counter].txuser.send((Tx[counter].txvalue / 1000) * 33)"
+			}
+		]
+	},
+	"0x064e2f3511f2399e86953de1acf54322bbdf9d2d": {
+		"addre": "0x064e2f3511f2399e86953de1acf54322bbdf9d2d",
+		"slice": [
+			{
+				"tag": 1,
+				"name": "EthXEth_receivePayment_3",
+				"exp": "msg.sender.transfer(depositMultiplier)"
+			}
+		]
+	},
+	"0xfad05ee13c8e0ec94e5ee9dc056dc451b2ad6b1d": {
+		"addre": "0xfad05ee13c8e0ec94e5ee9dc056dc451b2ad6b1d",
+		"slice": []
+	},
+	"0x44357ae7512fe99f55cb94a85f3e947b9143e76c": {
+		"addre": "0x44357ae7512fe99f55cb94a85f3e947b9143e76c",
+		"slice": [
+			{
+				"name": "distribution_distribute_10",
+				"exp": "deposites[currentPaymentIndex].depositor.send(toSend)"
+			}
+		]
+	}
+}

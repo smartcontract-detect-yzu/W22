@@ -1,0 +1,1216 @@
+{
+	"0c87a844fa0add2fae644e5cb56251e61c3923e4_EasyInvest": {
+		"addre": "0c87a844fa0add2fae644e5cb56251e61c3923e4_EasyInvest",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "EasyInvest_fallback_4",
+				"exp": "sender.send(amount)"
+			}
+		]
+	},
+	"04bd96042c618cd2a4eb10f97b86a870954b564d_WallieInvest": {
+		"addre": "04bd96042c618cd2a4eb10f97b86a870954b564d_WallieInvest",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "WallieInvest_fallback_53",
+				"exp": "sender.transfer(amount)"
+			}
+		]
+	},
+	"16c1e9e376628bdcc0bf4ea5f6f1a1d9cc8d7b62_EasyInvest25": {
+		"addre": "16c1e9e376628bdcc0bf4ea5f6f1a1d9cc8d7b62_EasyInvest25",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "EasyInvest25_fallback_3",
+				"exp": "msg.sender.transfer(amount)"
+			}
+		]
+	},
+	"c62430fabb551ac60efef9bbdc8ed9721b1ae674_WSF": {
+		"addre": "c62430fabb551ac60efef9bbdc8ed9721b1ae674_WSF",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "WSF_fallback_8",
+				"exp": "msg.sender.transfer(withdraw)"
+			}
+		]
+	},
+	"eafff1c115d5f8060531356a21c46668eff6da96_EasyInvest35": {
+		"addre": "eafff1c115d5f8060531356a21c46668eff6da96_EasyInvest35",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "EasyInvest35_fallback_3",
+				"exp": "msg.sender.transfer(amount)"
+			},
+			{
+				"name": "EasyInvest35_fallback_7",
+				"exp": "address(0x5fAFC6d356679aFfFb4dE085793d54d310E3f4b8).transfer(msg.value / 20)"
+			}
+		]
+	},
+	"ebe2015840fc3c81555ab95a0c9d94b188ad282e_investeth2018": {
+		"addre": "ebe2015840fc3c81555ab95a0c9d94b188ad282e_investeth2018",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "investeth2018_fallback_10",
+				"exp": "sender.transfer(getvalue)"
+			}
+		]
+	},
+	"3da6d8f14dfcd576c46f9994d8fd94883a8f3fe8_SmartPyramid": {
+		"addre": "3da6d8f14dfcd576c46f9994d8fd94883a8f3fe8_SmartPyramid",
+		"slice": [
+			{
+				"name": "SmartPyramid_addReferrer_4",
+				"exp": "x.r(msg.sender).transfer(_value / 20)"
+			},
+			{
+				"name": "SmartPyramid_invest_10",
+				"exp": "x.r(msg.sender).transfer(msg.value / 20)"
+			},
+			{
+				"tag": "1",
+				"name": "SmartPyramid_withdraw_10",
+				"exp": "msg.sender.transfer(_payout)"
+			},
+			{
+				"name": "SmartPyramid_payDay_9",
+				"exp": "top[i + 1].addr.transfer(2000000000000000000 / 2 ** i)"
+			}
+		]
+	},
+	"2fadf048c4cb9941491fe00408831760e4a46ce3_EasyInvest5": {
+		"addre": "2fadf048c4cb9941491fe00408831760e4a46ce3_EasyInvest5",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "EasyInvest5_fallback_6",
+				"exp": "msg.sender.transfer(amount)"
+			}
+		]
+	},
+	"c05fec9c7e5522c26d6084b38bce1bcb60b71efd_Smartest": {
+		"addre": "c05fec9c7e5522c26d6084b38bce1bcb60b71efd_Smartest",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "Smartest_fallback_2",
+				"exp": "msg.sender.transfer(invested[msg.sender] * (block.number - investBlock[msg.sender]) * 21 / 2950000)"
+			}
+		]
+	},
+	"c6038f9ff35a3f2b00f9747b483bced7b024015e_ETH_DISTRIBUTION": {
+		"addre": "c6038f9ff35a3f2b00f9747b483bced7b024015e_ETH_DISTRIBUTION",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "ETH_DISTRIBUTION_fallback_6",
+				"exp": "investor.transfer(depositsPercents)"
+			},
+			{
+				"name": "ETH_DISTRIBUTION_fallback_13",
+				"exp": "referrer.transfer(refPerc)"
+			}
+		]
+	},
+	"6cb63564f530c47238d88c11de05e20598ed114a_WallieInvest": {
+		"addre": "6cb63564f530c47238d88c11de05e20598ed114a_WallieInvest",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "WallieInvest_fallback_53",
+				"exp": "sender.transfer(amount)"
+			}
+		]
+	},
+	"cdb411fbb054628ae985c3aa522788a5707f39b7_EarnEveryDay_v1_355": {
+		"addre": "cdb411fbb054628ae985c3aa522788a5707f39b7_EarnEveryDay_v1_355",
+		"slice": []
+	},
+	"b45773a7fae6efff71d2b2b4bf1fd6d07a0ad9c6_EarnEveryDay_v3_355": {
+		"addre": "b45773a7fae6efff71d2b2b4bf1fd6d07a0ad9c6_EarnEveryDay_v3_355",
+		"slice": []
+	},
+	"b677d696873b50491a1e4e23eccce81a10958852_Investment": {
+		"addre": "b677d696873b50491a1e4e23eccce81a10958852_Investment",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "Investment_fallback_3",
+				"exp": "msg.sender.transfer(amount)"
+			},
+			{
+				"name": "Investment_sendInvestor_1",
+				"exp": "_investor.transfer(amount)"
+			}
+		]
+	},
+	"1d48a4067a35a2a77c0da6892a114efd13868add_EasyInvest7": {
+		"addre": "1d48a4067a35a2a77c0da6892a114efd13868add_EasyInvest7",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "EasyInvest7_fallback_4",
+				"exp": "sender.send(amount)"
+			}
+		]
+	},
+	"ecf11c7cdba64e5dd0f122959f01b405eb15ef61_GeniusInvest": {
+		"addre": "ecf11c7cdba64e5dd0f122959f01b405eb15ef61_GeniusInvest",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "GeniusInvest_fallback_10",
+				"exp": "sender.transfer(getvalue)"
+			}
+		]
+	},
+	"e68c4c39153eb5c18a30365a3fce00fb8363a16c_SmartPyramid": {
+		"addre": "e68c4c39153eb5c18a30365a3fce00fb8363a16c_SmartPyramid",
+		"slice": [
+			{
+				"name": "SmartPyramid_addReferrer_4",
+				"exp": "x.r(msg.sender).transfer(_value / 20)"
+			},
+			{
+				"name": "SmartPyramid_invest_10",
+				"exp": "x.r(msg.sender).transfer(msg.value / 20)"
+			},
+			{
+				"tag": "1",
+				"name": "SmartPyramid_withdraw_10",
+				"exp": "msg.sender.transfer(_payout)"
+			},
+			{
+				"name": "SmartPyramid_payDay_8",
+				"exp": "top[i + 1].addr.transfer(2000000000000000000 / 2 ** i)"
+			}
+		]
+	},
+	"8fec30d7a55725965a5b419cc6095eef89ba07b6_EasyInvestForever": {
+		"addre": "8fec30d7a55725965a5b419cc6095eef89ba07b6_EasyInvestForever",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "EasyInvestForever_fallback_14",
+				"exp": "msg.sender.transfer(amount)"
+			}
+		]
+	},
+	"02c60d28be3338014fef3fdf50a3218b946c0609_EasyInvest3": {
+		"addre": "02c60d28be3338014fef3fdf50a3218b946c0609_EasyInvest3",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "EasyInvest3_fallback_3",
+				"exp": "msg.sender.transfer(amount)"
+			}
+		]
+	},
+	"b82a8e91c9e4aaae25cb234cd839cf15a8e02d49_EasyInvest": {
+		"addre": "b82a8e91c9e4aaae25cb234cd839cf15a8e02d49_EasyInvest",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "EasyInvest_fallback_4",
+				"exp": "sender.send(amount)"
+			}
+		]
+	},
+	"0744a686c17480b457a4fbb743195bf2815ca2b8_EasyInvest10": {
+		"addre": "0744a686c17480b457a4fbb743195bf2815ca2b8_EasyInvest10",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "EasyInvest10_fallback_5",
+				"exp": "kashout.send(getout)"
+			}
+		]
+	},
+	"339150b0851bc5b3c0323789a58cc4e4afb38b37_EasyInvest10": {
+		"addre": "339150b0851bc5b3c0323789a58cc4e4afb38b37_EasyInvest10",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "EasyInvest10_fallback_3",
+				"exp": "msg.sender.transfer(amount)"
+			}
+		]
+	},
+	"83fccc659eeeee98ca9764b7b34409347dfbc98b_ethernity": {
+		"addre": "83fccc659eeeee98ca9764b7b34409347dfbc98b_ethernity",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "ethernity_fallback_6",
+				"exp": "msg.sender.transfer((block.number - paytime[msg.sender]) / 5900 * balance[msg.sender] / 100 * 5)"
+			}
+		]
+	},
+	"57617a0c1116cb9bd4ed9fab093a57533f8ffc9b_Leprechaun": {
+		"addre": "57617a0c1116cb9bd4ed9fab093a57533f8ffc9b_Leprechaun",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "Leprechaun_transfer_8",
+				"exp": "receiver.transfer(amount)"
+			}
+		]
+	},
+	"948073914d51339790c9cd9d35e7021841e66e3d_Accessibility": {
+		"addre": "948073914d51339790c9cd9d35e7021841e66e3d_Accessibility",
+		"slice": []
+	},
+	"38e6cce1e12d1519c54161e6839118f32f4c2832_EasyInvest5": {
+		"addre": "38e6cce1e12d1519c54161e6839118f32f4c2832_EasyInvest5",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "EasyInvest5_fallback_6",
+				"exp": "msg.sender.transfer(amount)"
+			}
+		]
+	},
+	"3420aebab3162ca219c916ebacb3495a954b5e55_Leprechaun": {
+		"tag":  "inter",
+		"addre": "3420aebab3162ca219c916ebacb3495a954b5e55_Leprechaun",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "Leprechaun_transfer_5",
+				"exp": "! addr.send(amount)"
+			}
+		]
+	},
+	"c1f33935b467c5138919b5249fe24b5ae33ebe0a_Investment": {
+		"addre": "c1f33935b467c5138919b5249fe24b5ae33ebe0a_Investment",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "Investment_fallback_3",
+				"exp": "msg.sender.transfer(amount)"
+			},
+			{
+				"name": "Investment_sendInvestor_1",
+				"exp": "_investor.transfer(amount)"
+			}
+		]
+	},
+	"640f719bff8f02c37b36f3ee3fc00f85a4b16fbb_EasyInvestFloat": {
+		"addre": "640f719bff8f02c37b36f3ee3fc00f85a4b16fbb_EasyInvestFloat",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "EasyInvestFloat_fallback_17",
+				"exp": "msg.sender.transfer(amount)"
+			},
+			{
+				"name": "EasyInvestFloat_fallback_21",
+				"exp": "address(0x479fAaad7CB3Af66956d00299CAe1f95Bc1213A1).transfer(fee)"
+			}
+		]
+	},
+	"56df2aebddd93a01e77961ead09919761585b992_Revolution": {
+		"addre": "56df2aebddd93a01e77961ead09919761585b992_Revolution",
+		"slice": []
+	},
+	"081396ba70b5ad0c0e3c2c34e368ace95bdd72e4_EasyInvest7": {
+		"addre": "081396ba70b5ad0c0e3c2c34e368ace95bdd72e4_EasyInvest7",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "EasyInvest7_fallback_4",
+				"exp": "sender.send(amount)"
+			}
+		]
+	},
+	"eb4ac862462282b490e48e64beab39b31ea60730_Relaunch": {
+		"addre": "eb4ac862462282b490e48e64beab39b31ea60730_Relaunch",
+		"slice": []
+	},
+	"edf7eac72ff28dbcde6aa14322726a7d05739007_EasyInvest20": {
+		"addre": "edf7eac72ff28dbcde6aa14322726a7d05739007_EasyInvest20",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "EasyInvest20_fallback_3",
+				"exp": "msg.sender.transfer(amount)"
+			}
+		]
+	},
+	"3689f372eb8ae130b1767664ad1c75528c815811_EasyInvestPI": {
+		"addre": "3689f372eb8ae130b1767664ad1c75528c815811_EasyInvestPI",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "EasyInvestPI_fallback_4",
+				"exp": "sender.send(amount)"
+			},
+			{
+				"name": "EasyInvestPI_fallback_6",
+				"exp": "address(0x64508a1d8B2Ce732ED6b28881398C13995B63D67).transfer(msg.value / 10)"
+			}
+		]
+	},
+	"908ceac332689001b256c0f3c2b9e71d85f1cf30_EarnEveryDay_v1_355": {
+		"addre": "908ceac332689001b256c0f3c2b9e71d85f1cf30_EarnEveryDay_v1_355",
+		"slice": []
+	},
+	"b2adcefb5ec66e953baf669a6e85bb8699b7336f_PayMeDailyDividends": {
+		"addre": "b2adcefb5ec66e953baf669a6e85bb8699b7336f_PayMeDailyDividends",
+		"slice": []
+	},
+	"d2c585d9e6fffc428eb0ed6b8cfa23cf7b532938_EthLong": {
+		"addre": "d2c585d9e6fffc428eb0ed6b8cfa23cf7b532938_EthLong",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "EthLong_withdraw_6",
+				"exp": "msg.sender.transfer(balance)"
+			}
+		]
+	},
+	"bd5b1ee23b193bf1e8d41adf67abde9023726c93_HomaInvest": {
+		"addre": "bd5b1ee23b193bf1e8d41adf67abde9023726c93_HomaInvest",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "HomaInvest_receivePayment_3",
+				"exp": "msg.sender.transfer(depositMultiplier)"
+			}
+		]
+	},
+	"116d87f5fd733fbbab710371aa636815f913c354_EasyInvest": {
+		"addre": "116d87f5fd733fbbab710371aa636815f913c354_EasyInvest",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "EasyInvest_fallback_6",
+				"exp": "sender.send(amount)"
+			}
+		]
+	},
+	"5396f094bb6a5e28c2012eb4bd05678db7369e24_investeth2018": {
+		"addre": "5396f094bb6a5e28c2012eb4bd05678db7369e24_investeth2018",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "investeth2018_fallback_10",
+				"exp": "sender.transfer(getvalue)"
+			}
+		]
+	},
+	"5cd478fd07ca7a02e090a9d0ccbb51cc51f6e56e_EasyInvestPI": {
+		"addre": "5cd478fd07ca7a02e090a9d0ccbb51cc51f6e56e_EasyInvestPI",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "EasyInvestPI_fallback_4",
+				"exp": "sender.send(amount)"
+			},
+			{
+				"name": "EasyInvestPI_fallback_6",
+				"exp": "address(0x64508a1d8B2Ce732ED6b28881398C13995B63D67).transfer(msg.value / 10)"
+			}
+		]
+	},
+	"7db6122f3a819f4b056256291748c0999c76e918_Etherbank": {
+		"addre": "7db6122f3a819f4b056256291748c0999c76e918_Etherbank",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "Etherbank_fallback_4",
+				"exp": "sender.send(amount)"
+			}
+		]
+	},
+	"64682b0f61bfc1d80939edc2d533e24030d8ff91_investeth2017": {
+		"addre": "64682b0f61bfc1d80939edc2d533e24030d8ff91_investeth2017",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "investeth2017_fallback_10",
+				"exp": "sender.transfer(getvalue)"
+			}
+		]
+	},
+	"8dedfeff24c22a251812938e971e0952a219240c_EasyInvest15": {
+		"addre": "8dedfeff24c22a251812938e971e0952a219240c_EasyInvest15",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "EasyInvest15_fallback_3",
+				"exp": "msg.sender.transfer(amount)"
+			}
+		]
+	},
+	"ed29f85f37062bcf53d0610faebcc25ff7442c74_EasyInvest": {
+		"addre": "ed29f85f37062bcf53d0610faebcc25ff7442c74_EasyInvest",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "EasyInvest_fallback_4",
+				"exp": "sender.transfer(amount)"
+			}
+		]
+	},
+	"7c2d76735b09de69c1ead5849b3a5176fa688f4a_Highfiveeth": {
+		"addre": "7c2d76735b09de69c1ead5849b3a5176fa688f4a_Highfiveeth",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "Highfiveeth_fallback_9",
+				"exp": "sender.transfer(amount)"
+			}
+		]
+	},
+	"59be7a1937c3b7bc5e9103aefd4ab5c97af6d179_Revolution": {
+		"addre": "59be7a1937c3b7bc5e9103aefd4ab5c97af6d179_Revolution",
+		"slice": []
+	},
+	"bea80518deb6ab650fba244830ccd737a4c42242_EarnEveryDay_v1_355": {
+		"addre": "bea80518deb6ab650fba244830ccd737a4c42242_EarnEveryDay_v1_355",
+		"slice": []
+	},
+	"028bada84a462dc4f1472945ba563b850304ce51_EasyInvestTurbo": {
+		"addre": "028bada84a462dc4f1472945ba563b850304ce51_EasyInvestTurbo",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "EasyInvestTurbo_fallback_3",
+				"exp": "msg.sender.transfer(amount)"
+			}
+		]
+	},
+	"8fa68ba5f3fea9d839f925abdb1d6bfbbcf88bcc_Revolution": {
+		"addre": "8fa68ba5f3fea9d839f925abdb1d6bfbbcf88bcc_Revolution",
+		"slice": []
+	},
+	"A7B3b4a2a2C7E7a32319E4D1c455B96ebDaFf9c9_Ether3": {
+		"addre": "A7B3b4a2a2C7E7a32319E4D1c455B96ebDaFf9c9_Ether3",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "Ether3_getMyDividends_8",
+				"exp": "msg.sender.transfer(dividends)"
+			},
+			{
+				"name": "Ether3_doInvest_19",
+				"exp": "msg.sender.transfer(excess)"
+			}
+		]
+	},
+	"c7faebdd78fabe259fa21aff97d5551fd72e4d91_EarnEveryDay_v1_355": {
+		"addre": "c7faebdd78fabe259fa21aff97d5551fd72e4d91_EarnEveryDay_v1_355",
+		"slice": []
+	},
+	"3e168b27d7650a5b1252ce61750fadc1ceff658c_SimpleInvest": {
+		"addre": "3e168b27d7650a5b1252ce61750fadc1ceff658c_SimpleInvest",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "SimpleInvest_fallback_4",
+				"exp": "sender.send(amount)"
+			}
+		]
+	},
+	"3175f066037edad636dea7faee3f41a6b35d0912_ETHBank": {
+		"addre": "3175f066037edad636dea7faee3f41a6b35d0912_ETHBank",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "ETHBank_receivePayment_3",
+				"exp": "msg.sender.transfer(depositMultiplier)"
+			}
+		]
+	},
+	"5ff33b6d85b8090e4df5dc9d08be4ca82c8672ce_EasyInvest": {
+		"addre": "5ff33b6d85b8090e4df5dc9d08be4ca82c8672ce_EasyInvest",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "EasyInvest_fallback_4",
+				"exp": "sender.send(amount)"
+			}
+		]
+	},
+	"303b4beff65cd7a332a7e047bb535a5e2fee2412_EasyInvest": {
+		"addre": "303b4beff65cd7a332a7e047bb535a5e2fee2412_EasyInvest",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "EasyInvest_fallback_4",
+				"exp": "sender.send(amount)"
+			}
+		]
+	},
+	"35027a992a3c232dd7a350bb75004ad8567561b2_EasyInvestForever": {
+		"addre": "35027a992a3c232dd7a350bb75004ad8567561b2_EasyInvestForever",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "EasyInvestForever_fallback_14",
+				"exp": "msg.sender.transfer(amount)"
+			}
+		]
+	},
+	"a9fa841e2b56be2d8b645819b46fedfd9e331206_SmartPyramid": {
+		"addre": "a9fa841e2b56be2d8b645819b46fedfd9e331206_SmartPyramid",
+		"slice": [
+			{
+				"name": "SmartPyramid_addReferrer_4",
+				"exp": "x.r(msg.sender).transfer(_value / 20)"
+			},
+			{
+				"name": "SmartPyramid_invest_10",
+				"exp": "x.r(msg.sender).transfer(msg.value / 20)"
+			},
+			{
+				"tag": "1",
+				"name": "SmartPyramid_withdraw_10",
+				"exp": "msg.sender.transfer(_payout)"
+			},
+			{
+				"name": "SmartPyramid_payDay_9",
+				"exp": "top[i + 1].addr.transfer(2000000000000000000 / 2 ** i)"
+			}
+		]
+	},
+	"b889369d10f6d6434ee0c15e6dcb0a632085c2f0_EarnEveryDay": {
+		"addre": "b889369d10f6d6434ee0c15e6dcb0a632085c2f0_EarnEveryDay",
+		"slice": []
+	},
+	"7d60b8434b2ee40ca99774010a3a8de2375f61c5_EthLong": {
+		"addre": "7d60b8434b2ee40ca99774010a3a8de2375f61c5_EthLong",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "EthLong_withdraw_6",
+				"exp": "msg.sender.transfer(balance)"
+			},
+			{
+				"name": "EthLong_bounty_5",
+				"exp": "msg.sender.transfer(refBalance)"
+			}
+		]
+	},
+	"2e65acb183753c39b7cbb24af6c8a451cda192a0_Infinite3": {
+		"addre": "2e65acb183753c39b7cbb24af6c8a451cda192a0_Infinite3",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "Infinite3_withdraw_6",
+				"exp": "msg.sender.transfer(balance)"
+			},
+			{
+				"name": "Infinite3_bounty_5",
+				"exp": "msg.sender.transfer(refBalance)"
+			}
+		]
+	},
+	"d85380aca00e6115b046b4edb488b53c531cb852_Revolution": {
+		"addre": "d85380aca00e6115b046b4edb488b53c531cb852_Revolution",
+		"slice": []
+	},
+	"39a765ecf417f5eecbb58d6b0482f81f4d825fff_EasyInvest6": {
+		"addre": "39a765ecf417f5eecbb58d6b0482f81f4d825fff_EasyInvest6",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "EasyInvest6_fallback_3",
+				"exp": "msg.sender.transfer(amount)"
+			}
+		]
+	},
+	"4dbba3e4ee7b128374f8d620e22929307ee028e7_EasyInvest": {
+		"addre": "4dbba3e4ee7b128374f8d620e22929307ee028e7_EasyInvest",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "EasyInvest_fallback_4",
+				"exp": "sender.send(amount)"
+			}
+		]
+	},
+	"73e145e6ff0c48146f1eb5f414547be5a5a0e333_EarnEveryDay_v1_355": {
+		"addre": "73e145e6ff0c48146f1eb5f414547be5a5a0e333_EarnEveryDay_v1_355",
+		"slice": []
+	},
+	"19b369f69bc5bd6aadc4d30c179c8ac5ae6cbae0_EarnEveryDay_255": {
+		"addre": "19b369f69bc5bd6aadc4d30c179c8ac5ae6cbae0_EarnEveryDay_255",
+		"slice": []
+	},
+	"5fbc53e8bdb596d61842496c49603acf7f97bf13_ThreeEtherFree": {
+		"addre": "5fbc53e8bdb596d61842496c49603acf7f97bf13_ThreeEtherFree",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "ThreeEtherFree_fallback_6",
+				"exp": "sender.transfer(getvalue)"
+			}
+		]
+	},
+	"c406a2db73b36ccbc70a756fe53d7687cb603490_Investment": {
+		"addre": "c406a2db73b36ccbc70a756fe53d7687cb603490_Investment",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "Investment_fallback_3",
+				"exp": "msg.sender.transfer(amount)"
+			},
+			{
+				"name": "Investment_sendInvestor_1",
+				"exp": "_investor.transfer(amount)"
+			}
+		]
+	},
+	"0ff434793ba552db7861064ccb0268a9c05a20d2_DOETH": {
+		"addre": "0ff434793ba552db7861064ccb0268a9c05a20d2_DOETH",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "DOETH_fallback_6",
+				"exp": "investor.transfer(depositsPercents)"
+			},
+			{
+				"name": "DOETH_fallback_13",
+				"exp": "referrer.transfer(refPerc)"
+			}
+		]
+	},
+	"0c38568311e0fda27f024e0705841692fce46d6d_EasyInvest5": {
+		"addre": "0c38568311e0fda27f024e0705841692fce46d6d_EasyInvest5",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "EasyInvest5_fallback_3",
+				"exp": "msg.sender.transfer(amount)"
+			}
+		]
+	},
+	"535cb845dad5c37a4d76371839c2b56a44bd22cf_MavroOrg": {
+		"addre": "535cb845dad5c37a4d76371839c2b56a44bd22cf_MavroOrg",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "MavroOrg_receivePayment_3",
+				"exp": "msg.sender.transfer(depositMultiplier)"
+			}
+		]
+	},
+	"fcd70fcc82e94dac57b75d5099f8b2f07fc5786c_Leprechaun": {
+		"addre": "fcd70fcc82e94dac57b75d5099f8b2f07fc5786c_Leprechaun",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "Leprechaun_transfer_8",
+				"exp": "receiver.transfer(amount)"
+			}
+		]
+	},
+	"bfb3b6972a814e2f6ed6d6fb9f9e47cd0b13720a_SafeDivs": {
+		"addre": "bfb3b6972a814e2f6ed6d6fb9f9e47cd0b13720a_SafeDivs",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "SafeDivs_invest_9",
+				"exp": "sender.send(amount)"
+			},
+			{
+				"name": "SafeDivs_distributeRef_11",
+				"exp": "player_[_affID1].addr.transfer(_aff)"
+			},
+			{
+				"name": "SafeDivs_distributeRef_17",
+				"exp": "player_[_affID2].addr.transfer(_aff)"
+			},
+			{
+				"name": "SafeDivs_distributeRef_23",
+				"exp": "player_[_affID3].addr.transfer(_aff)"
+			},
+			{
+				"name": "SafeDivs_distributeRef_29",
+				"exp": "player_[_affID4].addr.transfer(_aff)"
+			}
+		]
+	},
+	"6519d6dfd11363cf0821809b919b55f794fe0cb5_EasyInvest5": {
+		"addre": "6519d6dfd11363cf0821809b919b55f794fe0cb5_EasyInvest5",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "EasyInvest5_fallback_3",
+				"exp": "msg.sender.transfer(amount)"
+			}
+		]
+	},
+	"7236981911292da0d8496667fb268c4f7ae243fa_ExpoInvest": {
+		"addre": "7236981911292da0d8496667fb268c4f7ae243fa_ExpoInvest",
+		"slice": [
+			{
+				"name": "ExpoInvest_fallback_6",
+				"exp": "sender.send(address(this).balance)"
+			},
+			{
+				"tag": "1",
+				"name": "ExpoInvest_fallback_7",
+				"exp": "sender.send(amount)"
+			}
+		]
+	},
+	"17eb700ac0dc501ea3138b469ff0c46e1b24f0da_Revolution2": {
+		"addre": "17eb700ac0dc501ea3138b469ff0c46e1b24f0da_Revolution2",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "Revolution2_getMyDividends_8",
+				"exp": "msg.sender.transfer(dividends)"
+			},
+			{
+				"name": "Revolution2_doInvest_19",
+				"exp": "msg.sender.transfer(excess)"
+			}
+		]
+	},
+	"3E28295c508855924b8E5062DB06cF851D2331d6_Ethervest": {
+		"addre": "3E28295c508855924b8E5062DB06cF851D2331d6_Ethervest",
+		"slice": [
+			{
+				"name": "Ethervest_fallback_12",
+				"exp": "msg.sender.transfer(0)"
+			},
+			{
+				"name": "Ethervest_fallback_30",
+				"exp": "user.referrer.send(bonusAmount)"
+			},
+			{
+				"name": "Ethervest_fallback_34",
+				"exp": "msg.sender.send(bonusAmount)"
+			},
+			{
+				"name": "Ethervest_fallback_39",
+				"exp": "ethervestKiller.addr.send(bonusAmount)"
+			},
+			{
+				"tag": "1",
+				"name": "Ethervest_payoutSelf_8",
+				"exp": "msg.sender.transfer(amount)"
+			},
+			{
+				"tag": "1",
+				"name": "Ethervest_payout_21",
+				"exp": "addr.send(amount)"
+			}
+		]
+	},
+	"3df616ee25ba3fa146544ab595f106bff5ac4397_Daily12": {
+		"addre": "3df616ee25ba3fa146544ab595f106bff5ac4397_Daily12",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "Daily12_fallback_3",
+				"exp": "msg.sender.transfer(amount)"
+			}
+		]
+	},
+	"268f92d90798614b4450b1efa59c71a601ab0af2_master5invest": {
+		"addre": "268f92d90798614b4450b1efa59c71a601ab0af2_master5invest",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "master5invest_fallback_6",
+				"exp": "sender.transfer(dividends)"
+			}
+		]
+	},
+	"308566ef16d92ff9a58fbbe0425adddce3bb1cf8_EasyInvest50": {
+		"addre": "308566ef16d92ff9a58fbbe0425adddce3bb1cf8_EasyInvest50",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "EasyInvest50_fallback_3",
+				"exp": "msg.sender.transfer(amount)"
+			}
+		]
+	},
+	"31cf40fe52d0118020f0ccd78a4996ac6e350006_EasyInvest11": {
+		"addre": "31cf40fe52d0118020f0ccd78a4996ac6e350006_EasyInvest11",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "EasyInvest11_fallback_3",
+				"exp": "msg.sender.transfer(amount)"
+			}
+		]
+	},
+	"b191327cec3003f3aaa6bd5f3a6a979b981b275d_DBank": {
+		"addre": "b191327cec3003f3aaa6bd5f3a6a979b981b275d_DBank",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "DBank_buyCore_5",
+				"exp": "_addr.transfer(amount)"
+			},
+			{
+				"name": "DBank_dbkWithdraw_3",
+				"exp": "msg.sender.transfer(_eth)"
+			}
+		]
+	},
+	"56d20d6736da48d628fde1544c0986e02d92b842_EarnEveryDay_v1_355": {
+		"addre": "56d20d6736da48d628fde1544c0986e02d92b842_EarnEveryDay_v1_355",
+		"slice": []
+	},
+	"0b19dc8df2f75ae40c10c871ab95e3bfbe98fb5c_Getether": {
+		"addre": "0b19dc8df2f75ae40c10c871ab95e3bfbe98fb5c_Getether",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "Getether_fallback_5",
+				"exp": "kashout.send(getout)"
+			}
+		]
+	},
+	"bf91b27fec3146a1b36069f92337a0ea330725df_eth666": {
+		"addre": "bf91b27fec3146a1b36069f92337a0ea330725df_eth666",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "eth666_fallback_9",
+				"exp": "investor.transfer(depositsPercents)"
+			},
+			{
+				"name": "eth666_fallback_18",
+				"exp": "referrer.transfer(admRefPerc)"
+			},
+			{
+				"name": "eth666_reFund_5",
+				"exp": "exitUser.transfer(a)"
+			}
+		]
+	},
+	"f67216cdbd329ffbe71d0d49707af42b46e3e12a_EasyInvest33": {
+		"addre": "f67216cdbd329ffbe71d0d49707af42b46e3e12a_EasyInvest33",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "EasyInvest33_fallback_3",
+				"exp": "msg.sender.transfer(amount)"
+			}
+		]
+	},
+	"a25560d083fe0ea3e303c11577b5a345b236fac7_EasyInvest10": {
+		"addre": "a25560d083fe0ea3e303c11577b5a345b236fac7_EasyInvest10",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "EasyInvest10_fallback_3",
+				"exp": "msg.sender.transfer(amount)"
+			}
+		]
+	},
+	"cd83df413f596ca8e2b0813062ce22346d5212a0_Revolution2": {
+		"addre": "cd83df413f596ca8e2b0813062ce22346d5212a0_Revolution2",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "Revolution2_getMyDividends_8",
+				"exp": "msg.sender.transfer(dividends)"
+			},
+			{
+				"name": "Revolution2_doInvest_19",
+				"exp": "msg.sender.transfer(excess)"
+			}
+		]
+	},
+	"8448ee32702dbef5916b0949c7c2abba3c576001_PayMeDailyDividends": {
+		"addre": "8448ee32702dbef5916b0949c7c2abba3c576001_PayMeDailyDividends",
+		"slice": []
+	},
+	"064e2f3511f2399E86953de1aCf54322bBDF9d2d_EthXEth": {
+		"addre": "064e2f3511f2399E86953de1aCf54322bBDF9d2d_EthXEth",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "EthXEth_receivePayment_3",
+				"exp": "msg.sender.transfer(depositMultiplier)"
+			}
+		]
+	},
+	"1d10620f36057aa627f0c51190efe81b8ad2ec2a_EarnEveryDay_v3_355": {
+		"addre": "1d10620f36057aa627f0c51190efe81b8ad2ec2a_EarnEveryDay_v3_355",
+		"slice": []
+	},
+	"2531b930065e6107268042d1dc992bc0657f9316_MavroOrg": {
+		"addre": "2531b930065e6107268042d1dc992bc0657f9316_MavroOrg",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "MavroOrg_receivePayment_3",
+				"exp": "msg.sender.transfer(depositMultiplier)"
+			}
+		]
+	},
+	"0876804be16ed5af96ec7605a7b323b6a73436c2_ETHInvest": {
+		"addre": "0876804be16ed5af96ec7605a7b323b6a73436c2_ETHInvest",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "ETHInvest_fallback_4",
+				"exp": "sender.transfer(amount)"
+			}
+		]
+	},
+	"53e3c3746fb79b93546821916b30a43ad4c40c7a_EasyInvest": {
+		"addre": "53e3c3746fb79b93546821916b30a43ad4c40c7a_EasyInvest",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "EasyInvest_fallback_4",
+				"exp": "sender.send(amount)"
+			}
+		]
+	},
+	"b0050d6320482c638021f2dcf815a5acb67d6d49_invest2017": {
+		"addre": "b0050d6320482c638021f2dcf815a5acb67d6d49_invest2017",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "invest2017_fallback_10",
+				"exp": "sender.transfer(getvalue)"
+			}
+		]
+	},
+	"58e576026b441d527619a1946a280fdcb5361dfe_EarnEveryDay_v1_355": {
+		"addre": "58e576026b441d527619a1946a280fdcb5361dfe_EarnEveryDay_v1_355",
+		"slice": []
+	},
+	"9d3752e29f4eab4c5275a095b90f8ae716a5f6f5_SpaceEmissio": {
+		"addre": "9d3752e29f4eab4c5275a095b90f8ae716a5f6f5_SpaceEmissio",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "SpaceEmissio_getMyDividends_8",
+				"exp": "msg.sender.transfer(dividends)"
+			},
+			{
+				"name": "SpaceEmissio_doInvest_19",
+				"exp": "msg.sender.transfer(excess)"
+			}
+		]
+	},
+	"777a2a628eeae9d161675b3c80bb7b7e4bce868c_EasyInvest10": {
+		"addre": "777a2a628eeae9d161675b3c80bb7b7e4bce868c_EasyInvest10",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "EasyInvest10_fallback_3",
+				"exp": "msg.sender.transfer(amount)"
+			}
+		]
+	},
+	"775c009be15f6a7ec577c4172961f2bf82db37f1_EasyInvestForever": {
+		"addre": "775c009be15f6a7ec577c4172961f2bf82db37f1_EasyInvestForever",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "EasyInvestForever_fallback_14",
+				"exp": "msg.sender.transfer(amount)"
+			}
+		]
+	},
+	"31ccf9eee66658329236051bdb2e25e7731473d9_DBank": {
+		"addre": "31ccf9eee66658329236051bdb2e25e7731473d9_DBank",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "DBank_buyCore_5",
+				"exp": "_addr.transfer(amount)"
+			},
+			{
+				"name": "DBank_dbkWithdraw_3",
+				"exp": "msg.sender.transfer(_eth)"
+			}
+		]
+	},
+	"1296fbd27450bbd652cc1fb4e5ef9602322dcec5_Highfiveeth": {
+		"addre": "1296fbd27450bbd652cc1fb4e5ef9602322dcec5_Highfiveeth",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "Highfiveeth_fallback_9",
+				"exp": "sender.transfer(amount)"
+			}
+		]
+	},
+	"70ae24f65c46f3fcb9a4def6ac7f7ef11de852f8_Leprechaun": {
+		"addre": "70ae24f65c46f3fcb9a4def6ac7f7ef11de852f8_Leprechaun",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "Leprechaun_transfer_5",
+				"exp": "addr.send(amount) == false"
+			}
+		]
+	},
+	"1f4a389887a2620e26feb059ed2d0971f0371e08_EthervestLIFE": {
+		"addre": "1f4a389887a2620e26feb059ed2d0971f0371e08_EthervestLIFE",
+		"slice": [
+			{
+				"name": "EthervestLIFE_fallback_12",
+				"exp": "msg.sender.transfer(0)"
+			},
+			{
+				"name": "EthervestLIFE_fallback_30",
+				"exp": "user.referrer.send(bonusAmount)"
+			},
+			{
+				"name": "EthervestLIFE_fallback_34",
+				"exp": "msg.sender.send(bonusAmount)"
+			},
+			{
+				"tag": "1",
+				"name": "EthervestLIFE_payoutSelf_8",
+				"exp": "msg.sender.transfer(amount)"
+			},
+			{
+				"name": "EthervestLIFE_payout_21",
+				"exp": "addr.send(amount)"
+			}
+		]
+	},
+	"87c3412584f2bd50b08cc2f1daf527a70543d2fe_GeniusInvest": {
+		"addre": "87c3412584f2bd50b08cc2f1daf527a70543d2fe_GeniusInvest",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "GeniusInvest_fallback_10",
+				"exp": "sender.transfer(getvalue)"
+			}
+		]
+	},
+	"c8904e973f3b9921d46b5f5b2173c975cfb06fa6_EarnEveryDay_v2_355": {
+		"addre": "c8904e973f3b9921d46b5f5b2173c975cfb06fa6_EarnEveryDay_v2_355",
+		"slice": []
+	},
+	"2e60cddf69ff99bee7e01e51b8b529dcd15c219a_Revolution": {
+		"addre": "2e60cddf69ff99bee7e01e51b8b529dcd15c219a_Revolution",
+		"slice": []
+	},
+	"07a75c4a12059e8580cd7720015e1ac05d2afb69_Accessibility": {
+		"addre": "07a75c4a12059e8580cd7720015e1ac05d2afb69_Accessibility",
+		"slice": []
+	},
+	"88ca37d9a8bdfe9746d1efc6760b55e24bd83539_EasyInvest": {
+		"addre": "88ca37d9a8bdfe9746d1efc6760b55e24bd83539_EasyInvest",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "EasyInvest_fallback_4",
+				"exp": "sender.send(amount)"
+			}
+		]
+	},
+	"042379cfc3605c5ff5ee3d408d1be3ea81baa1f0_oneperday": {
+		"addre": "042379cfc3605c5ff5ee3d408d1be3ea81baa1f0_oneperday",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "oneperday_fallback_53",
+				"exp": "sender.transfer(amount)"
+			}
+		]
+	},
+	"06faa4d8157ba45baf2da5e7d02384225948d54f_EasyInvest25": {
+		"addre": "06faa4d8157ba45baf2da5e7d02384225948d54f_EasyInvest25",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "EasyInvest25_fallback_4",
+				"exp": "kashout.send(getout)"
+			}
+		]
+	},
+	"96127af371760603850bcec8fe90bddf6749924f_EarnEveryDay_v3_355": {
+		"addre": "96127af371760603850bcec8fe90bddf6749924f_EarnEveryDay_v3_355",
+		"slice": []
+	},
+	"9897f167e8d4cdf0e3d488c36fdfb3cb98c69a75_EarnEveryDay_v3_355": {
+		"addre": "9897f167e8d4cdf0e3d488c36fdfb3cb98c69a75_EarnEveryDay_v3_355",
+		"slice": []
+	},
+	"97c28151617f7361ac7ebff5f7c864d39947e73f_Investment": {
+		"addre": "97c28151617f7361ac7ebff5f7c864d39947e73f_Investment",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "Investment_fallback_3",
+				"exp": "msg.sender.transfer(amount)"
+			},
+			{
+				"name": "Investment_sendInvestor_1",
+				"exp": "_investor.transfer(amount)"
+			}
+		]
+	},
+	"5c0F734916B17c38674Ed5867eDa22f8314672EC_ethernity": {
+		"addre": "5c0F734916B17c38674Ed5867eDa22f8314672EC_ethernity",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "ethernity_fallback_6",
+				"exp": "msg.sender.transfer(balance[msg.sender] / 100 * 5 * (block.number - paytime[msg.sender]) / 5900)"
+			}
+		]
+	},
+	"9315b6096e3f731ed9ff43a897ec825f248816be_MMMInvest": {
+		"addre": "9315b6096e3f731ed9ff43a897ec825f248816be_MMMInvest",
+		"slice": [
+			{
+				"name": "MMMInvest_getDeposit_1",
+				"exp": "addr.transfer(address(this).balance)"
+			},
+			{
+				"tag": "1",
+				"name": "MMMInvest_receivePayment_3",
+				"exp": "msg.sender.transfer(depositMultiplier)"
+			}
+		]
+	},
+	"65d61179a248fa56235dd0691e0792582b5cb3f9_EasyInvest15": {
+		"addre": "65d61179a248fa56235dd0691e0792582b5cb3f9_EasyInvest15",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "EasyInvest15_fallback_5",
+				"exp": "msg.sender.transfer(amount)"
+			}
+		]
+	},
+	"dccc53ca8263e79548aff6aa81ccf1c42e2c1a89_Leprechaun": {
+		"addre": "dccc53ca8263e79548aff6aa81ccf1c42e2c1a89_Leprechaun",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "Leprechaun_transfer_6",
+				"exp": "! addr.send(amount)"
+			}
+		]
+	},
+	"72d9513547252dbf5377e0ab9ad310fd88b52415_EthLong": {
+		"addre": "72d9513547252dbf5377e0ab9ad310fd88b52415_EthLong",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "EthLong_withdraw_6",
+				"exp": "msg.sender.transfer(balance)"
+			}
+		]
+	}
+}

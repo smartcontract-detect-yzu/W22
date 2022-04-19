@@ -1,0 +1,4419 @@
+{
+	"0x31c26225d2395acdcd5264d12499958ad0c5493f": {
+		"note": "TBD",
+		"addre": "0x31c26225d2395acdcd5264d12499958ad0c5493f",
+		"slice": [
+			{
+				"name": "DXF_Tokens_acceptTermsAndJoinDXF_31",
+				"exp": "! multisigDXF.send(msg.value)"
+			},
+			{
+				"name": "DXF_Tokens_paybackContribution_20",
+				"exp": "! memberRefunded.send(msg.value)"
+			},
+			{
+				"name": "DXF_Tokens_closeFunding_5",
+				"exp": "! admin.send(this.balance)"
+			}
+		]
+	},
+	"0xb7438d9e851aaff3a86a8bdb060285872a32f558": {
+		"note": "TBD",
+		"addre": "0xb7438d9e851aaff3a86a8bdb060285872a32f558",
+		"slice": []
+	},
+	"0x84d9f3e49adb28f57f23f25b77bfb91612623f1f": {
+		"addre": "0x84d9f3e49adb28f57f23f25b77bfb91612623f1f",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "BetGame_winnerIsA_10",
+				"exp": "A[p].player.send(A[p].deposit + A[p].deposit / 1000000 * ratio)"
+			},
+			{
+				"tag": "1",
+				"name": "BetGame_winnerIsB_10",
+				"exp": "B[p].player.send(B[p].deposit + B[p].deposit / 1000000 * ratio)"
+			},
+			{
+				"tag": "1",
+				"name": "BetGame_winnerIsDraw_10",
+				"exp": "D[p].player.send(D[p].deposit + D[p].deposit / 1000000 * ratio)"
+			}
+		]
+	},
+	"0xeF9976e8346d4EBE1Cd43aea1060723917C9FEF4": {
+		"addre": "0xeF9976e8346d4EBE1Cd43aea1060723917C9FEF4",
+		"slice": [
+			{
+				"name": "Queue_fallback_9",
+				"exp": "PROMO1.send(promo1)"
+			},
+			{
+				"name": "Queue_fallback_11",
+				"exp": "PROMO2.send(promo2)"
+			},
+			{
+				"name": "Queue_fallback_13",
+				"exp": "PROMO3.send(promo3)"
+			},
+			{
+				"name": "Queue_fallback_15",
+				"exp": "PRIZE.send(prize)"
+			},
+			{
+				"tag": "1",
+				"name": "Queue_pay_16",
+				"exp": "dep.depositor.send(leftPayout)"
+			},
+			{
+				"tag": "1",
+				"name": "Queue_pay_21",
+				"exp": "dep.depositor.send(money)"
+			}
+		]
+	},
+	"0x629b4a1dae038650bd849fb972b375861da41567": {
+		"addre": "0x629b4a1dae038650bd849fb972b375861da41567",
+		"slice": [
+			{
+				"name": "EtherWaterfall_fallback_6",
+				"exp": "PROMO.send(promo)"
+			},
+			{
+				"tag": "1",
+				"name": "EtherWaterfall_pay_9",
+				"exp": "dep.depositor.send(dep.expect)"
+			},
+			{
+				"tag": "1",
+				"name": "EtherWaterfall_pay_12",
+				"exp": "dep.depositor.send(money)"
+			}
+		]
+	},
+	"0x109c4f2ccc82c4d77bde15f306707320294aea3f": {
+		"addre": "0x109c4f2ccc82c4d77bde15f306707320294aea3f",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "MyScheme_fallback_8",
+				"exp": "myTree[0].send(treeBalance)"
+			},
+			{
+				"tag": "1",
+				"name": "MyScheme_fallback_16",
+				"exp": "myTree[i].send(500000000000000000)"
+			},
+			{
+				"tag": "1",
+				"name": "MyScheme_fallback_25",
+				"exp": "myTree[i].send(eachLevelGets / numInLevel - 1)"
+			}
+		]
+	},
+	"0xa850e6f693b9bcb31df3ee44e7888ef19e608107": {
+		"addre": "0xa850e6f693b9bcb31df3ee44e7888ef19e608107",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "plusOnePonzi_fallback_11",
+				"exp": "payouts[payoutIndex].addr.send(payouts[payoutIndex].yield)"
+			}
+		]
+	},
+	"0x0f7466e713b582630504dd39a72f6e15d2d052a9": {
+		"addre": "0x0f7466e713b582630504dd39a72f6e15d2d052a9",
+		"slice": [
+			{
+				"name": "Multiplier_fallback_6",
+				"exp": "PROMO1.send(promo1)"
+			},
+			{
+				"name": "Multiplier_fallback_8",
+				"exp": "PROMO2.send(promo2)"
+			},
+			{
+				"name": "Multiplier_fallback_10",
+				"exp": "TECH.send(tech)"
+			},
+			{
+				"tag": "1",
+				"name": "Multiplier_pay_9",
+				"exp": "dep.depositor.send(dep.expect)"
+			},
+			{
+				"tag": "1",
+				"name": "Multiplier_pay_12",
+				"exp": "dep.depositor.send(money)"
+			}
+		]
+	},
+	"0xc07021b1875e2c4a885e73ad43557c7e40d63556": {
+		"addre": "0xc07021b1875e2c4a885e73ad43557c7e40d63556",
+		"slice": [
+			{
+				"name": "QuickQueue_fallback_6",
+				"exp": "SUPPORT.transfer(ads)"
+			},
+			{
+				"tag": "1",
+				"name": "QuickQueue_pay_9",
+				"exp": "dep.depositor.transfer(dep.expect)"
+			},
+			{
+				"tag": "1",
+				"name": "QuickQueue_pay_12",
+				"exp": "dep.depositor.transfer(money)"
+			}
+		]
+	},
+	"0x2a06efc3db84ed9e0652e13314df5ff963de92a1": {
+		"addre": "0x2a06efc3db84ed9e0652e13314df5ff963de92a1",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "DayTrader_purchase_15",
+				"exp": "oldOwner.transfer(payment)"
+			},
+			{
+				"name": "DayTrader_purchase_18",
+				"exp": "newOwner.transfer(purchaseExcess)"
+			},
+			{
+				"name": "DayTrader_payout_1",
+				"exp": "contractOwner.transfer(this.balance)"
+			}
+		]
+	},
+	"0x1b05e6557768650c0df0c9377c32c621ac1ccf17": {
+		"addre": "0x1b05e6557768650c0df0c9377c32c621ac1ccf17",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "NFTHouseGame_purchaseAsset_13",
+				"exp": "houses[_tokenId].owner.transfer(sellerProceeds)"
+			},
+			{
+				"name": "NFTHouseGame_withdrawFees_5",
+				"exp": "gameDeveloper.transfer(devsShare)"
+			},
+			{
+				"name": "NFTHouseGame_withdrawFees_7",
+				"exp": "_destination.transfer(this.balance)"
+			},
+			{
+				"name": "NFTHouseGame_withdrawDevFees_5",
+				"exp": "_destination.transfer(devsShare)"
+			}
+		]
+	},
+	"0xc677f49cf449421ffd246e4d33e69e49b1183e4b": {
+		"note": "TBD",
+		"addre": "0xc677f49cf449421ffd246e4d33e69e49b1183e4b",
+		"slice": []
+	},
+	"0x5aa4769f204f0b9e8d9c852377bf90fbe5bf2aeb": {
+		"addre": "0x5aa4769f204f0b9e8d9c852377bf90fbe5bf2aeb",
+		"slice": [
+			{
+				"name": "MultiX250max03eth_fallback_6",
+				"exp": "PROMO.transfer(promo)"
+			},
+			{
+				"tag": "1",
+				"name": "MultiX250max03eth_pay_9",
+				"exp": "dep.depositor.transfer(dep.expect)"
+			},
+			{
+				"tag": "1",
+				"name": "MultiX250max03eth_pay_12",
+				"exp": "dep.depositor.transfer(money)"
+			}
+		]
+	},
+	"0x4bb59d7764ca528e22a5ecaa785280986e9818ea": {
+		"note": "TBD",
+		"addre": "0x4bb59d7764ca528e22a5ecaa785280986e9818ea",
+		"slice": [
+			{
+				"name": "MartiGame_deleteGame_5",
+				"exp": "game.creator.transfer(game.bet)"
+			},
+			{
+				"name": "MartiGame_getWin_7",
+				"exp": "game.creator.transfer(game.bet)"
+			},
+			{
+				"name": "MartiGame_getWin_8",
+				"exp": "game.responder.transfer(game.bet)"
+			},
+			{
+				"name": "MartiGame_getWin_14",
+				"exp": "owner.transfer(owner_fee)"
+			},
+			{
+				"name": "MartiGame_getWin_18",
+				"exp": "game.creator.transfer(winAmount)"
+			},
+			{
+				"name": "MartiGame_getWin_21",
+				"exp": "game.responder.transfer(winAmount)"
+			}
+		]
+	},
+	"0x7f21a3cc5d175704ec7c421d7c973bfb80f2c11b": {
+		"addre": "0x7f21a3cc5d175704ec7c421d7c973bfb80f2c11b",
+		"slice": [
+			{
+				"name": "Queue_fallback_9",
+				"exp": "PROMO1.send(promo1)"
+			},
+			{
+				"name": "Queue_fallback_11",
+				"exp": "PROMO2.send(promo2)"
+			},
+			{
+				"name": "Queue_fallback_13",
+				"exp": "PROMO3.send(promo3)"
+			},
+			{
+				"name": "Queue_fallback_15",
+				"exp": "PRIZE.send(prize)"
+			},
+			{
+				"tag": "1",
+				"name": "Queue_pay_16",
+				"exp": "dep.depositor.send(leftPayout)"
+			},
+			{
+				"tag": "1",
+				"name": "Queue_pay_21",
+				"exp": "dep.depositor.send(money)"
+			}
+		]
+	},
+	"0xdf77b0896bc7c473df2d86d534af317b96b58386": {
+		"addre": "0xdf77b0896bc7c473df2d86d534af317b96b58386",
+		"slice": [
+			{
+				"name": "Queue_fallback_10",
+				"exp": "PROMO1.send(promo1)"
+			},
+			{
+				"name": "Queue_fallback_12",
+				"exp": "PROMO2.send(promo2)"
+			},
+			{
+				"name": "Queue_fallback_14",
+				"exp": "PROMO3.send(promo3)"
+			},
+			{
+				"name": "Queue_fallback_16",
+				"exp": "PRIZE.send(prize)"
+			},
+			{
+				"tag": "1",
+				"name": "Queue_pay_16",
+				"exp": "dep.depositor.send(leftPayout)"
+			},
+			{
+				"tag": "1",
+				"name": "Queue_pay_21",
+				"exp": "dep.depositor.send(money)"
+			}
+		]
+	},
+	"0x49f988d49f6cbfb3a24cc22b468109dcd0695429": {
+		"note": "TBD",
+		"addre": "0x49f988d49f6cbfb3a24cc22b468109dcd0695429",
+		"slice": [
+			{
+				"name": "DXF_Tokens_acceptTermsAndJoinDXF_31",
+				"exp": "! multisigDXF.send(msg.value)"
+			},
+			{
+				"name": "DXF_Tokens_paybackContribution_20",
+				"exp": "! memberRefunded.send(msg.value)"
+			},
+			{
+				"name": "DXF_Tokens_closeFunding_5",
+				"exp": "! admin.send(this.balance)"
+			}
+		]
+	},
+	"0x7a1ef8e226fd04f31468763c7b72d0abbe1518ea": {
+		"addre": "0x7a1ef8e226fd04f31468763c7b72d0abbe1518ea",
+		"slice": [
+			{
+				"name": "Game_makeDeposit_11",
+				"exp": "organizer.transfer(msg.value.mul(feeOrganizer).div(100))"
+			},
+			{
+				"name": "Game_makeDeposit_12",
+				"exp": "technician.transfer(msg.value.mul(feeTechnician).div(100))"
+			},
+			{
+				"tag": "1",
+				"name": "Game_makeDeposit_15",
+				"exp": "deposits[currentPaymentIndex].depositor.transfer(deposits[currentPaymentIndex].payout)"
+			}
+		]
+	},
+	"0x9908e89cfcf86ef44b6e3b2f65a6d871714ace39": {
+		"addre": "0x9908e89cfcf86ef44b6e3b2f65a6d871714ace39",
+		"slice": [
+			{
+				"name": "Queue_fallback_9",
+				"exp": "PROMO1.send(promo1)"
+			},
+			{
+				"name": "Queue_fallback_11",
+				"exp": "PROMO2.send(promo2)"
+			},
+			{
+				"name": "Queue_fallback_13",
+				"exp": "PROMO3.send(promo3)"
+			},
+			{
+				"name": "Queue_fallback_15",
+				"exp": "PRIZE.send(prize)"
+			},
+			{
+				"tag": "1",
+				"name": "Queue_pay_16",
+				"exp": "dep.depositor.send(leftPayout)"
+			},
+			{
+				"tag": "1",
+				"name": "Queue_pay_21",
+				"exp": "dep.depositor.send(money)"
+			}
+		]
+	},
+	"0xa2c5718723161f48fe1be09bee40a8fa347df520": {
+		"addre": "0xa2c5718723161f48fe1be09bee40a8fa347df520",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "DayTrader_purchase_15",
+				"exp": "oldOwner.transfer(payment)"
+			},
+			{
+				"name": "DayTrader_purchase_18",
+				"exp": "newOwner.transfer(purchaseExcess)"
+			},
+			{
+				"name": "DayTrader_payout_1",
+				"exp": "contractOwner.transfer(this.balance)"
+			}
+		]
+	},
+	"0xa871e6cf5657a0c14bda66c7a709ad0c42c42006": {
+		"addre": "0xa871e6cf5657a0c14bda66c7a709ad0c42c42006",
+		"slice": [
+			{
+				"name": "x105_fallback_6",
+				"exp": "PROMO.send(promo)"
+			},
+			{
+				"tag": "1",
+				"name": "x105_pay_9",
+				"exp": "dep.depositor.send(dep.expect)"
+			},
+			{
+				"tag": "1",
+				"name": "x105_pay_12",
+				"exp": "dep.depositor.send(money)"
+			}
+		]
+	},
+	"0x2c2e3baa2191cf325a28a01ff42340f2ae677572": {
+		"note": "TBD",
+		"addre": "0x2c2e3baa2191cf325a28a01ff42340f2ae677572",
+		"slice": [
+			{
+				"name": "Matching_Finneys_endRound_19",
+				"exp": "matchers[k].player.send(payout_matcher)"
+			},
+			{
+				"name": "Matching_Finneys_endRound_22",
+				"exp": "contrarians[index_contrarian].player.send(payout_contrarian)"
+			},
+			{
+				"name": "Matching_Finneys_endRound_28",
+				"exp": "owner.send(index_player_in_round * gamble_value - payout_total)"
+			},
+			{
+				"name": "Matching_Finneys_refundRound_7",
+				"exp": "matchers[k].player.send(gamble_value)"
+			},
+			{
+				"name": "Matching_Finneys_refundRound_14",
+				"exp": "contrarians[j].player.send(gamble_value)"
+			},
+			{
+				"name": "Matching_Finneys_refundRound_23",
+				"exp": "owner.send(balanceLeft)"
+			}
+		]
+	},
+	"0x1bb3ac952015995140031d42fcf7b649047afc27": {
+		"addre": "0x1bb3ac952015995140031d42fcf7b649047afc27",
+		"slice": [
+			{
+				"name": "DXF_Tokens_acceptTermsAndJoinDXF_31",
+				"exp": "! multisigDXF.send(msg.value)"
+			},
+			{
+				"name": "DXF_Tokens_paybackContribution_20",
+				"exp": "! memberRefunded.send(msg.value)"
+			},
+			{
+				"name": "DXF_Tokens_closeFunding_5",
+				"exp": "! admin.send(this.balance)"
+			}
+		]
+	},
+	"0x5169dbf8c7f02de1083b05d4018ef488f9c37222": {
+		"addre": "0x5169dbf8c7f02de1083b05d4018ef488f9c37222",
+		"slice": [
+			{
+				"name": "BestMultiplierNew_fallback_7",
+				"exp": "Reclame.send(promo)"
+			},
+			{
+				"name": "BestMultiplierNew_fallback_9",
+				"exp": "Admin.send(admin)"
+			},
+			{
+				"name": "BestMultiplierNew_fallback_11",
+				"exp": "BMG.send(bmg)"
+			},
+			{
+				"name": "BestMultiplierNew_refferal_7",
+				"exp": "Reclame.send(promo)"
+			},
+			{
+				"name": "BestMultiplierNew_refferal_9",
+				"exp": "Admin.send(admin)"
+			},
+			{
+				"name": "BestMultiplierNew_refferal_11",
+				"exp": "BMG.send(bmg)"
+			},
+			{
+				"name": "BestMultiplierNew_refferal_14",
+				"exp": "REF.send(ref)"
+			},
+			{
+				"tag": "1",
+				"name": "BestMultiplierNew_pay_9",
+				"exp": "dep.depositor.send(dep.expect)"
+			},
+			{
+				"tag": "1",
+				"name": "BestMultiplierNew_pay_12",
+				"exp": "dep.depositor.send(money)"
+			}
+		]
+	},
+	"0x5bd7b9cd17cee4d2fae01d9695e83098cf409488": {
+		"addre": "0x5bd7b9cd17cee4d2fae01d9695e83098cf409488",
+		"slice": [
+			{
+				"name": "Queue_fallback_9",
+				"exp": "PROMO1.send(promo1)"
+			},
+			{
+				"name": "Queue_fallback_11",
+				"exp": "PROMO2.send(promo2)"
+			},
+			{
+				"name": "Queue_fallback_13",
+				"exp": "PROMO3.send(promo3)"
+			},
+			{
+				"name": "Queue_fallback_15",
+				"exp": "PRIZE.send(prize)"
+			},
+			{
+				"tag": "1",
+				"name": "Queue_pay_16",
+				"exp": "dep.depositor.send(leftPayout)"
+			},
+			{
+				"tag": "1",
+				"name": "Queue_pay_21",
+				"exp": "dep.depositor.send(money)"
+			}
+		]
+	},
+	"0x37b0d8b1299c1edf07a8ee4c5c1d245f17d56e3f": {
+		"addre": "0x37b0d8b1299c1edf07a8ee4c5c1d245f17d56e3f",
+		"slice": [
+			{
+				"name": "Multiplier_X150_max_1eth_fallback_6",
+				"exp": "PROMO.transfer(promo)"
+			},
+			{
+				"tag": "1",
+				"name": "Multiplier_X150_max_1eth_pay_9",
+				"exp": "dep.depositor.transfer(dep.expect)"
+			},
+			{
+				"tag": "1",
+				"name": "Multiplier_X150_max_1eth_pay_12",
+				"exp": "dep.depositor.transfer(money)"
+			}
+		]
+	},
+	"0xc66d973181f202142bbdd5877d2c175c5593fdbf": {
+		"addre": "0xc66d973181f202142bbdd5877d2c175c5593fdbf",
+		"slice": [
+			{
+				"name": "Formula1Game_fallback_6",
+				"exp": "PROMO1.send(promo1)"
+			},
+			{
+				"name": "Formula1Game_fallback_8",
+				"exp": "PROMO2.send(promo2)"
+			},
+			{
+				"name": "Formula1Game_fallback_10",
+				"exp": "TECH.send(tech)"
+			},
+			{
+				"tag": "1",
+				"name": "Formula1Game_pay_9",
+				"exp": "dep.depositor.send(dep.expect)"
+			},
+			{
+				"tag": "1",
+				"name": "Formula1Game_pay_12",
+				"exp": "dep.depositor.send(money)"
+			}
+		]
+	},
+	"0x349455c38122f117bc339ef2771d95938f19eaa0": {
+		"addre": "0x349455c38122f117bc339ef2771d95938f19eaa0",
+		"slice": [
+			{
+				"name": "FireCasino_withdraw_2",
+				"exp": "owner.transfer(amount)"
+			},
+			{
+				"tag": "1",
+				"name": "FireCasino_distributePrizes_25",
+				"exp": "winners[j].transfer(winnerEtherAmount)"
+			}
+		]
+	},
+	"0xbb4f286f88881afff196f8170105ad91b6217e0b": {
+		"addre": "0xbb4f286f88881afff196f8170105ad91b6217e0b",
+		"slice": [
+			{
+				"name": "FromResponsibleInvestors_fallback_12",
+				"exp": "advertisingAddress.send(advertperc)"
+			},
+			{
+				"name": "FromResponsibleInvestors_fallback_13",
+				"exp": "adminsAddress.send(m_adminsPercent.mul(msg.value))"
+			},
+			{
+				"tag": "1",
+				"name": "FromResponsibleInvestors_distribute_17",
+				"exp": "ImportedQueue[currentImportedReceiverIndex].depositor.send(toSend)"
+			},
+			{
+				"tag": "1",
+				"name": "FromResponsibleInvestors_distribute_26",
+				"exp": "Queue[currentReceiverIndex].depositor.send(toSend)"
+			}
+		]
+	},
+	"0x194dd7c558d18e48ba0c35be5c40ec10d8001fda": {
+		"addre": "0x194dd7c558d18e48ba0c35be5c40ec10d8001fda",
+		"slice": [
+			{
+				"name": "Formula1Game_fallback_6",
+				"exp": "PROMO1.send(promo1)"
+			},
+			{
+				"name": "Formula1Game_fallback_8",
+				"exp": "PROMO2.send(promo2)"
+			},
+			{
+				"name": "Formula1Game_fallback_10",
+				"exp": "TECH.send(tech)"
+			},
+			{
+				"tag": "1",
+				"name": "Formula1Game_pay_9",
+				"exp": "dep.depositor.send(dep.expect)"
+			},
+			{
+				"tag": "1",
+				"name": "Formula1Game_pay_12",
+				"exp": "dep.depositor.send(money)"
+			}
+		]
+	},
+	"0x032747313c4e914b5fce356ab8dc4df551972dcd": {
+		"addre": "0x032747313c4e914b5fce356ab8dc4df551972dcd",
+		"slice": [
+			{
+				"name": "TrustEth_retrieveFunds_1",
+				"exp": "owner.send(this.balance)"
+			},
+			{
+				"name": "TrustEth_payEther_11",
+				"exp": "msg.sender.send(payback)"
+			},
+			{
+				"tag": "1",
+				"name": "TrustEth_payEther_12",
+				"exp": "sellers[transactions[transactionId].sellerId].etherAddress.send(etherAskedFor)"
+			}
+		]
+	},
+	"0xd077e49cbad10688a3084aa3e8ed1605084d4ec0": {
+		"addre": "0xd077e49cbad10688a3084aa3e8ed1605084d4ec0",
+		"slice": [
+			{
+				"name": "GasWars_fallback_9",
+				"exp": "PROMO1.send(promo1)"
+			},
+			{
+				"name": "GasWars_fallback_11",
+				"exp": "PROMO2.send(promo2)"
+			},
+			{
+				"name": "GasWars_fallback_13",
+				"exp": "PROMO3.send(promo3)"
+			},
+			{
+				"name": "GasWars_fallback_15",
+				"exp": "PRIZE.send(prize)"
+			},
+			{
+				"tag": "1",
+				"name": "GasWars_pay_16",
+				"exp": "dep.depositor.send(leftPayout)"
+			},
+			{
+				"tag": "1",
+				"name": "GasWars_pay_21",
+				"exp": "dep.depositor.send(money)"
+			}
+		]
+	},
+	"0x844224a22eed9f7787838c7ad903c596d565a573": {
+		"addre": "0x844224a22eed9f7787838c7ad903c596d565a573",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "Lottery_pickWinner_5",
+				"exp": "winner.transfer(address(this).balance)"
+			}
+		]
+	},
+	"0x88acc7101d390d33f26e6f4324b575ea8070aad1": {
+		"addre": "0x88acc7101d390d33f26e6f4324b575ea8070aad1",
+		"slice": [
+			{
+				"name": "InfinytiProfit_fallback_7",
+				"exp": "PROMO.transfer(promo)"
+			},
+			{
+				"tag": "1",
+				"name": "InfinytiProfit_pay_9",
+				"exp": "dep.depositor.transfer(dep.expect)"
+			},
+			{
+				"tag": "1",
+				"name": "InfinytiProfit_pay_12",
+				"exp": "dep.depositor.transfer(money)"
+			}
+		]
+	},
+	"0x020e0638aa7d98b40d2a3a7ebd37ebdfc5cba2fd": {
+		"addre": "0x020e0638aa7d98b40d2a3a7ebd37ebdfc5cba2fd",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "EtherBags_purchase_15",
+				"exp": "oldOwner.transfer(payment)"
+			},
+			{
+				"name": "EtherBags_purchase_18",
+				"exp": "newOwner.transfer(purchaseExcess)"
+			},
+			{
+				"name": "EtherBags_payout_1",
+				"exp": "contractOwner.transfer(this.balance)"
+			}
+		]
+	},
+	"0x8041b5737b9338c3d4e0c22497264293cb91a971": {
+		"addre": "0x8041b5737b9338c3d4e0c22497264293cb91a971",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "Lottery_pickWinner_5",
+				"exp": "winner.transfer(address(this).balance)"
+			}
+		]
+	},
+	"0x8bbeaeb0ec46bb71356d44c2d3121a35172662be": {
+		"addre": "0x8bbeaeb0ec46bb71356d44c2d3121a35172662be",
+		"slice": [
+			{
+				"name": "Formula1Game_fallback_6",
+				"exp": "PROMO1.send(promo1)"
+			},
+			{
+				"name": "Formula1Game_fallback_8",
+				"exp": "PROMO2.send(promo2)"
+			},
+			{
+				"name": "Formula1Game_fallback_10",
+				"exp": "TECH.send(tech)"
+			},
+			{
+				"tag": "1",
+				"name": "Formula1Game_pay_9",
+				"exp": "dep.depositor.send(dep.expect)"
+			},
+			{
+				"tag": "1",
+				"name": "Formula1Game_pay_12",
+				"exp": "dep.depositor.send(money)"
+			}
+		]
+	},
+	"0x19b115365671a818ed62aa326d91e6e4713f8900": {
+		"addre": "0x19b115365671a818ed62aa326d91e6e4713f8900",
+		"slice": [
+			{
+				"name": "BigProfit_fallback_6",
+				"exp": "PROMO.transfer(promo)"
+			},
+			{
+				"tag": "1",
+				"name": "BigProfit_pay_9",
+				"exp": "dep.depositor.transfer(dep.expect)"
+			},
+			{
+				"tag": "1",
+				"name": "BigProfit_pay_12",
+				"exp": "dep.depositor.transfer(money)"
+			}
+		]
+	},
+	"0xd6893da3dd6dc91b4957d2d74737c6726f1033d5": {
+		"addre": "0xd6893da3dd6dc91b4957d2d74737c6726f1033d5",
+		"slice": [
+			{
+				"name": "MAX150_fallback_6",
+				"exp": "ADS_SUPPORT.transfer(ads)"
+			},
+			{
+				"name": "MAX150_fallback_8",
+				"exp": "TECH_SUPPORT.transfer(tech)"
+			},
+			{
+				"tag": "1",
+				"name": "MAX150_pay_9",
+				"exp": "dep.depositor.transfer(dep.expect)"
+			},
+			{
+				"tag": "1",
+				"name": "MAX150_pay_12",
+				"exp": "dep.depositor.transfer(money)"
+			}
+		]
+	},
+	"0x2d6cb85e108326a8bbb72ca6f3c9f0f3c7f53638": {
+		"addre": "0x2d6cb85e108326a8bbb72ca6f3c9f0f3c7f53638",
+		"slice": [
+			{
+				"name": "Private_Fund_withdraw_privatefund_2",
+				"exp": "beneficiary.send(amountRaised)"
+			},
+			{
+				"name": "Private_Fund_withdraw_privatefund_9",
+				"exp": "funders[i].addr.send(funders[i].amount)"
+			}
+		]
+	},
+	"0x16a4ff536001405f2b0d7ddafc79f6a10d024640": {
+		"addre": "0x16a4ff536001405f2b0d7ddafc79f6a10d024640",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "plusOnePonzi_fallback_11",
+				"exp": "payouts[payoutIndex].addr.send(payouts[payoutIndex].yield)"
+			}
+		]
+	},
+	"0x95b3581fc1d18ca52cd2a295427c7153419abbf0": {
+		"addre": "0x95b3581fc1d18ca52cd2a295427c7153419abbf0",
+		"slice": [
+			{
+				"name": "Multi7_fallback_6",
+				"exp": "PROMO.send(promo)"
+			},
+			{
+				"tag": "1",
+				"name": "Multi7_pay_9",
+				"exp": "dep.depositor.send(dep.expect)"
+			},
+			{
+				"tag": "1",
+				"name": "Multi7_pay_12",
+				"exp": "dep.depositor.send(money)"
+			}
+		]
+	},
+	"0x7bd83b818fb88239a8ece4c95837dc5746af32cc": {
+		"addre": "0x7bd83b818fb88239a8ece4c95837dc5746af32cc",
+		"slice": [
+			{
+				"name": "Multiplier2_fallback_6",
+				"exp": "PROMO.send(promo)"
+			},
+			{
+				"tag": "1",
+				"name": "Multiplier2_pay_9",
+				"exp": "dep.depositor.send(dep.expect)"
+			},
+			{
+				"tag": "1",
+				"name": "Multiplier2_pay_12",
+				"exp": "dep.depositor.send(money)"
+			}
+		]
+	},
+	"0x9a13ba2e38cd2041f483a0992967439e35cebee7": {
+		"addre": "0x9a13ba2e38cd2041f483a0992967439e35cebee7",
+		"slice": [
+			{
+				"name": "Queue_fallback_9",
+				"exp": "PROMO1.send(promo1)"
+			},
+			{
+				"name": "Queue_fallback_11",
+				"exp": "PROMO2.send(promo2)"
+			},
+			{
+				"name": "Queue_fallback_13",
+				"exp": "PROMO3.send(promo3)"
+			},
+			{
+				"name": "Queue_fallback_15",
+				"exp": "PRIZE.send(prize)"
+			},
+			{
+				"tag": "1",
+				"name": "Queue_pay_16",
+				"exp": "dep.depositor.send(leftPayout)"
+			},
+			{
+				"tag": "1",
+				"name": "Queue_pay_21",
+				"exp": "dep.depositor.send(money)"
+			}
+		]
+	},
+	"0x0c73ad49b9824dfe59e6b0abd0d0fe26c6f268cd": {
+		"addre": "0x0c73ad49b9824dfe59e6b0abd0d0fe26c6f268cd",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "Lottery_draw_10",
+				"exp": "players[i].send(350000000000000000)"
+			},
+			{
+				"name": "Lottery_draw_14",
+				"exp": "admin.send(address(this).balance)"
+			}
+		]
+	},
+	"0x5df4bea3540899a33c76c4d25108f4fe2ca89044": {
+		"note": "TBD",
+		"addre": "0x5df4bea3540899a33c76c4d25108f4fe2ca89044",
+		"slice": [
+			{
+				"name": "RPS_abortGame_6",
+				"exp": "msg.sender.transfer(thisGame.value)"
+			},
+			{
+				"name": "RPS_revealMove_26",
+				"exp": "winner.transfer((thisGame.value * 2) - fee * 2)"
+			},
+			{
+				"name": "RPS_forfeitGame_12",
+				"exp": "thisGame.player2.transfer((thisGame.value * 2) - fee * 2)"
+			},
+			{
+				"name": "RPS_claimGame_13",
+				"exp": "thisGame.player2.transfer((thisGame.value * 2) - fee * 2)"
+			},
+			{
+				"name": "RPS_withdraw_6",
+				"exp": "msg.sender.transfer(amount)"
+			}
+		]
+	},
+	"0x7cdfa222f37f5c4cce49b3bbfc415e8c911d1cd8": {
+		"addre": "0x7cdfa222f37f5c4cce49b3bbfc415e8c911d1cd8",
+		"slice": [
+			{
+				"name": "Multiplier_fallback_6",
+				"exp": "PROMO.send(promo)"
+			},
+			{
+				"tag": "1",
+				"name": "Multiplier_pay_9",
+				"exp": "dep.depositor.send(dep.expect)"
+			},
+			{
+				"tag": "1",
+				"name": "Multiplier_pay_12",
+				"exp": "dep.depositor.send(money)"
+			}
+		]
+	},
+	"0x53e523b0207c0987af44aed9c09c4d3e59e7db9a": {
+		"addre": "0x53e523b0207c0987af44aed9c09c4d3e59e7db9a",
+		"slice": [
+			{
+				"name": "FireCasino_withdraw_1",
+				"exp": "owner.transfer(address(this).balance)"
+			},
+			{
+				"tag": "1",
+				"name": "FireCasino_distributePrizes_25",
+				"exp": "winners[j].transfer(winnerEtherAmount)"
+			}
+		]
+	},
+	"0xc33281d43bd23b6f8ec8880c663d7603b85cb383": {
+		"addre": "0xc33281d43bd23b6f8ec8880c663d7603b85cb383",
+		"slice": [
+			{
+				"name": "EthOne_fallback_8",
+				"exp": "myTree[0].send(treeBalance)"
+			},
+			{
+				"tag": "1",
+				"name": "EthOne_fallback_16",
+				"exp": "myTree[i].send(500000000000000000)"
+			},
+			{
+				"tag": "1",
+				"name": "EthOne_fallback_25",
+				"exp": "myTree[i].send(eachLevelGets / numInLevel - 1)"
+			}
+		]
+	},
+	"0xde22069cad238979bd436d5ea0d60475e5e7af06": {
+		"note": "TBD",
+		"addre": "0xde22069cad238979bd436d5ea0d60475e5e7af06",
+		"slice": []
+	},
+	"0x7229b46468dc09a0170ae349b9a7443ed6e2992a": {
+		"addre": "0x7229b46468dc09a0170ae349b9a7443ed6e2992a",
+		"slice": [
+			{
+				"name": "Multiplier_fallback_6",
+				"exp": "PROMO.send(promo)"
+			},
+			{
+				"tag": "1",
+				"name": "Multiplier_pay_9",
+				"exp": "dep.depositor.send(dep.expect)"
+			},
+			{
+				"tag": "1",
+				"name": "Multiplier_pay_12",
+				"exp": "dep.depositor.send(money)"
+			}
+		]
+	},
+	"0xf767fca8e65d03fe16d4e38810f5e5376c3372a8": {
+		"addre": "0xf767fca8e65d03fe16d4e38810f5e5376c3372a8",
+		"slice": [
+			{
+				"name": "LuckyDoubler_init_2",
+				"exp": "msg.sender.send(msg.value)"
+			},
+			{
+				"name": "LuckyDoubler_join_3",
+				"exp": "msg.sender.send(msg.value - 1000000000000000000)"
+			},
+			{
+				"tag": "1",
+				"name": "LuckyDoubler_join_19",
+				"exp": "theEntry.entryAddress.send(payout)"
+			},
+			{
+				"name": "LuckyDoubler_join_30",
+				"exp": "owner.send(fees)"
+			}
+		]
+	},
+	"0xf6646cbea7b18dd7c77756879bda42f70da3526f": {
+		"addre": "0xf6646cbea7b18dd7c77756879bda42f70da3526f",
+		"slice": [
+			{
+				"name": "EasyMultiplier_fallback_6",
+				"exp": "PROMO.send(promo)"
+			},
+			{
+				"tag": "1",
+				"name": "EasyMultiplier_pay_9",
+				"exp": "dep.depositor.send(dep.expect)"
+			},
+			{
+				"tag": "1",
+				"name": "EasyMultiplier_pay_12",
+				"exp": "dep.depositor.send(money)"
+			}
+		]
+	},
+	"0xe4c1c33ed635263c61bf61db751b8a74ee3af0e4": {
+		"addre": "0xe4c1c33ed635263c61bf61db751b8a74ee3af0e4",
+		"slice": [
+			{
+				"name": "WealthShare_enter_14",
+				"exp": "owner.send(Fees)"
+			},
+			{
+				"name": "WealthShare_enter_22",
+				"exp": "owner.send(minimal)"
+			},
+			{
+				"tag": "1",
+				"name": "WealthShare_enter_35",
+				"exp": "depositors[nr].etherAddress.send(payout)"
+			}
+		]
+	},
+	"0x243ae25b7f270b9136b61959d8012029856b4653": {
+		"addre": "0x243ae25b7f270b9136b61959d8012029856b4653",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "BetGame_winnerIsA_10",
+				"exp": "A[p].player.send(A[p].deposit + A[p].deposit / 1000000 * ratio)"
+			},
+			{
+				"tag": "1",
+				"name": "BetGame_winnerIsB_10",
+				"exp": "B[p].player.send(B[p].deposit + B[p].deposit / 1000000 * ratio)"
+			},
+			{
+				"tag": "1",
+				"name": "BetGame_winnerIsDraw_10",
+				"exp": "D[p].player.send(D[p].deposit + D[p].deposit / 1000000 * ratio)"
+			}
+		]
+	},
+	"0x513f38be4561091eb6fa87ed2566b3e6c7c0169f": {
+		"addre": "0x513f38be4561091eb6fa87ed2566b3e6c7c0169f",
+		"slice": [
+			{
+				"name": "Distripto_distributeLast_6",
+				"exp": "promoWallet.transfer(val)"
+			},
+			{
+				"name": "Distripto_distributeLast_7",
+				"exp": "deposits[deposits.length - 1].depositor.send(deposits[deposits.length - 1].payout)"
+			},
+			{
+				"name": "Distripto_distribute_2",
+				"exp": "promoWallet.transfer(amountForDistribution.mul(10).div(100))"
+			},
+			{
+				"tag": "1",
+				"name": "Distripto_distribute_10",
+				"exp": "deposits[i].depositor.send(deposits[i].payout)"
+			}
+		]
+	},
+	"0x60acd43314d93f38507f3fd12e84225a5a099229": {
+		"addre": "0x60acd43314d93f38507f3fd12e84225a5a099229",
+		"slice": [
+			{
+				"name": "EthBank_enter_14",
+				"exp": "owner.send(Fees)"
+			},
+			{
+				"name": "EthBank_enter_22",
+				"exp": "owner.send(minimal)"
+			},
+			{
+				"tag": "1",
+				"name": "EthBank_enter_35",
+				"exp": "depositors[nr].etherAddress.send(payout)"
+			},
+			{
+				"tag": "1",
+				"name": "EthBank_enter_45",
+				"exp": "depositors[nr].etherAddress.send(payout)"
+			}
+		]
+	},
+	"0x7efd3a0149fd4174bb8b08065001e5f7c3a00968": {
+		"note": "TBD",
+		"addre": "0x7efd3a0149fd4174bb8b08065001e5f7c3a00968",
+		"slice": [
+			{
+				"name": "DXF_Tokens_acceptTermsAndJoinDXF_31",
+				"exp": "! multisigDXF.send(msg.value)"
+			},
+			{
+				"name": "DXF_Tokens_paybackContribution_20",
+				"exp": "! memberRefunded.send(msg.value)"
+			},
+			{
+				"name": "DXF_Tokens_closeFunding_5",
+				"exp": "! admin.send(this.balance)"
+			}
+		]
+	},
+	"0xcac337492149bdb66b088bf5914bedfbf78ccc18": {
+		"addre": "0xcac337492149bdb66b088bf5914bedfbf78ccc18",
+		"slice": [
+			{
+				"name": "theRun_init_3",
+				"exp": "msg.sender.send(msg.value)"
+			},
+			{
+				"name": "theRun_init_7",
+				"exp": "msg.sender.send(msg.value - (20000000000000000000))"
+			},
+			{
+				"name": "theRun_Participate_15",
+				"exp": "msg.sender.send(WinningPot)"
+			},
+			{
+				"tag": "1",
+				"name": "theRun_Participate_22",
+				"exp": "players[Payout_id].addr.send(Last_Payout)"
+			},
+			{
+				"name": "theRun_CollectAllFees_4",
+				"exp": "admin.send(fees)"
+			},
+			{
+				"name": "theRun_GetAndReduceFeesByFraction_4",
+				"exp": "admin.send(fees / 1000 * p)"
+			}
+		]
+	},
+	"0xce40e8d14a2ac99926581b6aa7bbacaa26f37ea3": {
+		"note": "TBD",
+		"addre": "0xce40e8d14a2ac99926581b6aa7bbacaa26f37ea3",
+		"slice": [
+			{
+				"name": "Private_Fund_withdraw_privatefund_2",
+				"exp": "beneficiary.send(amountRaised)"
+			},
+			{
+				"name": "Private_Fund_withdraw_privatefund_9",
+				"exp": "funders[i].addr.send(funders[i].amount)"
+			}
+		]
+	},
+	"0x69a5e3ed619ef8e974a509429b0640814a2e0602": {
+		"note": "TBD",
+		"addre": "0x69a5e3ed619ef8e974a509429b0640814a2e0602",
+		"slice": []
+	},
+	"0x03f69791513022d8b67facf221b98243346df7cb": {
+		"addre": "0x03f69791513022d8b67facf221b98243346df7cb",
+		"slice": [
+			{
+				"name": "EthmoonV2_fallback_7",
+				"exp": "PROMO.transfer(promo)"
+			},
+			{
+				"name": "EthmoonV2_fallback_9",
+				"exp": "TECH.transfer(tech)"
+			},
+			{
+				"tag": "1",
+				"name": "EthmoonV2_pay_9",
+				"exp": "dep.depositor.transfer(dep.expect)"
+			},
+			{
+				"tag": "1",
+				"name": "EthmoonV2_pay_12",
+				"exp": "dep.depositor.transfer(money)"
+			}
+		]
+	},
+	"0xbc9b96e7aa6afea664f9d5fdda168518ee20f2cc": {
+		"addre": "0xbc9b96e7aa6afea664f9d5fdda168518ee20f2cc",
+		"slice": [
+			{
+				"name": "HumanityCard_mineCard_23",
+				"exp": "! owner.send(cardPrice)"
+			},
+			{
+				"name": "HumanityCard_processSellOrder_6",
+				"exp": "! order.seller.send(msg.value)"
+			}
+		]
+	},
+	"0xd55dd7b0ed0bbb05a047691f30277764ecf55a1f": {
+		"addre": "0xd55dd7b0ed0bbb05a047691f30277764ecf55a1f",
+		"slice": [
+			{
+				"name": "MultiX125_05eth_fallback_6",
+				"exp": "ADS_SUPPORT.transfer(ads)"
+			},
+			{
+				"name": "MultiX125_05eth_fallback_8",
+				"exp": "TECH_SUPPORT.transfer(tech)"
+			},
+			{
+				"tag": "1",
+				"name": "MultiX125_05eth_pay_9",
+				"exp": "dep.depositor.transfer(dep.expect)"
+			},
+			{
+				"tag": "1",
+				"name": "MultiX125_05eth_pay_12",
+				"exp": "dep.depositor.transfer(money)"
+			}
+		]
+	},
+	"0x4fa1f5846f9e8b139e85b10c604b47e9314a7d0a": {
+		"addre": "0x4fa1f5846f9e8b139e85b10c604b47e9314a7d0a",
+		"slice": [
+			{
+				"name": "Queue_fallback_9",
+				"exp": "PROMO1.send(promo1)"
+			},
+			{
+				"name": "Queue_fallback_11",
+				"exp": "PROMO2.send(promo2)"
+			},
+			{
+				"name": "Queue_fallback_13",
+				"exp": "PROMO3.send(promo3)"
+			},
+			{
+				"name": "Queue_fallback_15",
+				"exp": "PRIZE.send(prize)"
+			},
+			{
+				"tag": "1",
+				"name": "Queue_pay_16",
+				"exp": "dep.depositor.send(leftPayout)"
+			},
+			{
+				"tag": "1",
+				"name": "Queue_pay_21",
+				"exp": "dep.depositor.send(money)"
+			}
+		]
+	},
+	"0x20041df9e7359c2d04e22322d5fabd04783da436": {
+		"addre": "0x20041df9e7359c2d04e22322d5fabd04783da436",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "Raffle_selectWinner_39",
+				"exp": "winner.transfer(prize)"
+			},
+			{
+				"name": "Raffle_selectWinner_40",
+				"exp": "owner.transfer(fee)"
+			}
+		]
+	},
+	"0xaadcab6b005d3bbc025574d238b44588f3cd4ee2": {
+		"addre": "0xaadcab6b005d3bbc025574d238b44588f3cd4ee2",
+		"slice": [
+			{
+				"name": "Multiplier_fallback_6",
+				"exp": "PROMO.send(promo)"
+			},
+			{
+				"tag": "1",
+				"name": "Multiplier_pay_9",
+				"exp": "dep.depositor.send(dep.expect)"
+			},
+			{
+				"tag": "1",
+				"name": "Multiplier_pay_12",
+				"exp": "dep.depositor.send(money)"
+			}
+		]
+	},
+	"0xd6977ef977aba2f9a0c7c82cb7bb3707cd48aea6": {
+		"addre": "0xd6977ef977aba2f9a0c7c82cb7bb3707cd48aea6",
+		"slice": [
+			{
+				"name": "MyScheme_fallback_8",
+				"exp": "myTree[0].send(treeBalance)"
+			},
+			{
+				"tag": "1",
+				"name": "MyScheme_fallback_16",
+				"exp": "myTree[i].send(500000000000000000)"
+			},
+			{
+				"tag": "1",
+				"name": "MyScheme_fallback_25",
+				"exp": "myTree[i].send(eachLevelGets / numInLevel - 1)"
+			}
+		]
+	},
+	"0xb92c458422f9d4d7e006f5d5619f7709b8223c55": {
+		"addre": "0xb92c458422f9d4d7e006f5d5619f7709b8223c55",
+		"slice": [
+			{
+				"name": "DXF_Tokens_acceptTermsAndJoinDXF_31",
+				"exp": "! multisigDXF.send(msg.value)"
+			},
+			{
+				"name": "DXF_Tokens_paybackContribution_20",
+				"exp": "! memberRefunded.send(msg.value)"
+			},
+			{
+				"name": "DXF_Tokens_closeFunding_5",
+				"exp": "! admin.send(this.balance)"
+			}
+		]
+	},
+	"0x3a979b8c99b7dfc5a36824792a124e7bb973d00a": {
+		"addre": "0x3a979b8c99b7dfc5a36824792a124e7bb973d00a",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "BetGame_winnerIsA_10",
+				"exp": "A[p].player.send(A[p].deposit + A[p].deposit / 1000000 * ratio)"
+			},
+			{
+				"tag": "1",
+				"name": "BetGame_winnerIsB_10",
+				"exp": "B[p].player.send(B[p].deposit + B[p].deposit / 1000000 * ratio)"
+			},
+			{
+				"tag": "1",
+				"name": "BetGame_winnerIsDraw_10",
+				"exp": "D[p].player.send(D[p].deposit + D[p].deposit / 1000000 * ratio)"
+			}
+		]
+	},
+	"0x73b6e33895b7095587412cdf9b6e3d0af472f3bd": {
+		"addre": "0x73b6e33895b7095587412cdf9b6e3d0af472f3bd",
+		"slice": []
+	},
+	"0xabe47812f27f9bfd967276462eba14539490308e": {
+		"addre": "0xabe47812f27f9bfd967276462eba14539490308e",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "BetGame_winnerIsA_10",
+				"exp": "A[p].player.send(A[p].deposit + A[p].deposit / 1000000 * ratio)"
+			},
+			{
+				"tag": "1",
+				"name": "BetGame_winnerIsB_10",
+				"exp": "B[p].player.send(B[p].deposit + B[p].deposit / 1000000 * ratio)"
+			},
+			{
+				"tag": "1",
+				"name": "BetGame_winnerIsDraw_10",
+				"exp": "D[p].player.send(D[p].deposit + D[p].deposit / 1000000 * ratio)"
+			}
+		]
+	},
+	"0xae0317a0b05da292fe97c1d0ed5bdcbba9f88cc3": {
+		"addre": "0xae0317a0b05da292fe97c1d0ed5bdcbba9f88cc3",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "BetGame_winnerIsA_10",
+				"exp": "A[p].player.send(A[p].deposit + A[p].deposit / 1000000 * ratio)"
+			},
+			{
+				"tag": "1",
+				"name": "BetGame_winnerIsB_10",
+				"exp": "B[p].player.send(B[p].deposit + B[p].deposit / 1000000 * ratio)"
+			},
+			{
+				"tag": "1",
+				"name": "BetGame_winnerIsDraw_10",
+				"exp": "D[p].player.send(D[p].deposit + D[p].deposit / 1000000 * ratio)"
+			}
+		]
+	},
+	"0x49f053b866c33185fa1151e71fc80d5fe6b08a92": {
+		"addre": "0x49f053b866c33185fa1151e71fc80d5fe6b08a92",
+		"slice": [
+			{
+				"name": "FivePercent_init_2",
+				"exp": "msg.sender.send(msg.value)"
+			},
+			{
+				"name": "FivePercent_init_7",
+				"exp": "msg.sender.send(msg.value - 10000000000000000000)"
+			},
+			{
+				"tag": "1",
+				"name": "FivePercent_init_19",
+				"exp": "participants[payoutIdx].etherAddress.send(transactionAmount)"
+			}
+		]
+	},
+	"0x258e30f1ff095f738545ac72d3009d94cef2e8b3": {
+		"addre": "0x258e30f1ff095f738545ac72d3009d94cef2e8b3",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "Lottery_RandomWinner_6",
+				"exp": "lastWinner.transfer(address(this).balance - fee)"
+			},
+			{
+				"name": "Lottery_RandomWinner_7",
+				"exp": "owner.transfer(fee)"
+			}
+		]
+	},
+	"0xee462a6717f17c57c826f1ad9b4d3813495296c9": {
+		"addre": "0xee462a6717f17c57c826f1ad9b4d3813495296c9",
+		"slice": [
+			{
+				"name": "EthVenturesFinal_Enter_4",
+				"exp": "owner.send(PRE_amount / 100)"
+			},
+			{
+				"tag": "1",
+				"name": "EthVenturesFinal_Enter_13",
+				"exp": "investors[PRE_i].etherAddress.send(PRE_payout)"
+			},
+			{
+				"name": "EthVenturesFinal_Enter_45",
+				"exp": "owner.send(fees)"
+			},
+			{
+				"name": "EthVenturesFinal_Emergency_2",
+				"exp": "owner.send(balance)"
+			}
+		]
+	},
+	"0x30d1b797365f936300055a704a902124467b8b14": {
+		"addre": "0x30d1b797365f936300055a704a902124467b8b14",
+		"slice": [
+			{
+				"name": "Multiplier_fallback_6",
+				"exp": "PROMO.send(promo)"
+			},
+			{
+				"tag": "1",
+				"name": "Multiplier_pay_9",
+				"exp": "dep.depositor.send(dep.expect)"
+			},
+			{
+				"tag": "1",
+				"name": "Multiplier_pay_12",
+				"exp": "dep.depositor.send(money)"
+			}
+		]
+	},
+	"0x7d56485e026d5d3881f778e99969d2b1f90c50af": {
+		"note": "TBD",
+		"addre": "0x7d56485e026d5d3881f778e99969d2b1f90c50af",
+		"slice": [
+			{
+				"name": "ProtectTheCastle_repairTheCastle_3",
+				"exp": "msg.sender.send(msg.value)"
+			},
+			{
+				"name": "ProtectTheCastle_repairTheCastle_7",
+				"exp": "msg.sender.send(msg.value - 100000000000000000000)"
+			},
+			{
+				"name": "ProtectTheCastle_repairTheCastle_12",
+				"exp": "citizensAddresses[citizensAddresses.length - 1].send(piggyBank)"
+			},
+			{
+				"name": "ProtectTheCastle_repairTheCastle_14",
+				"exp": "citizensAddresses[citizensAddresses.length - 1].send(piggyBank * 65 / 100)"
+			},
+			{
+				"name": "ProtectTheCastle_repairTheCastle_15",
+				"exp": "citizensAddresses[citizensAddresses.length - 2].send(piggyBank * 35 / 100)"
+			},
+			{
+				"name": "ProtectTheCastle_repairTheCastle_17",
+				"exp": "citizensAddresses[citizensAddresses.length - 1].send(piggyBank * 55 / 100)"
+			},
+			{
+				"name": "ProtectTheCastle_repairTheCastle_18",
+				"exp": "citizensAddresses[citizensAddresses.length - 2].send(piggyBank * 30 / 100)"
+			},
+			{
+				"name": "ProtectTheCastle_repairTheCastle_19",
+				"exp": "citizensAddresses[citizensAddresses.length - 3].send(piggyBank * 15 / 100)"
+			},
+			{
+				"name": "ProtectTheCastle_repairTheCastle_31",
+				"exp": "jester.send(amount * 3 / 100)"
+			},
+			{
+				"name": "ProtectTheCastle_repairTheCastle_40",
+				"exp": "jester.send(amount * 3 / 100)"
+			},
+			{
+				"name": "ProtectTheCastle_repairTheCastle_44",
+				"exp": "citizensAddresses[lastCitizenPaid].send(citizensAmounts[lastCitizenPaid])"
+			},
+			{
+				"name": "ProtectTheCastle_surrender_2",
+				"exp": "bribedCitizen.send(address(this).balance)"
+			},
+			{
+				"name": "ProtectTheCastle_collectFee_2",
+				"exp": "bribedCitizen.send(collectedFee)"
+			}
+		]
+	},
+	"0xb97768a8e31789dbece1403694e53c2142c3d706": {
+		"addre": "0xb97768a8e31789dbece1403694e53c2142c3d706",
+		"slice": [
+			{
+				"name": "BlockChainEnterprise_init_3",
+				"exp": "msg.sender.send(new_deposit)"
+			},
+			{
+				"name": "BlockChainEnterprise_init_7",
+				"exp": "msg.sender.send(msg.value - MaxDeposit)"
+			},
+			{
+				"tag": "1",
+				"name": "BlockChainEnterprise_PayMiners_4",
+				"exp": "miners[Payout_id].addr.send(miners[Payout_id].payout)"
+			},
+			{
+				"name": "BlockChainEnterprise_PayWinnerMiner_2",
+				"exp": "winner.send(BlockReward)"
+			},
+			{
+				"name": "BlockChainEnterprise_PayWinnerMiner_5",
+				"exp": "winner.send(BlockReward * pcent / 100)"
+			},
+			{
+				"name": "BlockChainEnterprise_CollectAllFees_4",
+				"exp": "admin.send(fees)"
+			},
+			{
+				"name": "BlockChainEnterprise_GetAndReduceFeesByFraction_4",
+				"exp": "admin.send(fees / 1000 * p)"
+			}
+		]
+	},
+	"0x6cb877964e66fc227ff19e29969f6fc6a21798c2": {
+		"note": "TBD",
+		"addre": "0x6cb877964e66fc227ff19e29969f6fc6a21798c2",
+		"slice": [
+			{
+				"name": "ActionAgon_cancelAgon_8",
+				"exp": "msg.sender.transfer(agon.agonPrice)"
+			},
+			{
+				"name": "ActionAgon_cancelAgonForce_7",
+				"exp": "agon.master.transfer(agon.agonPrice)"
+			},
+			{
+				"name": "ActionAgon_fightAgon_12",
+				"exp": "agon.master.transfer(winVal)"
+			},
+			{
+				"name": "ActionAgon_fightAgon_13",
+				"exp": "agon.challenger.transfer(winVal)"
+			},
+			{
+				"name": "ActionAgon_fightAgon_17",
+				"exp": "poolContract.transfer(pVal)"
+			},
+			{
+				"name": "ActionAgon_fightAgon_18",
+				"exp": "addrFinance.transfer(devCut.sub(pVal))"
+			},
+			{
+				"name": "ActionAgon_fightAgon_19",
+				"exp": "addrFinance.transfer(devCut)"
+			}
+		]
+	},
+	"0x90101947063fc81f3430459ece984b32becef551": {
+		"addre": "0x90101947063fc81f3430459ece984b32becef551",
+		"slice": [
+			{
+				"name": "Multiplier3_fallback_6",
+				"exp": "PROMO_AND_PRIZE.send(adv)"
+			},
+			{
+				"name": "Multiplier3_fallback_8",
+				"exp": "TECH.send(support)"
+			},
+			{
+				"tag": "1",
+				"name": "Multiplier3_pay_8",
+				"exp": "dep.depositor.send(dep.expect)"
+			},
+			{
+				"tag": "1",
+				"name": "Multiplier3_pay_11",
+				"exp": "dep.depositor.send(money)"
+			}
+		]
+	},
+	"0x1a0c72d4bf7497ee5337e718a97f6da175995882": {
+		"addre": "0x1a0c72d4bf7497ee5337e718a97f6da175995882",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "BetGame_winnerIsA_10",
+				"exp": "A[p].player.send(A[p].deposit + A[p].deposit / 1000000 * ratio)"
+			},
+			{
+				"tag": "1",
+				"name": "BetGame_winnerIsB_10",
+				"exp": "B[p].player.send(B[p].deposit + B[p].deposit / 1000000 * ratio)"
+			},
+			{
+				"tag": "1",
+				"name": "BetGame_winnerIsDraw_10",
+				"exp": "D[p].player.send(D[p].deposit + D[p].deposit / 1000000 * ratio)"
+			}
+		]
+	},
+	"0xc0e6df904ee408b13f4f22487246af0a7755830a": {
+		"addre": "0xc0e6df904ee408b13f4f22487246af0a7755830a",
+		"slice": [
+			{
+				"name": "Multiplier2_fallback_10",
+				"exp": "TECH_AND_PROMO.send(support)"
+			},
+			{
+				"tag": "1",
+				"name": "Multiplier2_pay_8",
+				"exp": "dep.depositor.send(dep.expect)"
+			},
+			{
+				"tag": "1",
+				"name": "Multiplier2_pay_12",
+				"exp": "dep.depositor.send(money)"
+			}
+		]
+	},
+	"0x073d7a1d115181ae857614650ddea925cc499a72": {
+		"addre": "0x073d7a1d115181ae857614650ddea925cc499a72",
+		"slice": [
+			{
+				"name": "EthmoonV3_fallback_12",
+				"exp": "PROMO.transfer(promo)"
+			},
+			{
+				"tag": "1",
+				"name": "EthmoonV3_pay_9",
+				"exp": "dep.depositor.transfer(dep.expect)"
+			},
+			{
+				"tag": "1",
+				"name": "EthmoonV3_pay_12",
+				"exp": "dep.depositor.transfer(money)"
+			}
+		]
+	},
+	"0xa5dd50d5c00292c4c699b72feea631693bbd2a5a": {
+		"addre": "0xa5dd50d5c00292c4c699b72feea631693bbd2a5a",
+		"slice": [
+			{
+				"name": "WinEtherPot11_drawAutoWinner_13",
+				"exp": "owner.transfer(ownerAmt)"
+			},
+			{
+				"tag": "1",
+				"name": "WinEtherPot11_drawAutoWinner_17",
+				"exp": "_winner.send(winnerAmt)"
+			},
+			{
+				"tag": "1",
+				"name": "WinEtherPot11_drawAutoWinner_28",
+				"exp": "_winner.send(amountWon)"
+			},
+			{
+				"name": "WinEtherPot11_drawWinner_11",
+				"exp": "owner.transfer(ownerAmt)"
+			},
+			{
+				"tag": "1",
+				"name": "WinEtherPot11_drawWinner_15",
+				"exp": "_winner.send(winnerAmt)"
+			},
+			{
+				"tag": "1",
+				"name": "WinEtherPot11_drawWinner_25",
+				"exp": "_winner.send(amountWon)"
+			},
+			{
+				"name": "WinEtherPot11_withdraw_4",
+				"exp": "msg.sender.send(amount)"
+			},
+			{
+				"name": "WinEtherPot11_destroy_2",
+				"exp": "owner.transfer(potAmount)"
+			}
+		]
+	},
+	"0x62b0bf145927772654b17076371eafe935bf65e1": {
+		"addre": "0x62b0bf145927772654b17076371eafe935bf65e1",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "Lottery_pickWinner_5",
+				"exp": "winner.transfer(address(this).balance)"
+			},
+			{
+				"name": "Lottery_resetGame_3",
+				"exp": "manager.transfer(address(this).balance)"
+			}
+		]
+	},
+	"0x9d1cbf4ef833340120e721e5028c326ec1066c7e": {
+		"addre": "0x9d1cbf4ef833340120e721e5028c326ec1066c7e",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "DoubleEther_fallback_16",
+				"exp": "winnerQueueAddresses[0].transfer(winnerQueueAmount[0])"
+			},
+			{
+				"name": "DoubleEther_manualWithdrawEtherAll_1",
+				"exp": "address(owner).transfer(address(this).balance)"
+			},
+			{
+				"name": "DoubleEther_manualWithdrawEtherAdditionalOnly_2",
+				"exp": "address(owner).transfer(additionalFund)"
+			}
+		]
+	},
+	"0x146fb1682050e04d951fa84ee35bfec8a16195cb": {
+		"addre": "0x146fb1682050e04d951fa84ee35bfec8a16195cb",
+		"slice": [
+			{
+				"name": "EthereumMultiplier_fallback_7",
+				"exp": "Reclame.send(promo)"
+			},
+			{
+				"name": "EthereumMultiplier_fallback_9",
+				"exp": "Admin.send(admin)"
+			},
+			{
+				"name": "EthereumMultiplier_fallback_11",
+				"exp": "BMG.send(bmg)"
+			},
+			{
+				"name": "EthereumMultiplier_refferal_7",
+				"exp": "Reclame.send(promo)"
+			},
+			{
+				"name": "EthereumMultiplier_refferal_9",
+				"exp": "Admin.send(admin)"
+			},
+			{
+				"name": "EthereumMultiplier_refferal_11",
+				"exp": "BMG.send(bmg)"
+			},
+			{
+				"name": "EthereumMultiplier_refferal_14",
+				"exp": "REF.send(ref)"
+			},
+			{
+				"tag": "1",
+				"name": "EthereumMultiplier_pay_9",
+				"exp": "dep.depositor.send(dep.expect)"
+			},
+			{
+				"tag": "1",
+				"name": "EthereumMultiplier_pay_12",
+				"exp": "dep.depositor.send(money)"
+			}
+		]
+	},
+	"0x59bbfbb2a233ad668c567d77b1bed06f160edc30": {
+		"addre": "0x59bbfbb2a233ad668c567d77b1bed06f160edc30",
+		"slice": [
+			{
+				"name": "Multiplier_fallback_6",
+				"exp": "PROMO.send(promo)"
+			},
+			{
+				"tag": "1",
+				"name": "Multiplier_pay_9",
+				"exp": "dep.depositor.send(dep.expect)"
+			},
+			{
+				"tag": "1",
+				"name": "Multiplier_pay_12",
+				"exp": "dep.depositor.send(money)"
+			}
+		]
+	},
+	"0xcbfb33b01e265b60f46c21f2f9a96cf6276a5395": {
+		"addre": "0xcbfb33b01e265b60f46c21f2f9a96cf6276a5395",
+		"slice": [
+			{
+				"name": "FastLap_fallback_11",
+				"exp": "advertisingAddress.send(m_advertisingPercent.mul(msg.value))"
+			},
+			{
+				"name": "FastLap_fallback_12",
+				"exp": "adminsAddress.send(m_adminsPercent.mul(msg.value))"
+			},
+			{
+				"tag": "1",
+				"name": "FastLap_fallback_27",
+				"exp": "Queue[num].depositor.send(toSend)"
+			}
+		]
+	},
+	"0x05d7c87cf85de4103635ec585b1e36cf240837b4": {
+		"addre": "0x05d7c87cf85de4103635ec585b1e36cf240837b4",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "MMMultiplierX_pay_9",
+				"exp": "dep.depositor.send(dep.expect)"
+			},
+			{
+				"tag": "1",
+				"name": "MMMultiplierX_pay_12",
+				"exp": "dep.depositor.send(money)"
+			}
+		]
+	},
+	"0x1ff3f56609d0771abb49566600febade0e708beb": {
+		"note": "TBD",
+		"addre": "0x1ff3f56609d0771abb49566600febade0e708beb",
+		"slice": [
+			{
+				"name": "EthVentures_Enter_5",
+				"exp": "owner.send(PRE_amount / 100)"
+			},
+			{
+				"name": "EthVentures_Enter_14",
+				"exp": "investors[PRE_i].etherAddress.send(PRE_payout)"
+			},
+			{
+				"name": "EthVentures_Enter_53",
+				"exp": "owner.send(fees)"
+			},
+			{
+				"name": "EthVentures_Emergency_2",
+				"exp": "owner.send(balance)"
+			}
+		]
+	},
+	"0x4fb663c1616bfe80b5b6d5a214efa81d5a121801": {
+		"addre": "0x4fb663c1616bfe80b5b6d5a214efa81d5a121801",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "HYIP_performPayouts_14",
+				"exp": "! m_beneficiaries[idx].send(eachBeneficiaryPayout)"
+			},
+			{
+				"tag": "1",
+				"name": "HYIP_performPayouts_27",
+				"exp": "! m_investors[idx].etherAddress.send(payout)"
+			}
+		]
+	},
+	"0xa15bfc50d59d01e3da0e634ef31bc8f1f1bef58a": {
+		"addre": "0xa15bfc50d59d01e3da0e634ef31bc8f1f1bef58a",
+		"slice": []
+	},
+	"0xdcabd383a7c497069d0804070e4ba70ab6ecdd51": {
+		"note": "TBD",
+		"addre": "0xdcabd383a7c497069d0804070e4ba70ab6ecdd51",
+		"slice": [
+			{
+				"name": "BlockChainEnterprise_init_3",
+				"exp": "msg.sender.send(new_deposit)"
+			},
+			{
+				"name": "BlockChainEnterprise_init_7",
+				"exp": "msg.sender.send(msg.value - MaxDeposit)"
+			},
+			{
+				"name": "BlockChainEnterprise_PayMiners_4",
+				"exp": "miners[Payout_id].addr.send(miners[Payout_id].payout)"
+			},
+			{
+				"name": "BlockChainEnterprise_PayWinnerMiner_2",
+				"exp": "winner.send(BlockReward)"
+			},
+			{
+				"name": "BlockChainEnterprise_PayWinnerMiner_5",
+				"exp": "winner.send(BlockReward * pcent / 100)"
+			},
+			{
+				"name": "BlockChainEnterprise_CollectAllFees_4",
+				"exp": "admin.send(fees)"
+			},
+			{
+				"name": "BlockChainEnterprise_GetAndReduceFeesByFraction_4",
+				"exp": "admin.send(fees / 1000 * p)"
+			}
+		]
+	},
+	"0x794512a134b4c111ea688d7b357a75d93810ace1": {
+		"addre": "0x794512a134b4c111ea688d7b357a75d93810ace1",
+		"slice": [
+			{
+				"name": "FastEth_fallback_9",
+				"exp": "PROMO1.transfer(promo1)"
+			},
+			{
+				"name": "FastEth_fallback_11",
+				"exp": "PROMO2.transfer(promo2)"
+			},
+			{
+				"name": "FastEth_fallback_13",
+				"exp": "PRIZE.transfer(prize)"
+			},
+			{
+				"tag": "1",
+				"name": "FastEth_pay_16",
+				"exp": "dep.depositor.transfer(leftPayout)"
+			},
+			{
+				"tag": "1",
+				"name": "FastEth_pay_21",
+				"exp": "dep.depositor.transfer(money)"
+			}
+		]
+	},
+	"0x992a2a70967265f1e87965d2e74a529d1b74178e": {
+		"addre": "0x992a2a70967265f1e87965d2e74a529d1b74178e",
+		"slice": [
+			{
+				"name": "Restarter_fallback_14",
+				"exp": "ADS_SUPPORT.transfer(ads)"
+			},
+			{
+				"name": "Restarter_fallback_16",
+				"exp": "TECH_SUPPORT.transfer(tech)"
+			},
+			{
+				"tag": "1",
+				"name": "Restarter__pay_9",
+				"exp": "dep.depositor.transfer(dep.expect)"
+			},
+			{
+				"tag": "1",
+				"name": "Restarter__pay_11",
+				"exp": "dep.depositor.transfer(money)"
+			},
+			{
+				"tag": "1",
+				"name": "Restarter__payoutJackpot_3",
+				"exp": "dep.depositor.transfer(uint128(jackpotAmount * JACKPOT_WINNER_PERCENT / 100))"
+			},
+			{
+				"tag": "1",
+				"name": "Restarter__payoutJackpot_11",
+				"exp": "dep.depositor.transfer(dep.expect)"
+			},
+			{
+				"tag": "1",
+				"name": "Restarter__payoutJackpot_14",
+				"exp": "dep.depositor.transfer(money)"
+			}
+		]
+	},
+	"0xd3ac627abdc1ce6c27c04b37c86e368f754f2995": {
+		"addre": "0xd3ac627abdc1ce6c27c04b37c86e368f754f2995",
+		"slice": [
+			{
+				"name": "GradualPro_fallback_8",
+				"exp": "TECH_SUPPORT.transfer(tech)"
+			},
+			{
+				"tag": "1",
+				"name": "GradualPro_pay_9",
+				"exp": "dep.depositor.transfer(dep.expect)"
+			},
+			{
+				"tag": "1",
+				"name": "GradualPro_pay_12",
+				"exp": "dep.depositor.transfer(money)"
+			}
+		]
+	},
+	"0x017d4abee6a74ac4f0ba5a6fd95527827e69fec2": {
+		"addre": "0x017d4abee6a74ac4f0ba5a6fd95527827e69fec2",
+		"slice": [
+			{
+				"name": "FastBetMultiplier05eth_fallback_10",
+				"exp": "support.transfer(msg.value * 5 / 1000)"
+			},
+			{
+				"tag": "1",
+				"name": "FastBetMultiplier05eth_pay_9",
+				"exp": "dep.depositor.send(dep.expect)"
+			},
+			{
+				"tag": "1",
+				"name": "FastBetMultiplier05eth_pay_12",
+				"exp": "dep.depositor.send(money)"
+			}
+		]
+	},
+	"0x89c2352cb600df56fe4bfb5882caadef3e96213f": {
+		"addre": "0x89c2352cb600df56fe4bfb5882caadef3e96213f",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "TwoAndAHalfPonzi_fallback_11",
+				"exp": "payouts[payoutIndex].addr.send(payouts[payoutIndex].yield)"
+			}
+		]
+	},
+	"0xa64b0456ee7956cbc72ce31d61f43220a398a4f1": {
+		"addre": "0xa64b0456ee7956cbc72ce31d61f43220a398a4f1",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "Private_Fund_withdraw_privatefund_2",
+				"exp": "beneficiary.send(amountRaised)"
+			},
+			{
+				"tag": "1",
+				"name": "Private_Fund_withdraw_privatefund_9",
+				"exp": "funders[i].addr.send(funders[i].amount)"
+			}
+		]
+	},
+	"0xce9ed0b322a1420da4b6990e3047796f57471336": {
+		"addre": "0xce9ed0b322a1420da4b6990e3047796f57471336",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "LifetimeLottery_fallback_12",
+				"exp": "lastJackpotWinner.transfer(msg.value + jackpot)"
+			},
+			{
+				"tag": "1",
+				"name": "LifetimeLottery_fallback_16",
+				"exp": "lastWinner.transfer(msg.value - JACKPOT_INC)"
+			},
+			{
+				"name": "LifetimeLottery_fallback_19",
+				"exp": "msg.sender.transfer(msg.value)"
+			},
+			{
+				"name": "LifetimeLottery_fallback_22",
+				"exp": "msg.sender.transfer(msg.value)"
+			},
+			{
+				"name": "LifetimeLottery_withdraw_1",
+				"exp": "deployer.transfer(this.balance - jackpot)"
+			}
+		]
+	},
+	"0x6e850bf8607a37e84a489008eeb94fb19331b061": {
+		"addre": "0x6e850bf8607a37e84a489008eeb94fb19331b061",
+		"slice": [
+			{
+				"name": "FastEth_fallback_9",
+				"exp": "PROMO1.transfer(promo1)"
+			},
+			{
+				"name": "FastEth_fallback_11",
+				"exp": "PROMO2.transfer(promo2)"
+			},
+			{
+				"name": "FastEth_fallback_13",
+				"exp": "CASHBACK.transfer(cashback)"
+			},
+			{
+				"name": "FastEth_fallback_15",
+				"exp": "PRIZE.transfer(prize)"
+			},
+			{
+				"tag": "1",
+				"name": "FastEth_pay_16",
+				"exp": "dep.depositor.transfer(leftPayout)"
+			},
+			{
+				"tag": "1",
+				"name": "FastEth_pay_21",
+				"exp": "dep.depositor.transfer(money)"
+			}
+		]
+	},
+	"0xa48bb4d1baff077e9c45dab5d70db59537e8ab79": {
+		"addre": "0xa48bb4d1baff077e9c45dab5d70db59537e8ab79",
+		"slice": [
+			{
+				"name": "Queue_fallback_9",
+				"exp": "PROMO1.send(promo1)"
+			},
+			{
+				"name": "Queue_fallback_11",
+				"exp": "PROMO2.send(promo2)"
+			},
+			{
+				"name": "Queue_fallback_13",
+				"exp": "PROMO3.send(promo3)"
+			},
+			{
+				"name": "Queue_fallback_15",
+				"exp": "PRIZE.send(prize)"
+			},
+			{
+				"tag": "1",
+				"name": "Queue_pay_16",
+				"exp": "dep.depositor.send(leftPayout)"
+			},
+			{
+				"tag": "1",
+				"name": "Queue_pay_21",
+				"exp": "dep.depositor.send(money)"
+			}
+		]
+	},
+	"0xc2addd4725cd7bc2c82bd301be480db6e1603094": {
+		"addre": "0xc2addd4725cd7bc2c82bd301be480db6e1603094",
+		"slice": [
+			{
+				"name": "Queue_fallback_9",
+				"exp": "PROMO1.send(promo1)"
+			},
+			{
+				"name": "Queue_fallback_11",
+				"exp": "PROMO2.send(promo2)"
+			},
+			{
+				"name": "Queue_fallback_13",
+				"exp": "PROMO3.send(promo3)"
+			},
+			{
+				"name": "Queue_fallback_15",
+				"exp": "PRIZE.send(prize)"
+			},
+			{
+				"tag": "1",
+				"name": "Queue_pay_16",
+				"exp": "dep.depositor.send(leftPayout)"
+			},
+			{
+				"tag": "1",
+				"name": "Queue_pay_21",
+				"exp": "dep.depositor.send(money)"
+			}
+		]
+	},
+	"0x1b442a27fc37b5527ecd5c5ead301dac1638810d": {
+		"addre": "0x1b442a27fc37b5527ecd5c5ead301dac1638810d",
+		"slice": [
+			{
+				"name": "Raffle_selectWinner_39",
+				"exp": "winner.transfer(prize)"
+			},
+			{
+				"tag": "1",
+				"name": "Raffle_selectWinner_40",
+				"exp": "owner.transfer(fee)"
+			}
+		]
+	},
+	"0x984c3e8cbdb599ffc943b1ed71a81b461c3c5887": {
+		"addre": "0x984c3e8cbdb599ffc943b1ed71a81b461c3c5887",
+		"slice": [
+			{
+				"name": "WinEtherPot11_drawAutoWinner_13",
+				"exp": "owner.transfer(ownerAmt)"
+			},
+			{
+				"name": "WinEtherPot11_drawAutoWinner_17",
+				"exp": "_winner.send(winnerAmt)"
+			},
+			{
+				"name": "WinEtherPot11_drawAutoWinner_28",
+				"exp": "_winner.send(amountWon)"
+			},
+			{
+				"name": "WinEtherPot11_drawWinner_11",
+				"exp": "owner.transfer(ownerAmt)"
+			},
+			{
+				"name": "WinEtherPot11_drawWinner_15",
+				"exp": "_winner.send(winnerAmt)"
+			},
+			{
+				"name": "WinEtherPot11_drawWinner_25",
+				"exp": "_winner.send(amountWon)"
+			},
+			{
+				"name": "WinEtherPot11_withdraw_4",
+				"exp": "msg.sender.send(amount)"
+			},
+			{
+				"name": "WinEtherPot11__onlyAdmin_Destroy_2",
+				"exp": "owner.transfer(potAmount)"
+			}
+		]
+	},
+	"0xef35ca72fbeb2afbe5a181d3c1ebb313c948285e": {
+		"addre": "0xef35ca72fbeb2afbe5a181d3c1ebb313c948285e",
+		"slice": [
+			{
+				"name": "Multiplier_fallback_6",
+				"exp": "PROMO.send(promo)"
+			},
+			{
+				"tag": "1",
+				"name": "Multiplier_pay_9",
+				"exp": "dep.depositor.send(dep.expect)"
+			},
+			{
+				"tag": "1",
+				"name": "Multiplier_pay_12",
+				"exp": "dep.depositor.send(money)"
+			}
+		]
+	},
+	"0x8384fb31b6f7369b30e661be02952b2a96911b80": {
+		"addre": "0x8384fb31b6f7369b30e661be02952b2a96911b80",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "BetGame_winnerIsA_10",
+				"exp": "A[p].player.send(A[p].deposit + A[p].deposit / 1000000 * ratio)"
+			},
+			{
+				"tag": "1",
+				"name": "BetGame_winnerIsB_10",
+				"exp": "B[p].player.send(B[p].deposit + B[p].deposit / 1000000 * ratio)"
+			},
+			{
+				"tag": "1",
+				"name": "BetGame_winnerIsDraw_10",
+				"exp": "D[p].player.send(D[p].deposit + D[p].deposit / 1000000 * ratio)"
+			}
+		]
+	},
+	"0x66d2a16ec82f4bd6e930a93abf82fa1f36a1768b": {
+		"addre": "0x66d2a16ec82f4bd6e930a93abf82fa1f36a1768b",
+		"slice": [
+			{
+				"name": "DXF_Tokens_acceptTermsAndJoinDXF_31",
+				"exp": "! multisigDXF.send(msg.value)"
+			},
+			{
+				"name": "DXF_Tokens_paybackContribution_20",
+				"exp": "! memberRefunded.send(msg.value)"
+			},
+			{
+				"name": "DXF_Tokens_closeFunding_5",
+				"exp": "! admin.send(this.balance)"
+			}
+		]
+	},
+	"0xbb110d0226ad853da79921ad5b9f46195fbfa4d4": {
+		"addre": "0xbb110d0226ad853da79921ad5b9f46195fbfa4d4",
+		"slice": [
+			{
+				"name": "GradualPro_fallback_6",
+				"exp": "ADS_SUPPORT.transfer(ads)"
+			},
+			{
+				"name": "GradualPro_fallback_8",
+				"exp": "TECH_SUPPORT.transfer(tech)"
+			},
+			{
+				"tag": "1",
+				"name": "GradualPro_pay_9",
+				"exp": "dep.depositor.transfer(dep.expect)"
+			},
+			{
+				"tag": "1",
+				"name": "GradualPro_pay_12",
+				"exp": "dep.depositor.transfer(money)"
+			}
+		]
+	},
+	"0x0389a06b028526b05966c287370bebefa0082176": {
+		"addre": "0x0389a06b028526b05966c287370bebefa0082176",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "Dividend_PayOut_4",
+				"exp": "contributors[ContibutorNumber].addr.send(cProfit)"
+			},
+			{
+				"name": "Dividend_TestContract_1",
+				"exp": "deployer.send(this.balance)"
+			}
+		]
+	},
+	"0x0217495d71d7246205bc1b1039dad814d0c0c192": {
+		"addre": "0x0217495d71d7246205bc1b1039dad814d0c0c192",
+		"slice": [
+			{
+				"name": "Queue_fallback_9",
+				"exp": "PROMO1.send(promo1)"
+			},
+			{
+				"name": "Queue_fallback_11",
+				"exp": "PROMO2.send(promo2)"
+			},
+			{
+				"name": "Queue_fallback_13",
+				"exp": "PROMO3.send(promo3)"
+			},
+			{
+				"name": "Queue_fallback_15",
+				"exp": "PRIZE.send(prize)"
+			},
+			{
+				"tag": "1",
+				"name": "Queue_pay_16",
+				"exp": "dep.depositor.send(leftPayout)"
+			},
+			{
+				"tag": "1",
+				"name": "Queue_pay_21",
+				"exp": "dep.depositor.send(money)"
+			}
+		]
+	},
+	"0x8d5ede2af16e4dd5b7fd6c4f2b33bf685fffd584": {
+		"addre": "0x8d5ede2af16e4dd5b7fd6c4f2b33bf685fffd584",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "BLOCKCHAIN_DEPOSIT_BETA_performPayouts_14",
+				"exp": "! contract_depositors[idx].etherAddress.send(payout)"
+			}
+		]
+	},
+	"0x41f2d5040726c5328f8366f17041ec012ac8f338": {
+		"addre": "0x41f2d5040726c5328f8366f17041ec012ac8f338",
+		"slice": [
+			{
+				"name": "EthVenturesFinal_Enter_4",
+				"exp": "owner.send(PRE_amount / 100)"
+			},
+			{
+				"tag": "1",
+				"name": "EthVenturesFinal_Enter_13",
+				"exp": "investors[PRE_i].etherAddress.send(PRE_payout)"
+			},
+			{
+				"name": "EthVenturesFinal_Enter_53",
+				"exp": "owner.send(fees)"
+			},
+			{
+				"name": "EthVenturesFinal_Emergency_2",
+				"exp": "owner.send(balance)"
+			}
+		]
+	},
+	"0x23a32f84d9a6d163593a49f052d5039c05469da6": {
+		"addre": "0x23a32f84d9a6d163593a49f052d5039c05469da6",
+		"slice": [
+			{
+				"name": "DXF_Tokens_acceptTermsAndJoinDXF_31",
+				"exp": "! multisigDXF.send(msg.value)"
+			},
+			{
+				"name": "DXF_Tokens_paybackContribution_20",
+				"exp": "! memberRefunded.send(msg.value)"
+			},
+			{
+				"name": "DXF_Tokens_closeFunding_5",
+				"exp": "! admin.send(this.balance)"
+			}
+		]
+	},
+	"0xc543afe640c8c7521beb6549be75f77b568f4590": {
+		"addre": "0xc543afe640c8c7521beb6549be75f77b568f4590",
+		"slice": [
+			{
+				"name": "GET111_fallback_6",
+				"exp": "ADMIN.send(admin)"
+			},
+			{
+				"tag": "1",
+				"name": "GET111_pay_9",
+				"exp": "dep.depositor.send(dep.expect)"
+			},
+			{
+				"tag": "1",
+				"name": "GET111_pay_12",
+				"exp": "dep.depositor.send(money)"
+			}
+		]
+	},
+	"0xc8c3f722b6a618632df615a81c73079859535224": {
+		"addre": "0xc8c3f722b6a618632df615a81c73079859535224",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "BLOCKCHAIN_DEPOSIT_BETA_1M_performPayouts_14",
+				"exp": "! contract_depositors[idx].etherAddress.send(payout)"
+			}
+		]
+	},
+	"0x4d79a3d77d1fd3deb1e466374a81f609377730eb": {
+		"addre": "0x4d79a3d77d1fd3deb1e466374a81f609377730eb",
+		"slice": [
+			{
+				"name": "MultiplierV3_fallback_6",
+				"exp": "PROMO.send(promo)"
+			},
+			{
+				"tag": "1",
+				"name": "MultiplierV3_pay_9",
+				"exp": "dep.depositor.send(dep.expect)"
+			},
+			{
+				"tag": "1",
+				"name": "MultiplierV3_pay_12",
+				"exp": "dep.depositor.send(money)"
+			}
+		]
+	},
+	"0x7b878869b9971e0c94ca66d8e6c1488fa97158ab": {
+		"addre": "0x7b878869b9971e0c94ca66d8e6c1488fa97158ab",
+		"slice": [
+			{
+				"name": "x2_makeDeposit_10",
+				"exp": "owner.transfer(msg.value.mul(10).div(100))"
+			},
+			{
+				"tag": "1",
+				"name": "x2_makeDeposit_13",
+				"exp": "deposits[currentPaymentIndex].depositor.send(deposits[currentPaymentIndex].payout)"
+			}
+		]
+	},
+	"0xad01fab133e6b9a3308a68931f768ec86e1ad281": {
+		"note": "TBD",
+		"addre": "0xad01fab133e6b9a3308a68931f768ec86e1ad281",
+		"slice": [
+			{
+				"name": "Roshambo_abortGame_6",
+				"exp": "msg.sender.transfer(thisGame.value)"
+			},
+			{
+				"name": "Roshambo_revealMove_48",
+				"exp": "winner.transfer((thisGame.value * 2) - fee * 2)"
+			},
+			{
+				"name": "Roshambo_forfeitGame_11",
+				"exp": "thisGame.player2.transfer((thisGame.value * 2) - fee * 2)"
+			},
+			{
+				"name": "Roshambo_claimGame_12",
+				"exp": "thisGame.player2.transfer((thisGame.value * 2) - fee * 2)"
+			},
+			{
+				"name": "Roshambo_withdraw_6",
+				"exp": "msg.sender.transfer(amount)"
+			}
+		]
+	},
+	"0xcaa940073368a4537b38419f5ec5ba9cccd81b6c": {
+		"addre": "0xcaa940073368a4537b38419f5ec5ba9cccd81b6c",
+		"slice": [
+			{
+				"name": "MultiX150max1eth_fallback_6",
+				"exp": "PROMO.transfer(promo)"
+			},
+			{
+				"tag": "1",
+				"name": "MultiX150max1eth_pay_9",
+				"exp": "dep.depositor.transfer(dep.expect)"
+			},
+			{
+				"tag": "1",
+				"name": "MultiX150max1eth_pay_12",
+				"exp": "dep.depositor.transfer(money)"
+			}
+		]
+	},
+	"0x81312b948a47af46cf1cf8bbc94ef52c0c40fecb": {
+		"addre": "0x81312b948a47af46cf1cf8bbc94ef52c0c40fecb",
+		"slice": [
+			{
+				"name": "BestMultiplier_fallback_7",
+				"exp": "Reclame.send(promo)"
+			},
+			{
+				"name": "BestMultiplier_fallback_9",
+				"exp": "Admin.send(admin)"
+			},
+			{
+				"name": "BestMultiplier_fallback_11",
+				"exp": "BMG.send(bmg)"
+			},
+			{
+				"name": "BestMultiplier_refferal_7",
+				"exp": "Reclame.send(promo)"
+			},
+			{
+				"name": "BestMultiplier_refferal_9",
+				"exp": "Admin.send(admin)"
+			},
+			{
+				"name": "BestMultiplier_refferal_11",
+				"exp": "BMG.send(bmg)"
+			},
+			{
+				"name": "BestMultiplier_refferal_14",
+				"exp": "REF.send(ref)"
+			},
+			{
+				"tag": "1",
+				"name": "BestMultiplier_pay_9",
+				"exp": "dep.depositor.send(dep.expect)"
+			},
+			{
+				"tag": "1",
+				"name": "BestMultiplier_pay_12",
+				"exp": "dep.depositor.send(money)"
+			}
+		]
+	},
+	"0x351c2161e99187a750780e0ff010619a77ba9b0b": {
+		"addre": "0x351c2161e99187a750780e0ff010619a77ba9b0b",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "BetGame_winnerIsA_10",
+				"exp": "A[p].player.send(A[p].deposit + A[p].deposit / 1000000 * ratio)"
+			},
+			{
+				"tag": "1",
+				"name": "BetGame_winnerIsB_10",
+				"exp": "B[p].player.send(B[p].deposit + B[p].deposit / 1000000 * ratio)"
+			},
+			{
+				"tag": "1",
+				"name": "BetGame_winnerIsDraw_10",
+				"exp": "D[p].player.send(D[p].deposit + D[p].deposit / 1000000 * ratio)"
+			}
+		]
+	},
+	"0x4e88419be4e8643d98b15f8b6cf9cf3f6ef1fbfd": {
+		"addre": "0x4e88419be4e8643d98b15f8b6cf9cf3f6ef1fbfd",
+		"slice": [
+			{
+				"name": "MultiplierV2_fallback_6",
+				"exp": "PROMO.send(promo)"
+			},
+			{
+				"tag": "1",
+				"name": "MultiplierV2_pay_9",
+				"exp": "dep.depositor.send(dep.expect)"
+			},
+			{
+				"tag": "1",
+				"name": "MultiplierV2_pay_12",
+				"exp": "dep.depositor.send(money)"
+			}
+		]
+	},
+	"0xa38feb7b0aaad949a1b99ff516d4e3ea2e317bbf": {
+		"addre": "0xa38feb7b0aaad949a1b99ff516d4e3ea2e317bbf",
+		"slice": [
+			{
+				"name": "FastBetMultiplier05eth_fallback_10",
+				"exp": "support.transfer(msg.value * 5 / 1000)"
+			},
+			{
+				"tag": "1",
+				"name": "FastBetMultiplier05eth_pay_9",
+				"exp": "dep.depositor.send(dep.expect)"
+			},
+			{
+				"tag": "1",
+				"name": "FastBetMultiplier05eth_pay_12",
+				"exp": "dep.depositor.send(money)"
+			}
+		]
+	},
+	"0xb35a39c4271c288ef7ce8cd72d08ae926ee94705": {
+		"addre": "0xb35a39c4271c288ef7ce8cd72d08ae926ee94705",
+		"slice": [
+			{
+				"name": "FastEth_fallback_9",
+				"exp": "PROMO1.transfer(promo1)"
+			},
+			{
+				"name": "FastEth_fallback_11",
+				"exp": "PROMO2.transfer(promo2)"
+			},
+			{
+				"name": "FastEth_fallback_13",
+				"exp": "CASHBACK.transfer(cashback)"
+			},
+			{
+				"name": "FastEth_fallback_15",
+				"exp": "PRIZE.transfer(prize)"
+			},
+			{
+				"tag": "1",
+				"name": "FastEth_pay_16",
+				"exp": "dep.depositor.transfer(leftPayout)"
+			},
+			{
+				"tag": "1",
+				"name": "FastEth_pay_21",
+				"exp": "dep.depositor.transfer(money)"
+			}
+		]
+	},
+	"0xba69e7c96e9541863f009e713caf26d4ad2241a0": {
+		"addre": "0xba69e7c96e9541863f009e713caf26d4ad2241a0",
+		"slice": [
+			{
+				"name": "SmartRevshare_invest_3",
+				"exp": "currentManager.send(msg.value / 100)"
+			},
+			{
+				"tag": "1",
+				"name": "SmartRevshare_payout_17",
+				"exp": "investors[idx].addr.send(payoutValue)"
+			}
+		]
+	},
+	"0x6edea3515749cef9986d05f08104ffd976217bb7": {
+		"addre": "0x6edea3515749cef9986d05f08104ffd976217bb7",
+		"slice": [
+			{
+				"name": "BestMultiplierV3_fallback_12",
+				"exp": "support.transfer(fee)"
+			},
+			{
+				"tag": "1",
+				"name": "BestMultiplierV3_pay_16",
+				"exp": "dep.depositor.send(leftPayout)"
+			},
+			{
+				"tag": "1",
+				"name": "BestMultiplierV3_pay_21",
+				"exp": "dep.depositor.send(money)"
+			}
+		]
+	},
+	"0xf14f52b78169b526b2a0dbcba0ae82751fa6b0df": {
+		"note": "TBD",
+		"addre": "0xf14f52b78169b526b2a0dbcba0ae82751fa6b0df",
+		"slice": [
+			{
+				"name": "MartiGame_deleteGame_5",
+				"exp": "game.creator.transfer(game.bet)"
+			},
+			{
+				"name": "MartiGame_getWin_7",
+				"exp": "game.creator.transfer(game.bet)"
+			},
+			{
+				"name": "MartiGame_getWin_8",
+				"exp": "game.responder.transfer(game.bet)"
+			},
+			{
+				"name": "MartiGame_getWin_14",
+				"exp": "owner.transfer(owner_fee)"
+			},
+			{
+				"name": "MartiGame_getWin_18",
+				"exp": "game.creator.transfer(winAmount)"
+			},
+			{
+				"name": "MartiGame_getWin_21",
+				"exp": "game.responder.transfer(winAmount)"
+			}
+		]
+	},
+	"0xa69610b60fec5ec350a7267ed5d47bf87aa25364": {
+		"note": "TBD",
+		"addre": "0xa69610b60fec5ec350a7267ed5d47bf87aa25364",
+		"slice": [
+			{
+				"name": "SplitStealContract_transferEarningsToOwner_4",
+				"exp": "owner.transfer(_contractEarnings)"
+			},
+			{
+				"name": "SplitStealContract_ethTransfer_6",
+				"exp": "_to.transfer(amount)"
+			}
+		]
+	},
+	"0x7c4a690585ffe89c01aebfce188b9bec8def9e8d": {
+		"note": "TBD",
+		"addre": "0x7c4a690585ffe89c01aebfce188b9bec8def9e8d",
+		"slice": [
+			{
+				"name": "Honestgamble_init_2",
+				"exp": "msg.sender.send(msg.value)"
+			},
+			{
+				"name": "Honestgamble_init_6",
+				"exp": "msg.sender.send(msg.value - deposit)"
+			},
+			{
+				"name": "Honestgamble_Pay_19",
+				"exp": "players[i_13].addr.send(bet * first_prize / 100)"
+			},
+			{
+				"name": "Honestgamble_Pay_20",
+				"exp": "players[i_11].addr.send(bet * second_prize / 100)"
+			},
+			{
+				"name": "Honestgamble_Pay_21",
+				"exp": "players[i_6].addr.send(bet * third_prize / 100)"
+			},
+			{
+				"name": "Honestgamble_CancelRoundAndRefundAll_9",
+				"exp": "players[i].addr.send((deposit * (1000 - feeFrac)) / 1000)"
+			},
+			{
+				"name": "Honestgamble_CollectAllFees_4",
+				"exp": "admin.send(fees)"
+			},
+			{
+				"name": "Honestgamble_CollectAndReduceFees_4",
+				"exp": "admin.send(fees / 1000 * p)"
+			}
+		]
+	},
+	"0x446d1696a5527018453cda3d67aa4c2cd189b9f6": {
+		"addre": "0x446d1696a5527018453cda3d67aa4c2cd189b9f6",
+		"slice": [
+			{
+				"name": "GreedPit_jumpIn_4",
+				"exp": "msg.sender.send(msg.value - 50000000000000000000)"
+			},
+			{
+				"name": "GreedPit_jumpIn_69",
+				"exp": "msg.sender.send(saviourShare)"
+			},
+			{
+				"tag": "1",
+				"name": "GreedPit_jumpIn_72",
+				"exp": "entries[payoutOrder].entryAddress.send(payout)"
+			},
+			{
+				"name": "GreedPit_collectFees_4",
+				"exp": "owner.send(collectedFees)"
+			},
+			{
+				"name": "GreedPit_recycle_3",
+				"exp": "entries[0].entryAddress.send(balance)"
+			}
+		]
+	},
+	"0xcf797c717267d833d948fe8f76742f05b8164491": {
+		"note": "TBD",
+		"addre": "0xcf797c717267d833d948fe8f76742f05b8164491",
+		"slice": [
+			{
+				"name": "ProtectTheCastle_repairTheCastle_3",
+				"exp": "msg.sender.send(msg.value)"
+			},
+			{
+				"name": "ProtectTheCastle_repairTheCastle_7",
+				"exp": "msg.sender.send(msg.value - 100000000000000000000)"
+			},
+			{
+				"name": "ProtectTheCastle_repairTheCastle_12",
+				"exp": "citizensAddresses[citizensAddresses.length - 1].send(piggyBank)"
+			},
+			{
+				"name": "ProtectTheCastle_repairTheCastle_14",
+				"exp": "citizensAddresses[citizensAddresses.length - 1].send(piggyBank * 65 / 100)"
+			},
+			{
+				"name": "ProtectTheCastle_repairTheCastle_15",
+				"exp": "citizensAddresses[citizensAddresses.length - 2].send(piggyBank * 35 / 100)"
+			},
+			{
+				"name": "ProtectTheCastle_repairTheCastle_17",
+				"exp": "citizensAddresses[citizensAddresses.length - 1].send(piggyBank * 55 / 100)"
+			},
+			{
+				"name": "ProtectTheCastle_repairTheCastle_18",
+				"exp": "citizensAddresses[citizensAddresses.length - 2].send(piggyBank * 30 / 100)"
+			},
+			{
+				"name": "ProtectTheCastle_repairTheCastle_19",
+				"exp": "citizensAddresses[citizensAddresses.length - 3].send(piggyBank * 15 / 100)"
+			},
+			{
+				"name": "ProtectTheCastle_repairTheCastle_31",
+				"exp": "jester.send(amount * 3 / 100)"
+			},
+			{
+				"name": "ProtectTheCastle_repairTheCastle_40",
+				"exp": "jester.send(amount * 3 / 100)"
+			},
+			{
+				"name": "ProtectTheCastle_repairTheCastle_44",
+				"exp": "citizensAddresses[lastCitizenPaid].send(citizensAmounts[lastCitizenPaid])"
+			},
+			{
+				"name": "ProtectTheCastle_surrender_2",
+				"exp": "bribedCitizen.send(address(this).balance)"
+			},
+			{
+				"name": "ProtectTheCastle_collectFee_2",
+				"exp": "bribedCitizen.send(collectedFee)"
+			}
+		]
+	},
+	"0x26c4e381ffbdc825be9b986c3ba40525f0771e8d": {
+		"addre": "0x26c4e381ffbdc825be9b986c3ba40525f0771e8d",
+		"slice": [
+			{
+				"name": "Coinflip_enter_16",
+				"exp": "owner.send(Fees)"
+			},
+			{
+				"name": "Coinflip_enter_24",
+				"exp": "owner.send(minimal)"
+			},
+			{
+				"tag": "1",
+				"name": "Coinflip_enter_33",
+				"exp": "gamblerlist[list_length].etherAddress.send(Bankroll)"
+			}
+		]
+	},
+	"0x13ddd5c273a027608a42727a46f8250011645166": {
+		"addre": "0x13ddd5c273a027608a42727a46f8250011645166",
+		"slice": [
+			{
+				"name": "Fund_fundWithdraw_2",
+				"exp": "addr.transfer(value)"
+			},
+			{
+				"name": "Cryptoy_fundWithdraw_2",
+				"exp": "addr.transfer(value)"
+			},
+			{
+				"name": "Planet_fundWithdraw_2",
+				"exp": "addr.transfer(value)"
+			},
+			{
+				"tag": "1",
+				"name": "Planet_realbuy_5",
+				"exp": "item.owner.transfer(finalRefund)"
+			}
+		]
+	},
+	"0xf5582fb582d768e661d2d50f7163b0e379b7c527": {
+		"addre": "0xf5582fb582d768e661d2d50f7163b0e379b7c527",
+		"slice": [
+			{
+				"name": "MultiProfit_fallback_6",
+				"exp": "PROMO.send(promo)"
+			},
+			{
+				"tag": "1",
+				"name": "MultiProfit_pay_9",
+				"exp": "dep.depositor.send(dep.expect)"
+			},
+			{
+				"tag": "1",
+				"name": "MultiProfit_pay_12",
+				"exp": "dep.depositor.send(money)"
+			}
+		]
+	},
+	"0x92e5a69c506fd6bd5d7e6e834cd972d40dbddbe0": {
+		"addre": "0x92e5a69c506fd6bd5d7e6e834cd972d40dbddbe0",
+		"slice": [
+			{
+				"name": "Queue_fallback_9",
+				"exp": "PROMO.send(promo)"
+			},
+			{
+				"name": "Queue_fallback_11",
+				"exp": "PRIZE.send(prize)"
+			},
+			{
+				"tag": "1",
+				"name": "Queue_pay_16",
+				"exp": "dep.depositor.send(leftPayout)"
+			},
+			{
+				"tag": "1",
+				"name": "Queue_pay_21",
+				"exp": "dep.depositor.send(money)"
+			}
+		]
+	},
+	"0xdb9b3f9c12e710517ac572378c6199bc3624b1ed": {
+		"note": "TBD",
+		"addre": "0xdb9b3f9c12e710517ac572378c6199bc3624b1ed",
+		"slice": [
+			{
+				"name": "Matching_Finneys_endRound_19",
+				"exp": "matchers[k].player.send(payout_matcher)"
+			},
+			{
+				"name": "Matching_Finneys_endRound_22",
+				"exp": "contrarians[index_contrarian].player.send(payout_contrarian)"
+			},
+			{
+				"name": "Matching_Finneys_endRound_28",
+				"exp": "owner.send(index_player_in_round * gamble_value - payout_total)"
+			},
+			{
+				"name": "Matching_Finneys_refundRound_7",
+				"exp": "matchers[k].player.send(gamble_value)"
+			},
+			{
+				"name": "Matching_Finneys_refundRound_14",
+				"exp": "contrarians[j].player.send(gamble_value)"
+			},
+			{
+				"name": "Matching_Finneys_refundRound_23",
+				"exp": "owner.send(balanceLeft)"
+			}
+		]
+	},
+	"0x58d94584f2c091449cdc4e3e40453101ec30dfe3": {
+		"addre": "0x58d94584f2c091449cdc4e3e40453101ec30dfe3",
+		"slice": [
+			{
+				"name": "BestMultiplierV4_fallback_11",
+				"exp": "support.transfer(fee)"
+			},
+			{
+				"tag": "1",
+				"name": "BestMultiplierV4_pay_16",
+				"exp": "dep.depositor.send(leftPayout)"
+			},
+			{
+				"tag": "1",
+				"name": "BestMultiplierV4_pay_21",
+				"exp": "dep.depositor.send(money)"
+			}
+		]
+	},
+	"0x23e2134cbdd5b80f16300454d72a523cb7d1a886": {
+		"addre": "0x23e2134cbdd5b80f16300454d72a523cb7d1a886",
+		"slice": [
+			{
+				"name": "Formula1Game_fallback_6",
+				"exp": "PROMO1.send(promo1)"
+			},
+			{
+				"name": "Formula1Game_fallback_8",
+				"exp": "PROMO2.send(promo2)"
+			},
+			{
+				"name": "Formula1Game_fallback_10",
+				"exp": "TECH.send(tech)"
+			},
+			{
+				"tag": "1",
+				"name": "Formula1Game_pay_9",
+				"exp": "dep.depositor.send(dep.expect)"
+			},
+			{
+				"tag": "1",
+				"name": "Formula1Game_pay_12",
+				"exp": "dep.depositor.send(money)"
+			}
+		]
+	},
+	"0xa025151aee27bedc1518328657888330377291e9": {
+		"addre": "0xa025151aee27bedc1518328657888330377291e9",
+		"slice": [
+			{
+				"name": "FireCasino_collect_1",
+				"exp": "owner.transfer(address(this).balance)"
+			},
+			{
+				"tag": "1",
+				"name": "FireCasino_distributePrizes_25",
+				"exp": "winners[j].transfer(winnerEtherAmount)"
+			}
+		]
+	},
+	"0x1fb8d1159ba0fe9e237d5a9f8810d783500ab471": {
+		"addre": "0x1fb8d1159ba0fe9e237d5a9f8810d783500ab471",
+		"slice": [
+			{
+				"name": "FireCasino_withdraw_1",
+				"exp": "owner.transfer(address(this).balance)"
+			},
+			{
+				"tag": "1",
+				"name": "FireCasino_distributePrizes_25",
+				"exp": "winners[j].transfer(winnerEtherAmount)"
+			}
+		]
+	},
+	"0xac935d89f390c700e69230b369cb83e7eb0ea3d2": {
+		"addre": "0xac935d89f390c700e69230b369cb83e7eb0ea3d2",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "LifetimeLottery_fallback_12",
+				"exp": "lastJackpotWinner.transfer(msg.value + jackpot)"
+			},
+			{
+				"name": "LifetimeLottery_fallback_16",
+				"exp": "lastWinner.transfer(msg.value - JACKPOT_INC)"
+			},
+			{
+				"name": "LifetimeLottery_fallback_19",
+				"exp": "msg.sender.transfer(msg.value)"
+			},
+			{
+				"name": "LifetimeLottery_fallback_22",
+				"exp": "msg.sender.transfer(msg.value)"
+			}
+		]
+	},
+	"0x1c43991f89a000a803e0443d68a26684cde6dc2f": {
+		"addre": "0x1c43991f89a000a803e0443d68a26684cde6dc2f",
+		"slice": []
+	},
+	"0xc9ef94f7b7dd045cce2b0cab7ac3075d6b49f4b3": {
+		"addre": "0xc9ef94f7b7dd045cce2b0cab7ac3075d6b49f4b3",
+		"slice": [
+			{
+				"name": "SmartGrowup_fallback_12",
+				"exp": "msg.sender.transfer(0)"
+			},
+			{
+				"name": "SmartGrowup_fallback_27",
+				"exp": "support.transfer(msg.value / 5)"
+			},
+			{
+				"name": "SmartGrowup_fallback_30",
+				"exp": "user.referrer.send(bonusAmount)"
+			},
+			{
+				"name": "SmartGrowup_fallback_34",
+				"exp": "msg.sender.send(bonusAmount)"
+			},
+			{
+				"tag": "1",
+				"name": "SmartGrowup_payout_21",
+				"exp": "addr.send(amount)"
+			},
+			{
+				"name": "SmartGrowup_payoutSelf_8",
+				"exp": "msg.sender.transfer(amount)"
+			}
+		]
+	},
+	"0x99d982e49bcb5465a6b4c1e0ec4341c912d9ba42": {
+		"addre": "0x99d982e49bcb5465a6b4c1e0ec4341c912d9ba42",
+		"slice": [
+			{
+				"name": "EthVentures_Enter_5",
+				"exp": "owner.send(PRE_amount / 100)"
+			},
+			{
+				"tag": "1",
+				"name": "EthVentures_Enter_14",
+				"exp": "investors[PRE_i].etherAddress.send(PRE_payout)"
+			},
+			{
+				"name": "EthVentures_Enter_47",
+				"exp": "owner.send(fees)"
+			},
+			{
+				"name": "EthVentures_Emergency_2",
+				"exp": "owner.send(balance)"
+			}
+		]
+	},
+	"0xa2c510d23d1245637acc6c63e4f60ec8817bbfb4": {
+		"addre": "0xa2c510d23d1245637acc6c63e4f60ec8817bbfb4",
+		"slice": [
+			{
+				"name": "Test_fallback_6",
+				"exp": "PROMO1.send(promo1)"
+			},
+			{
+				"name": "Test_fallback_8",
+				"exp": "PROMO2.send(promo2)"
+			},
+			{
+				"name": "Test_fallback_10",
+				"exp": "TECH.send(tech)"
+			},
+			{
+				"tag": "1",
+				"name": "Test_pay_9",
+				"exp": "dep.depositor.send(dep.expect)"
+			},
+			{
+				"tag": "1",
+				"name": "Test_pay_12",
+				"exp": "dep.depositor.send(money)"
+			}
+		]
+	},
+	"0x6140d98c1bf9206488fc3428e2dc5496b0a23d84": {
+		"addre": "0x6140d98c1bf9206488fc3428e2dc5496b0a23d84",
+		"slice": [
+			{
+				"name": "Matching_Finneys_endRound_19",
+				"exp": "matchers[k].player.send(payout_matcher)"
+			},
+			{
+				"name": "Matching_Finneys_endRound_22",
+				"exp": "contrarians[index_contrarian].player.send(payout_contrarian)"
+			},
+			{
+				"name": "Matching_Finneys_endRound_28",
+				"exp": "owner.send(index_player_in_round * gamble_value - payout_total)"
+			},
+			{
+				"name": "Matching_Finneys_refundRound_7",
+				"exp": "matchers[k].player.send(gamble_value)"
+			},
+			{
+				"name": "Matching_Finneys_refundRound_14",
+				"exp": "contrarians[j].player.send(gamble_value)"
+			},
+			{
+				"name": "Matching_Finneys_refundRound_21",
+				"exp": "owner.send(balanceBeforeRefund - totalRefund)"
+			}
+		]
+	},
+	"0x5c39aa14370d47f0bd5319758bab177cf4ead1cb": {
+		"addre": "0x5c39aa14370d47f0bd5319758bab177cf4ead1cb",
+		"slice": [
+			{
+				"name": "Ethmoon_fallback_6",
+				"exp": "PROMO.transfer(promo)"
+			},
+			{
+				"name": "Ethmoon_fallback_8",
+				"exp": "TECH.transfer(tech)"
+			},
+			{
+				"tag": "1",
+				"name": "Ethmoon_pay_9",
+				"exp": "dep.depositor.transfer(dep.expect)"
+			},
+			{
+				"tag": "1",
+				"name": "Ethmoon_pay_12",
+				"exp": "dep.depositor.transfer(money)"
+			}
+		]
+	},
+	"0x217f77f4036421aa1eab10b72607456d79202048": {
+		"addre": "0x217f77f4036421aa1eab10b72607456d79202048",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "BetGame_winnerIsA_10",
+				"exp": "A[p].player.send(A[p].deposit + A[p].deposit / 1000000 * ratio)"
+			},
+			{
+				"tag": "1",
+				"name": "BetGame_winnerIsB_10",
+				"exp": "B[p].player.send(B[p].deposit + B[p].deposit / 1000000 * ratio)"
+			},
+			{
+				"tag": "1",
+				"name": "BetGame_winnerIsDraw_10",
+				"exp": "D[p].player.send(D[p].deposit + D[p].deposit / 1000000 * ratio)"
+			}
+		]
+	},
+	"0xcad29d8164328b4db1f6a5fe93e01d4ddd80f93a": {
+		"addre": "0xcad29d8164328b4db1f6a5fe93e01d4ddd80f93a",
+		"slice": [
+			{
+				"name": "Multiplier_fallback_6",
+				"exp": "PROMO.send(promo)"
+			},
+			{
+				"tag": "1",
+				"name": "Multiplier_pay_9",
+				"exp": "dep.depositor.send(dep.expect)"
+			},
+			{
+				"tag": "1",
+				"name": "Multiplier_pay_12",
+				"exp": "dep.depositor.send(money)"
+			}
+		]
+	},
+	"0x8ae568d934092188c97e9ddfec82a9a3b3856bb9": {
+		"addre": "0x8ae568d934092188c97e9ddfec82a9a3b3856bb9",
+		"slice": [
+			{
+				"name": "TwoOneTwo_ETH_fallback_6",
+				"exp": "PROMO.send(promo)"
+			},
+			{
+				"tag": "1",
+				"name": "TwoOneTwo_ETH_pay_9",
+				"exp": "dep.depositor.send(dep.expect)"
+			},
+			{
+				"tag": "1",
+				"name": "TwoOneTwo_ETH_pay_12",
+				"exp": "dep.depositor.send(money)"
+			}
+		]
+	},
+	"0xd907bd07813ba91a9143e7c98340e53755d575a5": {
+		"addre": "0xd907bd07813ba91a9143e7c98340e53755d575a5",
+		"slice": []
+	},
+	"0x124374f24bff86cf043e31344077ece93bd46b57": {
+		"addre": "0x124374f24bff86cf043e31344077ece93bd46b57",
+		"slice": [
+			{
+				"name": "EthPyramid_withdraw_5",
+				"exp": "msg.sender.transfer(balance)"
+			},
+			{
+				"name": "EthPyramid_withdrawOld_5",
+				"exp": "to.transfer(balance)"
+			},
+			{
+				"tag": "1",
+				"name": "EtherBags_purchase_15",
+				"exp": "oldOwner.transfer(payment)"
+			},
+			{
+				"name": "EtherBags_purchase_18",
+				"exp": "newOwner.transfer(purchaseExcess)"
+			},
+			{
+				"name": "EtherBags_payout_1",
+				"exp": "contractOwner.transfer(this.balance)"
+			},
+			{
+				"name": "EtherBags_getBagLevel_3",
+				"exp": "epc.transfer(SafeMath.div(this.balance,2))"
+			}
+		]
+	},
+	"0xe55d618856df833c63fbe3fa940fbb69a3137e05": {
+		"addre": "0xe55d618856df833c63fbe3fa940fbb69a3137e05",
+		"slice": [
+			{
+				"name": "x107_fallback_6",
+				"exp": "PROMO.send(promo)"
+			},
+			{
+				"tag": "1",
+				"name": "x107_pay_9",
+				"exp": "dep.depositor.send(dep.expect)"
+			},
+			{
+				"tag": "1",
+				"name": "x107_pay_12",
+				"exp": "dep.depositor.send(money)"
+			}
+		]
+	},
+	"0x43e49c79172a1be3ebb4240da727c0da0fa5d233": {
+		"addre": "0x43e49c79172a1be3ebb4240da727c0da0fa5d233",
+		"slice": [
+			{
+				"name": "EthVentures3_Enter_5",
+				"exp": "owner.send(PRE_amount / 100)"
+			},
+			{
+				"tag": "1",
+				"name": "EthVentures3_Enter_14",
+				"exp": "investors[PRE_i].etherAddress.send(PRE_payout)"
+			},
+			{
+				"name": "EthVentures3_Enter_53",
+				"exp": "owner.send(fees)"
+			},
+			{
+				"name": "EthVentures3_Emergency_2",
+				"exp": "owner.send(balance)"
+			}
+		]
+	},
+	"0x566ff5fb4e41a1a5d0dab025be83bbaea87bb7bf": {
+		"addre": "0x566ff5fb4e41a1a5d0dab025be83bbaea87bb7bf",
+		"slice": [
+			{
+				"name": "EthereumMultiplier_fallback_7",
+				"exp": "Reclame.send(promo)"
+			},
+			{
+				"name": "EthereumMultiplier_fallback_9",
+				"exp": "Admin.send(admin)"
+			},
+			{
+				"name": "EthereumMultiplier_fallback_11",
+				"exp": "BMG.send(bmg)"
+			},
+			{
+				"name": "EthereumMultiplier_refferal_7",
+				"exp": "Reclame.send(promo)"
+			},
+			{
+				"name": "EthereumMultiplier_refferal_9",
+				"exp": "Admin.send(admin)"
+			},
+			{
+				"name": "EthereumMultiplier_refferal_11",
+				"exp": "BMG.send(bmg)"
+			},
+			{
+				"name": "EthereumMultiplier_refferal_14",
+				"exp": "REF.send(ref)"
+			},
+			{
+				"tag": "1",
+				"name": "EthereumMultiplier_pay_9",
+				"exp": "dep.depositor.send(dep.expect)"
+			},
+			{
+				"tag": "1",
+				"name": "EthereumMultiplier_pay_12",
+				"exp": "dep.depositor.send(money)"
+			}
+		]
+	},
+	"0x8526f3df4ab4093650b7cf734a839580ee29f6de": {
+		"addre": "0x8526f3df4ab4093650b7cf734a839580ee29f6de",
+		"slice": [
+			{
+				"name": "Private_Fund_withdraw_privatefund_2",
+				"exp": "beneficiary.send(amountRaised)"
+			},
+			{
+				"name": "Private_Fund_withdraw_privatefund_9",
+				"exp": "funders[i].addr.send(funders[i].amount)"
+			}
+		]
+	},
+	"0x43bbc7fafb860d974037b8f7dd06b6f6fe799b3e": {
+		"addre": "0x43bbc7fafb860d974037b8f7dd06b6f6fe799b3e",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "ZeroPonzi_fallback_11",
+				"exp": "payouts[payoutIndex].addr.send(payouts[payoutIndex].yield)"
+			}
+		]
+	},
+	"0xb5e9f0ad611154bf8f135c85683981dd5ac84a94": {
+		"addre": "0xb5e9f0ad611154bf8f135c85683981dd5ac84a94",
+		"slice": [
+			{
+				"name": "x2_makeDeposit_10",
+				"exp": "owner.transfer(msg.value.mul(10).div(100))"
+			},
+			{
+				"tag": "1",
+				"name": "x2_makeDeposit_13",
+				"exp": "deposits[currentPaymentIndex].depositor.send(deposits[currentPaymentIndex].payout)"
+			}
+		]
+	},
+	"0x0d35e5b6b91254fb405e620448c8760fd10614ae": {
+		"addre": "0x0d35e5b6b91254fb405e620448c8760fd10614ae",
+		"slice": [
+			{
+				"name": "EthmoonV3_fallback_9",
+				"exp": "PROMO.transfer(promo)"
+			},
+			{
+				"name": "EthmoonV3_fallback_11",
+				"exp": "SMARTCONTRACT.transfer(smartcontract)"
+			},
+			{
+				"tag": "1",
+				"name": "EthmoonV3_pay_9",
+				"exp": "dep.depositor.transfer(dep.expect)"
+			},
+			{
+				"tag": "1",
+				"name": "EthmoonV3_pay_12",
+				"exp": "dep.depositor.transfer(money)"
+			}
+		]
+	},
+	"0x8b7810d04a7c03473a0059fe6d35f9c6b6188798": {
+		"addre": "0x8b7810d04a7c03473a0059fe6d35f9c6b6188798",
+		"slice": [
+			{
+				"name": "Multiplier_fallback_6",
+				"exp": "PROMO.send(promo)"
+			},
+			{
+				"tag": "1",
+				"name": "Multiplier_pay_9",
+				"exp": "dep.depositor.send(dep.expect)"
+			},
+			{
+				"tag": "1",
+				"name": "Multiplier_pay_12",
+				"exp": "dep.depositor.send(money)"
+			}
+		]
+	},
+	"0x5ba0d60f45c3769afe2cdf7826946c8338494467": {
+		"addre": "0x5ba0d60f45c3769afe2cdf7826946c8338494467",
+		"slice": [
+			{
+				"name": "Multiplier_fallback_6",
+				"exp": "PROMO1.send(promo1)"
+			},
+			{
+				"name": "Multiplier_fallback_8",
+				"exp": "PROMO2.send(promo2)"
+			},
+			{
+				"name": "Multiplier_fallback_10",
+				"exp": "TECH.send(tech)"
+			},
+			{
+				"tag": "1",
+				"name": "Multiplier_pay_9",
+				"exp": "dep.depositor.send(dep.expect)"
+			},
+			{
+				"tag": "1",
+				"name": "Multiplier_pay_12",
+				"exp": "dep.depositor.send(money)"
+			}
+		]
+	},
+	"0x66342e803943929dc47bca1d625f42c7c725b049": {
+		"addre": "0x66342e803943929dc47bca1d625f42c7c725b049",
+		"slice": [
+			{
+				"name": "etherlist_top_enter_2",
+				"exp": "msg.sender.send(msg.value)"
+			},
+			{
+				"tag": "1",
+				"name": "etherlist_top_enter_16",
+				"exp": "participants[i2].etherAddress.send(balance)"
+			},
+			{
+				"tag": "1",
+				"name": "etherlist_top_enter_20",
+				"exp": "participants[i2].etherAddress.send(participants[i2].amount)"
+			},
+			{
+				"name": "etherlist_top_collectFees_4",
+				"exp": "owner.send(collectedFees)"
+			}
+		]
+	},
+	"0x49c3019b7a83b3c77a823255533975969027308d": {
+		"addre": "0x49c3019b7a83b3c77a823255533975969027308d",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "SmartRevshare_payout_17",
+				"exp": "investors[idx].addr.send(payoutValue)"
+			},
+			{
+				"name": "SmartRevshare_testingContract_1",
+				"exp": "currentManager.send(this.balance)"
+			}
+		]
+	},
+	"0x7fef9e225a94a3d841086ebf686932620e838a75": {
+		"addre": "0x7fef9e225a94a3d841086ebf686932620e838a75",
+		"slice": [
+			{
+				"name": "Queue_fallback_9",
+				"exp": "PROMO1.send(promo1)"
+			},
+			{
+				"name": "Queue_fallback_11",
+				"exp": "PROMO2.send(promo2)"
+			},
+			{
+				"name": "Queue_fallback_13",
+				"exp": "PROMO3.send(promo3)"
+			},
+			{
+				"name": "Queue_fallback_15",
+				"exp": "PRIZE.send(prize)"
+			},
+			{
+				"tag": "1",
+				"name": "Queue_pay_16",
+				"exp": "dep.depositor.send(leftPayout)"
+			},
+			{
+				"tag": "1",
+				"name": "Queue_pay_21",
+				"exp": "dep.depositor.send(money)"
+			}
+		]
+	},
+	"0xa7da9eb94ed9062c84f6c1880500d4e1d9bd3374": {
+		"addre": "0xa7da9eb94ed9062c84f6c1880500d4e1d9bd3374",
+		"slice": [
+			{
+				"name": "EthmoonV3_fallback_12",
+				"exp": "PROMO.transfer(promo)"
+			},
+			{
+				"tag": "1",
+				"name": "EthmoonV3_pay_9",
+				"exp": "dep.depositor.transfer(dep.expect)"
+			},
+			{
+				"tag": "1",
+				"name": "EthmoonV3_pay_12",
+				"exp": "dep.depositor.transfer(money)"
+			}
+		]
+	},
+	"0x728033725e2d38af35e30b3f3c2e4874312e45f8": {
+		"addre": "0x728033725e2d38af35e30b3f3c2e4874312e45f8",
+		"slice": [
+			{
+				"name": "Multiplier_fallback_6",
+				"exp": "PROMO.send(promo)"
+			},
+			{
+				"tag": "1",
+				"name": "Multiplier_pay_9",
+				"exp": "dep.depositor.send(dep.expect)"
+			},
+			{
+				"tag": "1",
+				"name": "Multiplier_pay_12",
+				"exp": "dep.depositor.send(money)"
+			}
+		]
+	},
+	"0xfa0ccb7b23015e1afe28bf0dbd33a3448acf6f5d": {
+		"addre": "0xfa0ccb7b23015e1afe28bf0dbd33a3448acf6f5d",
+		"slice": [
+			{
+				"name": "Multiplier2_fallback_10",
+				"exp": "TECH_AND_PROMO.send(support)"
+			},
+			{
+				"tag": "1",
+				"name": "Multiplier2_pay_8",
+				"exp": "dep.depositor.send(dep.expect)"
+			},
+			{
+				"tag": "1",
+				"name": "Multiplier2_pay_12",
+				"exp": "dep.depositor.send(money)"
+			}
+		]
+	},
+	"0x83051e225a06682ff0dde9bcd267d8418c4cbcd7": {
+		"note": "TBD",
+		"addre": "0x83051e225a06682ff0dde9bcd267d8418c4cbcd7",
+		"slice": [
+			{
+				"name": "ParallelGambling_init_4",
+				"exp": "msg.sender.send(actual_deposit)"
+			},
+			{
+				"name": "ParallelGambling_init_9",
+				"exp": "msg.sender.send(actual_deposit - deposit[0])"
+			},
+			{
+				"name": "ParallelGambling_init_16",
+				"exp": "msg.sender.send(actual_deposit - deposit[1])"
+			},
+			{
+				"name": "ParallelGambling_init_23",
+				"exp": "msg.sender.send(actual_deposit - deposit[2])"
+			},
+			{
+				"name": "ParallelGambling_EndRound_19",
+				"exp": "players[zone][i_big_winner].addr.send(effective_bet * first_prize / 100)"
+			},
+			{
+				"name": "ParallelGambling_EndRound_20",
+				"exp": "players[zone][i_small_winner].addr.send(effective_bet * second_prize / 100)"
+			},
+			{
+				"name": "ParallelGambling_EndRound_22",
+				"exp": "players[zone][i_small_winner].addr.send(effective_bet * third_prize / 100)"
+			},
+			{
+				"name": "ParallelGambling_CancelRoundAndRefundAll_13",
+				"exp": "players[zone][i].addr.send(pay)"
+			},
+			{
+				"name": "ParallelGambling_CollectAllFees_4",
+				"exp": "admin.send(fees)"
+			}
+		]
+	},
+	"0x62b01d0aeb16656aff7a7632c3a61c8b069a8928": {
+		"addre": "0x62b01d0aeb16656aff7a7632c3a61c8b069a8928",
+		"slice": [
+			{
+				"name": "TopInvest125_fallback_6",
+				"exp": "PROMO.send(promo)"
+			},
+			{
+				"tag": "1",
+				"name": "TopInvest125_pay_9",
+				"exp": "dep.depositor.send(dep.expect)"
+			},
+			{
+				"tag": "1",
+				"name": "TopInvest125_pay_12",
+				"exp": "dep.depositor.send(money)"
+			}
+		]
+	},
+	"0x0ad03236f64e8db6c42dfa096264c26ce57c87ea": {
+		"addre": "0x0ad03236f64e8db6c42dfa096264c26ce57c87ea",
+		"slice": [
+			{
+				"name": "FastBetMultiplier01eth_fallback_10",
+				"exp": "support.transfer(msg.value * 5 / 1000)"
+			},
+			{
+				"tag": "1",
+				"name": "FastBetMultiplier01eth_pay_9",
+				"exp": "dep.depositor.send(dep.expect)"
+			},
+			{
+				"tag": "1",
+				"name": "FastBetMultiplier01eth_pay_12",
+				"exp": "dep.depositor.send(money)"
+			}
+		]
+	},
+	"0xe73cf3f446f126228b2db7c04a46d285ea18ab56": {
+		"addre": "0xe73cf3f446f126228b2db7c04a46d285ea18ab56",
+		"slice": [
+			{
+				"name": "Multiplier_fallback_6",
+				"exp": "PROMO.send(promo)"
+			},
+			{
+				"tag": "1",
+				"name": "Multiplier_pay_9",
+				"exp": "dep.depositor.send(dep.expect)"
+			},
+			{
+				"tag": "1",
+				"name": "Multiplier_pay_12",
+				"exp": "dep.depositor.send(money)"
+			}
+		]
+	},
+	"0x4c60e311d8fba04e313f7e7b3dec61b3028726d1": {
+		"note": "TBD",
+		"addre": "0x4c60e311d8fba04e313f7e7b3dec61b3028726d1",
+		"slice": [
+			{
+				"name": "EtherWorldCup_register_13",
+				"exp": "administrator.send(fivePercent)"
+			},
+			{
+				"name": "EtherWorldCup_concludeTournament_2",
+				"exp": "givethAddress.send(givethPool)"
+			},
+			{
+				"name": "EtherWorldCup_concludeTournament_4",
+				"exp": "_first.send(tenth.mul(4))"
+			},
+			{
+				"name": "EtherWorldCup_concludeTournament_5",
+				"exp": "_second.send(tenth.mul(3))"
+			},
+			{
+				"name": "EtherWorldCup_concludeTournament_6",
+				"exp": "_third.send(tenth.mul(2))"
+			},
+			{
+				"name": "EtherWorldCup_concludeTournament_7",
+				"exp": "_fourth.send(address(this).balance)"
+			},
+			{
+				"name": "EtherWorldCup_pullRipCord_7",
+				"exp": "_toRefund.send(191710000000000000)"
+			}
+		]
+	},
+	"0xbe46324018124b2d604c2f3eae91d3de9b388b09": {
+		"addre": "0xbe46324018124b2d604c2f3eae91d3de9b388b09",
+		"slice": [
+			{
+				"name": "RobinHoodPonzi_enter_2",
+				"exp": "msg.sender.send(msg.value)"
+			},
+			{
+				"name": "RobinHoodPonzi_enter_7",
+				"exp": "msg.sender.send(msg.value - 1000000000000000000000)"
+			},
+			{
+				"tag": "1",
+				"name": "RobinHoodPonzi_enter_42",
+				"exp": "participants[payoutIdx].etherAddress.send(transactionAmount)"
+			},
+			{
+				"name": "RobinHoodPonzi_enter_47",
+				"exp": "owner.send(collectedFees)"
+			}
+		]
+	},
+	"0xc14c848a2a5945e1a415976fc059550ecbe7b034": {
+		"addre": "0xc14c848a2a5945e1a415976fc059550ecbe7b034",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "Line_revealResult_21",
+				"exp": "player.send(prize)"
+			},
+			{
+				"name": "Line_revealResult_29",
+				"exp": "owner.transfer(spin.bet / ownerDenominator)"
+			},
+			{
+				"name": "Line_recordSpin_3",
+				"exp": "msg.sender.transfer(0)"
+			},
+			{
+				"name": "Line_reset_1",
+				"exp": "owner.transfer(address(this).balance)"
+			}
+		]
+	},
+	"0x72a68fb6d91ed8dc47b564e088e518c6d4a6ff44": {
+		"addre": "0x72a68fb6d91ed8dc47b564e088e518c6d4a6ff44",
+		"slice": [
+			{
+				"name": "DXF_Tokens_acceptTermsAndJoinDXF_31",
+				"exp": "! multisigDXF.send(msg.value)"
+			},
+			{
+				"name": "DXF_Tokens_paybackContribution_20",
+				"exp": "! memberRefunded.send(msg.value)"
+			},
+			{
+				"name": "DXF_Tokens_closeFunding_5",
+				"exp": "! admin.send(this.balance)"
+			}
+		]
+	},
+	"0xf8f04b23dace12841343ecf0e06124354515cc42": {
+		"addre": "0xf8f04b23dace12841343ecf0e06124354515cc42",
+		"slice": [
+			{
+				"name": "GradualPro_fallback_6",
+				"exp": "ADS_SUPPORT.transfer(ads)"
+			},
+			{
+				"name": "GradualPro_fallback_8",
+				"exp": "TECH_SUPPORT.transfer(tech)"
+			},
+			{
+				"tag": "1",
+				"name": "GradualPro_pay_9",
+				"exp": "dep.depositor.transfer(dep.expect)"
+			},
+			{
+				"tag": "1",
+				"name": "GradualPro_pay_12",
+				"exp": "dep.depositor.transfer(money)"
+			}
+		]
+	},
+	"0xfbd5979c6410cd9998add986c450695af5a69309": {
+		"addre": "0xfbd5979c6410cd9998add986c450695af5a69309",
+		"slice": [
+			{
+				"name": "Queue_fallback_10",
+				"exp": "PROMO1.send(promo1)"
+			},
+			{
+				"name": "Queue_fallback_12",
+				"exp": "PROMO2.send(promo2)"
+			},
+			{
+				"name": "Queue_fallback_14",
+				"exp": "PROMO3.send(promo3)"
+			},
+			{
+				"name": "Queue_fallback_16",
+				"exp": "PRIZE.send(prize)"
+			},
+			{
+				"tag": "1",
+				"name": "Queue_pay_16",
+				"exp": "dep.depositor.send(leftPayout)"
+			},
+			{
+				"tag": "1",
+				"name": "Queue_pay_21",
+				"exp": "dep.depositor.send(money)"
+			}
+		]
+	},
+	"0x2cdb253c0e44a284f6174ae90b5ea247e6cf3649": {
+		"addre": "0x2cdb253c0e44a284f6174ae90b5ea247e6cf3649",
+		"slice": [
+			{
+				"name": "BestMultiplierV2_fallback_10",
+				"exp": "support.transfer(msg.value / 10)"
+			},
+			{
+				"tag": "1",
+				"name": "BestMultiplierV2_pay_16",
+				"exp": "dep.depositor.send(leftPayout)"
+			},
+			{
+				"tag": "1",
+				"name": "BestMultiplierV2_pay_21",
+				"exp": "dep.depositor.send(money)"
+			}
+		]
+	},
+	"0x41c0542f41251d6d81526ed2dbc8f0008b13fe48": {
+		"addre": "0x41c0542f41251d6d81526ed2dbc8f0008b13fe48",
+		"slice": [
+			{
+				"name": "MultiEther_fallback_12",
+				"exp": "support.transfer(fee)"
+			},
+			{
+				"tag": "1",
+				"name": "MultiEther_pay_16",
+				"exp": "dep.depositor.send(leftPayout)"
+			},
+			{
+				"tag": "1",
+				"name": "MultiEther_pay_21",
+				"exp": "dep.depositor.send(money)"
+			}
+		]
+	},
+	"0x6c91c0104677d08cded353b1459b68415f278c38": {
+		"addre": "0x6c91c0104677d08cded353b1459b68415f278c38",
+		"slice": [
+			{
+				"name": "FastEth_fallback_9",
+				"exp": "PROMO1.transfer(promo1)"
+			},
+			{
+				"name": "FastEth_fallback_11",
+				"exp": "PROMO2.transfer(promo2)"
+			},
+			{
+				"name": "FastEth_fallback_13",
+				"exp": "CASHBACK.transfer(cashback)"
+			},
+			{
+				"name": "FastEth_fallback_15",
+				"exp": "PRIZE.transfer(prize)"
+			},
+			{
+				"tag": "1",
+				"name": "FastEth_pay_16",
+				"exp": "dep.depositor.transfer(leftPayout)"
+			},
+			{
+				"tag": "1",
+				"name": "FastEth_pay_21",
+				"exp": "dep.depositor.transfer(money)"
+			}
+		]
+	},
+	"0x4fa2bec37bb47781e56b4ddc7929f0d3bcedce33": {
+		"addre": "0x4fa2bec37bb47781e56b4ddc7929f0d3bcedce33",
+		"slice": [
+			{
+				"name": "BlackFridayMultiplier_fallback_7",
+				"exp": "Reclame.send(promo)"
+			},
+			{
+				"name": "BlackFridayMultiplier_fallback_9",
+				"exp": "Admin.send(admin)"
+			},
+			{
+				"name": "BlackFridayMultiplier_fallback_11",
+				"exp": "BMG.send(bmg)"
+			},
+			{
+				"name": "BlackFridayMultiplier_refferal_7",
+				"exp": "Reclame.send(promo)"
+			},
+			{
+				"name": "BlackFridayMultiplier_refferal_9",
+				"exp": "Admin.send(admin)"
+			},
+			{
+				"name": "BlackFridayMultiplier_refferal_11",
+				"exp": "BMG.send(bmg)"
+			},
+			{
+				"name": "BlackFridayMultiplier_refferal_14",
+				"exp": "REF.send(ref)"
+			},
+			{
+				"tag": "1",
+				"name": "BlackFridayMultiplier_pay_9",
+				"exp": "dep.depositor.send(dep.expect)"
+			},
+			{
+				"tag": "1",
+				"name": "BlackFridayMultiplier_pay_12",
+				"exp": "dep.depositor.send(money)"
+			}
+		]
+	},
+	"0xb15970c21d3fe0ed440980b056ab7fa7acb296b1": {
+		"addre": "0xb15970c21d3fe0ed440980b056ab7fa7acb296b1",
+		"slice": []
+	},
+	"0xcbc1d9b1f18cc9dfcb95a68830b2c66b647a221d": {
+		"addre": "0xcbc1d9b1f18cc9dfcb95a68830b2c66b647a221d",
+		"slice": [
+			{
+				"name": "DXF_Tokens_acceptTermsAndJoinDXF_31",
+				"exp": "! multisigDXF.send(msg.value)"
+			},
+			{
+				"name": "DXF_Tokens_paybackContribution_20",
+				"exp": "! memberRefunded.send(msg.value)"
+			},
+			{
+				"name": "DXF_Tokens_closeFunding_5",
+				"exp": "! admin.send(this.balance)"
+			}
+		]
+	},
+	"0x2dad35ca7d3e3577f5c4160f99940809a9f2ed91": {
+		"addre": "0x2dad35ca7d3e3577f5c4160f99940809a9f2ed91",
+		"slice": [
+			{
+				"name": "BestMultiplier_fallback_11",
+				"exp": "support.transfer(msg.value * 5 / 1000)"
+			},
+			{
+				"tag": "1",
+				"name": "BestMultiplier_pay_9",
+				"exp": "dep.depositor.send(dep.expect)"
+			},
+			{
+				"tag": "1",
+				"name": "BestMultiplier_pay_12",
+				"exp": "dep.depositor.send(money)"
+			}
+		]
+	},
+	"0x213d2b0498d7eef3151aa9af2e5c4eb8674ecce5": {
+		"note": "TBD",
+		"addre": "0x213d2b0498d7eef3151aa9af2e5c4eb8674ecce5",
+		"slice": [
+			{
+				"name": "Matching_Finneys_endRound_19",
+				"exp": "matchers[k].player.send(payout_matcher)"
+			},
+			{
+				"name": "Matching_Finneys_endRound_22",
+				"exp": "contrarians[index_contrarian].player.send(payout_contrarian)"
+			},
+			{
+				"name": "Matching_Finneys_endRound_28",
+				"exp": "owner.send(index_player_in_round * gamble_value - payout_total)"
+			},
+			{
+				"name": "Matching_Finneys_refundRound_7",
+				"exp": "matchers[k].player.send(gamble_value)"
+			},
+			{
+				"name": "Matching_Finneys_refundRound_14",
+				"exp": "contrarians[j].player.send(gamble_value)"
+			},
+			{
+				"name": "Matching_Finneys_refundRound_23",
+				"exp": "owner.send(balanceLeft)"
+			}
+		]
+	},
+	"0xdd39457768927c7d13b7854931eb4e800fb1f347": {
+		"addre": "0xdd39457768927c7d13b7854931eb4e800fb1f347",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "BLOCKCHAIN_DEPOSIT_BETA_performPayouts_14",
+				"exp": "! contract_depositors[idx].etherAddress.send(payout)"
+			}
+		]
+	},
+	"0x4f9048d95616dbf7acc16fc4179f5ac6ee37bce6": {
+		"addre": "0x4f9048d95616dbf7acc16fc4179f5ac6ee37bce6",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "Lottery_pickWinner_3",
+				"exp": "winner.transfer(this.balance)"
+			}
+		]
+	},
+	"0x243ce58ad1d2996399b0c110f013901d2f50243f": {
+		"addre": "0x243ce58ad1d2996399b0c110f013901d2f50243f",
+		"slice": [
+			{
+				"name": "FastProfit_fallback_6",
+				"exp": "PROMO.transfer(promo)"
+			},
+			{
+				"tag": "1",
+				"name": "FastProfit_pay_9",
+				"exp": "dep.depositor.transfer(dep.expect)"
+			},
+			{
+				"tag": "1",
+				"name": "FastProfit_pay_12",
+				"exp": "dep.depositor.transfer(money)"
+			}
+		]
+	},
+	"0xd28b6a09d841cc8a31fc546e731f2b6e9f1f20c9": {
+		"note": "TBD",
+		"addre": "0xd28b6a09d841cc8a31fc546e731f2b6e9f1f20c9",
+		"slice": [
+			{
+				"name": "RPS_abortGame_6",
+				"exp": "msg.sender.transfer(thisGame.value)"
+			},
+			{
+				"name": "RPS_revealMove_26",
+				"exp": "winner.transfer((thisGame.value * 2) - fee * 2)"
+			},
+			{
+				"name": "RPS_forfeitGame_12",
+				"exp": "thisGame.player2.transfer((thisGame.value * 2) - fee * 2)"
+			},
+			{
+				"name": "RPS_claimGame_13",
+				"exp": "thisGame.player2.transfer((thisGame.value * 2) - fee * 2)"
+			},
+			{
+				"name": "RPS_withdraw_6",
+				"exp": "msg.sender.transfer(amount)"
+			}
+		]
+	},
+	"0xfdc70cfb614535c6818647bd85d8da4008819c5f": {
+		"addre": "0xfdc70cfb614535c6818647bd85d8da4008819c5f",
+		"slice": [
+			{
+				"name": "Multy_fallback_9",
+				"exp": "PROMO.send(promo)"
+			},
+			{
+				"name": "Multy_fallback_11",
+				"exp": "PRIZE.send(prize)"
+			},
+			{
+				"tag": "1",
+				"name": "Multy_pay_16",
+				"exp": "dep.depositor.send(leftPayout)"
+			},
+			{
+				"tag": "1",
+				"name": "Multy_pay_21",
+				"exp": "dep.depositor.send(money)"
+			}
+		]
+	},
+	"0x31e13882c45c1023d9b16c3794c1a780bb6cb88d": {
+		"note": "TBD",
+		"addre": "0x31e13882c45c1023d9b16c3794c1a780bb6cb88d",
+		"slice": [
+			{
+				"name": "Matching_Ethers_endRound_19",
+				"exp": "matchers[k].player.send(payout_matcher)"
+			},
+			{
+				"name": "Matching_Ethers_endRound_22",
+				"exp": "contrarians[index_contrarian].player.send(payout_contrarian)"
+			},
+			{
+				"name": "Matching_Ethers_endRound_28",
+				"exp": "owner.send(index_player_in_round * gamble_value - payout_total)"
+			},
+			{
+				"name": "Matching_Ethers_refundRound_7",
+				"exp": "matchers[k].player.send(gamble_value)"
+			},
+			{
+				"name": "Matching_Ethers_refundRound_14",
+				"exp": "contrarians[j].player.send(gamble_value)"
+			},
+			{
+				"name": "Matching_Ethers_refundRound_23",
+				"exp": "owner.send(balanceLeft)"
+			}
+		]
+	},
+	"0x753c3d68fe0a3102a033a7d2333c447b69f6c1ea": {
+		"addre": "0x753c3d68fe0a3102a033a7d2333c447b69f6c1ea",
+		"slice": [
+			{
+				"name": "MultiplierReload_fallback_6",
+				"exp": "PROMO.send(promo)"
+			},
+			{
+				"tag": "1",
+				"name": "MultiplierReload_pay_9",
+				"exp": "dep.depositor.send(dep.expect)"
+			},
+			{
+				"tag": "1",
+				"name": "MultiplierReload_pay_12",
+				"exp": "dep.depositor.send(money)"
+			}
+		]
+	},
+	"0x8ea6c8077d6316b46e449aec8fb60a606cf50eea": {
+		"addre": "0x8ea6c8077d6316b46e449aec8fb60a606cf50eea",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "squareRootPonzi_fallback_10",
+				"exp": "masterCalculator[to].ethereumAddress.send(2000000000000000)"
+			}
+		]
+	},
+	"0x111df3f3fa069587c51a9b613f6271eb47e15594": {
+		"addre": "0x111df3f3fa069587c51a9b613f6271eb47e15594",
+		"slice": [
+			{
+				"name": "DXF_Tokens_acceptTermsAndJoinDXF_31",
+				"exp": "! multisigDXF.send(msg.value)"
+			},
+			{
+				"name": "DXF_Tokens_paybackContribution_20",
+				"exp": "! memberRefunded.send(msg.value)"
+			},
+			{
+				"name": "DXF_Tokens_closeFunding_5",
+				"exp": "! admin.send(this.balance)"
+			}
+		]
+	},
+	"0x70e2475b7da322d4a379e43cd7495c63c055192a": {
+		"addre": "0x70e2475b7da322d4a379e43cd7495c63c055192a",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "A_fallback_10",
+				"exp": "p[i].c.send(p[i].yield)"
+			}
+		]
+	},
+	"0x17d0582dee50a5401bb8f65ac29ec2da50c670ea": {
+		"note": "TBD",
+		"addre": "0x17d0582dee50a5401bb8f65ac29ec2da50c670ea",
+		"slice": [
+			{
+				"name": "Slot_acceptOwner_3",
+				"exp": "owner.transfer(acceptPrice)"
+			},
+			{
+				"name": "Slot_checkRoll_14",
+				"exp": "addr.transfer(totalWin)"
+			},
+			{
+				"name": "Slot_distribute_22",
+				"exp": "partners[j].from.transfer(share)"
+			},
+			{
+				"name": "Slot_distribute_33",
+				"exp": "owner.transfer(ownerShare)"
+			}
+		]
+	},
+	"0x1ac1c4c67181bb4d3c0a7d9dd2cda5d9692a364d": {
+		"addre": "0x1ac1c4c67181bb4d3c0a7d9dd2cda5d9692a364d",
+		"slice": [
+			{
+				"name": "Boom_fallback_6",
+				"exp": "PROMO.send(promo)"
+			},
+			{
+				"tag": "1",
+				"name": "Boom_pay_9",
+				"exp": "dep.depositor.send(dep.expect)"
+			},
+			{
+				"tag": "1",
+				"name": "Boom_pay_12",
+				"exp": "dep.depositor.send(money)"
+			}
+		]
+	},
+	"0xec46e917f78d1a42567ffeb4edfa8933d77eb872": {
+		"addre": "0xec46e917f78d1a42567ffeb4edfa8933d77eb872",
+		"slice": [
+			{
+				"name": "Ethmoon_fallback_6",
+				"exp": "PROMO.transfer(promo)"
+			},
+			{
+				"name": "Ethmoon_fallback_8",
+				"exp": "TECH.transfer(tech)"
+			},
+			{
+				"tag": "1",
+				"name": "Ethmoon_pay_9",
+				"exp": "dep.depositor.transfer(dep.expect)"
+			},
+			{
+				"tag": "1",
+				"name": "Ethmoon_pay_12",
+				"exp": "dep.depositor.transfer(money)"
+			}
+		]
+	},
+	"0x6869b8e23b1de74aa9376ec2b5f194bb9aa08cbc": {
+		"addre": "0x6869b8e23b1de74aa9376ec2b5f194bb9aa08cbc",
+		"slice": [
+			{
+				"name": "OpenAndWinEtherPotGame_drawAutoWinner_13",
+				"exp": "owner.transfer(ownerAmt)"
+			},
+			{
+				"tag": "1",
+				"name": "OpenAndWinEtherPotGame_drawAutoWinner_17",
+				"exp": "_winner.send(winnerAmt)"
+			},
+			{
+				"tag": "1",
+				"name": "OpenAndWinEtherPotGame_drawAutoWinner_28",
+				"exp": "_winner.send(amountWon)"
+			},
+			{
+				"name": "OpenAndWinEtherPotGame_drawWinner_11",
+				"exp": "owner.transfer(ownerAmt)"
+			},
+			{
+				"tag": "1",
+				"name": "OpenAndWinEtherPotGame_drawWinner_15",
+				"exp": "_winner.send(winnerAmt)"
+			},
+			{
+				"tag": "1",
+				"name": "OpenAndWinEtherPotGame_drawWinner_25",
+				"exp": "_winner.send(amountWon)"
+			},
+			{
+				"name": "OpenAndWinEtherPotGame_withdraw_4",
+				"exp": "msg.sender.send(amount)"
+			},
+			{
+				"name": "OpenAndWinEtherPotGame__onlyAdmin_Destroy_2",
+				"exp": "owner.transfer(potAmount)"
+			}
+		]
+	},
+	"0xf7070fc72e2b92c6309785a39338d7c919a3cf4a": {
+		"addre": "0xf7070fc72e2b92c6309785a39338d7c919a3cf4a",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "NoFeePonzi_fallback_11",
+				"exp": "payouts[payoutIndex].addr.send(payouts[payoutIndex].yield)"
+			}
+		]
+	},
+	"0x640bd81d0a049a0419971086f9773bdee7294fc5": {
+		"addre": "0x640bd81d0a049a0419971086f9773bdee7294fc5",
+		"slice": [
+			{
+				"name": "Fast50plus_fallback_6",
+				"exp": "MARKETING.transfer(promo)"
+			},
+			{
+				"tag": "1",
+				"name": "Fast50plus_pay_9",
+				"exp": "dep.depositor.transfer(dep.expect)"
+			},
+			{
+				"tag": "1",
+				"name": "Fast50plus_pay_12",
+				"exp": "dep.depositor.transfer(money)"
+			}
+		]
+	},
+	"0x90eca657b13e25ef82eab8dc23435da4e08b6f16": {
+		"addre": "0x90eca657b13e25ef82eab8dc23435da4e08b6f16",
+		"slice": [
+			{
+				"name": "Multiplier_fallback_6",
+				"exp": "PROMO.transfer(promo)"
+			},
+			{
+				"tag": "1",
+				"name": "Multiplier_pay_9",
+				"exp": "dep.depositor.transfer(dep.expect)"
+			},
+			{
+				"tag": "1",
+				"name": "Multiplier_pay_12",
+				"exp": "dep.depositor.transfer(money)"
+			}
+		]
+	},
+	"0x5c61fe62518b05f260bbdb68aa63671576ba4176": {
+		"addre": "0x5c61fe62518b05f260bbdb68aa63671576ba4176",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "BetGame_winnerIsA_10",
+				"exp": "A[p].player.send(A[p].deposit + A[p].deposit / 1000000 * ratio)"
+			},
+			{
+				"tag": "1",
+				"name": "BetGame_winnerIsB_10",
+				"exp": "B[p].player.send(B[p].deposit + B[p].deposit / 1000000 * ratio)"
+			},
+			{
+				"tag": "1",
+				"name": "BetGame_winnerIsDraw_10",
+				"exp": "D[p].player.send(D[p].deposit + D[p].deposit / 1000000 * ratio)"
+			}
+		]
+	}
+}

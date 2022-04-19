@@ -1,0 +1,1818 @@
+{
+	"0x2b6efb0b9ef5919add11a3fe4cd454091475458f": {
+		"addre": "0x2b6efb0b9ef5919add11a3fe4cd454091475458f",
+		"slice": [
+			{
+				"name": "VirtualToken_buyVirtTokens_12",
+				"exp": "whom.transfer(msg.value)"
+			},
+			{
+				"name": "ExpandedToken_buyVirtTokens_12",
+				"exp": "whom.transfer(msg.value)"
+			},
+			{
+				"name": "ExpandedToken_bid_11",
+				"exp": "seller.transfer(sendValue)"
+			},
+			{
+				"name": "SuperFan_bid_11",
+				"exp": "seller.transfer(sendValue)"
+			},
+			{
+				"name": "SuperFan_buyVirtTokens_12",
+				"exp": "whom.transfer(msg.value)"
+			},
+			{
+				"name": "SuperFan_withdrawFee_4",
+				"exp": "owner.transfer(tmpFeeValue)"
+			}
+		]
+	},
+	"0x05e7fb5cb2e99196d52b050c1680e886c0cc5552": {
+		"addre": "0x05e7fb5cb2e99196d52b050c1680e886c0cc5552",
+		"slice": [
+			{
+				"name": "Dextera_fallback_20",
+				"exp": "creator.send(_creatorFee)"
+			},
+			{
+				"name": "Dextera_fallback_21",
+				"exp": "seller.send(this.balance)"
+			},
+			{
+				"name": "Dextera_returnToBuyers_5",
+				"exp": "buyers[_i].ethAddress.send(buyers[_i].amountPaid)"
+			}
+		]
+	},
+	"0x0b6572076a4e657f288c2a1a0ce9bf93b54fedef": {
+		"addre": "0x0b6572076a4e657f288c2a1a0ce9bf93b54fedef",
+		"slice": [
+			{
+				"name": "EtherPoolNetwork_payReferral_9",
+				"exp": "sent = address(uint160(referer)).send(level_price_local)"
+			},
+			{
+				"tag": "1",
+				"name": "EtherPoolNetwork_buyPool1_11",
+				"exp": "sent = address(uint160(pool1Currentuser)).send(pool1_price)"
+			},
+			{
+				"tag": "1",
+				"name": "EtherPoolNetwork_buyPool2_12",
+				"exp": "sent = address(uint160(pool2Currentuser)).send(pool2_price)"
+			},
+			{
+				"tag": "1",
+				"name": "EtherPoolNetwork_buyPool3_12",
+				"exp": "sent = address(uint160(pool3Currentuser)).send(pool3_price)"
+			},
+			{
+				"tag": "1",
+				"name": "EtherPoolNetwork_buyPool4_12",
+				"exp": "sent = address(uint160(pool4Currentuser)).send(pool4_price)"
+			},
+			{
+				"tag": "1",
+				"name": "EtherPoolNetwork_buyPool5_12",
+				"exp": "sent = address(uint160(pool5Currentuser)).send(pool5_price)"
+			},
+			{
+				"tag": "1",
+				"name": "EtherPoolNetwork_buyPool6_11",
+				"exp": "sent = address(uint160(pool6Currentuser)).send(pool6_price)"
+			},
+			{
+				"tag": "1",
+				"name": "EtherPoolNetwork_buyPool7_12",
+				"exp": "sent = address(uint160(pool7Currentuser)).send(pool7_price)"
+			},
+			{
+				"tag": "1",
+				"name": "EtherPoolNetwork_buyPool8_12",
+				"exp": "sent = address(uint160(pool8Currentuser)).send(pool8_price)"
+			},
+			{
+				"tag": "1",
+				"name": "EtherPoolNetwork_buyPool9_12",
+				"exp": "sent = address(uint160(pool9Currentuser)).send(pool9_price)"
+			},
+			{
+				"tag": "1",
+				"name": "EtherPoolNetwork_buyPool10_12",
+				"exp": "sent = address(uint160(pool10Currentuser)).send(pool10_price)"
+			},
+			{
+				"tag": "1",
+				"name": "EtherPoolNetwork_buyPool11_12",
+				"exp": "sent = address(uint160(pool11Currentuser)).send(pool11_price)"
+			},
+			{
+				"tag": "1",
+				"name": "EtherPoolNetwork_buyPool12_12",
+				"exp": "sent = address(uint160(pool12Currentuser)).send(pool12_price)"
+			},
+			{
+				"name": "EtherPoolNetwork_sendBalance_1",
+				"exp": "! address(uint160(ownerWallet)).send(getEthBalance())"
+			}
+		]
+	},
+	"0x0373ead1b067793d8338ba4d21782dd082c02a00": {
+		"addre": "0x0373ead1b067793d8338ba4d21782dd082c02a00",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "SuperHeroes_snatchHero_8",
+				"exp": "previos.transfer(realPrice)"
+			},
+			{
+				"name": "SuperHeroes_withdraw_1",
+				"exp": "to.transfer(amount)"
+			}
+		]
+	},
+	"0x99fcb8e0f4b2114d283ce2dda523a4751bcd5d11": {
+		"addre": "0x99fcb8e0f4b2114d283ce2dda523a4751bcd5d11",
+		"slice": [
+			{
+				"name": "VirtualToken_buyVirtTokens_12",
+				"exp": "whom.transfer(msg.value)"
+			},
+			{
+				"name": "ExpandedToken_buyVirtTokens_12",
+				"exp": "whom.transfer(msg.value)"
+			},
+			{
+				"name": "ExpandedToken_bid_11",
+				"exp": "seller.transfer(sendValue)"
+			},
+			{
+				"name": "SuperFan_bid_11",
+				"exp": "seller.transfer(sendValue)"
+			},
+			{
+				"name": "SuperFan_buyVirtTokens_12",
+				"exp": "whom.transfer(msg.value)"
+			},
+			{
+				"name": "SuperFan_withdrawFee_4",
+				"exp": "owner.transfer(tmpFeeValue)"
+			}
+		]
+	},
+	"0x582b2489710a4189ad558b6958641789587fcc27": {
+		"addre": "0x582b2489710a4189ad558b6958641789587fcc27",
+		"slice": []
+	},
+	"0x92e2d8348df613104c321bb7ab2862f0883e3bdc": {
+		"addre": "0x92e2d8348df613104c321bb7ab2862f0883e3bdc",
+		"slice": [
+			{
+				"name": "CryptoNumismat_withdrawAll_1",
+				"exp": "owner.transfer(this.balance)"
+			},
+			{
+				"name": "CryptoNumismat_withdrawAmount_2",
+				"exp": "owner.transfer(_amount)"
+			},
+			{
+				"tag": "1",
+				"name": "CryptoNumismat_buy_19",
+				"exp": "_seller.transfer(_totalPrice)"
+			},
+			{
+				"name": "CryptoNumismat_buy_22",
+				"exp": "_buyer.transfer(_extra)"
+			}
+		]
+	},
+	"0x015a06a433353f8db634df4eddf0c109882a15ab": {
+		"addre": "0x015a06a433353f8db634df4eddf0c109882a15ab",
+		"slice": [
+			{
+				"name": "PixelMap_buyTile_20",
+				"exp": "owner.send(price)"
+			}
+		]
+	},
+	"0xcd5c0f3525118575fae42f612824b887afebeccc": {
+		"addre": "0xcd5c0f3525118575fae42f612824b887afebeccc",
+		"slice": [
+			{
+				"name": "Dextera_fallback_20",
+				"exp": "creator.send(_creatorFee)"
+			},
+			{
+				"name": "Dextera_fallback_21",
+				"exp": "seller.send(this.balance)"
+			},
+			{
+				"name": "Dextera_returnToBuyers_5",
+				"exp": "buyers[_i].ethAddress.send(buyers[_i].amountPaid)"
+			}
+		]
+	},
+	"0x7e312bdb6ae3bb7ecf2fe2606533a330fbf583e4": {
+		"addre": "0x7e312bdb6ae3bb7ecf2fe2606533a330fbf583e4",
+		"slice": [
+			{
+				"name": "Ownable_fallback_1",
+				"exp": "owner.transfer(address(this).balance)"
+			},
+			{
+				"name": "Shroom_fallback_1",
+				"exp": "owner.transfer(address(this).balance)"
+			},
+			{
+				"name": "Shroom_buy_9",
+				"exp": "currentOwner.transfer(price)"
+			}
+		]
+	},
+	"0x00c7d83d3aa5747a35bf07c7fe08974a1d27a974": {
+		"addre": "0x00c7d83d3aa5747a35bf07c7fe08974a1d27a974",
+		"slice": [
+			{
+				"name": "BullRun_payReferral_9",
+				"exp": "sent = address(uint160(referer)).send(level_price_local)"
+			},
+			{
+				"tag": "1",
+				"name": "BullRun_buyPool1_11",
+				"exp": "sent = address(uint160(pool1Currentuser)).send(pool1_price)"
+			},
+			{
+				"tag": "1",
+				"name": "BullRun_buyPool2_12",
+				"exp": "sent = address(uint160(pool2Currentuser)).send(pool2_price)"
+			},
+			{
+				"tag": "1",
+				"name": "BullRun_buyPool3_12",
+				"exp": "sent = address(uint160(pool3Currentuser)).send(pool3_price)"
+			},
+			{
+				"tag": "1",
+				"name": "BullRun_buyPool4_12",
+				"exp": "sent = address(uint160(pool4Currentuser)).send(pool4_price)"
+			},
+			{
+				"tag": "1",
+				"name": "BullRun_buyPool5_12",
+				"exp": "sent = address(uint160(pool5Currentuser)).send(pool5_price)"
+			},
+			{
+				"tag": "1",
+				"name": "BullRun_buyPool6_11",
+				"exp": "sent = address(uint160(pool6Currentuser)).send(pool6_price)"
+			},
+			{
+				"tag": "1",
+				"name": "BullRun_buyPool7_12",
+				"exp": "sent = address(uint160(pool7Currentuser)).send(pool7_price)"
+			},
+			{
+				"tag": "1",
+				"name": "BullRun_buyPool8_12",
+				"exp": "sent = address(uint160(pool8Currentuser)).send(pool8_price)"
+			},
+			{
+				"tag": "1",
+				"name": "BullRun_buyPool9_12",
+				"exp": "sent = address(uint160(pool9Currentuser)).send(pool9_price)"
+			},
+			{
+				"tag": "1",
+				"name": "BullRun_buyPool10_12",
+				"exp": "sent = address(uint160(pool10Currentuser)).send(pool10_price)"
+			},
+			{
+				"name": "BullRun_sendBalance_1",
+				"exp": "! address(uint160(ownerWallet)).send(getEthBalance())"
+			}
+		]
+	},
+	"0x386d51a52b36ff03602798418d4d5eec49939c5b": {
+		"addre": "0x386d51a52b36ff03602798418d4d5eec49939c5b",
+		"slice": [
+			{
+				"name": "CryptoNumismat_withdrawAll_1",
+				"exp": "owner.transfer(this.balance)"
+			},
+			{
+				"name": "CryptoNumismat_withdrawAmount_2",
+				"exp": "owner.transfer(_amount)"
+			},
+			{
+				"tag": "1",
+				"name": "CryptoNumismat_buy_19",
+				"exp": "_seller.transfer(_totalPrice)"
+			},
+			{
+				"name": "CryptoNumismat_buy_22",
+				"exp": "_buyer.transfer(_extra)"
+			}
+		]
+	},
+	"0x358d0e04f512c4d5f43b84f7d2b18923a51aa861": {
+		"addre": "0x358d0e04f512c4d5f43b84f7d2b18923a51aa861",
+		"slice": [
+			{
+				"name": "PixelFactory_sendOwnerCommission_1",
+				"exp": "contractOwner.transfer(msg.value)"
+			},
+			{
+				"name": "PixelFactory__sendWinnerJackpot_2",
+				"exp": "winner.transfer(jackpot)"
+			},
+			{
+				"tag": "1",
+				"name": "PixelFactory_buy_11",
+				"exp": "currentOwner.transfer(msg.value)"
+			}
+		]
+	},
+	"0x723dff0e27cc38b80556f5e05dfdbdcb721654d7": {
+		"addre": "0x723dff0e27cc38b80556f5e05dfdbdcb721654d7",
+		"slice": [
+			{
+				"name": "DFS_makeDeposit_6",
+				"exp": "! msg.sender.send(msg.value - 1000000000000000000000)"
+			},
+			{
+				"name": "DFS_makeDeposit_13",
+				"exp": "! owner1.send(amount * 5 / 2 / 100)"
+			},
+			{
+				"name": "DFS_makeDeposit_16",
+				"exp": "! owner2.send(amount * 5 / 2 / 100)"
+			},
+			{
+				"name": "DFS_makeDeposit_20",
+				"exp": "! ref1.send(amount * 5 / 100)"
+			},
+			{
+				"name": "DFS_makeDeposit_24",
+				"exp": "! ref2.send(amount * 2 / 100)"
+			},
+			{
+				"name": "DFS_makeDeposit_28",
+				"exp": "! ref3.send(amount / 100)"
+			},
+			{
+				"tag": "1",
+				"name": "DFS_pay_28",
+				"exp": "! deposits[i].sender.send(amountToWithdraw)"
+			}
+		]
+	},
+	"0x696f16d565993b05b353bdf4e2197a3201e19ebf": {
+		"addre": "0x696f16d565993b05b353bdf4e2197a3201e19ebf",
+		"slice": [
+			{
+				"name": "Dextera_fallback_20",
+				"exp": "creator.send(_creatorFee)"
+			},
+			{
+				"name": "Dextera_fallback_21",
+				"exp": "seller.send(this.balance)"
+			},
+			{
+				"name": "Dextera_returnToBuyers_5",
+				"exp": "buyers[_i].ethAddress.send(buyers[_i].amountPaid)"
+			}
+		]
+	},
+	"0xf81838e2b9d69490a75b263d5cc2da77d19e6613": {
+		"addre": "0xf81838e2b9d69490a75b263d5cc2da77d19e6613",
+		"slice": [
+			{
+				"name": "Dextera_fallback_20",
+				"exp": "creator.send(_creatorFee)"
+			},
+			{
+				"name": "Dextera_fallback_21",
+				"exp": "seller.send(this.balance)"
+			},
+			{
+				"name": "Dextera_returnToBuyers_5",
+				"exp": "buyers[_i].ethAddress.send(buyers[_i].amountPaid)"
+			}
+		]
+	},
+	"0x24f9c2c5032d22153e97205b93339f3496a3a3b5": {
+		"addre": "0x24f9c2c5032d22153e97205b93339f3496a3a3b5",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "Redeem_buy_14",
+				"exp": "item.owner.transfer(curWei * (1000 - cutOf(item.price)) / 1000)"
+			},
+			{
+				"name": "Redeem_buy_16",
+				"exp": "msg.sender.transfer(msg.value - curWei)"
+			},
+			{
+				"name": "Redeem_withdrawAll_1",
+				"exp": "msg.sender.transfer(this.balance)"
+			},
+			{
+				"name": "Redeem_withdraw_1",
+				"exp": "msg.sender.transfer(_amount)"
+			}
+		]
+	},
+	"0x8e43d7a5c4b2de24b728deff0e666fe674b3ca91": {
+		"addre": "0x8e43d7a5c4b2de24b728deff0e666fe674b3ca91",
+		"slice": [
+			{
+				"name": "HorseShoeShopOwner_buyHSShop_14",
+				"exp": "_from.transfer(oPrice)"
+			},
+			{
+				"name": "HorseShoeShopOwner_buyHSShop_15",
+				"exp": "ceoAddress.transfer(oPrice)"
+			},
+			{
+				"name": "HorseShoeShopOwner_buyHSShop_17",
+				"exp": "ceoAddress.transfer(Fee)"
+			},
+			{
+				"name": "HorseShoeShopOwner_buyHSShop_19",
+				"exp": "_to.transfer(buyExcess)"
+			},
+			{
+				"name": "HorseShoeShopOwner_bid_6",
+				"exp": "_to.transfer(msg.value)"
+			},
+			{
+				"name": "HorseShoeShopOwner_bid_16",
+				"exp": "ceoAddress.transfer(priceNow)"
+			},
+			{
+				"name": "HorseShoeShopOwner_bid_18",
+				"exp": "_to.transfer(buyExcess)"
+			},
+			{
+				"name": "HorseShoeBasis_buyHSShop_14",
+				"exp": "_from.transfer(oPrice)"
+			},
+			{
+				"name": "HorseShoeBasis_buyHSShop_15",
+				"exp": "ceoAddress.transfer(oPrice)"
+			},
+			{
+				"name": "HorseShoeBasis_buyHSShop_17",
+				"exp": "ceoAddress.transfer(Fee)"
+			},
+			{
+				"name": "HorseShoeBasis_buyHSShop_19",
+				"exp": "_to.transfer(buyExcess)"
+			},
+			{
+				"name": "HorseShoeBasis_bid_6",
+				"exp": "_to.transfer(msg.value)"
+			},
+			{
+				"name": "HorseShoeBasis_bid_16",
+				"exp": "ceoAddress.transfer(priceNow)"
+			},
+			{
+				"name": "HorseShoeBasis_bid_18",
+				"exp": "_to.transfer(buyExcess)"
+			},
+			{
+				"name": "HorseShoeBasis__sell_35",
+				"exp": "_from.transfer(oPrice)"
+			},
+			{
+				"name": "HorseShoeBasis__sell_36",
+				"exp": "ceoAddress.transfer(Fee)"
+			},
+			{
+				"name": "HorseShoeBasis__sell_38",
+				"exp": "HSSOwner.transfer(Fee)"
+			},
+			{
+				"name": "HorseShoeBasis__sell_39",
+				"exp": "ceoAddress.transfer(Fee)"
+			},
+			{
+				"name": "HorseShoeBasis__sell_42",
+				"exp": "_to.transfer(bidExcess)"
+			},
+			{
+				"name": "HorseShoeBasis__sell_43",
+				"exp": "_to.transfer(value)"
+			},
+			{
+				"name": "HorseShoeOwnership__sell_35",
+				"exp": "_from.transfer(oPrice)"
+			},
+			{
+				"name": "HorseShoeOwnership__sell_36",
+				"exp": "ceoAddress.transfer(Fee)"
+			},
+			{
+				"name": "HorseShoeOwnership__sell_38",
+				"exp": "HSSOwner.transfer(Fee)"
+			},
+			{
+				"name": "HorseShoeOwnership__sell_39",
+				"exp": "ceoAddress.transfer(Fee)"
+			},
+			{
+				"name": "HorseShoeOwnership__sell_42",
+				"exp": "_to.transfer(bidExcess)"
+			},
+			{
+				"name": "HorseShoeOwnership__sell_43",
+				"exp": "_to.transfer(value)"
+			},
+			{
+				"name": "HorseShoeOwnership_buyHSShop_14",
+				"exp": "_from.transfer(oPrice)"
+			},
+			{
+				"name": "HorseShoeOwnership_buyHSShop_15",
+				"exp": "ceoAddress.transfer(oPrice)"
+			},
+			{
+				"name": "HorseShoeOwnership_buyHSShop_17",
+				"exp": "ceoAddress.transfer(Fee)"
+			},
+			{
+				"name": "HorseShoeOwnership_buyHSShop_19",
+				"exp": "_to.transfer(buyExcess)"
+			},
+			{
+				"name": "HorseShoeOwnership_bid_6",
+				"exp": "_to.transfer(msg.value)"
+			},
+			{
+				"name": "HorseShoeOwnership_bid_16",
+				"exp": "ceoAddress.transfer(priceNow)"
+			},
+			{
+				"name": "HorseShoeOwnership_bid_18",
+				"exp": "_to.transfer(buyExcess)"
+			},
+			{
+				"name": "HorseShoeOwnership_transferFrom_6",
+				"exp": "_to.transfer(msg.value)"
+			},
+			{
+				"name": "HorseShoeMinting_transferFrom_6",
+				"exp": "_to.transfer(msg.value)"
+			},
+			{
+				"name": "HorseShoeMinting__sell_35",
+				"exp": "_from.transfer(oPrice)"
+			},
+			{
+				"name": "HorseShoeMinting__sell_36",
+				"exp": "ceoAddress.transfer(Fee)"
+			},
+			{
+				"name": "HorseShoeMinting__sell_38",
+				"exp": "HSSOwner.transfer(Fee)"
+			},
+			{
+				"name": "HorseShoeMinting__sell_39",
+				"exp": "ceoAddress.transfer(Fee)"
+			},
+			{
+				"name": "HorseShoeMinting__sell_42",
+				"exp": "_to.transfer(bidExcess)"
+			},
+			{
+				"name": "HorseShoeMinting__sell_43",
+				"exp": "_to.transfer(value)"
+			},
+			{
+				"name": "HorseShoeMinting_buyHSShop_14",
+				"exp": "_from.transfer(oPrice)"
+			},
+			{
+				"name": "HorseShoeMinting_buyHSShop_15",
+				"exp": "ceoAddress.transfer(oPrice)"
+			},
+			{
+				"name": "HorseShoeMinting_buyHSShop_17",
+				"exp": "ceoAddress.transfer(Fee)"
+			},
+			{
+				"name": "HorseShoeMinting_buyHSShop_19",
+				"exp": "_to.transfer(buyExcess)"
+			},
+			{
+				"name": "HorseShoeMinting_bid_6",
+				"exp": "_to.transfer(msg.value)"
+			},
+			{
+				"name": "HorseShoeMinting_bid_16",
+				"exp": "ceoAddress.transfer(priceNow)"
+			},
+			{
+				"name": "HorseShoeMinting_bid_18",
+				"exp": "_to.transfer(buyExcess)"
+			},
+			{
+				"name": "GetTheHorseShoe_transferFrom_6",
+				"exp": "_to.transfer(msg.value)"
+			},
+			{
+				"name": "GetTheHorseShoe__sell_35",
+				"exp": "_from.transfer(oPrice)"
+			},
+			{
+				"name": "GetTheHorseShoe__sell_36",
+				"exp": "ceoAddress.transfer(Fee)"
+			},
+			{
+				"name": "GetTheHorseShoe__sell_38",
+				"exp": "HSSOwner.transfer(Fee)"
+			},
+			{
+				"name": "GetTheHorseShoe__sell_39",
+				"exp": "ceoAddress.transfer(Fee)"
+			},
+			{
+				"name": "GetTheHorseShoe__sell_42",
+				"exp": "_to.transfer(bidExcess)"
+			},
+			{
+				"name": "GetTheHorseShoe__sell_43",
+				"exp": "_to.transfer(value)"
+			},
+			{
+				"name": "GetTheHorseShoe_buyHSShop_14",
+				"exp": "_from.transfer(oPrice)"
+			},
+			{
+				"name": "GetTheHorseShoe_buyHSShop_15",
+				"exp": "ceoAddress.transfer(oPrice)"
+			},
+			{
+				"name": "GetTheHorseShoe_buyHSShop_17",
+				"exp": "ceoAddress.transfer(Fee)"
+			},
+			{
+				"name": "GetTheHorseShoe_buyHSShop_19",
+				"exp": "_to.transfer(buyExcess)"
+			},
+			{
+				"name": "GetTheHorseShoe_bid_6",
+				"exp": "_to.transfer(msg.value)"
+			},
+			{
+				"name": "GetTheHorseShoe_bid_16",
+				"exp": "ceoAddress.transfer(priceNow)"
+			},
+			{
+				"name": "GetTheHorseShoe_bid_18",
+				"exp": "_to.transfer(buyExcess)"
+			}
+		]
+	},
+	"0x2784760e5d3be3bb700875635ac9f98bfbbc79d4": {
+		"addre": "0x2784760e5d3be3bb700875635ac9f98bfbbc79d4",
+		"slice": [
+			{
+				"name": "DragonKing_exit_35",
+				"exp": "msg.sender.transfer(playerBalance)"
+			},
+			{
+				"name": "DragonKing_collectFees_3",
+				"exp": "owner.transfer(amount)"
+			},
+			{
+				"name": "DragonKing_stop_5",
+				"exp": "! characters[ids[i]].owner.send(characters[ids[i]].value)"
+			},
+			{
+				"name": "DragonKing_sellCharacter_5",
+				"exp": "msg.sender.transfer(val)"
+			}
+		]
+	},
+	"0x1b27ab139a92d1522dc8511612db197d0e2e53c8": {
+		"addre": "0x1b27ab139a92d1522dc8511612db197d0e2e53c8",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "ETHRUN_payForLevel_27",
+				"exp": "address(uint160(upline)).transfer(LVL_COST[_lvl])"
+			}
+		]
+	},
+	"0x060362931c038a53e745d8d1ca8ddc1f58e00b2c": {
+		"addre": "0x060362931c038a53e745d8d1ca8ddc1f58e00b2c",
+		"slice": [
+			{
+				"name": "BullRun_payReferral_9",
+				"exp": "sent = address(uint160(referer)).send(level_price_local)"
+			},
+			{
+				"tag": "1",
+				"name": "BullRun_buyPool1_11",
+				"exp": "sent = address(uint160(pool1Currentuser)).send(pool1_price)"
+			},
+			{
+				"tag": "1",
+				"name": "BullRun_buyPool2_12",
+				"exp": "sent = address(uint160(pool2Currentuser)).send(pool2_price)"
+			},
+			{
+				"tag": "1",
+				"name": "BullRun_buyPool3_12",
+				"exp": "sent = address(uint160(pool3Currentuser)).send(pool3_price)"
+			},
+			{
+				"tag": "1",
+				"name": "BullRun_buyPool4_12",
+				"exp": "sent = address(uint160(pool4Currentuser)).send(pool4_price)"
+			},
+			{
+				"tag": "1",
+				"name": "BullRun_buyPool5_12",
+				"exp": "sent = address(uint160(pool5Currentuser)).send(pool5_price)"
+			},
+			{
+				"tag": "1",
+				"name": "BullRun_buyPool6_11",
+				"exp": "sent = address(uint160(pool6Currentuser)).send(pool6_price)"
+			},
+			{
+				"tag": "1",
+				"name": "BullRun_buyPool7_12",
+				"exp": "sent = address(uint160(pool7Currentuser)).send(pool7_price)"
+			},
+			{
+				"tag": "1",
+				"name": "BullRun_buyPool8_12",
+				"exp": "sent = address(uint160(pool8Currentuser)).send(pool8_price)"
+			},
+			{
+				"tag": "1",
+				"name": "BullRun_buyPool9_12",
+				"exp": "sent = address(uint160(pool9Currentuser)).send(pool9_price)"
+			},
+			{
+				"tag": "1",
+				"name": "BullRun_buyPool10_12",
+				"exp": "sent = address(uint160(pool10Currentuser)).send(pool10_price)"
+			},
+			{
+				"tag": "1",
+				"name": "BullRun_sendBalance_1",
+				"exp": "! address(uint160(ownerWallet)).send(getEthBalance())"
+			}
+		]
+	},
+	"0x0fcdc5d43bd644aa1948e632a133f9debd53ff5b": {
+		"addre": "0x0fcdc5d43bd644aa1948e632a133f9debd53ff5b",
+		"slice": [
+			{
+				"name": "HashedTimelock_withdraw_4",
+				"exp": "c.receiver.transfer(c.amount)"
+			},
+			{
+				"name": "HashedTimelock_refund_3",
+				"exp": "c.sender.transfer(c.amount)"
+			},
+			{
+				"name": "HashedTimelock_claimTokens_2",
+				"exp": "owner.transfer(feeToWithdraw)"
+			}
+		]
+	},
+	"0xe5b334c9b907656914dbc8f93d82f2b4a46eebe6": {
+		"addre": "0xe5b334c9b907656914dbc8f93d82f2b4a46eebe6",
+		"slice": [
+			{
+				"name": "Dextera_fallback_20",
+				"exp": "creator.send(_creatorFee)"
+			},
+			{
+				"name": "Dextera_fallback_21",
+				"exp": "seller.send(this.balance)"
+			},
+			{
+				"name": "Dextera_returnToBuyers_5",
+				"exp": "buyers[_i].ethAddress.send(buyers[_i].amountPaid)"
+			}
+		]
+	},
+	"0x167b173ed574867962e0418c811a038dcd9835b9": {
+		"addre": "0x167b173ed574867962e0418c811a038dcd9835b9",
+		"slice": [
+			{
+				"name": "SharingContract_finishSharingProd_7",
+				"exp": "sharingProdList[_sharingProdId].ownerAddress.transfer(sharingProdList[_sharingProdId].price)"
+			}
+		]
+	},
+	"0x1322d823ddf910b2e7cc0096d15dee0a977bd9dc": {
+		"addre": "0x1322d823ddf910b2e7cc0096d15dee0a977bd9dc",
+		"slice": [
+			{
+				"name": "Dextera_fallback_20",
+				"exp": "creator.send(_creatorFee)"
+			},
+			{
+				"name": "Dextera_fallback_21",
+				"exp": "seller.send(this.balance)"
+			},
+			{
+				"name": "Dextera_returnToBuyers_5",
+				"exp": "buyers[_i].ethAddress.send(buyers[_i].amountPaid)"
+			}
+		]
+	},
+	"0x2df0e612dad9ffe8141b3987f60608742db2feca": {
+		"addre": "0x2df0e612dad9ffe8141b3987f60608742db2feca",
+		"slice": [
+			{
+				"name": "StableICO_fallback_23",
+				"exp": "msg.sender.transfer(msg.value)"
+			},
+			{
+				"name": "StableICO_drawdown_4",
+				"exp": "beneficiary.transfer(totalFunded)"
+			},
+			{
+				"name": "StableICO_refund_14",
+				"exp": "donations[i].donorAddress.transfer(donations[i].ethAmount)"
+			},
+			{
+				"name": "StableICO_transferEthToOwner_4",
+				"exp": "owner.transfer(_amount)"
+			},
+			{
+				"name": "StableICO_backup_drawdown_amount_4",
+				"exp": "beneficiary.transfer(_amount)"
+			}
+		]
+	},
+	"0xa5540d1d6929215e9e971948d047d5883ef71bf4": {
+		"addre": "0xa5540d1d6929215e9e971948d047d5883ef71bf4",
+		"slice": [
+			{
+				"name": "Dextera_fallback_20",
+				"exp": "creator.send(_creatorFee)"
+			},
+			{
+				"name": "Dextera_fallback_21",
+				"exp": "seller.send(this.balance)"
+			},
+			{
+				"name": "Dextera_returnToBuyers_5",
+				"exp": "buyers[_i].ethAddress.send(buyers[_i].amountPaid)"
+			}
+		]
+	},
+	"0x2efaf60bbd75b9430a8446bd58d12fbc3f5dbb71": {
+		"addre": "0x2efaf60bbd75b9430a8446bd58d12fbc3f5dbb71",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "EtherMinerals_purchase_9",
+				"exp": "mineral.owner.transfer(reward)"
+			},
+			{
+				"name": "EtherMinerals_purchase_23",
+				"exp": "msg.sender.transfer(excess)"
+			},
+			{
+				"name": "EtherMinerals_payout_1",
+				"exp": "ceoAddress.transfer(address(this).balance)"
+			}
+		]
+	},
+	"0x08bf3adb1ad9ce3d73f8b709086e738d9d15df2b": {
+		"addre": "0x08bf3adb1ad9ce3d73f8b709086e738d9d15df2b",
+		"slice": [
+			{
+				"name": "HGT_send_13",
+				"exp": "records[toaddress].buyer.transfer(eth)"
+			}
+		]
+	},
+	"0x8ff1c8a8799dd59eca03d9cf52b12ae0ccc21762": {
+		"addre": "0x8ff1c8a8799dd59eca03d9cf52b12ae0ccc21762",
+		"slice": [
+			{
+				"name": "SkinBase_withdrawETH_1",
+				"exp": "cfo.transfer(this.balance)"
+			},
+			{
+				"name": "SkinMix_withdrawETH_1",
+				"exp": "cfo.transfer(this.balance)"
+			},
+			{
+				"name": "SkinMarket_withdrawETH_1",
+				"exp": "cfo.transfer(this.balance)"
+			},
+			{
+				"name": "SkinMarket_buyInMarket_7",
+				"exp": "seller.transfer(sellerProceeds)"
+			},
+			{
+				"name": "SkinMinting_buyInMarket_7",
+				"exp": "seller.transfer(sellerProceeds)"
+			},
+			{
+				"name": "SkinMinting_withdrawETH_1",
+				"exp": "cfo.transfer(this.balance)"
+			}
+		]
+	},
+	"0x56c1e514d7d7ae8019670207365606f2a0ee7e81": {
+		"addre": "0x56c1e514d7d7ae8019670207365606f2a0ee7e81",
+		"slice": [
+			{
+				"name": "PresidentElections_vote_5",
+				"exp": "owner.transfer(msg.value.mul(100 - percent).div(100))"
+			},
+			{
+				"name": "PresidentElections_vote_6",
+				"exp": "candidates[candidate].owner.transfer(msg.value.mul(percent).div(100))"
+			},
+			{
+				"name": "PresidentElections_vote_7",
+				"exp": "owner.transfer(msg.value)"
+			},
+			{
+				"name": "PresidentElections_add_3",
+				"exp": "owner.transfer(msg.value)"
+			}
+		]
+	},
+	"0x271de8577c1de7070a7e5508f11019318b46821b": {
+		"addre": "0x271de8577c1de7070a7e5508f11019318b46821b",
+		"slice": [
+			{
+				"name": "MillionaireVine_payReferral_9",
+				"exp": "sent = address(uint160(referer)).send(level_price_local)"
+			},
+			{
+				"tag": "1",
+				"name": "MillionaireVine_buyPool1_11",
+				"exp": "sent = address(uint160(pool1Currentuser)).send(pool1_price)"
+			},
+			{
+				"tag": "1",
+				"name": "MillionaireVine_buyPool2_11",
+				"exp": "sent = address(uint160(pool2Currentuser)).send(pool2_price)"
+			},
+			{
+				"tag": "1",
+				"name": "MillionaireVine_buyPool3_12",
+				"exp": "sent = address(uint160(pool3Currentuser)).send(pool3_price)"
+			},
+			{
+				"tag": "1",
+				"name": "MillionaireVine_buyPool4_12",
+				"exp": "sent = address(uint160(pool4Currentuser)).send(pool4_price)"
+			},
+			{
+				"tag": "1",
+				"name": "MillionaireVine_buyPool5_12",
+				"exp": "sent = address(uint160(pool5Currentuser)).send(pool5_price)"
+			},
+			{
+				"tag": "1",
+				"name": "MillionaireVine_buyPool6_11",
+				"exp": "sent = address(uint160(pool6Currentuser)).send(pool6_price)"
+			},
+			{
+				"tag": "1",
+				"name": "MillionaireVine_buyPool7_12",
+				"exp": "sent = address(uint160(pool7Currentuser)).send(pool7_price)"
+			},
+			{
+				"tag": "1",
+				"name": "MillionaireVine_buyPool8_12",
+				"exp": "sent = address(uint160(pool8Currentuser)).send(pool8_price)"
+			},
+			{
+				"tag": "1",
+				"name": "MillionaireVine_buyPool9_12",
+				"exp": "sent = address(uint160(pool9Currentuser)).send(pool9_price)"
+			},
+			{
+				"tag": "1",
+				"name": "MillionaireVine_buyPool10_12",
+				"exp": "sent = address(uint160(pool10Currentuser)).send(pool10_price)"
+			},
+			{
+				"tag": "1",
+				"name": "MillionaireVine_buyPool11_12",
+				"exp": "sent = address(uint160(pool11Currentuser)).send(pool11_price)"
+			},
+			{
+				"tag": "1",
+				"name": "MillionaireVine_buyPool12_12",
+				"exp": "sent = address(uint160(pool12Currentuser)).send(pool12_price)"
+			},
+			{
+				"tag": "1",
+				"name": "MillionaireVine_buyPool13_12",
+				"exp": "sent = address(uint160(pool13Currentuser)).send(pool13_price)"
+			},
+			{
+				"tag": "1",
+				"name": "MillionaireVine_buyPool14_12",
+				"exp": "sent = address(uint160(pool14Currentuser)).send(pool14_price)"
+			},
+			{
+				"tag": "1",
+				"name": "MillionaireVine_buyPool15_12",
+				"exp": "sent = address(uint160(pool15Currentuser)).send(pool15_price)"
+			},
+			{
+				"name": "MillionaireVine_sendBalance_1",
+				"exp": "! address(uint160(ownerWallet)).send(getEthBalance())"
+			}
+		]
+	},
+	"0x1fbe9723f1ac6a79c3d54ca0e8c2288def60c69e": {
+		"addre": "0x1fbe9723f1ac6a79c3d54ca0e8c2288def60c69e",
+		"slice": [
+			{
+				"name": "BullRun_payReferral_9",
+				"exp": "sent = address(uint160(referer)).send(level_price_local)"
+			},
+			{
+				"tag": "1",
+				"name": "BullRun_buyPool1_11",
+				"exp": "sent = address(uint160(pool1Currentuser)).send(pool1_price)"
+			},
+			{
+				"tag": "1",
+				"name": "BullRun_buyPool2_12",
+				"exp": "sent = address(uint160(pool2Currentuser)).send(pool2_price)"
+			},
+			{
+				"tag": "1",
+				"name": "BullRun_buyPool3_12",
+				"exp": "sent = address(uint160(pool3Currentuser)).send(pool3_price)"
+			},
+			{
+				"tag": "1",
+				"name": "BullRun_buyPool4_12",
+				"exp": "sent = address(uint160(pool4Currentuser)).send(pool4_price)"
+			},
+			{
+				"tag": "1",
+				"name": "BullRun_buyPool5_12",
+				"exp": "sent = address(uint160(pool5Currentuser)).send(pool5_price)"
+			},
+			{
+				"tag": "1",
+				"name": "BullRun_buyPool6_11",
+				"exp": "sent = address(uint160(pool6Currentuser)).send(pool6_price)"
+			},
+			{
+				"tag": "1",
+				"name": "BullRun_buyPool7_12",
+				"exp": "sent = address(uint160(pool7Currentuser)).send(pool7_price)"
+			},
+			{
+				"tag": "1",
+				"name": "BullRun_buyPool8_12",
+				"exp": "sent = address(uint160(pool8Currentuser)).send(pool8_price)"
+			},
+			{
+				"tag": "1",
+				"name": "BullRun_buyPool9_12",
+				"exp": "sent = address(uint160(pool9Currentuser)).send(pool9_price)"
+			},
+			{
+				"tag": "1",
+				"name": "BullRun_buyPool10_12",
+				"exp": "sent = address(uint160(pool10Currentuser)).send(pool10_price)"
+			},
+			{
+				"name": "BullRun_sendBalance_1",
+				"exp": "! address(uint160(ownerWallet)).send(getEthBalance())"
+			}
+		]
+	},
+	"0x1b9c123c28dcef6f91f55b38743d9958661f84aa": {
+		"addre": "0x1b9c123c28dcef6f91f55b38743d9958661f84aa",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "Emoz_buy_14",
+				"exp": "pO.transfer((3 * p) / 5)"
+			},
+			{
+				"name": "Emoz_buy_16",
+				"exp": "cO.transfer(this.balance)"
+			}
+		]
+	},
+	"0x14b2e65338ddef083f9469098629bdc563c5e167": {
+		"addre": "0x14b2e65338ddef083f9469098629bdc563c5e167",
+		"slice": [
+			{
+				"name": "Mortal_permaStop_3",
+				"exp": "owner.transfer(address(this).balance)"
+			},
+			{
+				"name": "Administrable_permaStop_3",
+				"exp": "owner.transfer(address(this).balance)"
+			},
+			{
+				"name": "Administrable_withdrawDeveloperPot_3",
+				"exp": "receiver.transfer(value)"
+			},
+			{
+				"name": "Administrable_donate_3",
+				"exp": "charity.transfer(value)"
+			},
+			{
+				"name": "Administrable_withdrawHighscorePot_4",
+				"exp": "receiver.transfer(value)"
+			},
+			{
+				"name": "Administrable_withdrawAffiliateBalance_4",
+				"exp": "receiver.transfer(value)"
+			},
+			{
+				"name": "Administrable_withdrawSurprisePot_3",
+				"exp": "receiver.transfer(value)"
+			},
+			{
+				"name": "Administrable_withdrawSurprisePotUser_8",
+				"exp": "msg.sender.transfer(value)"
+			},
+			{
+				"name": "Etherman_withdrawDeveloperPot_3",
+				"exp": "receiver.transfer(value)"
+			},
+			{
+				"name": "Etherman_donate_3",
+				"exp": "charity.transfer(value)"
+			},
+			{
+				"name": "Etherman_withdrawHighscorePot_4",
+				"exp": "receiver.transfer(value)"
+			},
+			{
+				"name": "Etherman_withdrawAffiliateBalance_4",
+				"exp": "receiver.transfer(value)"
+			},
+			{
+				"name": "Etherman_withdrawSurprisePot_3",
+				"exp": "receiver.transfer(value)"
+			},
+			{
+				"name": "Etherman_withdrawSurprisePotUser_8",
+				"exp": "msg.sender.transfer(value)"
+			},
+			{
+				"name": "Etherman_permaStop_3",
+				"exp": "owner.transfer(address(this).balance)"
+			},
+			{
+				"name": "Etherman_withdraw_6",
+				"exp": "msg.sender.transfer(value)"
+			},
+			{
+				"name": "Etherman_withdraw_10",
+				"exp": "msg.sender.transfer(value)"
+			},
+			{
+				"name": "Etherman_withdraw_11",
+				"exp": "player2.transfer(value)"
+			},
+			{
+				"name": "Etherman_withdraw_19",
+				"exp": "msg.sender.transfer(value)"
+			},
+			{
+				"name": "Etherman_withdraw_20",
+				"exp": "player1.transfer(value)"
+			},
+			{
+				"tag": "1",
+				"name": "Etherman_claimWin_20",
+				"exp": "msg.sender.transfer(win)"
+			},
+			{
+				"name": "Etherman_addScore_23",
+				"exp": "highscoreHolder.transfer(pot)"
+			}
+		]
+	},
+	"0xb7468dbc0a594bf1b2edf72f3b50abba27dc0f81": {
+		"addre": "0xb7468dbc0a594bf1b2edf72f3b50abba27dc0f81",
+		"slice": [
+			{
+				"name": "Dextera_fallback_20",
+				"exp": "creator.send(_creatorFee)"
+			},
+			{
+				"name": "Dextera_fallback_21",
+				"exp": "seller.send(this.balance)"
+			},
+			{
+				"name": "Dextera_returnToBuyers_5",
+				"exp": "buyers[_i].ethAddress.send(buyers[_i].amountPaid)"
+			}
+		]
+	},
+	"0x1277ee49236da5c07e93b8b9df29d629842f0ab9": {
+		"addre": "0x1277ee49236da5c07e93b8b9df29d629842f0ab9",
+		"slice": [
+			{
+				"name": "Payments_withdrawPayments_6",
+				"exp": "assert(bool)(payee.send(payment))"
+			},
+			{
+				"name": "Trading_withdrawPayments_6",
+				"exp": "assert(bool)(payee.send(payment))"
+			},
+			{
+				"name": "Trading_startBuying_12",
+				"exp": "payee.transfer(msg.value)"
+			},
+			{
+				"name": "MinesFactory_startBuying_12",
+				"exp": "payee.transfer(msg.value)"
+			},
+			{
+				"name": "MinesFactory_withdrawPayments_6",
+				"exp": "assert(bool)(payee.send(payment))"
+			}
+		]
+	},
+	"0x04299958f29fa5b8383f7bbd0c98ab86bef81363": {
+		"addre": "0x04299958f29fa5b8383f7bbd0c98ab86bef81363",
+		"slice": [
+			{
+				"name": "cyberbull_payReferral_9",
+				"exp": "sent = address(uint160(referer)).send(level_price_local)"
+			},
+			{
+				"tag": "1",
+				"name": "cyberbull_buyPool1_11",
+				"exp": "sent = address(uint160(pool1Currentuser)).send(pool1_price)"
+			},
+			{
+				"tag": "1",
+				"name": "cyberbull_buyPool2_12",
+				"exp": "sent = address(uint160(pool2Currentuser)).send(pool2_price)"
+			},
+			{
+				"tag": "1",
+				"name": "cyberbull_buyPool3_12",
+				"exp": "sent = address(uint160(pool3Currentuser)).send(pool3_price)"
+			},
+			{
+				"tag": "1",
+				"name": "cyberbull_buyPool4_12",
+				"exp": "sent = address(uint160(pool4Currentuser)).send(pool4_price)"
+			},
+			{
+				"tag": "1",
+				"name": "cyberbull_buyPool5_12",
+				"exp": "sent = address(uint160(pool5Currentuser)).send(pool5_price)"
+			},
+			{
+				"tag": "1",
+				"name": "cyberbull_buyPool6_11",
+				"exp": "sent = address(uint160(pool6Currentuser)).send(pool6_price)"
+			},
+			{
+				"tag": "1",
+				"name": "cyberbull_buyPool7_12",
+				"exp": "sent = address(uint160(pool7Currentuser)).send(pool7_price)"
+			},
+			{
+				"tag": "1",
+				"name": "cyberbull_buyPool8_12",
+				"exp": "sent = address(uint160(pool8Currentuser)).send(pool8_price)"
+			},
+			{
+				"tag": "1",
+				"name": "cyberbull_buyPool9_12",
+				"exp": "sent = address(uint160(pool9Currentuser)).send(pool9_price)"
+			},
+			{
+				"tag": "1",
+				"name": "cyberbull_buyPool10_12",
+				"exp": "sent = address(uint160(pool10Currentuser)).send(pool10_price)"
+			},
+			{
+				"tag": "1",
+				"name": "cyberbull_sendBalance_1",
+				"exp": "! address(uint160(ownerWallet)).send(getEthBalance())"
+			}
+		]
+	},
+	"0x0dae83df3867954983ab81c3c13579a7a65886c7": {
+		"addre": "0x0dae83df3867954983ab81c3c13579a7a65886c7",
+		"slice": [
+			{
+				"name": "Elitewings_payReferral_9",
+				"exp": "sent = address(uint160(referer)).send(level_price_local)"
+			},
+			{
+				"tag": "1",
+				"name": "Elitewings_buyPool_19",
+				"exp": "address(uint160(referer)).send(fee)"
+			},
+			{
+				"tag": "1",
+				"name": "Elitewings_buyPool_20",
+				"exp": "sent = address(uint160(poolCurrentuser)).send(poolshare)"
+			},
+			{
+				"name": "Elitewings_sendBalance_1",
+				"exp": "! address(uint160(ownerWallet)).send(getEthBalance())"
+			}
+		]
+	},
+	"0x2c110867ca90e43d372c1c2e92990b00ea32818b": {
+		"addre": "0x2c110867ca90e43d372c1c2e92990b00ea32818b",
+		"slice": [
+			{
+				"name": "FiatDex_protocol_v1_refundSwap_4",
+				"exp": "swap.ethTrader.transfer(swap.sendAmount + swap.ethTraderCollateral)"
+			},
+			{
+				"name": "FiatDex_protocol_v1_closeSwap_18",
+				"exp": "owner.transfer(feeAmount * 2)"
+			},
+			{
+				"name": "FiatDex_protocol_v1_closeSwap_20",
+				"exp": "swap.ethTrader.transfer(swap.ethTraderCollateral - feeAmount)"
+			},
+			{
+				"name": "FiatDex_protocol_v1_closeSwap_21",
+				"exp": "swap.fiatTrader.transfer(swap.sendAmount + swap.fiatTraderCollateral - feeAmount)"
+			}
+		]
+	},
+	"0x11acbcaf852862b75421a004b496f3e69e42e48c": {
+		"addre": "0x11acbcaf852862b75421a004b496f3e69e42e48c",
+		"slice": [
+			{
+				"name": "GIGADROP_payForLevel_18",
+				"exp": "address(uint160(upline)).transfer(LVL_COST[_lvl])"
+			}
+		]
+	},
+	"0xfdd6e6cb3f628ff04747e2afba5e1a969d883de7": {
+		"addre": "0xfdd6e6cb3f628ff04747e2afba5e1a969d883de7",
+		"slice": [
+			{
+				"name": "Dextera_fallback_20",
+				"exp": "creator.send(_creatorFee)"
+			},
+			{
+				"name": "Dextera_fallback_21",
+				"exp": "seller.send(this.balance)"
+			},
+			{
+				"name": "Dextera_returnToBuyers_5",
+				"exp": "buyers[_i].ethAddress.send(buyers[_i].amountPaid)"
+			}
+		]
+	},
+	"0x7cbfbe8b4872b2932446b90b7e3e03f6ae6e32da": {
+		"addre": "0x7cbfbe8b4872b2932446b90b7e3e03f6ae6e32da",
+		"slice": [
+			{
+				"name": "AuctionHouse_buyout_8",
+				"exp": "seller.transfer(msg.value - auctionCost)"
+			},
+			{
+				"name": "Etherchicks_buyout_8",
+				"exp": "seller.transfer(msg.value - auctionCost)"
+			},
+			{
+				"name": "Etherchicks_withdrawBalance_4",
+				"exp": "owner.transfer(_amount)"
+			},
+			{
+				"name": "Etherchicks_withdrawBalance_6",
+				"exp": "owner.transfer(amount)"
+			},
+			{
+				"name": "Etherchicks_participantsFirst_9",
+				"exp": "participantIndex[i].transfer(provision)"
+			}
+		]
+	},
+	"0x3465cd9ce5624e5b3d5eaccd816df4a8c0c31fda": {
+		"addre": "0x3465cd9ce5624e5b3d5eaccd816df4a8c0c31fda",
+		"slice": [
+			{
+				"name": "SkinBase_withdrawETH_1",
+				"exp": "owner.transfer(this.balance)"
+			},
+			{
+				"name": "SkinMix_withdrawETH_1",
+				"exp": "owner.transfer(this.balance)"
+			},
+			{
+				"name": "SkinMarket_withdrawETH_1",
+				"exp": "owner.transfer(this.balance)"
+			},
+			{
+				"name": "SkinMarket_buyInMarket_7",
+				"exp": "seller.transfer(sellerProceeds)"
+			},
+			{
+				"name": "SkinMinting_buyInMarket_7",
+				"exp": "seller.transfer(sellerProceeds)"
+			},
+			{
+				"name": "SkinMinting_withdrawETH_1",
+				"exp": "owner.transfer(this.balance)"
+			}
+		]
+	},
+	"0x979bc5ecc41b701efabd550b98cedbc137cbb0af": {
+		"addre": "0x979bc5ecc41b701efabd550b98cedbc137cbb0af",
+		"slice": [
+			{
+				"name": "VirtualToken_buyVirtTokens_12",
+				"exp": "whom.transfer(msg.value)"
+			},
+			{
+				"name": "ExpandedToken_buyVirtTokens_12",
+				"exp": "whom.transfer(msg.value)"
+			},
+			{
+				"name": "ExpandedToken_bid_11",
+				"exp": "seller.transfer(sendValue)"
+			},
+			{
+				"name": "SuperFan_bid_11",
+				"exp": "seller.transfer(sendValue)"
+			},
+			{
+				"name": "SuperFan_buyVirtTokens_12",
+				"exp": "whom.transfer(msg.value)"
+			},
+			{
+				"name": "SuperFan_withdrawFee_4",
+				"exp": "owner.transfer(tmpFeeValue)"
+			}
+		]
+	},
+	"0x1963572001614ce6c0527dfa7bd9de605c79779d": {
+		"addre": "0x1963572001614ce6c0527dfa7bd9de605c79779d",
+		"slice": [
+			{
+				"name": "PreSell_withdraw_1",
+				"exp": "owner.transfer(address(this).balance)"
+			},
+			{
+				"name": "PreSell_drawCoach_8",
+				"exp": "_address.transfer(inviteFee)"
+			},
+			{
+				"name": "PreSell_purchase_6",
+				"exp": "owner.transfer(msg.value)"
+			}
+		]
+	},
+	"0x0f1b2a4b049e69e651d9651072a5d6e44a030ae4": {
+		"addre": "0x0f1b2a4b049e69e651d9651072a5d6e44a030ae4",
+		"slice": [
+			{
+				"name": "EasyPool_payReferral_9",
+				"exp": "sent = address(uint160(referer)).send(level_price_local)"
+			},
+			{
+				"tag": "1",
+				"name": "EasyPool_buyPool1_11",
+				"exp": "sent = address(uint160(pool1Currentuser)).send(pool1_price)"
+			},
+			{
+				"tag": "1",
+				"name": "EasyPool_buyPool2_11",
+				"exp": "sent = address(uint160(pool2Currentuser)).send(pool2_price)"
+			},
+			{
+				"tag": "1",
+				"name": "EasyPool_buyPool3_11",
+				"exp": "sent = address(uint160(pool3Currentuser)).send(pool3_price)"
+			},
+			{
+				"tag": "1",
+				"name": "EasyPool_buyPool4_11",
+				"exp": "sent = address(uint160(pool4Currentuser)).send(pool4_price)"
+			},
+			{
+				"tag": "1",
+				"name": "EasyPool_buyPool5_12",
+				"exp": "sent = address(uint160(pool5Currentuser)).send(pool5_price)"
+			},
+			{
+				"tag": "1",
+				"name": "EasyPool_buyPool6_11",
+				"exp": "sent = address(uint160(pool6Currentuser)).send(pool6_price)"
+			},
+			{
+				"tag": "1",
+				"name": "EasyPool_buyPool7_12",
+				"exp": "sent = address(uint160(pool7Currentuser)).send(pool7_price)"
+			},
+			{
+				"tag": "1",
+				"name": "EasyPool_buyPool8_12",
+				"exp": "sent = address(uint160(pool8Currentuser)).send(pool8_price)"
+			},
+			{
+				"tag": "1",
+				"name": "EasyPool_buyPool9_12",
+				"exp": "sent = address(uint160(pool9Currentuser)).send(pool9_price)"
+			},
+			{
+				"tag": "1",
+				"name": "EasyPool_buyPool10_12",
+				"exp": "sent = address(uint160(pool10Currentuser)).send(pool10_price)"
+			},
+			{
+				"tag": "1",
+				"name": "EasyPool_buyPool11_12",
+				"exp": "sent = address(uint160(pool11Currentuser)).send(pool11_price)"
+			},
+			{
+				"tag": "1",
+				"name": "EasyPool_buyPool12_12",
+				"exp": "sent = address(uint160(pool12Currentuser)).send(pool12_price)"
+			},
+			{
+				"name": "EasyPool_sendBalance_1",
+				"exp": "! address(uint160(ownerWallet)).send(getEthBalance())"
+			}
+		]
+	},
+	"0x05e2d7e3af7df59232d20e916751b9f5b66093b7": {
+		"addre": "0x05e2d7e3af7df59232d20e916751b9f5b66093b7",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "ColorsApis_bid_7",
+				"exp": "colorOwner.transfer(colorOwnerPayout)"
+			},
+			{
+				"name": "ColorsApis_bid_8",
+				"exp": "owner.transfer(msg.value - colorOwnerPayout)"
+			},
+			{
+				"tag": "1",
+				"name": "ColorsMain_bid_7",
+				"exp": "colorOwner.transfer(colorOwnerPayout)"
+			},
+			{
+				"name": "ColorsMain_bid_8",
+				"exp": "owner.transfer(msg.value - colorOwnerPayout)"
+			},
+			{
+				"name": "PixelsApi_bid_18",
+				"exp": "currentOwner.transfer(currentOwnerPayout)"
+			},
+			{
+				"tag": "1",
+				"name": "PixelsApi_bid_21",
+				"exp": "colorOwner.transfer(colorOwnersFee)"
+			},
+			{
+				"name": "PixelsApi_bid_25",
+				"exp": "optionlReferrer.transfer(referralFee)"
+			},
+			{
+				"name": "PixelsApi_bid_27",
+				"exp": "owner.transfer(colorOwnersFee - referralFee)"
+			},
+			{
+				"name": "PixelsMain_bid_18",
+				"exp": "currentOwner.transfer(currentOwnerPayout)"
+			},
+			{
+				"tag": "1",
+				"name": "PixelsMain_bid_21",
+				"exp": "colorOwner.transfer(colorOwnersFee)"
+			},
+			{
+				"name": "PixelsMain_bid_25",
+				"exp": "optionlReferrer.transfer(referralFee)"
+			},
+			{
+				"name": "PixelsMain_bid_27",
+				"exp": "owner.transfer(colorOwnersFee - referralFee)"
+			}
+		]
+	},
+	"0x1d29dee8bd1a30b56b4bc56e73c0feb4551b10cb": {
+		"addre": "0x1d29dee8bd1a30b56b4bc56e73c0feb4551b10cb",
+		"slice": [
+			{
+				"name": "BullRun_payReferral_9",
+				"exp": "sent = address(uint160(referer)).send(level_price_local)"
+			},
+			{
+				"tag": "1",
+				"name": "BullRun_buyPool1_11",
+				"exp": "sent = address(uint160(pool1Currentuser)).send(pool1_price)"
+			},
+			{
+				"tag": "1",
+				"name": "BullRun_buyPool2_12",
+				"exp": "sent = address(uint160(pool2Currentuser)).send(pool2_price)"
+			},
+			{
+				"tag": "1",
+				"name": "BullRun_buyPool3_12",
+				"exp": "sent = address(uint160(pool3Currentuser)).send(pool3_price)"
+			},
+			{
+				"tag": "1",
+				"name": "BullRun_buyPool4_12",
+				"exp": "sent = address(uint160(pool4Currentuser)).send(pool4_price)"
+			},
+			{
+				"tag": "1",
+				"name": "BullRun_buyPool5_12",
+				"exp": "sent = address(uint160(pool5Currentuser)).send(pool5_price)"
+			},
+			{
+				"tag": "1",
+				"name": "BullRun_buyPool6_11",
+				"exp": "sent = address(uint160(pool6Currentuser)).send(pool6_price)"
+			},
+			{
+				"tag": "1",
+				"name": "BullRun_buyPool7_12",
+				"exp": "sent = address(uint160(pool7Currentuser)).send(pool7_price)"
+			},
+			{
+				"tag": "1",
+				"name": "BullRun_buyPool8_12",
+				"exp": "sent = address(uint160(pool8Currentuser)).send(pool8_price)"
+			},
+			{
+				"tag": "1",
+				"name": "BullRun_buyPool9_12",
+				"exp": "sent = address(uint160(pool9Currentuser)).send(pool9_price)"
+			},
+			{
+				"tag": "1",
+				"name": "BullRun_buyPool10_12",
+				"exp": "sent = address(uint160(pool10Currentuser)).send(pool10_price)"
+			},
+			{
+				"name": "BullRun_sendBalance_1",
+				"exp": "! address(uint160(ownerWallet)).send(getEthBalance())"
+			}
+		]
+	},
+	"0x06300cec31cf8edf74a17dac79cbc66355113179": {
+		"note": "TBD",
+		"addre": "0x06300cec31cf8edf74a17dac79cbc66355113179",
+		"slice": [
+			{
+				"name": "EtherWild_OfferCancel_internal_13",
+				"exp": "msg.sender.transfer(game.amount)"
+			},
+			{
+				"name": "EtherWild_OfferPlay_6",
+				"exp": "msg.sender.transfer(excess)"
+			},
+			{
+				"name": "EtherWild_CancelSimpleOffer_internal_16",
+				"exp": "msg.sender.transfer(fee)"
+			},
+			{
+				"name": "EtherWild_ProcessGame_5",
+				"exp": "creator.transfer(DoFee(fee * 2))"
+			},
+			{
+				"name": "EtherWild_ProcessGame_6",
+				"exp": "target.transfer(DoFee(fee * 2))"
+			},
+			{
+				"name": "EtherWild_DoFee_4",
+				"exp": "Owner.transfer(dFee)"
+			},
+			{
+				"name": "EtherWild_DoFee_5",
+				"exp": "HelpOwner.transfer(cFee)"
+			}
+		]
+	},
+	"0xa55b2f5996030e45c8d1ca5055fdc5e777b810b9": {
+		"addre": "0xa55b2f5996030e45c8d1ca5055fdc5e777b810b9",
+		"slice": [
+			{
+				"name": "Elitewings_payReferral_9",
+				"exp": "sent = address(uint160(referer)).send(level_price_local)"
+			},
+			{
+				"tag": "1",
+				"name": "Elitewings_buyPool_19",
+				"exp": "address(uint160(referer)).send(fee)"
+			},
+			{
+				"tag": "1",
+				"name": "Elitewings_buyPool_20",
+				"exp": "sent = address(uint160(poolCurrentuser)).send(poolshare)"
+			},
+			{
+				"name": "Elitewings_sendBalance_1",
+				"exp": "! address(uint160(ownerWallet)).send(getEthBalance())"
+			}
+		]
+	},
+	"0x48b643c1fdd04df1a2738b4bf7a4183cc9d6ca3d": {
+		"addre": "0x48b643c1fdd04df1a2738b4bf7a4183cc9d6ca3d",
+		"slice": [
+			{
+				"name": "Dextera_fallback_20",
+				"exp": "creator.send(_creatorFee)"
+			},
+			{
+				"name": "Dextera_fallback_21",
+				"exp": "seller.send(this.balance)"
+			},
+			{
+				"name": "Dextera_returnToBuyers_5",
+				"exp": "buyers[_i].ethAddress.send(buyers[_i].amountPaid)"
+			}
+		]
+	},
+	"0x568ad119417a50529ed0d296a9f1389a6525b49a": {
+		"addre": "0x568ad119417a50529ed0d296a9f1389a6525b49a",
+		"slice": [
+			{
+				"name": "PixelOperationsContract_buyFreePixels_6",
+				"exp": "owner.transfer(msg.value)"
+			},
+			{
+				"name": "PixelOperationsContract_buyOwnedPixels_4",
+				"exp": "blockOwner.transfer(msg.value)"
+			}
+		]
+	},
+	"0x9faec1198749203d920a90dc6d42be64ea66ca9e": {
+		"addre": "0x9faec1198749203d920a90dc6d42be64ea66ca9e",
+		"slice": [
+			{
+				"name": "VirtualToken_buyVirtTokens_12",
+				"exp": "whom.transfer(msg.value)"
+			},
+			{
+				"name": "ExpandedToken_buyVirtTokens_12",
+				"exp": "whom.transfer(msg.value)"
+			},
+			{
+				"name": "ExpandedToken_bid_11",
+				"exp": "seller.transfer(sendValue)"
+			},
+			{
+				"name": "SuperFan_bid_11",
+				"exp": "seller.transfer(sendValue)"
+			},
+			{
+				"name": "SuperFan_buyVirtTokens_12",
+				"exp": "whom.transfer(msg.value)"
+			},
+			{
+				"name": "SuperFan_withdrawFee_4",
+				"exp": "owner.transfer(tmpFeeValue)"
+			}
+		]
+	},
+	"0x038a4d4bacb8ffc2ca2b1732d1e755646cfc0086": {
+		"addre": "0x038a4d4bacb8ffc2ca2b1732d1e755646cfc0086",
+		"slice": [
+			{
+				"name": "SplitIt_collectFees_1",
+				"exp": "msg.sender.transfer(this.balance)"
+			},
+			{
+				"name": "SplitIt_processSend_1",
+				"exp": "to.send(amount)"
+			},
+			{
+				"name": "SplitIt_processSend_3",
+				"exp": "from.send(amount)"
+			},
+			{
+				"name": "SplitIt_processSend_5",
+				"exp": "senderToOwner[from].send(amount)"
+			}
+		]
+	}
+}

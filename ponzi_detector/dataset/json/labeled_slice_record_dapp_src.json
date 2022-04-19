@@ -1,0 +1,3155 @@
+{
+	"0xb4007597da3402a1e2b69c8e1c6dd753d01a8035": {
+		"addre": "0xb4007597da3402a1e2b69c8e1c6dd753d01a8035",
+		"slice": [
+			{
+				"name": "FundingVault_ReleaseFundsAndTokens_5",
+				"exp": "outputAddress.transfer(this.balance)"
+			},
+			{
+				"name": "FundingVault_ReleaseFundsAndTokens_9",
+				"exp": "outputAddress.transfer(amount_direct)"
+			},
+			{
+				"name": "FundingVault_ReleaseFundsAndTokens_24",
+				"exp": "outputAddress.transfer(transferEther)"
+			},
+			{
+				"name": "FundingVault_releaseTokensAndEtherForEmergencyFund_3",
+				"exp": "outputAddress.transfer(etherBalances[0])"
+			},
+			{
+				"name": "FundingVault_ReleaseFundsToInvestor_6",
+				"exp": "vaultOwner.transfer(this.balance)"
+			}
+		]
+	},
+	"0x54bfd2c33b252f6c959688bb1ef2169a96dcee8f": {
+		"addre": "0x54bfd2c33b252f6c959688bb1ef2169a96dcee8f",
+		"slice": []
+	},
+	"0xf6b6aa0ef0f5edc2c1c5d925477f97eaf66303e7": {
+		"addre": "0xf6b6aa0ef0f5edc2c1c5d925477f97eaf66303e7",
+		"slice": []
+	},
+	"0xfc79774fb9dedeea2325d0d5570554eddc4e6747": {
+		"addre": "0xfc79774fb9dedeea2325d0d5570554eddc4e6747",
+		"slice": []
+	},
+	"0x7c523c42ad255e5b270b12fee2ecc1103e88a9dc": {
+		"addre": "0x7c523c42ad255e5b270b12fee2ecc1103e88a9dc",
+		"slice": [
+			{
+				"name": "DeedImplementation_setBalance_3",
+				"exp": "require(bool)(owner.send(address(this).balance - newValue) || ! throwOnFailure)"
+			},
+			{
+				"name": "DeedImplementation_closeDeed_2",
+				"exp": "require(bool)(burn.send(((1000 - refundRatio) * address(this).balance) / 1000))"
+			}
+		]
+	},
+	"0x00214120d3469a74ca586bc9557c0ff8fb09b157": {
+		"addre": "0x00214120d3469a74ca586bc9557c0ff8fb09b157",
+		"slice": []
+	},
+	"0x68d57c9a1c35f63e2c83ee8e49a64e9d70528d25": {
+		"addre": "0x68d57c9a1c35f63e2c83ee8e49a64e9d70528d25",
+		"slice": [
+			{
+				"name": "RefundVault_refundETH_10",
+				"exp": "msg.sender.transfer(ETHToRefundAmountWei)"
+			}
+		]
+	},
+	"0xba2184520a1cc49a6159c57e61e1844e085615b6": {
+		"addre": "0xba2184520a1cc49a6159c57e61e1844e085615b6",
+		"slice": [
+			{
+				"name": "HelloGoldSale_createTokens_42",
+				"exp": "recipient.transfer(refund)"
+			},
+			{
+				"name": "HelloGoldSale_createTokens_45",
+				"exp": "! multiSig.send(this.balance)"
+			},
+			{
+				"name": "HelloGoldSale_createTokens_73",
+				"exp": "recipient.transfer(val + maxRefund)"
+			},
+			{
+				"name": "HelloGoldSale_createTokens_75",
+				"exp": "! multiSig.send(this.balance)"
+			},
+			{
+				"name": "HelloGoldSale_withdraw_5",
+				"exp": "msg.sender.transfer(val)"
+			},
+			{
+				"name": "HelloGoldSale_complete_4",
+				"exp": "! multiSig.send(val)"
+			}
+		]
+	},
+	"0x8940442e7f54e875c8c1c80213a4aee7eee4781c": {
+		"addre": "0x8940442e7f54e875c8c1c80213a4aee7eee4781c",
+		"slice": [
+			{
+				"name": "Avatar_sendEther_1",
+				"exp": "_to.transfer(_amountInWei)"
+			}
+		]
+	},
+	"0x3a1bda28adb5b0a812a7cf10a1950c920f79bcd3": {
+		"addre": "0x3a1bda28adb5b0a812a7cf10a1950c920f79bcd3",
+		"slice": [
+			{
+				"name": "HasNoEther_reclaimEther_1",
+				"exp": "assert(bool)(owner.send(this.balance))"
+			},
+			{
+				"name": "FlipToken_reclaimEther_1",
+				"exp": "assert(bool)(owner.send(this.balance))"
+			}
+		]
+	},
+	"0x8207c1ffc5b6804f6024322ccf34f29c3541ae26": {
+		"addre": "0x8207c1ffc5b6804f6024322ccf34f29c3541ae26",
+		"slice": []
+	},
+	"0x6fff3806bbac52a20e0d79bc538d527f6a22c96b": {
+		"addre": "0x6fff3806bbac52a20e0d79bc538d527f6a22c96b",
+		"slice": [
+			{
+				"name": "Token_transferEth_3",
+				"exp": "dst.transfer(wad)"
+			},
+			{
+				"name": "Token_payout_2",
+				"exp": "dst.transfer(this.balance)"
+			}
+		]
+	},
+	"0x5bf5f85480848eb92af31e610cd65902bcf22648": {
+		"addre": "0x5bf5f85480848eb92af31e610cd65902bcf22648",
+		"slice": [
+			{
+				"name": "Lescovex_ISC_withdrawReward_6",
+				"exp": "msg.sender.transfer(ethAmount)"
+			},
+			{
+				"name": "Lescovex_ISC_withdraw_1",
+				"exp": "msg.sender.transfer(value)"
+			}
+		]
+	},
+	"0xd152f549545093347a162dce210e7293f1452150": {
+		"addre": "0xd152f549545093347a162dce210e7293f1452150",
+		"slice": [
+			{
+				"name": "Disperse_disperseEther_5",
+				"exp": "recipients[i].transfer(values[i])"
+			},
+			{
+				"name": "Disperse_disperseEther_9",
+				"exp": "msg.sender.transfer(balance)"
+			}
+		]
+	},
+	"0x1ce7ae555139c5ef5a57cc8d814a867ee6ee33d8": {
+		"addre": "0x1ce7ae555139c5ef5a57cc8d814a867ee6ee33d8",
+		"slice": []
+	},
+	"0x551d56781e0cd16ac2c61a03e6537844a41c7709": {
+		"addre": "0x551d56781e0cd16ac2c61a03e6537844a41c7709",
+		"slice": [
+			{
+				"name": "Withdrawable_withdrawEther_1",
+				"exp": "sendTo.transfer(amount)"
+			},
+			{
+				"name": "MartletInstantlyTrader_withdrawEther_1",
+				"exp": "sendTo.transfer(amount)"
+			},
+			{
+				"name": "MartletInstantlyTrader_doTrade_27",
+				"exp": "msg.sender.transfer(srcAmount - actualSrcAmount)"
+			},
+			{
+				"name": "MartletInstantlyTrader_doSupplierTrade_9",
+				"exp": "destAddress.transfer(expectedDestAmount)"
+			}
+		]
+	},
+	"0xb746aed479f18287dc8fc202fe06f25f1a0a60ae": {
+		"addre": "0xb746aed479f18287dc8fc202fe06f25f1a0a60ae",
+		"slice": [
+			{
+				"name": "Ethex_cancelAllBuyOrders_4",
+				"exp": "! msg.sender.send(remain)"
+			},
+			{
+				"name": "Ethex_takeBuyOrder_15",
+				"exp": "! buyer.send(refundAmount)"
+			},
+			{
+				"name": "Ethex_takeBuyOrder_23",
+				"exp": "! feeAccount.send(safeAdd(currentTakeFee,currentMakeFee))"
+			},
+			{
+				"name": "Ethex_takeBuyOrder_27",
+				"exp": "! msg.sender.send(safeSub(transactionWeiAmountNoFee,currentTakeFee))"
+			},
+			{
+				"name": "Ethex_takeSellOrder_16",
+				"exp": "! feeAccount.send(totalFee)"
+			},
+			{
+				"name": "Ethex_takeSellOrder_20",
+				"exp": "! seller.send(makerProceedsAfterFee)"
+			}
+		]
+	},
+	"0xa15c7ebe1f07caf6bff097d8a589fb8ac49ae5b3": {
+		"addre": "0xa15c7ebe1f07caf6bff097d8a589fb8ac49ae5b3",
+		"slice": [
+			{
+				"name": "RefundVault_refund_4",
+				"exp": "investor.transfer(depositedValue)"
+			}
+		]
+	},
+	"0x0c577fbf29f8797d9d29a33de59001b872a1d4dc": {
+		"addre": "0x0c577fbf29f8797d9d29a33de59001b872a1d4dc",
+		"slice": [
+			{
+				"name": "FeeWallet_withdraw_3",
+				"exp": "msg.sender.transfer(amount)"
+			},
+			{
+				"name": "DexdexERC20_buy_8",
+				"exp": "destinationAddr.transfer(address(this).balance)"
+			},
+			{
+				"name": "DexdexERC20_sell_11",
+				"exp": "destinationAddr.transfer(volumeEthEffective)"
+			},
+			{
+				"name": "DexdexERC20_fillOrder_8",
+				"exp": "address(trader).transfer(volumeEth)"
+			}
+		]
+	},
+	"0x1f0d1de1558582ad6f13763f477119a1455502af": {
+		"addre": "0x1f0d1de1558582ad6f13763f477119a1455502af",
+		"slice": [
+			{
+				"name": "Exchange_sendTokensTo_2",
+				"exp": "destination.transfer(amount)"
+			}
+		]
+	},
+	"0x31a240648e2baf4f9f17225987f6f53fceb1699a": {
+		"addre": "0x31a240648e2baf4f9f17225987f6f53fceb1699a",
+		"slice": [
+			{
+				"name": "SafePromo_promo_6",
+				"exp": "_recipients[i].transfer(7777777777)"
+			}
+		]
+	},
+	"0xdd6bf56ca2ada24c683fac50e37783e55b57af9f": {
+		"addre": "0xdd6bf56ca2ada24c683fac50e37783e55b57af9f",
+		"slice": []
+	},
+	"0x82c970c55711dc5f33aa40fee6614fbb857ceb83": {
+		"addre": "0x82c970c55711dc5f33aa40fee6614fbb857ceb83",
+		"slice": []
+	},
+	"0x9e2f2dd1e3641f389673f89dc316bb00b01cd83a": {
+		"addre": "0x9e2f2dd1e3641f389673f89dc316bb00b01cd83a",
+		"slice": [
+			{
+				"name": "BitEyeEx_withdraw_9",
+				"exp": "require(bool)(msg.sender.send(amount))"
+			}
+		]
+	},
+	"0xcf6cc4dddad0924e0b55a394cfb4c442822f6311": {
+		"addre": "0xcf6cc4dddad0924e0b55a394cfb4c442822f6311",
+		"slice": [
+			{
+				"name": "EXNCEDistributor_getBalance_3",
+				"exp": "require(bool)(_receiverAddress.send(address(this).balance))"
+			},
+			{
+				"name": "EXNCEDistributor_ethSendSameValue_10",
+				"exp": "require(bool)(_to[i].send(_value))"
+			},
+			{
+				"name": "EXNCEDistributor_ethSendDifferentValue_11",
+				"exp": "require(bool)(_to[i].send(_value[i]))"
+			}
+		]
+	},
+	"0x12480e24eb5bec1a9d4369cab6a80cad3c0a377a": {
+		"addre": "0x12480e24eb5bec1a9d4369cab6a80cad3c0a377a",
+		"slice": [
+			{
+				"name": "MyAdvancedToken_sell_6",
+				"exp": "! msg.sender.send(amount * sellPrice)"
+			}
+		]
+	},
+	"0x4a8f44be523580a11cdb20e2c7c470adf44ec9bb": {
+		"addre": "0x4a8f44be523580a11cdb20e2c7c470adf44ec9bb",
+		"slice": [
+			{
+				"name": "BTMC_etherProceeds_1",
+				"exp": "! msg.sender.send(this.balance)"
+			}
+		]
+	},
+	"0x2f6321db2461f68676f42f396330a4dc4a8f49df": {
+		"addre": "0x2f6321db2461f68676f42f396330a4dc4a8f49df",
+		"slice": [
+			{
+				"name": "MultiSender_getBalance_3",
+				"exp": "require(bool)(_receiverAddress.send(address(this).balance))"
+			},
+			{
+				"name": "MultiSender_registerVIP_3",
+				"exp": "require(bool)(_receiverAddress.send(msg.value))"
+			},
+			{
+				"name": "MultiSender_ethSendSameValue_14",
+				"exp": "require(bool)(_to[i].send(_value))"
+			},
+			{
+				"name": "MultiSender_ethSendDifferentValue_15",
+				"exp": "require(bool)(_to[i].send(_value[i]))"
+			}
+		]
+	},
+	"0x867ffb5a3871b500f65bdfafe0136f9667deae06": {
+		"addre": "0x867ffb5a3871b500f65bdfafe0136f9667deae06",
+		"slice": [
+			{
+				"name": "LocalEthereumEscrows_resolveDispute_14",
+				"exp": "_buyer.transfer((_value - _totalFees) * _buyerPercent / 100)"
+			},
+			{
+				"name": "LocalEthereumEscrows_resolveDispute_17",
+				"exp": "_seller.transfer((_value - _totalFees) * (100 - _buyerPercent) / 100)"
+			},
+			{
+				"name": "LocalEthereumEscrows_withdrawFees_3",
+				"exp": "_to.transfer(_amount)"
+			},
+			{
+				"name": "LocalEthereumEscrows_transferMinusFees_6",
+				"exp": "_to.transfer(_value - _totalFees)"
+			}
+		]
+	},
+	"0x4d829f8c92a6691c56300d020c9e0db984cfe2ba": {
+		"addre": "0x4d829f8c92a6691c56300d020c9e0db984cfe2ba",
+		"slice": [
+			{
+				"name": "StartToken_transfer_1",
+				"exp": "super.transfer(_to,_value,_data)"
+			},
+			{
+				"name": "HumanStandardToken_transfer_1",
+				"exp": "super.transfer(_to,_value,_data)"
+			},
+			{
+				"name": "CoinCrowdToken_transfer_1",
+				"exp": "super.transfer(_to,_value,_data)"
+			}
+		]
+	},
+	"0x5d65d971895edc438f465c17db6992698a52318d": {
+		"addre": "0x5d65d971895edc438f465c17db6992698a52318d",
+		"slice": [
+			{
+				"name": "NebulasToken_transferETH_4",
+				"exp": "! ethFundDeposit.send(this.balance)"
+			}
+		]
+	},
+	"0xc0eb85285d83217cd7c891702bcbc0fc401e2d9d": {
+		"addre": "0xc0eb85285d83217cd7c891702bcbc0fc401e2d9d",
+		"slice": []
+	},
+	"0xa5d1e58ece1fc438d64e65769d2ab730143a4caf": {
+		"addre": "0xa5d1e58ece1fc438d64e65769d2ab730143a4caf",
+		"slice": [
+			{
+				"name": "RobomedIco_approveWithdrawal_5",
+				"exp": "withdrawalTo.transfer(_value)"
+			}
+		]
+	},
+	"0x46d35eb66725413c6694dee8fe6d41d5eb9e1408": {
+		"addre": "0x46d35eb66725413c6694dee8fe6d41d5eb9e1408",
+		"slice": [
+			{
+				"name": "DankCoin_withdraw_6",
+				"exp": "_customerAddress.transfer(_dividends)"
+			}
+		]
+	},
+	"0xe477292f1b3268687a29376116b0ed27a9c76170": {
+		"addre": "0xe477292f1b3268687a29376116b0ed27a9c76170",
+		"slice": [
+			{
+				"name": "HeroCoin_requestRefund_4",
+				"exp": "msg.sender.transfer(payout)"
+			},
+			{
+				"name": "HeroCoin_requestPayout_1",
+				"exp": "msg.sender.transfer(_amount)"
+			}
+		]
+	},
+	"0x5136c98a80811c3f46bdda8b5c4555cfd9f812f0": {
+		"addre": "0x5136c98a80811c3f46bdda8b5c4555cfd9f812f0",
+		"slice": [
+			{
+				"name": "IndaHashToken_reclaimFunds_11",
+				"exp": "msg.sender.transfer(amount)"
+			}
+		]
+	},
+	"0x323a3e1693e7a0959f65972f3bf2dfcb93239dfe": {
+		"addre": "0x323a3e1693e7a0959f65972f3bf2dfcb93239dfe",
+		"slice": [
+			{
+				"name": "DigitalArtChain_purchaseDigitalArtSellingItem_8",
+				"exp": "sellingItem.seller.transfer(proceeds)"
+			},
+			{
+				"name": "DigitalArtChain_purchaseDigitalArtSellingItem_9",
+				"exp": "digitalArts[_tokenId].publisher.transfer(actualPublisherCut)"
+			}
+		]
+	},
+	"0x3c77312be032b7e36b57b5a9a44fed9fb3d59771": {
+		"addre": "0x3c77312be032b7e36b57b5a9a44fed9fb3d59771",
+		"slice": []
+	},
+	"0x27f706edde3ad952ef647dd67e24e38cd0803dd6": {
+		"addre": "0x27f706edde3ad952ef647dd67e24e38cd0803dd6",
+		"slice": []
+	},
+	"0x602087badcb6ed10cc0dff3301b50d6f1993f3b3": {
+		"addre": "0x602087badcb6ed10cc0dff3301b50d6f1993f3b3",
+		"slice": [
+			{
+				"name": "ArtifactCoin_get_14",
+				"exp": "! owner.send(etherValue)"
+			},
+			{
+				"name": "ArtifactCoin_withdraw_2",
+				"exp": "! receiveAddress.send(etherBalance)"
+			}
+		]
+	},
+	"0x16eb52d84fb8085fb0c466c8f11f21e4efa6ed3d": {
+		"addre": "0x16eb52d84fb8085fb0c466c8f11f21e4efa6ed3d",
+		"slice": [
+			{
+				"name": "QunFaBa_withdrawEth_4",
+				"exp": "msg.sender.transfer(toTransfer)"
+			},
+			{
+				"name": "QunFaBa_issueRefunds_9",
+				"exp": "_addrs[i].transfer(toRefund)"
+			}
+		]
+	},
+	"0x2cc69caaaaa6114ddf48f4ddb2adb9c5d5d3e048": {
+		"addre": "0x2cc69caaaaa6114ddf48f4ddb2adb9c5d5d3e048",
+		"slice": [
+			{
+				"name": "OnChainOrderBookV012b_withdrawCntr_5",
+				"exp": "client.transfer(amountCntr)"
+			}
+		]
+	},
+	"0x24027b8e12383ee6d726b5b6a48562c484593846": {
+		"addre": "0x24027b8e12383ee6d726b5b6a48562c484593846",
+		"slice": [
+			{
+				"name": "AuctionHouse__bid_10",
+				"exp": "seller.transfer(sellerProceeds)"
+			},
+			{
+				"name": "AuctionHouse__bid_13",
+				"exp": "msg.sender.transfer(bidExcess)"
+			}
+		]
+	},
+	"0x08d32b0da63e2c3bcf8019c9c5d849d7a9d791e6": {
+		"addre": "0x08d32b0da63e2c3bcf8019c9c5d849d7a9d791e6",
+		"slice": [
+			{
+				"name": "DentacoinToken_transfer_18",
+				"exp": "! msg.sender.send(gasForDCN)"
+			},
+			{
+				"name": "DentacoinToken_transfer_23",
+				"exp": "! _to.send(gasForDCN)"
+			},
+			{
+				"name": "DentacoinToken_sellDentacoinsAgainstEther_11",
+				"exp": "! msg.sender.send(revenue)"
+			},
+			{
+				"name": "DentacoinToken_refundToOwner_2",
+				"exp": "! msg.sender.send(eth)"
+			}
+		]
+	},
+	"0x912b8f85e28b9ec196b48228159e2f13546836e6": {
+		"addre": "0x912b8f85e28b9ec196b48228159e2f13546836e6",
+		"slice": [
+			{
+				"name": "Drainable_withdrawEther_1",
+				"exp": "require(bool)(msg.sender.send(this.balance))"
+			},
+			{
+				"name": "ADXExchange_withdrawEther_1",
+				"exp": "require(bool)(msg.sender.send(this.balance))"
+			}
+		]
+	},
+	"0xa5fd1a791c4dfcaacc963d4f73c6ae5824149ea7": {
+		"addre": "0xa5fd1a791c4dfcaacc963d4f73c6ae5824149ea7",
+		"slice": []
+	},
+	"0x4cf488387f035ff08c371515562cba712f9015d4": {
+		"addre": "0x4cf488387f035ff08c371515562cba712f9015d4",
+		"slice": []
+	},
+	"0x324e5e2335b8e8bdb11ec9ab7db176d7e2a875e1": {
+		"addre": "0x324e5e2335b8e8bdb11ec9ab7db176d7e2a875e1",
+		"slice": [
+			{
+				"name": "Rappo_withdraw_8",
+				"exp": "_customerAddress.transfer(_dividends)"
+			}
+		]
+	},
+	"0x30cc0e266cf33b8eac6a99cbd98e39b890cfd69b": {
+		"addre": "0x30cc0e266cf33b8eac6a99cbd98e39b890cfd69b",
+		"slice": [
+			{
+				"name": "ClassyCoin_sell_6",
+				"exp": "! msg.sender.send(amount * sellPrice)"
+			}
+		]
+	},
+	"0x6cee948c9d593c58cba5dfa70482444899d1341c": {
+		"addre": "0x6cee948c9d593c58cba5dfa70482444899d1341c",
+		"slice": [
+			{
+				"name": "SpectreSubscriberToken_refund_5",
+				"exp": "msg.sender.transfer(tokenValue)"
+			},
+			{
+				"name": "SpectreSubscriberToken_withdrawEther_1",
+				"exp": "msg.sender.transfer(this.balance)"
+			}
+		]
+	},
+	"0x20827ab17e406d92e2c5cbc2948be0871e160d8c": {
+		"addre": "0x20827ab17e406d92e2c5cbc2948be0871e160d8c",
+		"slice": []
+	},
+	"0xdb6f847849765ca3ecd34e4d90f8c58b80bf5443": {
+		"addre": "0xdb6f847849765ca3ecd34e4d90f8c58b80bf5443",
+		"slice": [
+			{
+				"name": "TaskRegister_endUpgrade_3",
+				"exp": "upgradableState.nextVersion.transfer(address(this).balance)"
+			},
+			{
+				"name": "TaskRegister_solveTask_16",
+				"exp": "msg.sender.transfer(minerReward)"
+			},
+			{
+				"name": "TaskRegister_solveTask_20",
+				"exp": "task.referrer.transfer(referrerReward)"
+			},
+			{
+				"name": "TaskRegister_claim_2",
+				"exp": "_to.transfer(address(this).balance - totalReward)"
+			}
+		]
+	},
+	"0xed06d46ffb309128c4458a270c99c824dc127f5d": {
+		"addre": "0xed06d46ffb309128c4458a270c99c824dc127f5d",
+		"slice": [
+			{
+				"name": "EnclavesDEX_depositEther_7",
+				"exp": "msg.sender.transfer(refund)"
+			},
+			{
+				"name": "EnclavesDEX_withdrawUser_5",
+				"exp": "_user.transfer(_amount)"
+			}
+		]
+	},
+	"0x8d12a197cb00d4747a1fe03395095ce2a5cc6819": {
+		"addre": "0x8d12a197cb00d4747a1fe03395095ce2a5cc6819",
+		"slice": []
+	},
+	"0x2d17e56fb46cfebb9d07603588050afc2b6dfca9": {
+		"addre": "0x2d17e56fb46cfebb9d07603588050afc2b6dfca9",
+		"slice": [
+			{
+				"name": "redalert_withdraw_7",
+				"exp": "_customerAddress.transfer(_dividends)"
+			}
+		]
+	},
+	"0xf8e386eda857484f5a12e4b5daa9984e06e73705": {
+		"addre": "0xf8e386eda857484f5a12e4b5daa9984e06e73705",
+		"slice": [
+			{
+				"name": "IndorseSaleContract_createTokens_16",
+				"exp": "msg.sender.transfer(etherToRefund)"
+			}
+		]
+	},
+	"0x8f6015289a64c48ccf258c21a999809fc553c3c4": {
+		"addre": "0x8f6015289a64c48ccf258c21a999809fc553c3c4",
+		"slice": [
+			{
+				"name": "TwelveHourToken_withdraw_6",
+				"exp": "_customerAddress.transfer(_dividends)"
+			}
+		]
+	},
+	"0xd6df5935cd03a768b7b9e92637a01b25e24cb709": {
+		"addre": "0xd6df5935cd03a768b7b9e92637a01b25e24cb709",
+		"slice": []
+	},
+	"0x687174f8c49ceb7729d925c3a961507ea4ac7b28": {
+		"addre": "0x687174f8c49ceb7729d925c3a961507ea4ac7b28",
+		"slice": [
+			{
+				"name": "GATTokenSale_buyTokens_24",
+				"exp": "msg.sender.transfer(refund)"
+			}
+		]
+	},
+	"0x02c4c78c462e32cca4a90bc499bf411fb7bc6afb": {
+		"addre": "0x02c4c78c462e32cca4a90bc499bf411fb7bc6afb",
+		"slice": []
+	},
+	"0xd64979357160e8146f6e1d805cf20437397bf1ba": {
+		"addre": "0xd64979357160e8146f6e1d805cf20437397bf1ba",
+		"slice": [
+			{
+				"name": "SaiProxy_free_10",
+				"exp": "address(msg.sender).transfer(jam)"
+			},
+			{
+				"name": "SaiProxyCreateAndExecute_free_10",
+				"exp": "address(msg.sender).transfer(jam)"
+			}
+		]
+	},
+	"0x12b306fa98f4cbb8d4457fdff3a0a0a56f07ccdf": {
+		"addre": "0x12b306fa98f4cbb8d4457fdff3a0a0a56f07ccdf",
+		"slice": []
+	},
+	"0xef80158b7db893e74fac82fe32415d9420e60ffd": {
+		"addre": "0xef80158b7db893e74fac82fe32415d9420e60ffd",
+		"slice": [
+			{
+				"name": "BAC_issueToken_10",
+				"exp": "! target.send(msg.value)"
+			}
+		]
+	},
+	"0x7f1d1c0a0c3a5ff6f5523b939b769b9f88509122": {
+		"addre": "0x7f1d1c0a0c3a5ff6f5523b939b769b9f88509122",
+		"slice": [
+			{
+				"name": "PeerLicensing_withdraw_10",
+				"exp": "msg.sender.transfer(out)"
+			},
+			{
+				"name": "PeerLicensing_withdrawOld_10",
+				"exp": "to.transfer(out)"
+			},
+			{
+				"name": "PeerLicensing_fullCycleSellBonds_2",
+				"exp": "msg.sender.transfer(balance)"
+			}
+		]
+	},
+	"0x437cf0bf53634e3dfa5e3eaff3104004d50fb532": {
+		"addre": "0x437cf0bf53634e3dfa5e3eaff3104004d50fb532",
+		"slice": [
+			{
+				"name": "BTN_processPurchase_5",
+				"exp": "! multisigAddress.send(msg.value)"
+			},
+			{
+				"name": "BTN_drain_1",
+				"exp": "! ownerAddress.send(this.balance)"
+			}
+		]
+	},
+	"0x417d6feeae8b2fcb73d14d64be7f192e49431978": {
+		"addre": "0x417d6feeae8b2fcb73d14d64be7f192e49431978",
+		"slice": []
+	},
+	"0xebf5ffaed443093dbda54eed6dc77f7bba6dc7f2": {
+		"addre": "0xebf5ffaed443093dbda54eed6dc77f7bba6dc7f2",
+		"slice": []
+	},
+	"0xc81774fd1b51bc7e26b2bad562dcdb0a2cbebaf2": {
+		"addre": "0xc81774fd1b51bc7e26b2bad562dcdb0a2cbebaf2",
+		"slice": []
+	},
+	"0xdab5dfa0966c3435da991b39d205c3ba1c64fe31": {
+		"addre": "0xdab5dfa0966c3435da991b39d205c3ba1c64fe31",
+		"slice": []
+	},
+	"0x0b76544f6c413a555f309bf76260d1e02377c02a": {
+		"addre": "0x0b76544f6c413a555f309bf76260d1e02377c02a",
+		"slice": [
+			{
+				"name": "INTToken_sell_3",
+				"exp": "msg.sender.transfer(amount * sellPrice)"
+			},
+			{
+				"name": "INT_sell_3",
+				"exp": "msg.sender.transfer(amount * sellPrice)"
+			}
+		]
+	},
+	"0xaab60b6cb2b0d9f0c7f0bfb7ffb727d2583f5e57": {
+		"addre": "0xaab60b6cb2b0d9f0c7f0bfb7ffb727d2583f5e57",
+		"slice": [
+			{
+				"name": "MultiSender_getBalance_3",
+				"exp": "require(bool)(_receiverAddress.send(address(this).balance))"
+			},
+			{
+				"name": "MultiSender_registerVIP_3",
+				"exp": "require(bool)(receiverAddress.send(msg.value))"
+			},
+			{
+				"name": "MultiSender_ethSendSameValue_14",
+				"exp": "require(bool)(_to[i].send(_value))"
+			},
+			{
+				"name": "MultiSender_ethSendDifferentValue_15",
+				"exp": "require(bool)(_to[i].send(_value[i]))"
+			}
+		]
+	},
+	"0x31b5e97294e1afd6fff6ffe4cba89a344555f753": {
+		"addre": "0x31b5e97294e1afd6fff6ffe4cba89a344555f753",
+		"slice": [
+			{
+				"name": "TripAlly_withdraw_2",
+				"exp": "_toAddress.transfer(amount)"
+			}
+		]
+	},
+	"0x4e260e3ca268e40133c84b142de73108a7c1ec99": {
+		"addre": "0x4e260e3ca268e40133c84b142de73108a7c1ec99",
+		"slice": []
+	},
+	"0x01925d0ffe4a6a6162b51ba611e3d4780fc2df42": {
+		"addre": "0x01925d0ffe4a6a6162b51ba611e3d4780fc2df42",
+		"slice": []
+	},
+	"0xa4d17ab1ee0efdd23edc2869e7ba96b89eecf9ab": {
+		"addre": "0xa4d17ab1ee0efdd23edc2869e7ba96b89eecf9ab",
+		"slice": []
+	},
+	"0xe2f45f1660dc99daf3bd06f637ab1e4debc15bde": {
+		"addre": "0xe2f45f1660dc99daf3bd06f637ab1e4debc15bde",
+		"slice": [
+			{
+				"name": "PullPayment_withdrawPayments_10",
+				"exp": "! payee.send(payment)"
+			},
+			{
+				"name": "Crowdsale_withdrawPayments_10",
+				"exp": "! payee.send(payment)"
+			},
+			{
+				"name": "Crowdsale_finalize_9",
+				"exp": "! multisigEther.send(this.balance)"
+			},
+			{
+				"name": "Crowdsale_drain_1",
+				"exp": "! owner.send(this.balance)"
+			}
+		]
+	},
+	"0x255aa6df07540cb5d3d297f0d0d4d84cb52bc8e6": {
+		"addre": "0x255aa6df07540cb5d3d297f0d0d4d84cb52bc8e6",
+		"slice": []
+	},
+	"0x0bb217e40f8a5cb79adf04e1aab60e5abd0dfc1e": {
+		"addre": "0x0bb217e40f8a5cb79adf04e1aab60e5abd0dfc1e",
+		"slice": [
+			{
+				"name": "SwftCoin_sell_6",
+				"exp": "! msg.sender.send(amount * sellPrice)"
+			}
+		]
+	},
+	"0xc2dae00a6d0b2e9ca084c1c521b77af3dc4c08ca": {
+		"addre": "0xc2dae00a6d0b2e9ca084c1c521b77af3dc4c08ca",
+		"slice": []
+	},
+	"0x41a5b8aa081dcd69ace566061d5b6adcb92cae1c": {
+		"addre": "0x41a5b8aa081dcd69ace566061d5b6adcb92cae1c",
+		"slice": [
+			{
+				"name": "DexBrokerage_withdraw_5",
+				"exp": "msg.sender.transfer(amount)"
+			},
+			{
+				"name": "DexBrokerage_adminWithdraw_16",
+				"exp": "user.transfer(amount)"
+			}
+		]
+	},
+	"0xf244176246168f24e3187f7288edbca29267739b": {
+		"addre": "0xf244176246168f24e3187f7288edbca29267739b",
+		"slice": [
+			{
+				"name": "EtherNomin_sell_13",
+				"exp": "sender.transfer(proceeds)"
+			}
+		]
+	},
+	"0xdfbd6a960a55bcfcf59d5925351e05a51498bcef": {
+		"addre": "0xdfbd6a960a55bcfcf59d5925351e05a51498bcef",
+		"slice": []
+	},
+	"0xc282f494a0619592a2410166dcc749155804f548": {
+		"addre": "0xc282f494a0619592a2410166dcc749155804f548",
+		"slice": [
+			{
+				"name": "Avatar_sendEther_1",
+				"exp": "_to.transfer(_amountInWei)"
+			}
+		]
+	},
+	"0x07cff9c779702a57a4da4b15ef9a0af58e9472d3": {
+		"addre": "0x07cff9c779702a57a4da4b15ef9a0af58e9472d3",
+		"slice": []
+	},
+	"0xfad31a5672fbd8243e9691e8a5f958699cd0aaa9": {
+		"addre": "0xfad31a5672fbd8243e9691e8a5f958699cd0aaa9",
+		"slice": [
+			{
+				"name": "UserfeedsClaimWithValueTransfer_post_2",
+				"exp": "userfeed.transfer(msg.value)"
+			},
+			{
+				"name": "UserfeedsClaimWithValueMultiSendUnsafe_send_6",
+				"exp": "recipients[i].send(amount)"
+			},
+			{
+				"name": "UserfeedsClaimWithValueMultiSendUnsafe_send_8",
+				"exp": "msg.sender.transfer(address(this).balance)"
+			},
+			{
+				"name": "UserfeedsClaimWithConfigurableValueMultiTransfer_transfer_5",
+				"exp": "recipients[i].transfer(values[i])"
+			},
+			{
+				"name": "UserfeedsClaimWithConfigurableValueMultiTransfer_transfer_7",
+				"exp": "msg.sender.transfer(address(this).balance)"
+			}
+		]
+	},
+	"0x4459b42d034330ecc1e4d604c0a5c855b857df2c": {
+		"addre": "0x4459b42d034330ecc1e4d604c0a5c855b857df2c",
+		"slice": [
+			{
+				"name": "DappleAirdrops_withdrawEth_4",
+				"exp": "msg.sender.transfer(toTransfer)"
+			},
+			{
+				"name": "DappleAirdrops_issueRefunds_9",
+				"exp": "_addrs[i].transfer(toRefund)"
+			}
+		]
+	},
+	"0x73dd069c299a5d691e9836243bcaec9c8c1d8734": {
+		"addre": "0x73dd069c299a5d691e9836243bcaec9c8c1d8734",
+		"slice": [
+			{
+				"name": "ERC20Mineable_burn_1",
+				"exp": "ret = burnAddress.send(value)"
+			},
+			{
+				"name": "Bitcoineum_burn_1",
+				"exp": "ret = burnAddress.send(value)"
+			}
+		]
+	},
+	"0x475de1f3e1ba5aeefc9fc694852c8fce59b353a1": {
+		"addre": "0x475de1f3e1ba5aeefc9fc694852c8fce59b353a1",
+		"slice": [
+			{
+				"name": "EtherShareDonation_FreeShare_4",
+				"exp": "msg.sender.send(tx.gasprice * (startGasLeft - endGasLeft + 35000))"
+			}
+		]
+	},
+	"0xe5dada80aa6477e85d09747f2842f7993d0df71c": {
+		"addre": "0xe5dada80aa6477e85d09747f2842f7993d0df71c",
+		"slice": []
+	},
+	"0x96a65609a7b84e8842732deb08f56c3e21ac6f8a": {
+		"addre": "0x96a65609a7b84e8842732deb08f56c3e21ac6f8a",
+		"slice": []
+	},
+	"0xd248b0d48e44aaf9c49aea0312be7e13a6dc1468": {
+		"addre": "0xd248b0d48e44aaf9c49aea0312be7e13a6dc1468",
+		"slice": []
+	},
+	"0x4c382f8e09615ac86e08ce58266cc227e7d4d913": {
+		"addre": "0x4c382f8e09615ac86e08ce58266cc227e7d4d913",
+		"slice": []
+	},
+	"0xa78fa0825b46b38c8679c3ea7e493d90cd6bc834": {
+		"addre": "0xa78fa0825b46b38c8679c3ea7e493d90cd6bc834",
+		"slice": [
+			{
+				"name": "Pool_contribute_7",
+				"exp": "_receiver.transfer(payout)"
+			}
+		]
+	},
+	"0x74951b677de32d596ee851a233336926e6a2cd09": {
+		"addre": "0x74951b677de32d596ee851a233336926e6a2cd09",
+		"slice": [
+			{
+				"name": "WeBetCrypto_fallback_11",
+				"exp": "etherTransfer.transfer(msg.value)"
+			}
+		]
+	},
+	"0x80c1a36dcbdca742f59f09fda16c43e6ad877c2b": {
+		"addre": "0x80c1a36dcbdca742f59f09fda16c43e6ad877c2b",
+		"slice": [
+			{
+				"name": "Fish_sell_7",
+				"exp": "! msg.sender.send(moneyWorth)"
+			}
+		]
+	},
+	"0xd4737858dd8eb9842cd0696171b781525b56086f": {
+		"addre": "0xd4737858dd8eb9842cd0696171b781525b56086f",
+		"slice": [
+			{
+				"name": "NoteChain_withdraw_2",
+				"exp": "address(_address).transfer(_amount)"
+			}
+		]
+	},
+	"0x9e386da8cdfcf8b9e7490e3f2a4589c570cb2b2f": {
+		"addre": "0x9e386da8cdfcf8b9e7490e3f2a4589c570cb2b2f",
+		"slice": [
+			{
+				"name": "PullPayment_withdrawPayments_10",
+				"exp": "! payee.send(payment)"
+			},
+			{
+				"name": "Crowdsale_withdrawPayments_10",
+				"exp": "! payee.send(payment)"
+			},
+			{
+				"name": "Crowdsale_finalize_9",
+				"exp": "! multisigEther.send(this.balance)"
+			},
+			{
+				"name": "Crowdsale_drain_1",
+				"exp": "! owner.send(this.balance)"
+			}
+		]
+	},
+	"0xc6689eb9a6d724b8d7b1d923ffd65b7005da1b62": {
+		"addre": "0xc6689eb9a6d724b8d7b1d923ffd65b7005da1b62",
+		"slice": [
+			{
+				"name": "SECToken_sell_3",
+				"exp": "msg.sender.transfer(amount * sellPrice)"
+			},
+			{
+				"name": "SEC_sell_3",
+				"exp": "msg.sender.transfer(amount * sellPrice)"
+			}
+		]
+	},
+	"0xc75fa06f6002b458468d9e484d13bf522030d4ae": {
+		"addre": "0xc75fa06f6002b458468d9e484d13bf522030d4ae",
+		"slice": [
+			{
+				"name": "Balance_withdrawEther_3",
+				"exp": "msg.sender.transfer(_amount)"
+			}
+		]
+	},
+	"0xd559f20296ff4895da39b5bd9add54b442596a61": {
+		"addre": "0xd559f20296ff4895da39b5bd9add54b442596a61",
+		"slice": [
+			{
+				"name": "FTXToken_transfer_7",
+				"exp": "! msg.sender.send(gas4Token)"
+			},
+			{
+				"name": "FTXToken_withdrawToOwner_2",
+				"exp": "msg.sender.transfer(weiAmt)"
+			}
+		]
+	},
+	"0xca3fcd359d91200fe8cb22c8a95ccac44b68e3e1": {
+		"addre": "0xca3fcd359d91200fe8cb22c8a95ccac44b68e3e1",
+		"slice": [
+			{
+				"name": "Poppy_withdraw_6",
+				"exp": "_customerAddress.transfer(_dividends)"
+			}
+		]
+	},
+	"0x7f45d3b158410b69b2d7f503bdc90a9aa734cbef": {
+		"addre": "0x7f45d3b158410b69b2d7f503bdc90a9aa734cbef",
+		"slice": []
+	},
+	"0x8fd3121013a07c57f0d69646e86e7a4880b467b7": {
+		"addre": "0x8fd3121013a07c57f0d69646e86e7a4880b467b7",
+		"slice": [
+			{
+				"name": "AirSwapExchange_fill_2",
+				"exp": "msg.sender.transfer(msg.value)"
+			},
+			{
+				"name": "AirSwapExchange_fill_7",
+				"exp": "msg.sender.transfer(msg.value)"
+			},
+			{
+				"name": "AirSwapExchange_fill_13",
+				"exp": "msg.sender.transfer(msg.value)"
+			},
+			{
+				"name": "AirSwapExchange_fill_21",
+				"exp": "makerAddress.transfer(msg.value)"
+			},
+			{
+				"name": "AirSwapExchange_fill_23",
+				"exp": "msg.sender.transfer(msg.value)"
+			},
+			{
+				"name": "AirSwapExchange_fill_27",
+				"exp": "msg.sender.transfer(msg.value)"
+			}
+		]
+	},
+	"0x39013f961c378f02c2b82a6e1d31e9812786fd9d": {
+		"addre": "0x39013f961c378f02c2b82a6e1d31e9812786fd9d",
+		"slice": []
+	},
+	"0x999967e2ec8a74b7c8e9db19e039d920b31d39d0": {
+		"addre": "0x999967e2ec8a74b7c8e9db19e039d920b31d39d0",
+		"slice": [
+			{
+				"name": "ERC23PayableToken_transferAndPay_9",
+				"exp": "to.transfer(msg.value)"
+			},
+			{
+				"name": "TieToken_transferAndPay_9",
+				"exp": "to.transfer(msg.value)"
+			}
+		]
+	},
+	"0x779b7b713c86e3e6774f5040d9ccc2d43ad375f8": {
+		"addre": "0x779b7b713c86e3e6774f5040d9ccc2d43ad375f8",
+		"slice": [
+			{
+				"name": "StakePoolICO_fallback_7",
+				"exp": "require(bool)(multiSigWallet.send(msg.value))"
+			}
+		]
+	},
+	"0x1530df3e1c69501d4ecb7e58eb045b90de158873": {
+		"addre": "0x1530df3e1c69501d4ecb7e58eb045b90de158873",
+		"slice": []
+	},
+	"0xdcb9ff81013c31ff686154b4502ef6bfaa102d2d": {
+		"addre": "0xdcb9ff81013c31ff686154b4502ef6bfaa102d2d",
+		"slice": [
+			{
+				"name": "Goochain_sell_4",
+				"exp": "require(bool)(msg.sender.send(amount * sellPrice))"
+			}
+		]
+	},
+	"0x5f0bfe2ac3c0a34eca548d377315c2d3fe60c84f": {
+		"addre": "0x5f0bfe2ac3c0a34eca548d377315c2d3fe60c84f",
+		"slice": []
+	},
+	"0x177d39ac676ed1c67a2b268ad7f1e58826e5b0af": {
+		"addre": "0x177d39ac676ed1c67a2b268ad7f1e58826e5b0af",
+		"slice": [
+			{
+				"name": "CDTToken_drain_1",
+				"exp": "! creator.send(this.balance)"
+			}
+		]
+	},
+	"0x887834d3b8d450b6bab109c252df3da286d73ce4": {
+		"addre": "0x887834d3b8d450b6bab109c252df3da286d73ce4",
+		"slice": []
+	},
+	"0xa5cc679a3528956e8032df4f03756c077c1ee3f4": {
+		"addre": "0xa5cc679a3528956e8032df4f03756c077c1ee3f4",
+		"slice": [
+			{
+				"name": "Exchange_withdraw_9",
+				"exp": "! msg.sender.send(amount)"
+			},
+			{
+				"name": "Exchange_adminWithdraw_19",
+				"exp": "! user.send(amount)"
+			}
+		]
+	},
+	"0xe73f83fd4c2baeda893016357c6988011d73e027": {
+		"addre": "0xe73f83fd4c2baeda893016357c6988011d73e027",
+		"slice": [
+			{
+				"name": "MyAdvancedToken_sell_3",
+				"exp": "msg.sender.transfer(amount * sellPrice / (10 ** uint256(decimals)))"
+			},
+			{
+				"name": "MyAdvancedToken_withdrawalEth_2",
+				"exp": "msg.sender.transfer(amount)"
+			}
+		]
+	},
+	"0x742134547b314adbf197ae10d53efcebfc6ff1e8": {
+		"addre": "0x742134547b314adbf197ae10d53efcebfc6ff1e8",
+		"slice": []
+	},
+	"0x3e0371bcb61283c036a48274abde0ab3da107a50": {
+		"addre": "0x3e0371bcb61283c036a48274abde0ab3da107a50",
+		"slice": [
+			{
+				"name": "Gateway_payEth_4",
+				"exp": "_sellerAddress.transfer(_value.sub(fee))"
+			}
+		]
+	},
+	"0xfbeef911dc5821886e1dda71586d90ed28174b7d": {
+		"addre": "0xfbeef911dc5821886e1dda71586d90ed28174b7d",
+		"slice": [
+			{
+				"name": "KnownOriginDigitalAssetV2__handleFunds_3",
+				"exp": "_artistAccount.transfer(artistPayment)"
+			},
+			{
+				"name": "KnownOriginDigitalAssetV2__handleFunds_8",
+				"exp": "commission.recipient.transfer(rateSplit)"
+			}
+		]
+	},
+	"0x08b67e38b4ecc788eb0cfbab72074c374ecddbf3": {
+		"addre": "0x08b67e38b4ecc788eb0cfbab72074c374ecddbf3",
+		"slice": []
+	},
+	"0x1844b21593262668b7248d0f57a220caaba46ab9": {
+		"addre": "0x1844b21593262668b7248d0f57a220caaba46ab9",
+		"slice": []
+	},
+	"0x9cb9eb4bb7800bdbb017be2a4ffbeccb67454ea9": {
+		"addre": "0x9cb9eb4bb7800bdbb017be2a4ffbeccb67454ea9",
+		"slice": []
+	},
+	"0x10d9601e7a7bf1c9c3dfe7d93b4050867829a3fd": {
+		"addre": "0x10d9601e7a7bf1c9c3dfe7d93b4050867829a3fd",
+		"slice": [
+			{
+				"name": "IronHandsCoin_withdraw_6",
+				"exp": "_customerAddress.transfer(_dividends)"
+			}
+		]
+	},
+	"0x342ba159f988f24f0b033f3cc5232377ee500543": {
+		"addre": "0x342ba159f988f24f0b033f3cc5232377ee500543",
+		"slice": [
+			{
+				"name": "MyAdvancedToken_sell_3",
+				"exp": "msg.sender.transfer(amount * sellPrice)"
+			}
+		]
+	},
+	"0x2ee5054ee925a122976281e1dfea22dc873de96f": {
+		"addre": "0x2ee5054ee925a122976281e1dfea22dc873de96f",
+		"slice": [
+			{
+				"name": "WorldCupToken_purchase_12",
+				"exp": "oldOwner.send(payment)"
+			},
+			{
+				"name": "WorldCupToken_purchase_15",
+				"exp": "msg.sender.send(purchaseExcess)"
+			},
+			{
+				"name": "WorldCupToken__payout_3",
+				"exp": "_to.send(this.balance)"
+			}
+		]
+	},
+	"0x3f18b2e57acd6f6c111936577529ac0dce7148b8": {
+		"addre": "0x3f18b2e57acd6f6c111936577529ac0dce7148b8",
+		"slice": [
+			{
+				"name": "CryptoArteSales_sendTo_3",
+				"exp": "_payee.transfer(_amount)"
+			}
+		]
+	},
+	"0x861ab771d6787ac7eecc2d33b6fed63a06ae7d1c": {
+		"addre": "0x861ab771d6787ac7eecc2d33b6fed63a06ae7d1c",
+		"slice": [
+			{
+				"name": "NekoToken_withdraw_6",
+				"exp": "_customerAddress.transfer(_dividends)"
+			}
+		]
+	},
+	"0xb2f7eb1f2c37645be61d73953035360e768d81e6": {
+		"addre": "0xb2f7eb1f2c37645be61d73953035360e768d81e6",
+		"slice": [
+			{
+				"name": "CobinhoodToken_buyTokens_12",
+				"exp": "wallet.transfer(msg.value)"
+			}
+		]
+	},
+	"0xcc34366e3842ca1bd36c1f324d15257960fcc801": {
+		"addre": "0xcc34366e3842ca1bd36c1f324d15257960fcc801",
+		"slice": [
+			{
+				"name": "MainSale_createTokens_4",
+				"exp": "require(bool)(multisigVault.send(msg.value))"
+			}
+		]
+	},
+	"0xc99ddc30bb0cf76b07d90dcb6b267b8352697bef": {
+		"addre": "0xc99ddc30bb0cf76b07d90dcb6b267b8352697bef",
+		"slice": []
+	},
+	"0xe3818504c1b32bf1557b16c238b2e01fd3149c17": {
+		"addre": "0xe3818504c1b32bf1557b16c238b2e01fd3149c17",
+		"slice": [
+			{
+				"name": "PillarToken_refund_13",
+				"exp": "msg.sender.transfer(ethValue)"
+			}
+		]
+	},
+	"0x9214ec02cb71cba0ada6896b8da260736a67ab10": {
+		"addre": "0x9214ec02cb71cba0ada6896b8da260736a67ab10",
+		"slice": []
+	},
+	"0x1c83501478f1320977047008496dacbd60bb15ef": {
+		"addre": "0x1c83501478f1320977047008496dacbd60bb15ef",
+		"slice": [
+			{
+				"name": "RefundVault_vault_releaseDeposit_4",
+				"exp": "vault_wallet.transfer(totalDeposited)"
+			},
+			{
+				"name": "RefundVault_vault_refund_4",
+				"exp": "investor.transfer(depositedValue)"
+			},
+			{
+				"name": "DGTX_vault_refund_4",
+				"exp": "investor.transfer(depositedValue)"
+			},
+			{
+				"name": "DGTX_buy_21",
+				"exp": "saleWalletAddress.transfer(msg.value - msg.value * 96 / 100)"
+			},
+			{
+				"name": "DGTX_buy_27",
+				"exp": "localOwner.transfer(msg.value * 96 / 100)"
+			}
+		]
+	},
+	"0xb547cc51ce58293e6945ba08d664ce051563d9ac": {
+		"addre": "0xb547cc51ce58293e6945ba08d664ce051563d9ac",
+		"slice": []
+	},
+	"0x757cc5723396981b9852cb6237a567720aee8906": {
+		"addre": "0x757cc5723396981b9852cb6237a567720aee8906",
+		"slice": [
+			{
+				"name": "Griptoken_withdraw_6",
+				"exp": "_customerAddress.transfer(_dividends)"
+			}
+		]
+	},
+	"0xf1def7f0e620f39531eb352fe13da6825218e7df": {
+		"addre": "0xf1def7f0e620f39531eb352fe13da6825218e7df",
+		"slice": []
+	},
+	"0xa7112b46bfeec68b2044b33e36b9cf83addf107a": {
+		"addre": "0xa7112b46bfeec68b2044b33e36b9cf83addf107a",
+		"slice": []
+	},
+	"0xb9e7f8568e08d5659f5d29c4997173d84cdf2607": {
+		"addre": "0xb9e7f8568e08d5659f5d29c4997173d84cdf2607",
+		"slice": []
+	},
+	"0xab6cf87a50f17d7f5e1feaf81b6fe9ffbe8ebf84": {
+		"addre": "0xab6cf87a50f17d7f5e1feaf81b6fe9ffbe8ebf84",
+		"slice": [
+			{
+				"name": "MRVToken_createTokens_12",
+				"exp": "! beneficiary.send(msg.value)"
+			},
+			{
+				"name": "MRVToken_reclaimEther_1",
+				"exp": "assert(bool)(owner.send(this.balance))"
+			}
+		]
+	},
+	"0xe42ba5558b00d2e6109cc60412d5d4c9473fe998": {
+		"addre": "0xe42ba5558b00d2e6109cc60412d5d4c9473fe998",
+		"slice": [
+			{
+				"name": "IMMCoin_sell_3",
+				"exp": "msg.sender.transfer(amount * sellPrice)"
+			}
+		]
+	},
+	"0xaf30d2a7e90d7dc361c8c4585e9bb7d2f6f15bc7": {
+		"addre": "0xaf30d2a7e90d7dc361c8c4585e9bb7d2f6f15bc7",
+		"slice": []
+	},
+	"0x86f484020161d2d1f3a0bd5a13edba498d5afe9d": {
+		"addre": "0x86f484020161d2d1f3a0bd5a13edba498d5afe9d",
+		"slice": [
+			{
+				"name": "Nexgen_withdraw_10",
+				"exp": "_customerAddress.transfer(eighty_percentForCustomer)"
+			},
+			{
+				"name": "Nexgen_sellingWithdraw_4",
+				"exp": "_customerAddress.transfer(_sellingWithdraw)"
+			},
+			{
+				"name": "Nexgen_payout_1",
+				"exp": "_address.transfer(address(this).balance)"
+			}
+		]
+	},
+	"0x1eab19e6623e8cbcafc252e275f5b51c27656faf": {
+		"addre": "0x1eab19e6623e8cbcafc252e275f5b51c27656faf",
+		"slice": [
+			{
+				"name": "SpankICO_fallback_7",
+				"exp": "require(bool)(multiSigWallet.send(msg.value))"
+			}
+		]
+	},
+	"0xdfe06d5a4534fbe955eebe8a4908ef596763c2a4": {
+		"addre": "0xdfe06d5a4534fbe955eebe8a4908ef596763c2a4",
+		"slice": [
+			{
+				"name": "ExtraFundingInputMarketing_buy_11",
+				"exp": "! outputWalletAddress.send(contributed_value)"
+			},
+			{
+				"name": "ExtraFundingInputMarketing_buy_15",
+				"exp": "msg.sender.send(this.balance)"
+			}
+		]
+	},
+	"0x7f2176ceb16dcb648dc924eff617c3dc2befd30d": {
+		"addre": "0x7f2176ceb16dcb648dc924eff617c3dc2befd30d",
+		"slice": [
+			{
+				"name": "MyAdvancedToken_sell_6",
+				"exp": "! msg.sender.send(amount * sellPrice)"
+			}
+		]
+	},
+	"0x4dac1801ffa1534346ce8a1114e9a40ef908d7fd": {
+		"addre": "0x4dac1801ffa1534346ce8a1114e9a40ef908d7fd",
+		"slice": [
+			{
+				"name": "MooncatListing_withdrawBalance_1",
+				"exp": "assert(bool)(owner.send(this.balance))"
+			},
+			{
+				"name": "MooncatListing_buyListing_8",
+				"exp": "seller.transfer(currentPrice - (currentPrice * ownerPercentage / 10000))"
+			}
+		]
+	},
+	"0x9895960b93e314ef221346ab985b895da9a5b7d5": {
+		"addre": "0x9895960b93e314ef221346ab985b895da9a5b7d5",
+		"slice": [
+			{
+				"name": "SixPillars_safeTransferFrom_3",
+				"exp": "_from.transfer(sendAmount)"
+			},
+			{
+				"name": "SixPillars_transferFrom_3",
+				"exp": "_from.transfer(sendAmount)"
+			}
+		]
+	},
+	"0xf091cf09c51811819db705710e9634b8bf18f164": {
+		"addre": "0xf091cf09c51811819db705710e9634b8bf18f164",
+		"slice": [
+			{
+				"name": "Couchain_sell_3",
+				"exp": "msg.sender.transfer(amount * sellPrice)"
+			}
+		]
+	},
+	"0x6beb418fc6e1958204ac8baddcf109b8e9694966": {
+		"addre": "0x6beb418fc6e1958204ac8baddcf109b8e9694966",
+		"slice": [
+			{
+				"name": "MyToken_sell_7",
+				"exp": "msg.sender.transfer(linkerSendAmount)"
+			},
+			{
+				"name": "MyToken_transferEther_1",
+				"exp": "msg.sender.transfer(amount)"
+			}
+		]
+	},
+	"0x2ca72c9699b92b47272c9716c664cad6167c80b0": {
+		"addre": "0x2ca72c9699b92b47272c9716c664cad6167c80b0",
+		"slice": [
+			{
+				"name": "GUNS_finalize_7",
+				"exp": "! ethFundDeposit.send(this.balance)"
+			},
+			{
+				"name": "GUNS_refund_21",
+				"exp": "! msg.sender.send(ethVal)"
+			}
+		]
+	},
+	"0x9d160e257f1dff52ec81d5a4e7326dd82e144177": {
+		"addre": "0x9d160e257f1dff52ec81d5a4e7326dd82e144177",
+		"slice": [
+			{
+				"name": "Exchange_withdraw_2",
+				"exp": "msg.sender.transfer(amount)"
+			}
+		]
+	},
+	"0x38c6a68304cdefb9bec48bbfaaba5c5b47818bb2": {
+		"addre": "0x38c6a68304cdefb9bec48bbfaaba5c5b47818bb2",
+		"slice": [
+			{
+				"name": "HPBToken_issueToken_10",
+				"exp": "! target.send(msg.value)"
+			}
+		]
+	},
+	"0x705ee96c1c160842c92c1aecfcffccc9c412e3d9": {
+		"addre": "0x705ee96c1c160842c92c1aecfcffccc9c412e3d9",
+		"slice": [
+			{
+				"name": "POLLToken_fallback_2",
+				"exp": "! owner.send(msg.value)"
+			}
+		]
+	},
+	"0x3893b9422cd5d70a81edeffe3d5a1c6a978310bb": {
+		"addre": "0x3893b9422cd5d70a81edeffe3d5a1c6a978310bb",
+		"slice": [
+			{
+				"name": "MithrilToken_fallback_1",
+				"exp": "wallet.transfer(msg.value)"
+			}
+		]
+	},
+	"0xa701122c1b67220a8b6883d03c8ad67896b12466": {
+		"addre": "0xa701122c1b67220a8b6883d03c8ad67896b12466",
+		"slice": []
+	},
+	"0x58124afeb40f51bec09cba79f3ca76f7ae05939f": {
+		"addre": "0x58124afeb40f51bec09cba79f3ca76f7ae05939f",
+		"slice": []
+	},
+	"0xea1f346faf023f974eb5adaf088bbcdf02d761f4": {
+		"addre": "0xea1f346faf023f974eb5adaf088bbcdf02d761f4",
+		"slice": [
+			{
+				"name": "TIXToken_finalize_8",
+				"exp": "! ethFundDeposit.send(this.balance)"
+			}
+		]
+	},
+	"0x819bb9964b6ebf52361f1ae42cf4831b921510f9": {
+		"addre": "0x819bb9964b6ebf52361f1ae42cf4831b921510f9",
+		"slice": [
+			{
+				"name": "V00_Marketplace_refundBuyer_3",
+				"exp": "require(bool,string)(offer.buyer.send(offer.value),ETH refund failed)"
+			},
+			{
+				"name": "V00_Marketplace_paySeller_5",
+				"exp": "require(bool,string)(offer.buyer.send(offer.refund),ETH refund failed)"
+			},
+			{
+				"name": "V00_Marketplace_paySeller_6",
+				"exp": "require(bool,string)(listing.seller.send(value),ETH send failed)"
+			}
+		]
+	},
+	"0xa50c298118e89e0cc465f2a1705c7579f67b6f26": {
+		"addre": "0xa50c298118e89e0cc465f2a1705c7579f67b6f26",
+		"slice": [
+			{
+				"name": "Avatar_sendEther_1",
+				"exp": "_to.transfer(_amountInWei)"
+			}
+		]
+	},
+	"0x88fcfbc22c6d3dbaa25af478c578978339bde77a": {
+		"addre": "0x88fcfbc22c6d3dbaa25af478c578978339bde77a",
+		"slice": []
+	},
+	"0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2": {
+		"addre": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+		"slice": [
+			{
+				"name": "WETH9_withdraw_3",
+				"exp": "msg.sender.transfer(wad)"
+			}
+		]
+	},
+	"0x2a0c0dbecc7e4d658f48e01e3fa353f44050c208": {
+		"addre": "0x2a0c0dbecc7e4d658f48e01e3fa353f44050c208",
+		"slice": [
+			{
+				"name": "Exchange_withdraw_9",
+				"exp": "! msg.sender.send(amount)"
+			},
+			{
+				"name": "Exchange_adminWithdraw_19",
+				"exp": "! user.send(amount)"
+			}
+		]
+	},
+	"0x4e0603e2a27a30480e5e3a4fe548e29ef12f64be": {
+		"addre": "0x4e0603e2a27a30480e5e3a4fe548e29ef12f64be",
+		"slice": [
+			{
+				"name": "Credo_finalize_14",
+				"exp": "! etherProceedsAccount.send(this.balance)"
+			},
+			{
+				"name": "Credo_refund_21",
+				"exp": "! msg.sender.send(ethVal)"
+			}
+		]
+	},
+	"0xd850942ef8811f2a866692a623011bde52a462c1": {
+		"addre": "0xd850942ef8811f2a866692a623011bde52a462c1",
+		"slice": [
+			{
+				"name": "VENSale_buy_18",
+				"exp": "ethVault.transfer(ethCost)"
+			},
+			{
+				"name": "VENSale_buy_24",
+				"exp": "msg.sender.transfer(toReturn)"
+			}
+		]
+	},
+	"0xbc9395973bd35a3b4bd924f050d2778c07506ecb": {
+		"addre": "0xbc9395973bd35a3b4bd924f050d2778c07506ecb",
+		"slice": [
+			{
+				"name": "GreedTokenICO_fallback_32",
+				"exp": "msg.sender.transfer(refund)"
+			}
+		]
+	},
+	"0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7": {
+		"addre": "0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7",
+		"slice": [
+			{
+				"name": "Vault_disburseAuthorizedPayment_9",
+				"exp": "p.recipient.transfer(p.amount)"
+			},
+			{
+				"name": "FailClosedVault_disburseAuthorizedPayment_9",
+				"exp": "p.recipient.transfer(p.amount)"
+			},
+			{
+				"name": "GivethBridge_disburseAuthorizedPayment_9",
+				"exp": "p.recipient.transfer(p.amount)"
+			}
+		]
+	},
+	"0x9571c052c01fa73e58334c02a57e421045f7ab9a": {
+		"addre": "0x9571c052c01fa73e58334c02a57e421045f7ab9a",
+		"slice": []
+	},
+	"0x787273ff2a40c54f0b3be987f58f874ce6675c07": {
+		"addre": "0x787273ff2a40c54f0b3be987f58f874ce6675c07",
+		"slice": [
+			{
+				"name": "TokenMintERC20Token_constructor_5",
+				"exp": "feeReceiver.transfer(msg.value)"
+			}
+		]
+	},
+	"0x700f5b6fbef95f3fbd4f50233e6d05d4eab6dd03": {
+		"addre": "0x700f5b6fbef95f3fbd4f50233e6d05d4eab6dd03",
+		"slice": []
+	},
+	"0xfcca0c5ccd723baf6bf7f6678c8cfb49ce0042c7": {
+		"addre": "0xfcca0c5ccd723baf6bf7f6678c8cfb49ce0042c7",
+		"slice": []
+	},
+	"0x68aa3f232da9bdc2343465545794ef3eea5209bd": {
+		"addre": "0x68aa3f232da9bdc2343465545794ef3eea5209bd",
+		"slice": []
+	},
+	"0x28a40acf39b1d3c932f42dd8068ad00a5ad6448f": {
+		"addre": "0x28a40acf39b1d3c932f42dd8068ad00a5ad6448f",
+		"slice": [
+			{
+				"name": "LudumToken_finalizeCrowdsale_5",
+				"exp": "require(bool)(ethDepositAddress.send(this.balance))"
+			}
+		]
+	},
+	"0x2b44d68555899dbc1ab0892e7330476183dbc932": {
+		"addre": "0x2b44d68555899dbc1ab0892e7330476183dbc932",
+		"slice": []
+	},
+	"0x275b69aa7c8c1d648a0557656bce1c286e69a29d": {
+		"addre": "0x275b69aa7c8c1d648a0557656bce1c286e69a29d",
+		"slice": []
+	},
+	"0x44f588aeeb8c44471439d1270b3603c66a9262f1": {
+		"addre": "0x44f588aeeb8c44471439d1270b3603c66a9262f1",
+		"slice": [
+			{
+				"name": "SnipCoin_fallback_12",
+				"exp": "saleWalletAddress.transfer(msg.value)"
+			}
+		]
+	},
+	"0xc27a2f05fa577a83ba0fdb4c38443c0718356501": {
+		"addre": "0xc27a2f05fa577a83ba0fdb4c38443c0718356501",
+		"slice": []
+	},
+	"0xb4c55b5a1faf5323e59842171c2492773a3783dd": {
+		"addre": "0xb4c55b5a1faf5323e59842171c2492773a3783dd",
+		"slice": [
+			{
+				"name": "BCDCVault_unlockForFounders_11",
+				"exp": "! bcdcMultisig.send(this.balance)"
+			},
+			{
+				"name": "BCDCToken_finalizeCrowdfunding_26",
+				"exp": "! bcdcMultisig.send(this.balance)"
+			},
+			{
+				"name": "BCDCToken_refund_13",
+				"exp": "! msg.sender.send(ethValue)"
+			}
+		]
+	},
+	"0xe6923e9b56db1eed1c9f430ea761da7565e260fe": {
+		"addre": "0xe6923e9b56db1eed1c9f430ea761da7565e260fe",
+		"slice": [
+			{
+				"name": "MyAdvancedToken_sell_4",
+				"exp": "! msg.sender.send(amount * sellPrice)"
+			}
+		]
+	},
+	"0x48bf5e13a1ee8bd4385c182904b3abf73e042675": {
+		"addre": "0x48bf5e13a1ee8bd4385c182904b3abf73e042675",
+		"slice": [
+			{
+				"name": "AutomatedExchange_receiveApproval_5",
+				"exp": "from.transfer(tokenValue)"
+			}
+		]
+	},
+	"0x26c7bdd051318b48092390eabd1b69fce5080b25": {
+		"addre": "0x26c7bdd051318b48092390eabd1b69fce5080b25",
+		"slice": []
+	},
+	"0xb8c77482e45f1f44de1745f52c74426c631bdd52": {
+		"addre": "0xb8c77482e45f1f44de1745f52c74426c631bdd52",
+		"slice": []
+	},
+	"0xb5b2b7a7089afcbcc990f2adf3384920cd1ad451": {
+		"addre": "0xb5b2b7a7089afcbcc990f2adf3384920cd1ad451",
+		"slice": [
+			{
+				"name": "MagicBox_transfer_3",
+				"exp": "_to.transfer(_amount)"
+			}
+		]
+	},
+	"0x77faed976e187f26b49e78be8418ab074a341f26": {
+		"addre": "0x77faed976e187f26b49e78be8418ab074a341f26",
+		"slice": []
+	},
+	"0xdd9b82c59aa260b2a834ec67c472f43b40a2e6f1": {
+		"addre": "0xdd9b82c59aa260b2a834ec67c472f43b40a2e6f1",
+		"slice": []
+	},
+	"0xc0e0c1dba795bfe7c4aa302a189423460cca57ad": {
+		"addre": "0xc0e0c1dba795bfe7c4aa302a189423460cca57ad",
+		"slice": []
+	},
+	"0xba3ed686cc32ffa8664628b1e96d8022e40543de": {
+		"addre": "0xba3ed686cc32ffa8664628b1e96d8022e40543de",
+		"slice": [
+			{
+				"name": "Broker__withdraw_3",
+				"exp": "_withdrawer.transfer(_amount)"
+			}
+		]
+	},
+	"0x5907aecf617c5019d9b3b43a5d65e583ce0f48bf": {
+		"addre": "0x5907aecf617c5019d9b3b43a5d65e583ce0f48bf",
+		"slice": [
+			{
+				"name": "BatchTransferWallet_transferMulti_6",
+				"exp": "receivers[j].transfer(amounts[j])"
+			},
+			{
+				"name": "BatchTransferWallet_withdraw_2",
+				"exp": "_address.transfer(address(this).balance)"
+			}
+		]
+	},
+	"0xb70835d7822ebb9426b56543e391846c107bd32c": {
+		"addre": "0xb70835d7822ebb9426b56543e391846c107bd32c",
+		"slice": []
+	},
+	"0xb96eb33e4a1a9ea3b8581abc8185f9597e45e8aa": {
+		"addre": "0xb96eb33e4a1a9ea3b8581abc8185f9597e45e8aa",
+		"slice": [
+			{
+				"name": "HeroChainToken__tokenPurchase_4",
+				"exp": "wallet.transfer(msg.value)"
+			}
+		]
+	},
+	"0x3c020e014069df790d4f4e63fd297ba4e1c8e51f": {
+		"addre": "0x3c020e014069df790d4f4e63fd297ba4e1c8e51f",
+		"slice": []
+	},
+	"0x58534c480ef96b6478940f9bbf6748da8f2ec935": {
+		"addre": "0x58534c480ef96b6478940f9bbf6748da8f2ec935",
+		"slice": [
+			{
+				"name": "Funding_receivePayment_15",
+				"exp": "_sender.send(this.balance)"
+			}
+		]
+	},
+	"0xdde2d979e8d39bb8416eafcfc1758f3cab2c9c72": {
+		"addre": "0xdde2d979e8d39bb8416eafcfc1758f3cab2c9c72",
+		"slice": [
+			{
+				"name": "KnownOriginDigitalAsset__applyCommission_10",
+				"exp": "artistAccount.transfer(finalCommissionTotal)"
+			}
+		]
+	},
+	"0x9901ed1e649c4a77c7fff3dfd446ffe3464da747": {
+		"addre": "0x9901ed1e649c4a77c7fff3dfd446ffe3464da747",
+		"slice": [
+			{
+				"name": "Hut34TS_refundFor_24",
+				"exp": "addr.transfer(value)"
+			}
+		]
+	},
+	"0xe3fa177acecfb86721cf6f9f4206bd3bd672d7d5": {
+		"addre": "0xe3fa177acecfb86721cf6f9f4206bd3bd672d7d5",
+		"slice": [
+			{
+				"name": "CTCToken_refundFunds_1",
+				"exp": "origin.transfer(msg.value)"
+			}
+		]
+	},
+	"0x44f12955189e3f01be5daf1dd9002ee4d774f42b": {
+		"addre": "0x44f12955189e3f01be5daf1dd9002ee4d774f42b",
+		"slice": [
+			{
+				"name": "AfterSchoolCrowdsaleToken_refundTransaction_2",
+				"exp": "msg.sender.transfer(msg.value)"
+			},
+			{
+				"name": "AfterSchoolCrowdsaleToken_createTokens_25",
+				"exp": "! multisig.send(msg.value)"
+			},
+			{
+				"name": "AfterSchoolCrowdsaleToken_batchReturnEthIfFailed_17",
+				"exp": "! currentParticipantAddress.send(contribution)"
+			}
+		]
+	},
+	"0xf19c536ab792f173b7ee62d9ccc51f4ed6180773": {
+		"addre": "0xf19c536ab792f173b7ee62d9ccc51f4ed6180773",
+		"slice": [
+			{
+				"name": "MiniMeToken_fallback_8",
+				"exp": "! controller.send(msg.value)"
+			}
+		]
+	},
+	"0xdf6ef343350780bf8c3410bf062e0c015b1dd671": {
+		"addre": "0xdf6ef343350780bf8c3410bf062e0c015b1dd671",
+		"slice": []
+	},
+	"0xf05a9382a4c3f29e2784502754293d88b835109c": {
+		"addre": "0xf05a9382a4c3f29e2784502754293d88b835109c",
+		"slice": [
+			{
+				"name": "RexToken_createTokens_19",
+				"exp": "! msg.sender.send(msg.value - weiAmount)"
+			},
+			{
+				"name": "RexToken_createTokens_28",
+				"exp": "! vault.send(weiAmount)"
+			}
+		]
+	},
+	"0x47f383f5acbacc18a3d9ff6f7af8b49bfed27c61": {
+		"addre": "0x47f383f5acbacc18a3d9ff6f7af8b49bfed27c61",
+		"slice": [
+			{
+				"name": "EthHodler_doWithdrawal_14",
+				"exp": "! msg.sender.send(amount + extra)"
+			}
+		]
+	},
+	"0x3f9c0a5773817ffaa5a1061e1e33c1d9c8888dff": {
+		"addre": "0x3f9c0a5773817ffaa5a1061e1e33c1d9c8888dff",
+		"slice": []
+	},
+	"0xb4b1d2c217ec0776584ce08d3dd98f90ededa44b": {
+		"addre": "0xb4b1d2c217ec0776584ce08d3dd98f90ededa44b",
+		"slice": []
+	},
+	"0x6ec8a24cabdc339a06a172f8223ea557055adaa5": {
+		"addre": "0x6ec8a24cabdc339a06a172f8223ea557055adaa5",
+		"slice": []
+	},
+	"0x68fcb1f0d07000a84b569ccb647dd8fe320cddaa": {
+		"addre": "0x68fcb1f0d07000a84b569ccb647dd8fe320cddaa",
+		"slice": []
+	},
+	"0x0abdace70d3790235af448c88547603b945604ea": {
+		"addre": "0x0abdace70d3790235af448c88547603b945604ea",
+		"slice": [
+			{
+				"name": "MiniMeToken_claimTokens_2",
+				"exp": "_claimer.transfer(this.balance)"
+			},
+			{
+				"name": "District0xNetworkToken_claimTokens_2",
+				"exp": "_claimer.transfer(this.balance)"
+			},
+			{
+				"name": "District0xContribution_contributeWithAddress_28",
+				"exp": "msg.sender.transfer(excessContribValue)"
+			}
+		]
+	},
+	"0x1e797ce986c3cff4472f7d38d5c4aba55dfefe40": {
+		"addre": "0x1e797ce986c3cff4472f7d38d5c4aba55dfefe40",
+		"slice": [
+			{
+				"name": "blockcdn_reFund_12",
+				"exp": "! msg.sender.send(value)"
+			},
+			{
+				"name": "blockcdn_reFundByOther_12",
+				"exp": "! _fundaddr.send(value)"
+			},
+			{
+				"name": "blockcdn_transfer_15",
+				"exp": "! msg.sender.send(_value)"
+			},
+			{
+				"name": "blockcdn_withDrawEth_13",
+				"exp": "! msg.sender.send(value)"
+			}
+		]
+	},
+	"0x87ed87a34adc1ecc62232f248d74fe1f81e5da68": {
+		"addre": "0x87ed87a34adc1ecc62232f248d74fe1f81e5da68",
+		"slice": [
+			{
+				"name": "ICOToken_withdraw_2",
+				"exp": "icoHolder.transfer(balance)"
+			}
+		]
+	},
+	"0xe814aee960a85208c3db542c53e7d4a6c8d5f60f": {
+		"addre": "0xe814aee960a85208c3db542c53e7d4a6c8d5f60f",
+		"slice": []
+	},
+	"0x76eec498e1502993324f7da98f0c78380e071098": {
+		"addre": "0x76eec498e1502993324f7da98f0c78380e071098",
+		"slice": [
+			{
+				"name": "MemeToken_purchase_18",
+				"exp": "oldOwner.transfer(payment)"
+			},
+			{
+				"name": "MemeToken_purchase_21",
+				"exp": "msg.sender.transfer(purchaseExcess)"
+			},
+			{
+				"name": "MemeToken__payout_3",
+				"exp": "_to.transfer(this.balance)"
+			}
+		]
+	},
+	"0xec7ba74789694d0d03d458965370dc7cf2fe75ba": {
+		"addre": "0xec7ba74789694d0d03d458965370dc7cf2fe75ba",
+		"slice": [
+			{
+				"name": "HBToken_sendEther_1",
+				"exp": "_to.transfer(_amount)"
+			}
+		]
+	},
+	"0xc463aa806958f3bdd20081cc5cab89fbb35b650d": {
+		"addre": "0xc463aa806958f3bdd20081cc5cab89fbb35b650d",
+		"slice": [
+			{
+				"name": "RAMEN_withdraw_6",
+				"exp": "_customerAddress.transfer(_dividends)"
+			}
+		]
+	},
+	"0x5ca71ea65acb6293e71e62c41b720698b0aa611c": {
+		"addre": "0x5ca71ea65acb6293e71e62c41b720698b0aa611c",
+		"slice": [
+			{
+				"name": "BBDToken_buy_18",
+				"exp": "exchangeAddress.transfer(msg.value.mul(1000).div(divisor))"
+			},
+			{
+				"name": "BBDToken_refund_10",
+				"exp": "msg.sender.transfer(ethVal)"
+			}
+		]
+	},
+	"0x7a6542e629630a6a2c89ccce098386dcec39f6cf": {
+		"addre": "0x7a6542e629630a6a2c89ccce098386dcec39f6cf",
+		"slice": []
+	},
+	"0xee395235ac363725c6b895d8994706cb7050482f": {
+		"addre": "0xee395235ac363725c6b895d8994706cb7050482f",
+		"slice": [
+			{
+				"name": "DataShieldCoin_sell_3",
+				"exp": "msg.sender.transfer(amount * sellPrice)"
+			}
+		]
+	},
+	"0x954e3affbb76333e4d37f89bf1cd5830cd9c61bb": {
+		"addre": "0x954e3affbb76333e4d37f89bf1cd5830cd9c61bb",
+		"slice": [
+			{
+				"name": "Harj_withdraw_6",
+				"exp": "_customerAddress.transfer(_dividends)"
+			}
+		]
+	},
+	"0xd5a4b179960e17dc1004eee21fc80a8ed5c8e259": {
+		"addre": "0xd5a4b179960e17dc1004eee21fc80a8ed5c8e259",
+		"slice": [
+			{
+				"name": "Easy_buyTokens_13",
+				"exp": "wallet.transfer(weiAmount)"
+			}
+		]
+	},
+	"0x9a2d163ab40f88c625fd475e807bbc3556566f80": {
+		"addre": "0x9a2d163ab40f88c625fd475e807bbc3556566f80",
+		"slice": []
+	},
+	"0xfd74f0ce337fc692b8c124c094c1386a14ec7901": {
+		"addre": "0xfd74f0ce337fc692b8c124c094c1386a14ec7901",
+		"slice": [
+			{
+				"name": "UserfeedsClaimWithValueTransfer_post_1",
+				"exp": "userfeed.transfer(msg.value)"
+			}
+		]
+	},
+	"0x701c244b988a513c945973defa05de933b23fe1d": {
+		"addre": "0x701c244b988a513c945973defa05de933b23fe1d",
+		"slice": [
+			{
+				"name": "OpenANXToken_proxyPayment_13",
+				"exp": "! wallet.send(msg.value)"
+			}
+		]
+	},
+	"0x5adf43dd006c6c36506e2b2dfa352e60002d22dc": {
+		"addre": "0x5adf43dd006c6c36506e2b2dfa352e60002d22dc",
+		"slice": []
+	},
+	"0x5808fb823d720e91f1564cd9c9081af7136f73db": {
+		"addre": "0x5808fb823d720e91f1564cd9c9081af7136f73db",
+		"slice": []
+	},
+	"0x28daa51dc3d80a951af9c451d174f0c7156c6876": {
+		"addre": "0x28daa51dc3d80a951af9c451d174f0c7156c6876",
+		"slice": [
+			{
+				"name": "EtherShareReward_Reward_3",
+				"exp": "to.transfer(msg.value)"
+			}
+		]
+	},
+	"0xd341d1680eeee3255b8c4c75bcce7eb57f144dae": {
+		"addre": "0xd341d1680eeee3255b8c4c75bcce7eb57f144dae",
+		"slice": [
+			{
+				"name": "HasNoEther_reclaimEther_1",
+				"exp": "assert(bool)(owner.send(this.balance))"
+			},
+			{
+				"name": "onG_reclaimEther_1",
+				"exp": "assert(bool)(owner.send(this.balance))"
+			}
+		]
+	},
+	"0xfb2f26f266fb2805a387230f2aa0a331b4d96fba": {
+		"addre": "0xfb2f26f266fb2805a387230f2aa0a331b4d96fba",
+		"slice": [
+			{
+				"name": "DadiToken_finalizeIco_23",
+				"exp": "! fundsWallet.send(this.balance)"
+			},
+			{
+				"name": "DadiToken_refund_5",
+				"exp": "! _recipient.send(value)"
+			},
+			{
+				"name": "DadiToken_withdrawFunds_1",
+				"exp": "_address.transfer(_amount)"
+			},
+			{
+				"name": "DadiToken_forwardFunds_7",
+				"exp": "account.transfer(_value)"
+			},
+			{
+				"name": "DadiToken_forwardFunds_14",
+				"exp": "account.transfer(_value)"
+			}
+		]
+	},
+	"0x33d6461a9dba4c234fc01bc4a2df59bf26720e66": {
+		"addre": "0x33d6461a9dba4c234fc01bc4a2df59bf26720e66",
+		"slice": [
+			{
+				"name": "Exchange_withdraw_6",
+				"exp": "! msg.sender.send(amount)"
+			},
+			{
+				"name": "Exchange_adminWithdraw_19",
+				"exp": "! user.send(amount)"
+			}
+		]
+	},
+	"0xeda8b016efa8b1161208cf041cd86972eee0f31e": {
+		"addre": "0xeda8b016efa8b1161208cf041cd86972eee0f31e",
+		"slice": [
+			{
+				"name": "Crowdsale_investInternal_30",
+				"exp": "require(bool)(multisigWallet.send(weiAmount))"
+			},
+			{
+				"name": "Crowdsale_investInternal_44",
+				"exp": "require(bool)(multisigWallet.send(weiAmount))"
+			},
+			{
+				"name": "Crowdsale_refund_6",
+				"exp": "require(bool)(msg.sender.send(weiValue))"
+			},
+			{
+				"name": "MintedEthCappedCrowdsale_investInternal_30",
+				"exp": "require(bool)(multisigWallet.send(weiAmount))"
+			},
+			{
+				"name": "MintedEthCappedCrowdsale_investInternal_44",
+				"exp": "require(bool)(multisigWallet.send(weiAmount))"
+			},
+			{
+				"name": "MintedEthCappedCrowdsale_refund_6",
+				"exp": "require(bool)(msg.sender.send(weiValue))"
+			}
+		]
+	},
+	"0x041fe8df8b4aaa868941eb877952f17babe57da5": {
+		"addre": "0x041fe8df8b4aaa868941eb877952f17babe57da5",
+		"slice": []
+	},
+	"0x6f6deb5db0c4994a8283a01d6cfeeb27fc3bbe9c": {
+		"addre": "0x6f6deb5db0c4994a8283a01d6cfeeb27fc3bbe9c",
+		"slice": [
+			{
+				"name": "SmartBillions_coldStore_6",
+				"exp": "msg.sender.transfer(_amount)"
+			},
+			{
+				"name": "SmartBillions_pay_3",
+				"exp": "msg.sender.transfer(_amount)"
+			},
+			{
+				"name": "SmartBillions_pay_11",
+				"exp": "msg.sender.transfer(maxpay)"
+			},
+			{
+				"name": "SmartBillions_invest_8",
+				"exp": "msg.sender.transfer(msg.value.sub(investing))"
+			}
+		]
+	},
+	"0x9b68bfae21df5a510931a262cecf63f41338f264": {
+		"addre": "0x9b68bfae21df5a510931a262cecf63f41338f264",
+		"slice": []
+	},
+	"0xd2308446536a0bad028ab8c090d62e1ea2a51f24": {
+		"addre": "0xd2308446536a0bad028ab8c090d62e1ea2a51f24",
+		"slice": [
+			{
+				"name": "Token_transfer_9",
+				"exp": "! owner.send(txnTax)"
+			},
+			{
+				"name": "Token_transferFrom_2",
+				"exp": "! owner.send(txnTax)"
+			}
+		]
+	},
+	"0xef68e7c694f40c8202821edf525de3782458639f": {
+		"addre": "0xef68e7c694f40c8202821edf525de3782458639f",
+		"slice": [
+			{
+				"name": "LoopringToken_issueToken_7",
+				"exp": "! target.send(msg.value)"
+			}
+		]
+	},
+	"0x4b317864a05c91225ab8f401ec7be0aeb87e9c12": {
+		"addre": "0x4b317864a05c91225ab8f401ec7be0aeb87e9c12",
+		"slice": [
+			{
+				"name": "TokenBBBasic_contBuy_4",
+				"exp": "addr.transfer(amount / sellScale)"
+			},
+			{
+				"name": "TokenBBBasic_sellToAddress_2",
+				"exp": "to.transfer(amount / sellScale)"
+			},
+			{
+				"name": "TokenBBBasic_sell_3",
+				"exp": "msg.sender.transfer(amount / sellScale)"
+			}
+		]
+	},
+	"0x0651842ee1f973367138cd512709d81bf8a62217": {
+		"addre": "0x0651842ee1f973367138cd512709d81bf8a62217",
+		"slice": []
+	},
+	"0xf7920b0768ecb20a123fac32311d07d193381d6f": {
+		"addre": "0xf7920b0768ecb20a123fac32311d07d193381d6f",
+		"slice": []
+	},
+	"0x358d12436080a01a16f711014610f8a4c2c2d233": {
+		"addre": "0x358d12436080a01a16f711014610f8a4c2c2d233",
+		"slice": []
+	},
+	"0x91ca47b9ec3187c77f324281a1851f4b991103f1": {
+		"addre": "0x91ca47b9ec3187c77f324281a1851f4b991103f1",
+		"slice": []
+	},
+	"0x54b0de285c15d27b0daa687bcbf40cea68b2807f": {
+		"addre": "0x54b0de285c15d27b0daa687bcbf40cea68b2807f",
+		"slice": [
+			{
+				"name": "Vault_withdrawTo_2",
+				"exp": "user.transfer(amount)"
+			}
+		]
+	},
+	"0x7d8b9f24320dab5369144eb46927667f4a58dc49": {
+		"addre": "0x7d8b9f24320dab5369144eb46927667f4a58dc49",
+		"slice": []
+	},
+	"0xac709fcb44a43c35f0da4e3163b117a17f3770f5": {
+		"addre": "0xac709fcb44a43c35f0da4e3163b117a17f3770f5",
+		"slice": [
+			{
+				"name": "ARCToken_buyRecipient_8",
+				"exp": "! multisig.send(msg.value)"
+			}
+		]
+	},
+	"0x1f0480a66883de97d2b054929252aae8f664c15c": {
+		"addre": "0x1f0480a66883de97d2b054929252aae8f664c15c",
+		"slice": []
+	},
+	"0x17fd666fa0784885fa1afec8ac624d9b7e72b752": {
+		"addre": "0x17fd666fa0784885fa1afec8ac624d9b7e72b752",
+		"slice": []
+	},
+	"0xfb7da9863e030495db8b4d067d665fc8433fff85": {
+		"addre": "0xfb7da9863e030495db8b4d067d665fc8433fff85",
+		"slice": [
+			{
+				"name": "PccToken_withdraw_2",
+				"exp": "_toAddress.transfer(amount)"
+			}
+		]
+	},
+	"0x69fbf8707a3f6b30b438d694fe333e27c287bffc": {
+		"addre": "0x69fbf8707a3f6b30b438d694fe333e27c287bffc",
+		"slice": []
+	},
+	"0x2f23228b905ceb4734eb42d9b42805296667c93b": {
+		"addre": "0x2f23228b905ceb4734eb42d9b42805296667c93b",
+		"slice": [
+			{
+				"name": "Coinchangex_withdraw_3",
+				"exp": "msg.sender.transfer(amount)"
+			}
+		]
+	},
+	"0x6531f133e6deebe7f2dce5a0441aa7ef330b4e53": {
+		"addre": "0x6531f133e6deebe7f2dce5a0441aa7ef330b4e53",
+		"slice": []
+	},
+	"0x4cc29dd2b01a3e0ed005c6e2deb5b3666e4c240c": {
+		"addre": "0x4cc29dd2b01a3e0ed005c6e2deb5b3666e4c240c",
+		"slice": []
+	},
+	"0x793ebbe21607e4f04788f89c7a9b97320773ec59": {
+		"addre": "0x793ebbe21607e4f04788f89c7a9b97320773ec59",
+		"slice": []
+	},
+	"0x1d9e20e581a5468644fe74ccb6a46278ef377f9e": {
+		"addre": "0x1d9e20e581a5468644fe74ccb6a46278ef377f9e",
+		"slice": [
+			{
+				"name": "CDRTToken_claimProfitEquivalent_9",
+				"exp": "msg.sender.transfer(toPay)"
+			},
+			{
+				"name": "CDRTToken_execBuyBack_7",
+				"exp": "msg.sender.transfer(toPay)"
+			}
+		]
+	},
+	"0x107c4504cd79c5d2696ea0030a8dd4e92601b82e": {
+		"addre": "0x107c4504cd79c5d2696ea0030a8dd4e92601b82e",
+		"slice": []
+	},
+	"0x540449e4d172cd9491c76320440cd74933d5691a": {
+		"addre": "0x540449e4d172cd9491c76320440cd74933d5691a",
+		"slice": [
+			{
+				"name": "DecentBetToken_finalizeCrowdfunding_17",
+				"exp": "! decentBetMultisig.send(this.balance)"
+			}
+		]
+	},
+	"0xa7d81c86f9934b56dd00fa826c319330d628d31f": {
+		"addre": "0xa7d81c86f9934b56dd00fa826c319330d628d31f",
+		"slice": []
+	},
+	"0x5882d49d3511e09096cbbab7e19fbfb82f65f28d": {
+		"addre": "0x5882d49d3511e09096cbbab7e19fbfb82f65f28d",
+		"slice": [
+			{
+				"name": "BioToken_withdrawEthereum_9",
+				"exp": "! multisigVault.send(_amount)"
+			}
+		]
+	},
+	"0x7654915a1b82d6d2d0afc37c52af556ea8983c7e": {
+		"addre": "0x7654915a1b82d6d2d0afc37c52af556ea8983c7e",
+		"slice": [
+			{
+				"name": "Crowdsale_investInternal_19",
+				"exp": "! multisigWallet.send(weiAmount)"
+			},
+			{
+				"name": "Crowdsale_refund_6",
+				"exp": "! msg.sender.send(weiValue)"
+			},
+			{
+				"name": "MintedEthCappedCrowdsale_investInternal_19",
+				"exp": "! multisigWallet.send(weiAmount)"
+			},
+			{
+				"name": "MintedEthCappedCrowdsale_refund_6",
+				"exp": "! msg.sender.send(weiValue)"
+			}
+		]
+	},
+	"0x48bd67ad140c9d10f94099c1cef7ab17d90ac335": {
+		"addre": "0x48bd67ad140c9d10f94099c1cef7ab17d90ac335",
+		"slice": []
+	},
+	"0x56ba2ee7890461f463f7be02aac3099f6d5811a8": {
+		"addre": "0x56ba2ee7890461f463f7be02aac3099f6d5811a8",
+		"slice": [
+			{
+				"name": "CATToken_refund_10",
+				"exp": "! msg.sender.send(etherAmount)"
+			}
+		]
+	},
+	"0xf6cfe53d6febaeea051f400ff5fc14f0cbbdaca1": {
+		"addre": "0xf6cfe53d6febaeea051f400ff5fc14f0cbbdaca1",
+		"slice": [
+			{
+				"name": "DigipulseToken_buyDigipulseOriginalBackersRound_27",
+				"exp": "assert(bool)(msg.sender.send(excess))"
+			},
+			{
+				"name": "DigipulseToken_buyDigipulseTokens_40",
+				"exp": "assert(bool)(msg.sender.send(excess))"
+			}
+		]
+	},
+	"0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48": {
+		"addre": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+		"slice": []
+	},
+	"0xcf5d889e2336d0f35f6121718f6c25e0650d4b25": {
+		"addre": "0xcf5d889e2336d0f35f6121718f6c25e0650d4b25",
+		"slice": []
+	},
+	"0x80fb784b7ed66730e8b1dbd9820afd29931aab03": {
+		"addre": "0x80fb784b7ed66730e8b1dbd9820afd29931aab03",
+		"slice": [
+			{
+				"name": "EthLendToken_withdrawEther_2",
+				"exp": "require(bool)(escrow.send(this.balance))"
+			}
+		]
+	},
+	"0xf24d3dfffcaf9f9a5dda9c57eeeb1ac0bba49c86": {
+		"addre": "0xf24d3dfffcaf9f9a5dda9c57eeeb1ac0bba49c86",
+		"slice": []
+	},
+	"0x10ec03b714a2660581040c1a0329d88e381ca603": {
+		"addre": "0x10ec03b714a2660581040c1a0329d88e381ca603",
+		"slice": [
+			{
+				"name": "EthPledge_cancelCampaign_7",
+				"exp": "campaign[campaignID].charity.transfer(amountToSendToCharity)"
+			},
+			{
+				"name": "EthPledge_cancelCampaign_8",
+				"exp": "campaign[campaignID].benefactor.transfer(amountShort)"
+			},
+			{
+				"name": "EthPledge_contributeToCampaign_15",
+				"exp": "campaign[campaignID].charity.transfer(campaign[campaignID].amountRaised + campaign[campaignID].amountPledged)"
+			}
+		]
+	},
+	"0x56a7d37b5252b057aebce6d65d2f87e49f1e1dcd": {
+		"addre": "0x56a7d37b5252b057aebce6d65d2f87e49f1e1dcd",
+		"slice": [
+			{
+				"name": "EnnaMaEppadi_withdraw_5",
+				"exp": "msg.sender.transfer(balance)"
+			},
+			{
+				"name": "EnnaMaEppadi_withdrawOld_5",
+				"exp": "to.transfer(balance)"
+			}
+		]
+	},
+	"0x23cb17d7d079518dbff4febb6efcc0de58d8c984": {
+		"addre": "0x23cb17d7d079518dbff4febb6efcc0de58d8c984",
+		"slice": [
+			{
+				"name": "TravelCoinToken_sell_6",
+				"exp": "! msg.sender.send(amount * sellPrice)"
+			}
+		]
+	},
+	"0xd780ae2bf04cd96e577d3d014762f831d97129d0": {
+		"addre": "0xd780ae2bf04cd96e577d3d014762f831d97129d0",
+		"slice": [
+			{
+				"name": "EVNToken_refuseKyc_12",
+				"exp": "_user.transfer(ethVal)"
+			},
+			{
+				"name": "EVNToken_refund_15",
+				"exp": "msg.sender.transfer(ethVal)"
+			},
+			{
+				"name": "EVNToken_retrieveEth_3",
+				"exp": "_safe.transfer(_value)"
+			},
+			{
+				"name": "EVNToken_finalize_5",
+				"exp": "_safe.transfer(allReceivedEth)"
+			}
+		]
+	},
+	"0xbea8bcb843ccd1d17ff4b4a4b0850ad5de3607d3": {
+		"addre": "0xbea8bcb843ccd1d17ff4b4a4b0850ad5de3607d3",
+		"slice": [
+			{
+				"name": "Ethconomy_cancelOrder_6",
+				"exp": "msg.sender.transfer(order.price)"
+			},
+			{
+				"name": "Ethconomy_fillOrder_4",
+				"exp": "msg.sender.transfer(order.price)"
+			}
+		]
+	},
+	"0xe9827370ae7c0aa97e87b6dbe56e0bd735a552f1": {
+		"addre": "0xe9827370ae7c0aa97e87b6dbe56e0bd735a552f1",
+		"slice": [
+			{
+				"name": "WillAlwaysLove_withdraw_3",
+				"exp": "msg.sender.transfer(amount)"
+			}
+		]
+	},
+	"0x744d70fdbe2ba4cf95131626614a1763df805b9e": {
+		"addre": "0x744d70fdbe2ba4cf95131626614a1763df805b9e",
+		"slice": [
+			{
+				"name": "StatusContribution_doBuy_6",
+				"exp": "destEthDevs.transfer(_toFund)"
+			},
+			{
+				"name": "StatusContribution_doBuy_12",
+				"exp": "_th.transfer(toReturn)"
+			},
+			{
+				"name": "StatusContribution_doBuy_13",
+				"exp": "msg.sender.transfer(toReturn)"
+			}
+		]
+	},
+	"0xce96c5c02dd87a9ef4e7353383d121bb7edf1333": {
+		"addre": "0xce96c5c02dd87a9ef4e7353383d121bb7edf1333",
+		"slice": []
+	},
+	"0xafe60511341a37488de25bef351952562e31fcc1": {
+		"addre": "0xafe60511341a37488de25bef351952562e31fcc1",
+		"slice": []
+	},
+	"0xa667f7c9f8d9e7f54814f312ae42d08a31154889": {
+		"addre": "0xa667f7c9f8d9e7f54814f312ae42d08a31154889",
+		"slice": [
+			{
+				"name": "ListingsERC20_withdrawBalance_1",
+				"exp": "assert(bool)(owner.send(this.balance))"
+			},
+			{
+				"name": "ListingsERC20_buyListing_21",
+				"exp": "seller.transfer(sale - (sale.mul(ownerPercentage).div(10000)))"
+			},
+			{
+				"name": "ListingsERC20_buyListing_22",
+				"exp": "seller.transfer(sale)"
+			}
+		]
+	},
+	"0x2f5e044ad4adac34c8d8df738fac7743eda1409c": {
+		"addre": "0x2f5e044ad4adac34c8d8df738fac7743eda1409c",
+		"slice": [
+			{
+				"name": "AgoraToken_refill_4",
+				"exp": "msg.sender.transfer(share)"
+			}
+		]
+	},
+	"0x8606704880234178125b2d44cbbe190ccdbde015": {
+		"addre": "0x8606704880234178125b2d44cbbe190ccdbde015",
+		"slice": []
+	},
+	"0x5c976e71bb27538bddb0ed399be1722c6745bcb6": {
+		"addre": "0x5c976e71bb27538bddb0ed399be1722c6745bcb6",
+		"slice": [
+			{
+				"name": "ProofOfKennyCoin_withdraw_6",
+				"exp": "_customerAddress.transfer(_dividends)"
+			}
+		]
+	},
+	"0xa94c128a138504e1f81d727cc21bcb9ae6581015": {
+		"addre": "0xa94c128a138504e1f81d727cc21bcb9ae6581015",
+		"slice": []
+	},
+	"0x94eb295ec89d759bf803628d2c58de09d8f67950": {
+		"addre": "0x94eb295ec89d759bf803628d2c58de09d8f67950",
+		"slice": [
+			{
+				"name": "ERC721BuyListing_withdrawBalance_1",
+				"exp": "assert(bool)(owner.send(this.balance))"
+			},
+			{
+				"name": "ERC721BuyListing_buyListing_8",
+				"exp": "seller.transfer(currentPrice - (currentPrice * ownerPercentage / 10000))"
+			}
+		]
+	},
+	"0x90b12b97a52451f38090f49bce8bc2962dde4902": {
+		"addre": "0x90b12b97a52451f38090f49bce8bc2962dde4902",
+		"slice": [
+			{
+				"name": "TokensWarContract__payout_3",
+				"exp": "_to.transfer(this.balance)"
+			},
+			{
+				"name": "TokensWarContract_purchase_23",
+				"exp": "oldOwner.transfer(payment)"
+			},
+			{
+				"name": "TokensWarContract_purchase_27",
+				"exp": "goldenOwner.transfer(goldenPayment)"
+			},
+			{
+				"name": "TokensWarContract_purchase_31",
+				"exp": "msg.sender.transfer(purchaseExcess)"
+			}
+		]
+	},
+	"0x184c8624d79f41eff9b3a702737ee86eeef80e67": {
+		"addre": "0x184c8624d79f41eff9b3a702737ee86eeef80e67",
+		"slice": [
+			{
+				"name": "EthMonsters_withdrawFees_4",
+				"exp": "msg.sender.transfer(amount)"
+			},
+			{
+				"name": "EthMonsters_withdraw_4",
+				"exp": "msg.sender.transfer(amount)"
+			}
+		]
+	},
+	"0x353d92db08564500d812ddfd23a668d2f405ed85": {
+		"addre": "0x353d92db08564500d812ddfd23a668d2f405ed85",
+		"slice": [
+			{
+				"name": "R1Exchange_withdraw_12",
+				"exp": "require(bool)(msg.sender.send(amount))"
+			},
+			{
+				"name": "R1Exchange_withdrawNoLimit_4",
+				"exp": "require(bool)(msg.sender.send(amount))"
+			},
+			{
+				"name": "R1Exchange_adminWithdraw_17",
+				"exp": "require(bool)(user.send(amount))"
+			},
+			{
+				"name": "R1Exchange_refund_10",
+				"exp": "require(bool)(user.send(amount))"
+			}
+		]
+	},
+	"0xffe02ee4c69edf1b340fcad64fbd6b37a7b9e265": {
+		"addre": "0xffe02ee4c69edf1b340fcad64fbd6b37a7b9e265",
+		"slice": []
+	},
+	"0x24a77c1f17c547105e14813e517be06b0040aa76": {
+		"addre": "0x24a77c1f17c547105e14813e517be06b0040aa76",
+		"slice": [
+			{
+				"name": "LiveStarsTokenPresale_withdraw_1",
+				"exp": "require(bool)(beneficiary.send(currentBalance))"
+			},
+			{
+				"name": "LiveStarsTokenPresale_finalWithdraw_2",
+				"exp": "require(bool)(beneficiary.send(currentBalance))"
+			}
+		]
+	},
+	"0xcfb98637bcae43c13323eaa1731ced2b716962fd": {
+		"addre": "0xcfb98637bcae43c13323eaa1731ced2b716962fd",
+		"slice": [
+			{
+				"name": "NEToken_refund_11",
+				"exp": "msg.sender.transfer(ethVal)"
+			}
+		]
+	},
+	"0xec3d7968b0d3fff0a074668e08eb56c5e6d38b21": {
+		"addre": "0xec3d7968b0d3fff0a074668e08eb56c5e6d38b21",
+		"slice": [
+			{
+				"name": "DAppDEX_withdraw_3",
+				"exp": "msg.sender.transfer(amount)"
+			}
+		]
+	},
+	"0x965f109d31ccb77005858defae0ebaf7b4381652": {
+		"addre": "0x965f109d31ccb77005858defae0ebaf7b4381652",
+		"slice": []
+	},
+	"0x986ee2b944c42d017f52af21c4c69b84dbea35d8": {
+		"addre": "0x986ee2b944c42d017f52af21c4c69b84dbea35d8",
+		"slice": []
+	},
+	"0x461733c17b0755ca5649b6db08b3e213fcf22546": {
+		"addre": "0x461733c17b0755ca5649b6db08b3e213fcf22546",
+		"slice": []
+	},
+	"0x1776e1f26f98b1a5df9cd347953a26dd3cb46671": {
+		"addre": "0x1776e1f26f98b1a5df9cd347953a26dd3cb46671",
+		"slice": [
+			{
+				"name": "NumeraireBackend_claimTokens_3",
+				"exp": "msg.sender.transfer(this.balance)"
+			}
+		]
+	},
+	"0x2af47a65da8cd66729b4209c22017d6a5c2d2400": {
+		"addre": "0x2af47a65da8cd66729b4209c22017d6a5c2d2400",
+		"slice": [
+			{
+				"name": "StandardBounties_acceptFulfillment_6",
+				"exp": "fulfillments[_bountyId][_fulfillmentId].fulfiller.transfer(bounties[_bountyId].fulfillmentAmount)"
+			},
+			{
+				"name": "StandardBounties_killBounty_7",
+				"exp": "bounties[_bountyId].issuer.transfer(oldBalance)"
+			}
+		]
+	},
+	"0xde1e0ae6101b46520cf66fdc0b1059c5cc3d106c": {
+		"addre": "0xde1e0ae6101b46520cf66fdc0b1059c5cc3d106c",
+		"slice": []
+	},
+	"0xe25bcec5d3801ce3a794079bf94adf1b8ccd802d": {
+		"addre": "0xe25bcec5d3801ce3a794079bf94adf1b8ccd802d",
+		"slice": [
+			{
+				"name": "MANToken_mintMAN_26",
+				"exp": "require(bool)(msg.sender.send(msg.value - etherValue))"
+			},
+			{
+				"name": "MANToken_mintMAN_33",
+				"exp": "require(bool)(ethFundAddress.send(etherValue))"
+			}
+		]
+	},
+	"0x1460a58096d80a50a2f1f956dda497611fa4f165": {
+		"addre": "0x1460a58096d80a50a2f1f956dda497611fa4f165",
+		"slice": []
+	},
+	"0x6ff73ee2255c30e072d35598f9b06795122d4e64": {
+		"addre": "0x6ff73ee2255c30e072d35598f9b06795122d4e64",
+		"slice": []
+	},
+	"0xf238f55ede5120915b36715b0fffe20ff57f8134": {
+		"addre": "0xf238f55ede5120915b36715b0fffe20ff57f8134",
+		"slice": [
+			{
+				"name": "ZodiacERC20_buy_8",
+				"exp": "destinationAddr.transfer(address(this).balance)"
+			},
+			{
+				"name": "ZodiacERC20_sell_11",
+				"exp": "destinationAddr.transfer(volumeEthEffective)"
+			},
+			{
+				"name": "ZodiacERC20_fillOrder_8",
+				"exp": "address(trader).transfer(volumeEth)"
+			}
+		]
+	},
+	"0x1829aa045e21e0d59580024a951db48096e01782": {
+		"addre": "0x1829aa045e21e0d59580024a951db48096e01782",
+		"slice": []
+	},
+	"0x9720b742c04e272b5fd5be56f4b4881aa3597b82": {
+		"addre": "0x9720b742c04e272b5fd5be56f4b4881aa3597b82",
+		"slice": [
+			{
+				"name": "CryptoChamps_purchase_8",
+				"exp": "msg.sender.transfer(msg.value - price)"
+			},
+			{
+				"name": "CryptoChamps__shareDiscountPrice_2",
+				"exp": "_target.transfer(_price - commision)"
+			},
+			{
+				"name": "CryptoChamps__shareProfit_3",
+				"exp": "_target.transfer(_price - commision)"
+			}
+		]
+	},
+	"0xea61319f55b6543962fe1d7bd990ef74849fc54f": {
+		"addre": "0xea61319f55b6543962fe1d7bd990ef74849fc54f",
+		"slice": [
+			{
+				"name": "ProofOfCraigGrant_withdraw_6",
+				"exp": "_customerAddress.transfer(_dividends)"
+			}
+		]
+	},
+	"0xd4c435f5b09f855c3317c8524cb1f586e42795fa": {
+		"addre": "0xd4c435f5b09f855c3317c8524cb1f586e42795fa",
+		"slice": []
+	},
+	"0x4ccc3759eb48faf1c6cfadad2619e7038db6b212": {
+		"addre": "0x4ccc3759eb48faf1c6cfadad2619e7038db6b212",
+		"slice": []
+	},
+	"0x163733bcc28dbf26b41a8cfa83e369b5b3af741b": {
+		"addre": "0x163733bcc28dbf26b41a8cfa83e369b5b3af741b",
+		"slice": []
+	},
+	"0xb05faba79ac993dc1ff7e3a0a764c3d0478cdc1f": {
+		"addre": "0xb05faba79ac993dc1ff7e3a0a764c3d0478cdc1f",
+		"slice": []
+	},
+	"0x05af72594440cf75c0fdcbbd9993fc26f62c7afc": {
+		"addre": "0x05af72594440cf75c0fdcbbd9993fc26f62c7afc",
+		"slice": [
+			{
+				"name": "TwelveHourAuction_buy_20",
+				"exp": "msg.sender.transfer(repay)"
+			},
+			{
+				"name": "TwelveHourAuction_withdraw_18",
+				"exp": "msg.sender.transfer(balance)"
+			},
+			{
+				"name": "TwelveHourAuction_withdrawReferral_6",
+				"exp": "msg.sender.transfer(balance)"
+			},
+			{
+				"name": "TwelveHourAuction_sendToTeamMaketing_6",
+				"exp": "teamMarketing[idx].transfer(profit)"
+			}
+		]
+	},
+	"0x788ca5935759c06ea223d0e2cf5ea5729d669c18": {
+		"addre": "0x788ca5935759c06ea223d0e2cf5ea5729d669c18",
+		"slice": []
+	},
+	"0x83cee9e086a77e492ee0bb93c2b0437ad6fdeccc": {
+		"addre": "0x83cee9e086a77e492ee0bb93c2b0437ad6fdeccc",
+		"slice": [
+			{
+				"name": "Goldmint_finishICO_16",
+				"exp": "ms.transfer(sendThisAmount)"
+			},
+			{
+				"name": "Goldmint_finishICO_21",
+				"exp": "lastMs.transfer(this.balance)"
+			},
+			{
+				"name": "Goldmint_getMyRefund_6",
+				"exp": "sender.transfer(ethValue)"
+			}
+		]
+	},
+	"0xed314bf44013612e8c00abd3cb6eade61cc8c72e": {
+		"addre": "0xed314bf44013612e8c00abd3cb6eade61cc8c72e",
+		"slice": []
+	},
+	"0xc8cc5c8db49d3a556bf64a5c4b3ae9ff862ac6af": {
+		"addre": "0xc8cc5c8db49d3a556bf64a5c4b3ae9ff862ac6af",
+		"slice": [
+			{
+				"name": "FunCoin_withdraw_6",
+				"exp": "_customerAddress.transfer(_dividends)"
+			}
+		]
+	},
+	"0x63e634330a20150dbb61b15648bc73855d6ccf07": {
+		"addre": "0x63e634330a20150dbb61b15648bc73855d6ccf07",
+		"slice": [
+			{
+				"name": "BlocklancerToken_finalize_12",
+				"exp": "! master.send(this.balance)"
+			},
+			{
+				"name": "BlocklancerToken_refund_13",
+				"exp": "! msg.sender.send(ethValue)"
+			}
+		]
+	},
+	"0x90528aeb3a2b736b780fd1b6c478bb7e1d643170": {
+		"addre": "0x90528aeb3a2b736b780fd1b6c478bb7e1d643170",
+		"slice": [
+			{
+				"name": "XPAToken_finalize_3",
+				"exp": "assert(bool)(ethFundDeposit.send(this.balance))"
+			}
+		]
+	},
+	"0xf97187f566ec6374cb08470cce593ff0dd36d8a9": {
+		"addre": "0xf97187f566ec6374cb08470cce593ff0dd36d8a9",
+		"slice": [
+			{
+				"name": "BMBYToken_purchase_17",
+				"exp": "holder.transfer(currentOwnerFee)"
+			},
+			{
+				"name": "BMBYToken_purchase_20",
+				"exp": "creator.transfer(creatorFee)"
+			},
+			{
+				"name": "BMBYToken_payout_4",
+				"exp": "destination.transfer(amount)"
+			}
+		]
+	},
+	"0x4470bb87d77b963a013db939be332f927f2b992e": {
+		"addre": "0x4470bb87d77b963a013db939be332f927f2b992e",
+		"slice": [
+			{
+				"name": "ADXToken_processPurchase_5",
+				"exp": "! multisigAddress.send(msg.value)"
+			},
+			{
+				"name": "ADXToken_drain_1",
+				"exp": "! ownerAddress.send(this.balance)"
+			}
+		]
+	},
+	"0x08fd34559f2ed8585d3810b4d96ab8a05c9f97c5": {
+		"addre": "0x08fd34559f2ed8585d3810b4d96ab8a05c9f97c5",
+		"slice": [
+			{
+				"name": "PullPayment_withdrawPayments_10",
+				"exp": "! payee.send(payment)"
+			},
+			{
+				"name": "ClusterToken_withdrawPayments_10",
+				"exp": "! payee.send(payment)"
+			},
+			{
+				"name": "ClusterToken_Drain_2",
+				"exp": "! owner.send(this.balance)"
+			}
+		]
+	},
+	"0xfa2632a88bd0c11535a38f98a98db8251ccbaa9e": {
+		"addre": "0xfa2632a88bd0c11535a38f98a98db8251ccbaa9e",
+		"slice": []
+	},
+	"0x568ad119417a50529ed0d296a9f1389a6525b49a": {
+		"addre": "0x568ad119417a50529ed0d296a9f1389a6525b49a",
+		"slice": [
+			{
+				"name": "PixelOperationsContract_buyOwnedPixels_4",
+				"exp": "blockOwner.transfer(msg.value)"
+			}
+		]
+	},
+	"0xefcec6d87e3ce625c90865a49f2b7482963d73fe": {
+		"addre": "0xefcec6d87e3ce625c90865a49f2b7482963d73fe",
+		"slice": []
+	},
+	"0xae4f56f072c34c0a65b3ae3e4db797d831439d93": {
+		"addre": "0xae4f56f072c34c0a65b3ae3e4db797d831439d93",
+		"slice": [
+			{
+				"name": "GimliCrowdsale_fallback_6",
+				"exp": "require(bool)(MULTISIG_WALLET_ADDRESS.send(msg.value))"
+			},
+			{
+				"name": "Gimli_fallback_6",
+				"exp": "require(bool)(MULTISIG_WALLET_ADDRESS.send(msg.value))"
+			}
+		]
+	},
+	"0xd8d48e52f39ab2d169c8b562c53589e6c71ac4d3": {
+		"addre": "0xd8d48e52f39ab2d169c8b562c53589e6c71ac4d3",
+		"slice": [
+			{
+				"name": "ETHERCExchange_withdraw_3",
+				"exp": "msg.sender.transfer(_amount)"
+			}
+		]
+	},
+	"0x8e870d67f660d95d5be530380d0ec0bd388289e1": {
+		"addre": "0x8e870d67f660d95d5be530380d0ec0bd388289e1",
+		"slice": []
+	},
+	"0x8b9c35c79af5319c70dd9a3e3850f368822ed64e": {
+		"addre": "0x8b9c35c79af5319c70dd9a3e3850f368822ed64e",
+		"slice": []
+	},
+	"0x9ed3b1520f60d1075c2b9a65ec8a253f9ceb456f": {
+		"addre": "0x9ed3b1520f60d1075c2b9a65ec8a253f9ceb456f",
+		"slice": []
+	},
+	"0x957c30ab0426e0c93cd8241e2c60392d08c6ac8e": {
+		"addre": "0x957c30ab0426e0c93cd8241e2c60392d08c6ac8e",
+		"slice": [
+			{
+				"name": "ModumToken_claimBonus_7",
+				"exp": "msg.sender.transfer(sendValue)"
+			}
+		]
+	},
+	"0x69beab403438253f13b6e92db91f7fb849258263": {
+		"addre": "0x69beab403438253f13b6e92db91f7fb849258263",
+		"slice": [
+			{
+				"name": "HasNoEther_reclaimEther_1",
+				"exp": "assert(bool)(owner.send(this.balance))"
+			},
+			{
+				"name": "NeuroToken_reclaimEther_1",
+				"exp": "assert(bool)(owner.send(this.balance))"
+			}
+		]
+	},
+	"0x65302d3a313cf7b0bc7badbf0b9b07a4f176ed10": {
+		"addre": "0x65302d3a313cf7b0bc7badbf0b9b07a4f176ed10",
+		"slice": [
+			{
+				"name": "CrystalReignShard_fallback_10",
+				"exp": "msg.sender.transfer(msg.value)"
+			},
+			{
+				"name": "CrystalReignShard_tileDrop_7",
+				"exp": "winners[winList].transfer(bonusETH.div(64))"
+			}
+		]
+	},
+	"0x91126cfa7db2983527b0b749cc8a61fdeffedc28": {
+		"addre": "0x91126cfa7db2983527b0b749cc8a61fdeffedc28",
+		"slice": []
+	},
+	"0xc79d440551a03f84f863b1f259f135794c8a7190": {
+		"addre": "0xc79d440551a03f84f863b1f259f135794c8a7190",
+		"slice": [
+			{
+				"name": "Crowdsale_investInternal_19",
+				"exp": "! multisigWallet.send(weiAmount)"
+			},
+			{
+				"name": "Crowdsale_refund_6",
+				"exp": "! msg.sender.send(weiValue)"
+			},
+			{
+				"name": "MintedEthCappedCrowdsale_investInternal_19",
+				"exp": "! multisigWallet.send(weiAmount)"
+			},
+			{
+				"name": "MintedEthCappedCrowdsale_refund_6",
+				"exp": "! msg.sender.send(weiValue)"
+			}
+		]
+	},
+	"0xaf6a5b0998ff41355f3b4fe1ab96d89bd2c487d3": {
+		"addre": "0xaf6a5b0998ff41355f3b4fe1ab96d89bd2c487d3",
+		"slice": []
+	},
+	"0xc7c9b856d33651cc2bcd9e0099efa85f59f78302": {
+		"addre": "0xc7c9b856d33651cc2bcd9e0099efa85f59f78302",
+		"slice": [
+			{
+				"name": "R1Exchange_withdraw_12",
+				"exp": "require(bool)(msg.sender.send(amount))"
+			},
+			{
+				"name": "R1Exchange_withdrawNoLimit_4",
+				"exp": "require(bool)(msg.sender.send(amount))"
+			},
+			{
+				"name": "R1Exchange_adminWithdraw_15",
+				"exp": "require(bool)(param.user.send(param.amount))"
+			},
+			{
+				"name": "R1Exchange_refund_15",
+				"exp": "require(bool)(user.send(amount))"
+			}
+		]
+	},
+	"0x2bdc0d42996017fce214b21607a515da41a9e0c5": {
+		"addre": "0x2bdc0d42996017fce214b21607a515da41a9e0c5",
+		"slice": [
+			{
+				"name": "PullPayment_withdrawPayments_10",
+				"exp": "! payee.send(payment)"
+			},
+			{
+				"name": "Crowdsale_withdrawPayments_10",
+				"exp": "! payee.send(payment)"
+			},
+			{
+				"name": "Crowdsale_finalize_9",
+				"exp": "! multisigEther.send(this.balance)"
+			},
+			{
+				"name": "Crowdsale_drain_1",
+				"exp": "! owner.send(this.balance)"
+			}
+		]
+	},
+	"0x0a97094c19295e320d5121d72139a150021a2702": {
+		"addre": "0x0a97094c19295e320d5121d72139a150021a2702",
+		"slice": [
+			{
+				"name": "CryptoMinerToken_withdraw_6",
+				"exp": "_customerAddress.transfer(_dividends)"
+			}
+		]
+	},
+	"0x8effd494eb698cc399af6231fccd39e08fd20b15": {
+		"addre": "0x8effd494eb698cc399af6231fccd39e08fd20b15",
+		"slice": []
+	},
+	"0xc5f5d88c6d39828cdb5e1150a13125e98b26b65e": {
+		"addre": "0xc5f5d88c6d39828cdb5e1150a13125e98b26b65e",
+		"slice": []
+	},
+	"0x51907923c3280c24b6b69b0d217ea34cabde684d": {
+		"addre": "0x51907923c3280c24b6b69b0d217ea34cabde684d",
+		"slice": []
+	},
+	"0x9b2b16f9a9a65425ee9a117aa6ba9f0603d973f7": {
+		"addre": "0x9b2b16f9a9a65425ee9a117aa6ba9f0603d973f7",
+		"slice": [
+			{
+				"name": "ProofOfStableCoin_withdraw_17",
+				"exp": "msg.sender.transfer(_amountAfterTax)"
+			},
+			{
+				"name": "ProofOfStableCoin_claim_2",
+				"exp": "msg.sender.transfer(_dividends)"
+			}
+		]
+	},
+	"0xa29939f74c3e527c83011fab972b09ac68e71a47": {
+		"addre": "0xa29939f74c3e527c83011fab972b09ac68e71a47",
+		"slice": [
+			{
+				"name": "RadiCards_gift_8",
+				"exp": "benefactors[_benefactorIndex].ethAddress.transfer(msg.value)"
+			}
+		]
+	},
+	"0xb8327f32127afe37a544c52b628653e222a93bad": {
+		"addre": "0xb8327f32127afe37a544c52b628653e222a93bad",
+		"slice": []
+	},
+	"0x0d8775f648430679a709e98d2b0cb6250d2887ef": {
+		"addre": "0x0d8775f648430679a709e98d2b0cb6250d2887ef",
+		"slice": [
+			{
+				"name": "BAToken_finalize_14",
+				"exp": "! ethFundDeposit.send(this.balance)"
+			},
+			{
+				"name": "BAToken_refund_21",
+				"exp": "! msg.sender.send(ethVal)"
+			}
+		]
+	},
+	"0x39fbd1140cd1fc298f00c3ea64b3591de94c67e7": {
+		"addre": "0x39fbd1140cd1fc298f00c3ea64b3591de94c67e7",
+		"slice": [
+			{
+				"name": "BitEyeExchange_withdraw_9",
+				"exp": "require(bool)(msg.sender.send(amount))"
+			}
+		]
+	},
+	"0xd2d6158683aee4cc838067727209a0aaf4359de3": {
+		"addre": "0xd2d6158683aee4cc838067727209a0aaf4359de3",
+		"slice": [
+			{
+				"name": "Bounty0xCrowdsale_withdraw_1",
+				"exp": "msg.sender.transfer(amount)"
+			},
+			{
+				"name": "Bounty0xCrowdsale_fallback_23",
+				"exp": "msg.sender.transfer(refundWei)"
+			}
+		]
+	},
+	"0x8a9771775ed9a5e3440f89ad790764c188e16191": {
+		"addre": "0x8a9771775ed9a5e3440f89ad790764c188e16191",
+		"slice": [
+			{
+				"name": "Market__buyFromMarket_16",
+				"exp": "origin_owner.transfer(current_token_price - current_fund)"
+			},
+			{
+				"name": "Market__awardForRecommender_4",
+				"exp": "recommender.transfer(agency_fee)"
+			},
+			{
+				"name": "Market__refund_2",
+				"exp": "msg.sender.transfer(refund_amount)"
+			},
+			{
+				"name": "Market__gambling_5",
+				"exp": "msg.sender.transfer(hit_funds)"
+			}
+		]
+	},
+	"0x4355fc160f74328f9b383df2ec589bb3dfd82ba0": {
+		"addre": "0x4355fc160f74328f9b383df2ec589bb3dfd82ba0",
+		"slice": [
+			{
+				"name": "OpusToken_buyRecipient_25",
+				"exp": "! multisig.send(msg.value)"
+			}
+		]
+	},
+	"0xaaaf91d9b90df800df4f55c205fd6989c977e73a": {
+		"addre": "0xaaaf91d9b90df800df4f55c205fd6989c977e73a",
+		"slice": []
+	}
+}

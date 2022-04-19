@@ -1,0 +1,2950 @@
+{
+	"0xc352add7ad8cac8baa839d8c88e7e9d7df9a219b": {
+		"addre": "0xc352add7ad8cac8baa839d8c88e7e9d7df9a219b",
+		"slice": [
+			{
+				"name": "Fibonzi_openPool_7",
+				"exp": "owner.transfer(price)"
+			},
+			{
+				"name": "Fibonzi_openPool_10",
+				"exp": "msg.sender.transfer(msg.value - pools[poolId].price)"
+			},
+			{
+				"name": "Fibonzi_joinPool_9",
+				"exp": "msg.sender.transfer(msg.value - pools[poolId].price)"
+			},
+			{
+				"tag": "1",
+				"name": "Fibonzi_joinPool_12",
+				"exp": "pools[poolId].owner.transfer((price * 80) / 100)"
+			},
+			{
+				"name": "Fibonzi_withdrawComission_10",
+				"exp": "msg.sender.transfer(players[msg.sender].balance)"
+			}
+		]
+	},
+	"0x486e49d1622fdfc8ca760fcfc17792753a4beca8": {
+		"addre": "0x486e49d1622fdfc8ca760fcfc17792753a4beca8",
+		"slice": [
+			{
+				"name": "Crowdsale_investInternal_25",
+				"exp": "! multisigWallet.send(weiAmount)"
+			},
+			{
+				"name": "Crowdsale_refund_8",
+				"exp": "! msg.sender.send(weiValue)"
+			}
+		]
+	},
+	"HYIP": {
+		"addre": "HYIP",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "HYIP_performPayouts_14",
+				"exp": "! m_beneficiaries[idx].send(eachBeneficiaryPayout)"
+			},
+			{
+				"tag": "1",
+				"name": "HYIP_performPayouts_27",
+				"exp": "! m_investors[idx].etherAddress.send(payout)"
+			}
+		]
+	},
+	"0x6aae3fd4e1545e9865bfdc92c032cb2c712fb125": {
+		"addre": "0x6aae3fd4e1545e9865bfdc92c032cb2c712fb125",
+		"slice": [
+			{
+				"name": "Crowdsale_investInternal_25",
+				"exp": "! multisigWallet.send(weiAmount)"
+			},
+			{
+				"name": "Crowdsale_refund_8",
+				"exp": "! msg.sender.send(weiValue)"
+			}
+		]
+	},
+	"DepositHolder": {
+		"addre": "DepositHolder",
+		"slice": [
+			{
+				"name": "DepositHolder_deposit_5",
+				"exp": "! msg.sender.send(msg.value - required)"
+			},
+			{
+				"name": "DepositHolder_withdraw_2",
+				"exp": "! msg.sender.send(recovered)"
+			},
+			{
+				"name": "DepositHolder_disburse_4",
+				"exp": "! addr.send(amount)"
+			}
+		]
+	},
+	"FastRealisticPyramid1": {
+		"addre": "FastRealisticPyramid1",
+		"slice": [
+			{
+				"name": "FastRealisticPyramid_enter_7",
+				"exp": "owner.send(collectedFees)"
+			},
+			{
+				"tag": "1",
+				"name": "FastRealisticPyramid_enter_14",
+				"exp": "person[payoutIdx].etherAddress.send(transactionAmount)"
+			}
+		]
+	},
+	"0xbdb8b73aea0c43118ce8834c91d50ae8bbd5ed32": {
+		"addre": "0xbdb8b73aea0c43118ce8834c91d50ae8bbd5ed32",
+		"slice": [
+			{
+				"name": "MumsTheWord_enter_3",
+				"exp": "msg.sender.transfer(amount)"
+			},
+			{
+				"name": "MumsTheWord_enter_4",
+				"exp": "creditorAddresses[creditorAddresses.length - 1].transfer(jackpot)"
+			},
+			{
+				"name": "MumsTheWord_enter_5",
+				"exp": "owner.transfer(this.balance)"
+			},
+			{
+				"name": "MumsTheWord_enter_17",
+				"exp": "owner.transfer(amount * 5 / 100)"
+			},
+			{
+				"tag": "1",
+				"name": "MumsTheWord_enter_22",
+				"exp": "creditorAddresses[lastCreditorPayedOut].transfer(creditorAmounts[lastCreditorPayedOut])"
+			},
+			{
+				"name": "MumsTheWord_enter_26",
+				"exp": "msg.sender.transfer(amount)"
+			}
+		]
+	},
+	"FirePonzi": {
+		"addre": "FirePonzi",
+		"slice": [
+			{
+				"name": "FirePonzi_enter_2",
+				"exp": "msg.sender.send(msg.value)"
+			},
+			{
+				"name": "FirePonzi_enter_7",
+				"exp": "msg.sender.send(msg.value - 2000000000000000000)"
+			},
+			{
+				"tag": "1",
+				"name": "FirePonzi_enter_19",
+				"exp": "persons[payoutCursor_Id].etherAddress.send(MultipliedPayout)"
+			}
+		]
+	},
+	"0xfc5de599c9fe4e5cf0744aef3139ae53aa30a566": {
+		"addre": "0xfc5de599c9fe4e5cf0744aef3139ae53aa30a566",
+		"slice": [
+			{
+				"name": "Crowdsale_investInternal_19",
+				"exp": "! multisigWallet.send(weiAmount)"
+			},
+			{
+				"name": "Crowdsale_refund_6",
+				"exp": "! msg.sender.send(weiValue)"
+			},
+			{
+				"name": "MintedEthCappedCrowdsale_investInternal_19",
+				"exp": "! multisigWallet.send(weiAmount)"
+			},
+			{
+				"name": "MintedEthCappedCrowdsale_refund_6",
+				"exp": "! msg.sender.send(weiValue)"
+			}
+		]
+	},
+	"KingOfTheEtherThrone._31lug2016": {
+		"addre": "KingOfTheEtherThrone._31lug2016",
+		"slice": []
+	},
+	"Ethereum-x2.0": {
+		"addre": "Ethereum-x2.0",
+		"slice": [
+			{
+				"name": "x2_enter_2",
+				"exp": "msg.sender.send(msg.value)"
+			},
+			{
+				"name": "x2_enter_7",
+				"exp": "msg.sender.send(msg.value - 50000000000000000000)"
+			},
+			{
+				"tag": "1",
+				"name": "x2_enter_23",
+				"exp": "participants[payoutIdx].etherAddress.send(transactionAmount)"
+			},
+			{
+				"name": "x2_collectFees_4",
+				"exp": "owner.send(collectedFees)"
+			}
+		]
+	},
+	"GoodFellas": {
+		"addre": "GoodFellas",
+		"slice": [
+			{
+				"name": "Goodfellas_enter_2",
+				"exp": "msg.sender.send(msg.value)"
+			},
+			{
+				"name": "Goodfellas_enter_7",
+				"exp": "msg.sender.send(msg.value - 50000000000000000000)"
+			},
+			{
+				"name": "Goodfellas_enter_17",
+				"exp": "owner.send(collectedFees)"
+			},
+			{
+				"tag": "1",
+				"name": "Goodfellas_enter_25",
+				"exp": "persons[payoutIdx].etherAddress.send(transactionAmount)"
+			}
+		]
+	},
+	"KingOfTheEtherThrone._06feb2016": {
+		"addre": "KingOfTheEtherThrone._06feb2016",
+		"slice": [
+			{
+				"name": "KingOfTheEtherThrone_claimThrone_3",
+				"exp": "msg.sender.send(valuePaid)"
+			},
+			{
+				"name": "KingOfTheEtherThrone_claimThrone_8",
+				"exp": "msg.sender.send(excessPaid)"
+			},
+			{
+				"tag": "1",
+				"name": "KingOfTheEtherThrone_claimThrone_14",
+				"exp": "currentMonarch.etherAddress.send(compensation)"
+			},
+			{
+				"name": "KingOfTheEtherThrone_sweepCommission_1",
+				"exp": "wizardAddress.send(amount)"
+			}
+		]
+	},
+	"LuckyDoubler": {
+		"addre": "LuckyDoubler",
+		"slice": [
+			{
+				"name": "LuckyDoubler_init_2",
+				"exp": "msg.sender.send(msg.value)"
+			},
+			{
+				"name": "LuckyDoubler_join_3",
+				"exp": "msg.sender.send(msg.value - 1000000000000000000)"
+			},
+			{
+				"tag": "1",
+				"name": "LuckyDoubler_join_19",
+				"exp": "theEntry.entryAddress.send(payout)"
+			},
+			{
+				"name": "LuckyDoubler_join_30",
+				"exp": "owner.send(fees)"
+			}
+		]
+	},
+	"CrystalDoubler": {
+		"addre": "CrystalDoubler",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "CrystalDoubler_enter_14",
+				"exp": "depositors[nr].EtherAddress.send(payout)"
+			}
+		]
+	},
+	"0x582b2489710a4189ad558b6958641789587fcc27": {
+		"addre": "0x582b2489710a4189ad558b6958641789587fcc27",
+		"slice": []
+	},
+	"SmartRevShare2": {
+		"addre": "SmartRevShare2",
+		"slice": [
+			{
+				"name": "SmartRevshare_invest_3",
+				"exp": "currentManager.send(msg.value / 100)"
+			},
+			{
+				"tag": "1",
+				"name": "SmartRevshare_payout_17",
+				"exp": "investors[idx].addr.send(payoutValue)"
+			}
+		]
+	},
+	"Government": {
+		"addre": "Government",
+		"slice": [
+			{
+				"name": "Government_lendGovernmentMoney_3",
+				"exp": "msg.sender.send(amount)"
+			},
+			{
+				"name": "Government_lendGovernmentMoney_4",
+				"exp": "creditorAddresses[creditorAddresses.length - 1].send(profitFromCrash)"
+			},
+			{
+				"name": "Government_lendGovernmentMoney_5",
+				"exp": "corruptElite.send(this.balance)"
+			},
+			{
+				"name": "Government_lendGovernmentMoney_17",
+				"exp": "corruptElite.send(amount * 5 / 100)"
+			},
+			{
+				"name": "Government_lendGovernmentMoney_22",
+				"exp": "buddy.send(amount * 5 / 100)"
+			},
+			{
+				"name": "Government_lendGovernmentMoney_26",
+				"exp": "creditorAddresses[lastCreditorPayedOut].send(creditorAmounts[lastCreditorPayedOut])"
+			},
+			{
+				"name": "Government_lendGovernmentMoney_31",
+				"exp": "msg.sender.send(amount)"
+			}
+		]
+	},
+	"Matthew": {
+		"addre": "Matthew",
+		"slice": [
+			{
+				"name": "Matthew_fallback_5",
+				"exp": "isSuccess = whale.send(stake - nextStake)"
+			},
+			{
+				"name": "Matthew_fallback_16",
+				"exp": "isOtherSuccess = msg.sender.send(stake)"
+			}
+		]
+	},
+	"0xfc4f1acaaed191715cd50b9bc5311f7ad076424e": {
+		"addre": "0xfc4f1acaaed191715cd50b9bc5311f7ad076424e",
+		"slice": []
+	},
+	"SmallPonzi2": {
+		"addre": "SmallPonzi2",
+		"slice": [
+			{
+				"name": "smallponzi_enter_2",
+				"exp": "msg.sender.send(msg.value)"
+			},
+			{
+				"name": "smallponzi_enter_7",
+				"exp": "msg.sender.send(msg.value - 3000000000000000000)"
+			},
+			{
+				"name": "smallponzi_enter_17",
+				"exp": "owner.send(collectedFees)"
+			},
+			{
+				"tag": "1",
+				"name": "smallponzi_enter_25",
+				"exp": "persons[payoutIdx].etherAddress.send(transactionAmount)"
+			}
+		]
+	},
+	"ResetPonzi4": {
+		"addre": "ResetPonzi4",
+		"slice": [
+			{
+				"name": "ResetPonzi_enter_24",
+				"exp": "persons[payoutIdx].addr.send(1000000000000000000)"
+			},
+			{
+				"name": "ResetPonzi_enter_25",
+				"exp": "currentNiceGuy.send(100000000000000000)"
+			}
+		]
+	},
+	"SmallPonzi": {
+		"addre": "SmallPonzi",
+		"slice": [
+			{
+				"name": "smallponzi_enter_2",
+				"exp": "msg.sender.send(msg.value)"
+			},
+			{
+				"name": "smallponzi_enter_7",
+				"exp": "msg.sender.send(msg.value - 3000000000000000000)"
+			},
+			{
+				"name": "smallponzi_enter_17",
+				"exp": "owner.send(collectedFees)"
+			},
+			{
+				"tag": "1",
+				"name": "smallponzi_enter_25",
+				"exp": "persons[payoutIdx].etherAddress.send(transactionAmount)"
+			}
+		]
+	},
+	"EthVenturesFinal1": {
+		"addre": "EthVenturesFinal1",
+		"slice": [
+			{
+				"name": "EthVenturesFinal_Enter_4",
+				"exp": "owner.send(PRE_amount / 100)"
+			},
+			{
+				"name": "EthVenturesFinal_Enter_13",
+				"exp": "investors[PRE_i].etherAddress.send(PRE_payout)"
+			},
+			{
+				"name": "EthVenturesFinal_Enter_45",
+				"exp": "owner.send(fees)"
+			},
+			{
+				"name": "EthVenturesFinal_Emergency_2",
+				"exp": "owner.send(balance)"
+			}
+		]
+	},
+	"0xec34d45fde0836d50ac8438f8442002b588435c0": {
+		"addre": "0xec34d45fde0836d50ac8438f8442002b588435c0",
+		"slice": []
+	},
+	"0x7bbc3ad5c296ae6eb50228d2a6a37234d2db3ff1": {
+		"addre": "0x7bbc3ad5c296ae6eb50228d2a6a37234d2db3ff1",
+		"slice": [
+			{
+				"name": "Crowdsale_investInternal_25",
+				"exp": "! multisigWallet.send(weiAmount)"
+			},
+			{
+				"name": "Crowdsale_refund_8",
+				"exp": "! msg.sender.send(weiValue)"
+			}
+		]
+	},
+	"NotAnotherPonzi": {
+		"addre": "NotAnotherPonzi",
+		"slice": [
+			{
+				"name": "NotAnotherPonzi_enter_2",
+				"exp": "msg.sender.send(msg.value)"
+			},
+			{
+				"name": "NotAnotherPonzi_enter_7",
+				"exp": "msg.sender.send(msg.value - 10000000000000000000)"
+			},
+			{
+				"name": "NotAnotherPonzi_enter_17",
+				"exp": "owner.send(collectedFees)"
+			},
+			{
+				"name": "NotAnotherPonzi_enter_25",
+				"exp": "persons[payoutIdx].etherAddress.send(transactionAmount)"
+			}
+		]
+	},
+	"ResetPonzi5": {
+		"addre": "ResetPonzi5",
+		"slice": [
+			{
+				"name": "ResetPonzi_enter_22",
+				"exp": "currentNiceGuy.send(100000000000000000)"
+			},
+			{
+				"name": "ResetPonzi_enter_25",
+				"exp": "persons[payoutIdx].addr.send(1000000000000000000)"
+			}
+		]
+	},
+	"0x2e5e995bdaa495abaf2af499d682b0277d4dd66b": {
+		"addre": "0x2e5e995bdaa495abaf2af499d682b0277d4dd66b",
+		"slice": [
+			{
+				"name": "Crowdsale_investInternal_19",
+				"exp": "! multisigWallet.send(weiAmount)"
+			},
+			{
+				"name": "Crowdsale_refund_6",
+				"exp": "! msg.sender.send(weiValue)"
+			},
+			{
+				"name": "MintedEthCappedCrowdsale_investInternal_19",
+				"exp": "! multisigWallet.send(weiAmount)"
+			},
+			{
+				"name": "MintedEthCappedCrowdsale_refund_6",
+				"exp": "! msg.sender.send(weiValue)"
+			}
+		]
+	},
+	"Quick2": {
+		"addre": "Quick2",
+		"slice": [
+			{
+				"name": "quick2_enter_2",
+				"exp": "msg.sender.send(msg.value)"
+			},
+			{
+				"name": "quick2_enter_7",
+				"exp": "msg.sender.send(msg.value - 20000000000000000000)"
+			},
+			{
+				"name": "quick2_enter_17",
+				"exp": "owner.send(collectedFees)"
+			},
+			{
+				"name": "quick2_enter_25",
+				"exp": "persons[payoutIdx].etherAddress.send(transactionAmount)"
+			}
+		]
+	},
+	"Tomeka": {
+		"addre": "Tomeka",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "Tomeka_addPayout_13",
+				"exp": "participants[payoutOrder].etherAddress.send(payoutToSend)"
+			},
+			{
+				"name": "Tomeka_collectAllFees_4",
+				"exp": "creator.send(collectedFees)"
+			},
+			{
+				"name": "Tomeka_collectFeesInEther_8",
+				"exp": "creator.send(_amt)"
+			},
+			{
+				"name": "Tomeka_collectPercentOfFees_5",
+				"exp": "creator.send(feesToCollect)"
+			}
+		]
+	},
+	"EthVentures4": {
+		"addre": "EthVentures4",
+		"slice": [
+			{
+				"name": "EthVentures4_Enter_4",
+				"exp": "owner.send(PRE_amount / 100)"
+			},
+			{
+				"name": "EthVentures4_Enter_13",
+				"exp": "investors[PRE_i].etherAddress.send(PRE_payout)"
+			},
+			{
+				"name": "EthVentures4_Enter_53",
+				"exp": "owner.send(fees)"
+			},
+			{
+				"name": "EthVentures4_Emergency_2",
+				"exp": "owner.send(balance)"
+			}
+		]
+	},
+	"Niceguytax1": {
+		"addre": "Niceguytax1",
+		"slice": [
+			{
+				"name": "NiceGuyTax_fallback_2",
+				"exp": "msg.sender.send(msg.value)"
+			},
+			{
+				"name": "NiceGuyTax_fallback_5",
+				"exp": "currentNiceGuy.send(1000000000000000000)"
+			},
+			{
+				"name": "NiceGuyTax_fallback_26",
+				"exp": "investors[payoutIndex].addr.send(10000000000000000000)"
+			}
+		]
+	},
+	"Niceguytax2": {
+		"addre": "Niceguytax2",
+		"slice": [
+			{
+				"name": "NiceGuyTax_fallback_2",
+				"exp": "msg.sender.send(msg.value)"
+			},
+			{
+				"name": "NiceGuyTax_fallback_5",
+				"exp": "currentNiceGuy.send(1000000000000000000)"
+			},
+			{
+				"name": "NiceGuyTax_fallback_26",
+				"exp": "investors[payoutIndex].addr.send(10000000000000000000)"
+			}
+		]
+	},
+	"ResetPonzi3": {
+		"addre": "ResetPonzi3",
+		"slice": [
+			{
+				"name": "ResetPonzi_enter_23",
+				"exp": "currentNiceGuy.send(100000000000000000)"
+			},
+			{
+				"name": "ResetPonzi_enter_27",
+				"exp": "persons[payoutIdx].addr.send(1000000000000000000)"
+			}
+		]
+	},
+	"0xbef44157a4afbfcce76db29353b6c103a03ed803": {
+		"addre": "0xbef44157a4afbfcce76db29353b6c103a03ed803",
+		"slice": [
+			{
+				"name": "Pixiu_Beta_withdraw_5",
+				"exp": "msg.sender.transfer(_remain)"
+			},
+			{
+				"name": "Pixiu_Beta_withdraw_admin_4",
+				"exp": "msg.sender.transfer(_withdraw)"
+			},
+			{
+				"name": "Pixiu_Beta_withdraw_all_admin_2",
+				"exp": "_deposit.transfer(this.balance)"
+			}
+		]
+	},
+	"ProtectTheCastle": {
+		"addre": "ProtectTheCastle",
+		"slice": [
+			{
+				"name": "ProtectTheCastle_repairTheCastle_3",
+				"exp": "msg.sender.send(msg.value)"
+			},
+			{
+				"name": "ProtectTheCastle_repairTheCastle_7",
+				"exp": "msg.sender.send(msg.value - 100000000000000000000)"
+			},
+			{
+				"name": "ProtectTheCastle_repairTheCastle_12",
+				"exp": "citizensAddresses[citizensAddresses.length - 1].send(piggyBank)"
+			},
+			{
+				"name": "ProtectTheCastle_repairTheCastle_14",
+				"exp": "citizensAddresses[citizensAddresses.length - 1].send(piggyBank * 65 / 100)"
+			},
+			{
+				"name": "ProtectTheCastle_repairTheCastle_15",
+				"exp": "citizensAddresses[citizensAddresses.length - 2].send(piggyBank * 35 / 100)"
+			},
+			{
+				"name": "ProtectTheCastle_repairTheCastle_17",
+				"exp": "citizensAddresses[citizensAddresses.length - 1].send(piggyBank * 55 / 100)"
+			},
+			{
+				"name": "ProtectTheCastle_repairTheCastle_18",
+				"exp": "citizensAddresses[citizensAddresses.length - 2].send(piggyBank * 30 / 100)"
+			},
+			{
+				"name": "ProtectTheCastle_repairTheCastle_19",
+				"exp": "citizensAddresses[citizensAddresses.length - 3].send(piggyBank * 15 / 100)"
+			},
+			{
+				"name": "ProtectTheCastle_repairTheCastle_31",
+				"exp": "jester.send(amount * 3 / 100)"
+			},
+			{
+				"name": "ProtectTheCastle_repairTheCastle_40",
+				"exp": "jester.send(amount * 3 / 100)"
+			},
+			{
+				"tag": "1",
+				"name": "ProtectTheCastle_repairTheCastle_44",
+				"exp": "citizensAddresses[lastCitizenPaid].send(citizensAmounts[lastCitizenPaid])"
+			},
+			{
+				"name": "ProtectTheCastle_surrender_2",
+				"exp": "bribedCitizen.send(address(this).balance)"
+			},
+			{
+				"name": "ProtectTheCastle_collectFee_2",
+				"exp": "bribedCitizen.send(collectedFee)"
+			}
+		]
+	},
+	"Quadrupler": {
+		"addre": "Quadrupler",
+		"slice": [
+			{
+				"name": "quadrupler_enter_2",
+				"exp": "msg.sender.send(msg.value)"
+			},
+			{
+				"name": "quadrupler_enter_7",
+				"exp": "msg.sender.send(msg.value - 999000000000000000000)"
+			},
+			{
+				"name": "quadrupler_enter_17",
+				"exp": "owner.send(collectedFees)"
+			},
+			{
+				"name": "quadrupler_enter_25",
+				"exp": "persons[payoutIdx].etherAddress.send(transactionAmount)"
+			}
+		]
+	},
+	"EthVenturesFinal2": {
+		"addre": "EthVenturesFinal2",
+		"slice": [
+			{
+				"name": "EthVenturesFinal_Enter_4",
+				"exp": "owner.send(PRE_amount / 100)"
+			},
+			{
+				"name": "EthVenturesFinal_Enter_13",
+				"exp": "investors[PRE_i].etherAddress.send(PRE_payout)"
+			},
+			{
+				"name": "EthVenturesFinal_Enter_53",
+				"exp": "owner.send(fees)"
+			},
+			{
+				"name": "EthVenturesFinal_Emergency_2",
+				"exp": "owner.send(balance)"
+			}
+		]
+	},
+	"Plusoneponzi3": {
+		"addre": "Plusoneponzi3",
+		"slice": [
+			{
+				"name": "plusOnePonzi_fallback_11",
+				"exp": "payouts[payoutIndex].addr.send(payouts[payoutIndex].yield)"
+			}
+		]
+	},
+	"0x582e3d8dcd41f586fbcc6559f16476d20b2a3b95": {
+		"addre": "0x582e3d8dcd41f586fbcc6559f16476d20b2a3b95",
+		"slice": [
+			{
+				"name": "SCLCrowdsale_withdraw_9",
+				"exp": "! creator.send(ethFees)"
+			},
+			{
+				"name": "SCLCrowdsale_withdraw_12",
+				"exp": "! beneficiary.send(ethBalance - ethFees)"
+			},
+			{
+				"name": "SCLCrowdsale_refund_6",
+				"exp": "receivedAmount > 0 && ! msg.sender.send(receivedAmount)"
+			},
+			{
+				"name": "SCLCrowdsale_fallback_24",
+				"exp": "! creator.send(ethFees)"
+			},
+			{
+				"name": "SCLCrowdsale_fallback_27",
+				"exp": "! beneficiary.send(received - ethFees)"
+			}
+		]
+	},
+	"0x8cdb6436f4e08f2aeb6f7b0473423bb30743afe2": {
+		"addre": "0x8cdb6436f4e08f2aeb6f7b0473423bb30743afe2",
+		"slice": [
+			{
+				"name": "Crowdsale_investInternal_25",
+				"exp": "! multisigWallet.send(weiAmount)"
+			},
+			{
+				"name": "Crowdsale_refund_8",
+				"exp": "! msg.sender.send(weiValue)"
+			}
+		]
+	},
+	"SquareRootPonzi": {
+		"addre": "SquareRootPonzi",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "squareRootPonzi_fallback_10",
+				"exp": "masterCalculator[to].ethereumAddress.send(2000000000000000)"
+			}
+		]
+	},
+	"ThesimpleGame": {
+		"addre": "ThesimpleGame",
+		"slice": [
+			{
+				"name": "thesimplegame_enter_2",
+				"exp": "msg.sender.send(msg.value)"
+			},
+			{
+				"name": "thesimplegame_enter_7",
+				"exp": "msg.sender.send(msg.value - 10000000000000000000)"
+			},
+			{
+				"name": "thesimplegame_enter_17",
+				"exp": "owner.send(collectedFees)"
+			},
+			{
+				"tag": "1",
+				"name": "thesimplegame_enter_25",
+				"exp": "persons[payoutIdx].etherAddress.send(transactionAmount)"
+			}
+		]
+	},
+	"0xfc3c1c0550188c649f70e78787c8cd9ff9d3b8d4": {
+		"addre": "0xfc3c1c0550188c649f70e78787c8cd9ff9d3b8d4",
+		"slice": [
+			{
+				"name": "Cubic_withdraw_2",
+				"exp": "owner.transfer(this.balance)"
+			}
+		]
+	},
+	"NanoPyramid2": {
+		"addre": "NanoPyramid2",
+		"slice": [
+			{
+				"name": "NanoPyramid_enter_9",
+				"exp": "! msg.sender.send(amountToRefund)"
+			},
+			{
+				"name": "NanoPyramid_enter_22",
+				"exp": "participants[payoutOrder].etherAddress.send(payoutToSend)"
+			},
+			{
+				"name": "NanoPyramid_enter_27",
+				"exp": "! owner.send(collectedFees)"
+			}
+		]
+	},
+	"0x43f208d94a82cc2749a140b5e82636f31ce0390d": {
+		"addre": "0x43f208d94a82cc2749a140b5e82636f31ce0390d",
+		"slice": [
+			{
+				"name": "betContractDOWN_createBet_3",
+				"exp": "msg.sender.transfer(msg.value - 2000)"
+			},
+			{
+				"name": "betContractDOWN_winnerReward_2",
+				"exp": "player.transfer(winningAmount)"
+			},
+			{
+				"name": "betContractDOWN_loser_1",
+				"exp": "player.transfer(1)"
+			},
+			{
+				"name": "betContractDOWN_draw_1",
+				"exp": "player.transfer(betvalue)"
+			},
+			{
+				"name": "betContractDOWN_drain_1",
+				"exp": "owner.transfer(this.balance)"
+			}
+		]
+	},
+	"DynamicPyramid": {
+		"addre": "DynamicPyramid",
+		"slice": [
+			{
+				"name": "DynamicPyramid_addPayout_13",
+				"exp": "participants[payoutOrder].etherAddress.send(payoutToSend)"
+			},
+			{
+				"name": "DynamicPyramid_collectAllFees_4",
+				"exp": "creator.send(collectedFees)"
+			},
+			{
+				"name": "DynamicPyramid_collectFeesInEther_8",
+				"exp": "creator.send(_amt)"
+			},
+			{
+				"name": "DynamicPyramid_collectPercentOfFees_5",
+				"exp": "creator.send(feesToCollect)"
+			}
+		]
+	},
+	"Etheramid": {
+		"addre": "Etheramid",
+		"slice": [
+			{
+				"name": "Etheramid_enter_3",
+				"exp": "msg.sender.send(msg.value)"
+			},
+			{
+				"name": "Etheramid_enter_13",
+				"exp": "next.send(toSend)"
+			},
+			{
+				"name": "Etheramid_enter_19",
+				"exp": "next.send(rest)"
+			}
+		]
+	},
+	"NanoPyramid": {
+		"addre": "NanoPyramid",
+		"slice": [
+			{
+				"name": "NanoPyramid_enter_9",
+				"exp": "! msg.sender.send(amountToRefund)"
+			},
+			{
+				"name": "NanoPyramid_enter_22",
+				"exp": "participants[payoutOrder].etherAddress.send(payoutToSend)"
+			},
+			{
+				"name": "NanoPyramid_enter_27",
+				"exp": "! owner.send(collectedFees)"
+			}
+		]
+	},
+	"0x80c1a36dcbdca742f59f09fda16c43e6ad877c2b": {
+		"addre": "0x80c1a36dcbdca742f59f09fda16c43e6ad877c2b",
+		"slice": [
+			{
+				"name": "Fish_sell_7",
+				"exp": "! msg.sender.send(moneyWorth)"
+			}
+		]
+	},
+	"0xdd97853ba34af302f3d6a6415a750ae38e26d1fc": {
+		"addre": "0xdd97853ba34af302f3d6a6415a750ae38e26d1fc",
+		"slice": [
+			{
+				"name": "betContractUP_createBet_3",
+				"exp": "msg.sender.transfer(msg.value - 2000)"
+			},
+			{
+				"name": "betContractUP_winnerReward_2",
+				"exp": "player.transfer(winningAmount)"
+			},
+			{
+				"name": "betContractUP_loser_1",
+				"exp": "player.transfer(1)"
+			},
+			{
+				"name": "betContractUP_draw_1",
+				"exp": "player.transfer(betvalue)"
+			},
+			{
+				"name": "betContractUP_drain_1",
+				"exp": "owner.transfer(this.balance)"
+			}
+		]
+	},
+	"0xe8b55deaced913c5c6890331d2926ea0fcbe59ac": {
+		"note": "TBD",
+		"addre": "0xe8b55deaced913c5c6890331d2926ea0fcbe59ac",
+		"slice": [
+			{
+				"name": "Fibonzi_openPool_8",
+				"exp": "owner.transfer(price)"
+			},
+			{
+				"name": "Fibonzi_openPool_12",
+				"exp": "players[playersWallets[msg.sender]].wallet.transfer(msg.value - pools[poolId].price)"
+			},
+			{
+				"name": "Fibonzi_joinPool_8",
+				"exp": "players[pools[poolId].owner].wallet.transfer((price * 80) / 100)"
+			},
+			{
+				"name": "Fibonzi_joinPool_13",
+				"exp": "players[playersWallets[msg.sender]].wallet.transfer(msg.value - pools[poolId].price)"
+			},
+			{
+				"name": "Fibonzi_withdraw_4",
+				"exp": "players[playersWallets[msg.sender]].wallet.transfer(playersBalance[msg.sender])"
+			}
+		]
+	},
+	"NewPonzi": {
+		"addre": "NewPonzi",
+		"slice": [
+			{
+				"name": "newponzi_enter_2",
+				"exp": "msg.sender.send(msg.value)"
+			},
+			{
+				"name": "newponzi_enter_7",
+				"exp": "msg.sender.send(msg.value - 10000000000000000000)"
+			},
+			{
+				"name": "newponzi_enter_17",
+				"exp": "owner.send(collectedFees)"
+			},
+			{
+				"tag": "1",
+				"name": "newponzi_enter_25",
+				"exp": "persons[payoutIdx].etherAddress.send(transactionAmount)"
+			}
+		]
+	},
+	"StackyGame": {
+		"addre": "StackyGame",
+		"slice": [
+			{
+				"name": "StackyGame_enter_2",
+				"exp": "msg.sender.send(msg.value)"
+			},
+			{
+				"tag": "1",
+				"name": "StackyGame_enter_16",
+				"exp": "participants[payoutIdx].etherAddress.send(transactionAmount)"
+			},
+			{
+				"name": "StackyGame_collectFees_4",
+				"exp": "owner.send(collectedFees)"
+			}
+		]
+	},
+	"0x53344c813fbc35890a7304187dc920358b5acf4a": {
+		"addre": "0x53344c813fbc35890a7304187dc920358b5acf4a",
+		"slice": [
+			{
+				"name": "Pixiu_Beta_withdraw_5",
+				"exp": "msg.sender.transfer(_remain)"
+			},
+			{
+				"name": "Pixiu_Beta_withdraw_admin_4",
+				"exp": "msg.sender.transfer(_withdraw)"
+			},
+			{
+				"name": "Pixiu_Beta_withdraw_all_admin_2",
+				"exp": "_deposit.transfer(this.balance)"
+			}
+		]
+	},
+	"FountainOfWealth": {
+		"addre": "FountainOfWealth",
+		"slice": [
+			{
+				"name": "FountainOfWealth_enter_16",
+				"exp": "owner.send(feeamount)"
+			},
+			{
+				"tag": "1",
+				"name": "FountainOfWealth_enter_31",
+				"exp": "investors[nr].etherAddress.send(payout)"
+			},
+			{
+				"tag": "1",
+				"name": "FountainOfWealth_enter_35",
+				"exp": "investors[nr].etherAddress.send(payout)"
+			}
+		]
+	},
+	"EthFactory": {
+		"addre": "EthFactory",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "EthFactory_enter_15",
+				"exp": "depositors[index].EtherAddress.send(payment)"
+			},
+			{
+				"name": "EthFactory_DeleteContract_1",
+				"exp": "owner.send(Balance)"
+			}
+		]
+	},
+	"TheRun": {
+		"addre": "TheRun",
+		"slice": [
+			{
+				"name": "theRun_init_3",
+				"exp": "msg.sender.send(msg.value)"
+			},
+			{
+				"name": "theRun_init_7",
+				"exp": "msg.sender.send(msg.value - (20000000000000000000))"
+			},
+			{
+				"name": "theRun_Participate_15",
+				"exp": "msg.sender.send(WinningPot)"
+			},
+			{
+				"tag": "1",
+				"name": "theRun_Participate_22",
+				"exp": "players[Payout_id].addr.send(Last_Payout)"
+			},
+			{
+				"name": "theRun_CollectAllFees_4",
+				"exp": "admin.send(fees)"
+			},
+			{
+				"name": "theRun_GetAndReduceFeesByFraction_4",
+				"exp": "admin.send(fees / 1000 * p)"
+			}
+		]
+	},
+	"DepositHolder2": {
+		"addre": "DepositHolder2",
+		"slice": [
+			{
+				"name": "DepositHolder_deposit_5",
+				"exp": "! msg.sender.send(msg.value - required)"
+			},
+			{
+				"name": "DepositHolder_withdraw_2",
+				"exp": "! msg.sender.send(recovered)"
+			},
+			{
+				"name": "DepositHolder_disburse_4",
+				"exp": "! addr.send(amount)"
+			}
+		]
+	},
+	"Doubler2": {
+		"addre": "Doubler2",
+		"slice": [
+			{
+				"name": "Doubler_enter_2",
+				"exp": "msg.sender.send(msg.value)"
+			},
+			{
+				"tag": "1",
+				"name": "Doubler_enter_16",
+				"exp": "participants[payoutIdx].etherAddress.send(transactionAmount)"
+			},
+			{
+				"name": "Doubler_collectFees_4",
+				"exp": "owner.send(collectedFees)"
+			}
+		]
+	},
+	"NoFeePonzi": {
+		"addre": "NoFeePonzi",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "NoFeePonzi_fallback_11",
+				"exp": "payouts[payoutIndex].addr.send(payouts[payoutIndex].yield)"
+			}
+		]
+	},
+	"X15": {
+		"addre": "X15",
+		"slice": [
+			{
+				"name": "x15_enter_2",
+				"exp": "kappa.send(msg.value)"
+			},
+			{
+				"name": "x15_enter_19",
+				"exp": "kappa.send(feeamount)"
+			},
+			{
+				"tag": "1",
+				"name": "x15_enter_36",
+				"exp": "crazyearners[nr].etherAddress.send(payout)"
+			},
+			{
+				"tag": "1",
+				"name": "x15_enter_40",
+				"exp": "crazyearners[nr].etherAddress.send(payout)"
+			}
+		]
+	},
+	"UfoPonzi": {
+		"addre": "UfoPonzi",
+		"slice": [
+			{
+				"name": "UfoPonzi_enter_2",
+				"exp": "msg.sender.send(msg.value)"
+			},
+			{
+				"tag": "1",
+				"name": "UfoPonzi_enter_16",
+				"exp": "participants[payoutIdx].etherAddress.send(transactionAmount)"
+			},
+			{
+				"name": "UfoPonzi_collectFees_4",
+				"exp": "owner.send(collectedFees)"
+			}
+		]
+	},
+	"DoubleYour5": {
+		"addre": "DoubleYour5",
+		"slice": [
+			{
+				"name": "doubleyour5_enter_2",
+				"exp": "msg.sender.send(msg.value)"
+			},
+			{
+				"name": "doubleyour5_enter_7",
+				"exp": "msg.sender.send(msg.value - 5000000000000000000)"
+			},
+			{
+				"tag": "1",
+				"name": "doubleyour5_enter_19",
+				"exp": "persons[payoutIdx].etherAddress.send(transactionAmount)"
+			}
+		]
+	},
+	"0x21aec0a028d7adec228595b24439c7eb969edd5f": {
+		"addre": "0x21aec0a028d7adec228595b24439c7eb969edd5f",
+		"slice": []
+	},
+	"Kardashian": {
+		"addre": "Kardashian",
+		"slice": [
+			{
+				"name": "Kardashian_enter_2",
+				"exp": "msg.sender.send(msg.value)"
+			},
+			{
+				"name": "Kardashian_enter_7",
+				"exp": "msg.sender.send(msg.value - 100000000000000000000)"
+			},
+			{
+				"tag": "1",
+				"name": "Kardashian_enter_23",
+				"exp": "participants[payoutIdx].etherAddress.send(transactionAmount)"
+			},
+			{
+				"name": "Kardashian_collectFees_4",
+				"exp": "owner.send(collectedFees)"
+			}
+		]
+	},
+	"ResetPonzi1": {
+		"addre": "ResetPonzi1",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "ResetPonzi_fallback_22",
+				"exp": "currentNiceGuy.send(1000000000000000000)"
+			},
+			{
+				"tag": "1",
+				"name": "ResetPonzi_fallback_25",
+				"exp": "persons[payoutIdx].addr.send(10000000000000000000)"
+			},
+			{
+				"name": "ResetPonzi_funnel_1",
+				"exp": "beta.send(this.balance)"
+			}
+		]
+	},
+	"GreedPit": {
+		"note": "TBD",
+		"addre": "GreedPit",
+		"slice": [
+			{
+				"name": "GreedPit_jumpIn_4",
+				"exp": "msg.sender.send(msg.value - 50000000000000000000)"
+			},
+			{
+				"name": "GreedPit_jumpIn_69",
+				"exp": "msg.sender.send(saviourShare)"
+			},
+			{
+				"name": "GreedPit_jumpIn_72",
+				"exp": "entries[payoutOrder].entryAddress.send(payout)"
+			},
+			{
+				"name": "GreedPit_collectFees_4",
+				"exp": "owner.send(collectedFees)"
+			},
+			{
+				"name": "GreedPit_recycle_3",
+				"exp": "entries[0].entryAddress.send(balance)"
+			}
+		]
+	},
+	"Free_Ether_A_Day_Funds_Return": {
+		"addre": "Free_Ether_A_Day_Funds_Return",
+		"slice": [
+			{
+				"name": "Free_Ether_A_Day_Funds_Return_return_funds_5",
+				"exp": "success = poorguy.send(210000000000000000000)"
+			}
+		]
+	},
+	"BalancedPonzi2": {
+		"addre": "BalancedPonzi2",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "BalancedPonzi_fallback_23",
+				"exp": "currentNiceGuy.send(1000000000000000000)"
+			},
+			{
+				"tag": "1",
+				"name": "BalancedPonzi_fallback_27",
+				"exp": "persons[payoutIdx].addr.send(10000000000000000000)"
+			},
+			{
+				"name": "BalancedPonzi_funnel_1",
+				"exp": "beta.send(this.balance)"
+			}
+		]
+	},
+	"ResetPonzi8": {
+		"addre": "ResetPonzi8",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "ResetPonzi_enter_22",
+				"exp": "currentNiceGuy.send(1000000000000000000)"
+			},
+			{
+				"tag": "1",
+				"name": "ResetPonzi_enter_26",
+				"exp": "persons[payoutIdx].addr.send(10000000000000000000)"
+			}
+		]
+	},
+	"PonzICO": {
+		"addre": "PonzICO",
+		"slice": [
+			{
+				"name": "PonzICO_withdraw_3",
+				"exp": "! msg.sender.send(amount)"
+			}
+		]
+	},
+	"ResetPonzi7": {
+		"addre": "ResetPonzi7",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "ResetPonzi_enter_23",
+				"exp": "currentNiceGuy.send(1000000000000000000)"
+			},
+			{
+				"tag": "1",
+				"name": "ResetPonzi_enter_27",
+				"exp": "persons[payoutIdx].addr.send(10000000000000000000)"
+			}
+		]
+	},
+	"Timegame1": {
+		"addre": "Timegame1",
+		"slice": [
+			{
+				"name": "timegame_enter_3",
+				"exp": "msg.sender.send(msg.value)"
+			},
+			{
+				"name": "timegame_enter_8",
+				"exp": "msg.sender.send(msg.value - 50000000000000000000)"
+			},
+			{
+				"name": "timegame_enter_19",
+				"exp": "owner.send(collectedFees)"
+			},
+			{
+				"tag": "1",
+				"name": "timegame_enter_27",
+				"exp": "persons[payoutIdx].etherAddress.send(transactionAmount)"
+			},
+			{
+				"name": "timegame_enter_31",
+				"exp": "msg.sender.send(msg.value)"
+			}
+		]
+	},
+	"0x3f4dd010fbbc9a9b6d95f1f53837d7e9f3befac8": {
+		"addre": "0x3f4dd010fbbc9a9b6d95f1f53837d7e9f3befac8",
+		"slice": [
+			{
+				"name": "Pixiu_withdraw_5",
+				"exp": "msg.sender.transfer(_remain)"
+			},
+			{
+				"name": "Pixiu_admin_withdraw_4",
+				"exp": "msg.sender.transfer(_withdraw)"
+			},
+			{
+				"name": "Pixiu_admin_withdraw_all_2",
+				"exp": "_deposit.transfer(this.balance)"
+			}
+		]
+	},
+	"EthVentures2": {
+		"addre": "EthVentures2",
+		"slice": [
+			{
+				"name": "EthVentures_Enter_5",
+				"exp": "owner.send(PRE_amount / 100)"
+			},
+			{
+				"tag": "1",
+				"name": "EthVentures_Enter_14",
+				"exp": "investors[PRE_i].etherAddress.send(PRE_payout)"
+			},
+			{
+				"name": "EthVentures_Enter_47",
+				"exp": "owner.send(fees)"
+			},
+			{
+				"name": "EthVentures_Emergency_2",
+				"exp": "owner.send(balance)"
+			}
+		]
+	},
+	"0x935b118412c93ee969051fd14ef96c70ecd7839d": {
+		"addre": "0x935b118412c93ee969051fd14ef96c70ecd7839d",
+		"slice": [
+			{
+				"name": "Crowdsale_investInternal_25",
+				"exp": "! multisigWallet.send(weiAmount)"
+			},
+			{
+				"name": "Crowdsale_refund_8",
+				"exp": "! msg.sender.send(weiValue)"
+			}
+		]
+	},
+	"CrazyEarning": {
+		"addre": "CrazyEarning",
+		"slice": [
+			{
+				"name": "CrazyEarning_enter_16",
+				"exp": "owner.send(feeamount)"
+			},
+			{
+				"tag": "1",
+				"name": "CrazyEarning_enter_31",
+				"exp": "crazyearners[nr].etherAddress.send(payout)"
+			},
+			{
+				"tag": "1",
+				"name": "CrazyEarning_enter_35",
+				"exp": "crazyearners[nr].etherAddress.send(payout)"
+			}
+		]
+	},
+	"The10EtherPyramid": {
+		"addre": "The10EtherPyramid",
+		"slice": [
+			{
+				"name": "The10ETHPyramid_enter_2",
+				"exp": "msg.sender.send(msg.value)"
+			},
+			{
+				"name": "The10ETHPyramid_enter_7",
+				"exp": "msg.sender.send(msg.value - 10000000000000000000)"
+			},
+			{
+				"name": "The10ETHPyramid_enter_17",
+				"exp": "owner.send(collectedFees)"
+			},
+			{
+				"tag": "1",
+				"name": "The10ETHPyramid_enter_25",
+				"exp": "persons[payoutIdx].etherAddress.send(transactionAmount)"
+			}
+		]
+	},
+	"BestBamkWithInterest": {
+		"note": "TBD",
+		"addre": "BestBamkWithInterest",
+		"slice": [
+			{
+				"name": "Best_Bank_with_Interest_withdraw_19",
+				"exp": "! msg.sender.send(withdraw_amount)"
+			},
+			{
+				"name": "Best_Bank_with_Interest_withdraw_22",
+				"exp": "! msg.sender.send(interest)"
+			}
+		]
+	},
+	"LittleCactus": {
+		"addre": "LittleCactus",
+		"slice": [
+			{
+				"name": "LittleCactus_enter_2",
+				"exp": "msg.sender.send(msg.value)"
+			},
+			{
+				"name": "LittleCactus_enter_7",
+				"exp": "msg.sender.send(msg.value - 50000000000000000000)"
+			},
+			{
+				"name": "LittleCactus_enter_17",
+				"exp": "owner.send(collectedFees)"
+			},
+			{
+				"tag": "1",
+				"name": "LittleCactus_enter_25",
+				"exp": "persons[payoutIdx].etherAddress.send(transactionAmount)"
+			}
+		]
+	},
+	"Timegame2": {
+		"addre": "Timegame2",
+		"slice": [
+			{
+				"name": "timegame_enter_3",
+				"exp": "msg.sender.send(msg.value)"
+			},
+			{
+				"name": "timegame_enter_8",
+				"exp": "msg.sender.send(msg.value - 50000000000000000000)"
+			},
+			{
+				"name": "timegame_enter_19",
+				"exp": "owner.send(collectedFees)"
+			},
+			{
+				"tag": "1",
+				"name": "timegame_enter_27",
+				"exp": "persons[payoutIdx].etherAddress.send(transactionAmount)"
+			},
+			{
+				"name": "timegame_enter_31",
+				"exp": "msg.sender.send(msg.value)"
+			}
+		]
+	},
+	"RobinHoodPonzi": {
+		"addre": "RobinHoodPonzi",
+		"slice": [
+			{
+				"name": "RobinHoodPonzi_enter_2",
+				"exp": "msg.sender.send(msg.value)"
+			},
+			{
+				"name": "RobinHoodPonzi_enter_7",
+				"exp": "msg.sender.send(msg.value - 1000000000000000000000)"
+			},
+			{
+				"tag": "1",
+				"name": "RobinHoodPonzi_enter_42",
+				"exp": "participants[payoutIdx].etherAddress.send(transactionAmount)"
+			},
+			{
+				"name": "RobinHoodPonzi_enter_47",
+				"exp": "owner.send(collectedFees)"
+			}
+		]
+	},
+	"EthVentures1": {
+		"addre": "EthVentures1",
+		"slice": [
+			{
+				"name": "EthVentures_Enter_5",
+				"exp": "owner.send(PRE_amount / 100)"
+			},
+			{
+				"tag": "1",
+				"name": "EthVentures_Enter_14",
+				"exp": "investors[PRE_i].etherAddress.send(PRE_payout)"
+			},
+			{
+				"name": "EthVentures_Enter_53",
+				"exp": "owner.send(fees)"
+			},
+			{
+				"name": "EthVentures_Emergency_2",
+				"exp": "owner.send(balance)"
+			}
+		]
+	},
+	"0x75f97d98eb49989f9af40c49a7a1eb32767214f5": {
+		"addre": "0x75f97d98eb49989f9af40c49a7a1eb32767214f5",
+		"slice": []
+	},
+	"EtherAds": {
+		"addre": "EtherAds",
+		"slice": [
+			{
+				"name": "EtherAds_buyAd_7",
+				"exp": "msg.sender.send(value - maximumDeposit)"
+			},
+			{
+				"tag": "1",
+				"name": "EtherAds_distributeEarnings_5",
+				"exp": "ads[payoutIdx].etherAddress.send(amount / 100 * 80)"
+			},
+			{
+				"tag": "1",
+				"name": "EtherAds_distributeEarnings_14",
+				"exp": "ads[uint256(refId)].etherAddress.send(level0Fee)"
+			},
+			{
+				"tag": "1",
+				"name": "EtherAds_distributeEarnings_19",
+				"exp": "ads[uint256(refId)].etherAddress.send(level1Fee)"
+			},
+			{
+				"tag": "1",
+				"name": "EtherAds_distributeEarnings_24",
+				"exp": "ads[uint256(refId)].etherAddress.send(level2Fee)"
+			},
+			{
+				"tag": "1",
+				"name": "EtherAds_resetContract_3",
+				"exp": "ads[ads.length - 1].etherAddress.send(balance)"
+			},
+			{
+				"name": "EtherAds_collectFees_8",
+				"exp": "owners[i].send(sharedFee)"
+			}
+		]
+	},
+	"0x6203188c0dd1a4607614dbc8af409e91ed46def0": {
+		"addre": "0x6203188c0dd1a4607614dbc8af409e91ed46def0",
+		"slice": []
+	},
+	"EthVentures3": {
+		"addre": "EthVentures3",
+		"slice": [
+			{
+				"name": "EthVentures3_Enter_5",
+				"exp": "owner.send(PRE_amount / 100)"
+			},
+			{
+				"tag": "1",
+				"name": "EthVentures3_Enter_14",
+				"exp": "investors[PRE_i].etherAddress.send(PRE_payout)"
+			},
+			{
+				"name": "EthVentures3_Enter_53",
+				"exp": "owner.send(fees)"
+			},
+			{
+				"name": "EthVentures3_Emergency_2",
+				"exp": "owner.send(balance)"
+			}
+		]
+	},
+	"Triple": {
+		"addre": "Triple",
+		"slice": [
+			{
+				"name": "triple_enter_2",
+				"exp": "msg.sender.send(msg.value)"
+			},
+			{
+				"name": "triple_enter_7",
+				"exp": "msg.sender.send(msg.value - 27000000000000000000)"
+			},
+			{
+				"name": "triple_enter_17",
+				"exp": "owner.send(collectedFees)"
+			},
+			{
+				"tag": "1",
+				"name": "triple_enter_25",
+				"exp": "persons[payoutIdx].etherAddress.send(transactionAmount)"
+			}
+		]
+	},
+	"Fresh": {
+		"addre": "Fresh",
+		"slice": [
+			{
+				"name": "fresh_enter_2",
+				"exp": "msg.sender.send(msg.value)"
+			},
+			{
+				"name": "fresh_enter_7",
+				"exp": "msg.sender.send(msg.value - 20000000000000000000)"
+			},
+			{
+				"name": "fresh_enter_17",
+				"exp": "owner.send(collectedFees)"
+			},
+			{
+				"tag": "1",
+				"name": "fresh_enter_25",
+				"exp": "persons[payoutIdx].etherAddress.send(transactionAmount)"
+			}
+		]
+	},
+	"Plusoneponzi1": {
+		"addre": "Plusoneponzi1",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "plusOnePonzi_fallback_11",
+				"exp": "payouts[payoutIndex].addr.send(payouts[payoutIndex].yield)"
+			}
+		]
+	},
+	"TwoAndAHalfPonzi": {
+		"addre": "TwoAndAHalfPonzi",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "TwoAndAHalfPonzi_fallback_11",
+				"exp": "payouts[payoutIndex].addr.send(payouts[payoutIndex].yield)"
+			}
+		]
+	},
+	"TheWhaleGame1": {
+		"addre": "TheWhaleGame1",
+		"slice": [
+			{
+				"name": "thewhalegame_enter_2",
+				"exp": "msg.sender.send(msg.value)"
+			},
+			{
+				"name": "thewhalegame_enter_7",
+				"exp": "msg.sender.send(msg.value - 500000000000000000000)"
+			},
+			{
+				"name": "thewhalegame_enter_17",
+				"exp": "owner.send(collectedFees)"
+			},
+			{
+				"tag": "1",
+				"name": "thewhalegame_enter_25",
+				"exp": "persons[payoutIdx].etherAddress.send(transactionAmount)"
+			}
+		]
+	},
+	"Diana": {
+		"addre": "Diana",
+		"slice": [
+			{
+				"name": "Diana_enter_2",
+				"exp": "msg.sender.send(msg.value)"
+			},
+			{
+				"name": "Diana_enter_7",
+				"exp": "msg.sender.send(msg.value - 100000000000000000000)"
+			},
+			{
+				"tag": "1",
+				"name": "Diana_enter_23",
+				"exp": "participants[payoutIdx].etherAddress.send(transactionAmount)"
+			},
+			{
+				"name": "Diana_collectFees_4",
+				"exp": "owner.send(collectedFees)"
+			}
+		]
+	},
+	"FivePerCent": {
+		"addre": "FivePerCent",
+		"slice": [
+			{
+				"name": "FivePercent_init_2",
+				"exp": "msg.sender.send(msg.value)"
+			},
+			{
+				"name": "FivePercent_init_7",
+				"exp": "msg.sender.send(msg.value - 10000000000000000000)"
+			},
+			{
+				"tag": "1",
+				"name": "FivePercent_init_19",
+				"exp": "participants[payoutIdx].etherAddress.send(transactionAmount)"
+			}
+		]
+	},
+	"UltimatePyramid": {
+		"addre": "UltimatePyramid",
+		"slice": [
+			{
+				"name": "theultimatepyramid_enter_2",
+				"exp": "msg.sender.send(msg.value)"
+			},
+			{
+				"name": "theultimatepyramid_enter_7",
+				"exp": "msg.sender.send(msg.value - 40000000000000000000)"
+			},
+			{
+				"name": "theultimatepyramid_enter_17",
+				"exp": "owner.send(collectedFees)"
+			},
+			{
+				"tag": "1",
+				"name": "theultimatepyramid_enter_25",
+				"exp": "persons[payoutIdx].etherAddress.send(transactionAmount)"
+			}
+		]
+	},
+	"TreasureChest": {
+		"addre": "TreasureChest",
+		"slice": [
+			{
+				"name": "TreasureChest_enter_2",
+				"exp": "msg.sender.send(msg.value)"
+			},
+			{
+				"name": "TreasureChest_enter_17",
+				"exp": "owner.send(fees)"
+			},
+			{
+				"tag": "1",
+				"name": "TreasureChest_enter_28",
+				"exp": "investors[nr].etherAddress.send(payout)"
+			},
+			{
+				"tag": "1",
+				"name": "TreasureChest_enter_32",
+				"exp": "investors[nr].etherAddress.send(payout)"
+			}
+		]
+	},
+	"TheFunction": {
+		"addre": "TheFunction",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "HYIP_performPayouts_14",
+				"exp": "! m_beneficiaries[idx].send(eachBeneficiaryPayout)"
+			},
+			{
+				"tag": "1",
+				"name": "HYIP_performPayouts_27",
+				"exp": "! m_investors[idx].etherAddress.send(payout)"
+			}
+		]
+	},
+	"BigRisk": {
+		"addre": "BigRisk",
+		"slice": [
+			{
+				"name": "BigRisk_enter_4",
+				"exp": "msg.sender.send(amount)"
+			},
+			{
+				"tag": "1",
+				"name": "BigRisk_enter_15",
+				"exp": "persons[payoutIdx].etherAddress.send(transactionAmount)"
+			}
+		]
+	},
+	"ProtectTheCastle2": {
+		"addre": "ProtectTheCastle2",
+		"slice": [
+			{
+				"name": "ProtectTheCastle_repairTheCastle_3",
+				"exp": "msg.sender.send(msg.value)"
+			},
+			{
+				"name": "ProtectTheCastle_repairTheCastle_7",
+				"exp": "msg.sender.send(msg.value - 100000000000000000000)"
+			},
+			{
+				"name": "ProtectTheCastle_repairTheCastle_12",
+				"exp": "citizensAddresses[citizensAddresses.length - 1].send(piggyBank)"
+			},
+			{
+				"name": "ProtectTheCastle_repairTheCastle_14",
+				"exp": "citizensAddresses[citizensAddresses.length - 1].send(piggyBank * 65 / 100)"
+			},
+			{
+				"name": "ProtectTheCastle_repairTheCastle_15",
+				"exp": "citizensAddresses[citizensAddresses.length - 2].send(piggyBank * 35 / 100)"
+			},
+			{
+				"name": "ProtectTheCastle_repairTheCastle_17",
+				"exp": "citizensAddresses[citizensAddresses.length - 1].send(piggyBank * 55 / 100)"
+			},
+			{
+				"name": "ProtectTheCastle_repairTheCastle_18",
+				"exp": "citizensAddresses[citizensAddresses.length - 2].send(piggyBank * 30 / 100)"
+			},
+			{
+				"name": "ProtectTheCastle_repairTheCastle_19",
+				"exp": "citizensAddresses[citizensAddresses.length - 3].send(piggyBank * 15 / 100)"
+			},
+			{
+				"name": "ProtectTheCastle_repairTheCastle_31",
+				"exp": "jester.send(amount * 3 / 100)"
+			},
+			{
+				"name": "ProtectTheCastle_repairTheCastle_40",
+				"exp": "jester.send(amount * 3 / 100)"
+			},
+			{
+				"tag": "1",
+				"name": "ProtectTheCastle_repairTheCastle_44",
+				"exp": "citizensAddresses[lastCitizenPaid].send(citizensAmounts[lastCitizenPaid])"
+			},
+			{
+				"name": "ProtectTheCastle_collectFee_2",
+				"exp": "bribedCitizen.send(collectedFee)"
+			}
+		]
+	},
+	"SmartRevShare1": {
+		"addre": "SmartRevShare1",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "SmartRevshare_payout_17",
+				"exp": "investors[idx].addr.send(payoutValue)"
+			},
+			{
+				"name": "SmartRevshare_testingContract_1",
+				"exp": "currentManager.send(this.balance)"
+			}
+		]
+	},
+	"EthereumPyramid": {
+		"addre": "EthereumPyramid",
+		"slice": [
+			{
+				"name": "Pyramid_enter_2",
+				"exp": "msg.sender.send(msg.value)"
+			},
+			{
+				"name": "Pyramid_enter_6",
+				"exp": "msg.sender.send(msg.value)"
+			},
+			{
+				"name": "Pyramid_enter_10",
+				"exp": "msg.sender.send(msg.value - 1000000000000000000)"
+			},
+			{
+				"tag": "1",
+				"name": "Pyramid_enter_29",
+				"exp": "participants[payoutIdx].etherAddress.send(amount)"
+			},
+			{
+				"name": "Pyramid_collectFees_4",
+				"exp": "recipient.send(collectedFees)"
+			}
+		]
+	},
+	"Dividend": {
+		"addre": "Dividend",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "Dividend_PayOut_4",
+				"exp": "contributors[ContibutorNumber].addr.send(cProfit)"
+			},
+			{
+				"name": "Dividend_TestContract_1",
+				"exp": "deployer.send(this.balance)"
+			}
+		]
+	},
+	"X151": {
+		"addre": "X151",
+		"slice": [
+			{
+				"name": "x15_enter_2",
+				"exp": "kappa.send(msg.value)"
+			},
+			{
+				"name": "x15_enter_19",
+				"exp": "kappa.send(feeamount)"
+			},
+			{
+				"tag": "1",
+				"name": "x15_enter_36",
+				"exp": "crazyearners[nr].etherAddress.send(payout)"
+			},
+			{
+				"tag": "1",
+				"name": "x15_enter_40",
+				"exp": "crazyearners[nr].etherAddress.send(payout)"
+			}
+		]
+	},
+	"0x5d41106d9088f968f6fdc376bec83451420c356f": {
+		"addre": "0x5d41106d9088f968f6fdc376bec83451420c356f",
+		"slice": [
+			{
+				"name": "Fish_sell_7",
+				"exp": "! msg.sender.send(moneyWorth)"
+			}
+		]
+	},
+	"ResetPonzi6": {
+		"addre": "ResetPonzi6",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "ResetPonzi_enter_22",
+				"exp": "currentNiceGuy.send(100000000000000000)"
+			},
+			{
+				"tag": "1",
+				"name": "ResetPonzi_enter_25",
+				"exp": "persons[payoutIdx].addr.send(1000000000000000000)"
+			}
+		]
+	},
+	"Timegame3": {
+		"addre": "Timegame3",
+		"slice": [
+			{
+				"name": "timegame_enter_3",
+				"exp": "msg.sender.send(msg.value)"
+			},
+			{
+				"name": "timegame_enter_8",
+				"exp": "msg.sender.send(msg.value - 50000000000000000000)"
+			},
+			{
+				"name": "timegame_enter_19",
+				"exp": "owner.send(collectedFees)"
+			},
+			{
+				"tag": "1",
+				"name": "timegame_enter_27",
+				"exp": "persons[payoutIdx].etherAddress.send(transactionAmount)"
+			},
+			{
+				"name": "timegame_enter_31",
+				"exp": "msg.sender.send(msg.value)"
+			}
+		]
+	},
+	"TheGame": {
+		"addre": "TheGame",
+		"slice": [
+			{
+				"name": "TheGame_contribute_toTheGame_3",
+				"exp": "msg.sender.send(msg.value)"
+			},
+			{
+				"name": "TheGame_contribute_toTheGame_7",
+				"exp": "msg.sender.send(msg.value - 25000000000000000000)"
+			},
+			{
+				"name": "TheGame_contribute_toTheGame_12",
+				"exp": "playersAddresses[playersAddresses.length - 1].send(jackpot)"
+			},
+			{
+				"tag": "1",
+				"name": "TheGame_contribute_toTheGame_14",
+				"exp": "playersAddresses[playersAddresses.length - 1].send(jackpot * 70 / 100)"
+			},
+			{
+				"tag": "1",
+				"name": "TheGame_contribute_toTheGame_15",
+				"exp": "playersAddresses[playersAddresses.length - 2].send(jackpot * 30 / 100)"
+			},
+			{
+				"tag": "1",
+				"name": "TheGame_contribute_toTheGame_17",
+				"exp": "playersAddresses[playersAddresses.length - 1].send(jackpot * 70 / 100)"
+			},
+			{
+				"tag": "1",
+				"name": "TheGame_contribute_toTheGame_18",
+				"exp": "playersAddresses[playersAddresses.length - 2].send(jackpot * 20 / 100)"
+			},
+			{
+				"tag": "1",
+				"name": "TheGame_contribute_toTheGame_19",
+				"exp": "playersAddresses[playersAddresses.length - 3].send(jackpot * 10 / 100)"
+			},
+			{
+				"name": "TheGame_contribute_toTheGame_31",
+				"exp": "first_player.send(amount * 3 / 100)"
+			},
+			{
+				"name": "TheGame_contribute_toTheGame_40",
+				"exp": "first_player.send(amount * 3 / 100)"
+			},
+			{
+				"tag": "1",
+				"name": "TheGame_contribute_toTheGame_44",
+				"exp": "playersAddresses[lastPlayerPaid].send(playersAmounts[lastPlayerPaid])"
+			},
+			{
+				"name": "TheGame_restart_2",
+				"exp": "mainPlayer.send(address(this).balance)"
+			},
+			{
+				"name": "TheGame_collectFee_2",
+				"exp": "mainPlayer.send(collectedFee)"
+			}
+		]
+	},
+	"0x09515cb5e3acaef239ab83d78b2f3e3764fcab9b": {
+		"addre": "0x09515cb5e3acaef239ab83d78b2f3e3764fcab9b",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "BalancedPonzi_fallback_22",
+				"exp": "currentNiceGuy.send(1000000000000000000)"
+			},
+			{
+				"tag": "1",
+				"name": "BalancedPonzi_fallback_25",
+				"exp": "persons[payoutIdx].addr.send(10000000000000000000)"
+			},
+			{
+				"name": "BalancedPonzi_funnel_1",
+				"exp": "beta.send(this.balance)"
+			}
+		]
+	},
+	"MultiplyX10": {
+		"addre": "MultiplyX10",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "MultiplyX10_enter_15",
+				"exp": "depositors[index].EtherAddress.send(payment)"
+			}
+		]
+	},
+	"LittleEthereumDoubler": {
+		"addre": "LittleEthereumDoubler",
+		"slice": [
+			{
+				"name": "LittleEthereumDoubler_NewFeeAddress_2",
+				"exp": "tx.origin.send(msg.value)"
+			},
+			{
+				"name": "LittleEthereumDoubler_DepositLimit_7",
+				"exp": "tx.origin.send(a - x)"
+			},
+			{
+				"name": "LittleEthereumDoubler_Fees_1",
+				"exp": "feeAddress.send(a * 25 / 1000)"
+			},
+			{
+				"tag": "1",
+				"name": "LittleEthereumDoubler_Payout_6",
+				"exp": "users[index].addr.send(this.balance)"
+			},
+			{
+				"tag": "1",
+				"name": "LittleEthereumDoubler_Payout_8",
+				"exp": "users[index].addr.send(users[index].payoutLeft)"
+			}
+		]
+	},
+	"Quick": {
+		"addre": "Quick",
+		"slice": [
+			{
+				"name": "quick_enter_2",
+				"exp": "msg.sender.send(msg.value)"
+			},
+			{
+				"name": "quick_enter_7",
+				"exp": "msg.sender.send(msg.value - 20000000000000000000)"
+			},
+			{
+				"name": "quick_enter_17",
+				"exp": "owner.send(collectedFees)"
+			},
+			{
+				"tag": "1",
+				"name": "quick_enter_25",
+				"exp": "persons[payoutIdx].etherAddress.send(transactionAmount)"
+			}
+		]
+	},
+	"PiggyBank2": {
+		"addre": "PiggyBank2",
+		"slice": [
+			{
+				"name": "PiggyBank_enter_2",
+				"exp": "msg.sender.send(msg.value)"
+			},
+			{
+				"name": "PiggyBank_enter_14",
+				"exp": "owner.send(fees)"
+			},
+			{
+				"tag": "1",
+				"name": "PiggyBank_enter_23",
+				"exp": "investors[k].etherAddress.send(transactionAmount)"
+			},
+			{
+				"tag": "1",
+				"name": "PiggyBank_enter_26",
+				"exp": "investors[k].etherAddress.send(transactionAmount)"
+			}
+		]
+	},
+	"0xe02d1cf96c2d6dc085f475ce61579c9538119b86": {
+		"addre": "0xe02d1cf96c2d6dc085f475ce61579c9538119b86",
+		"slice": [
+			{
+				"name": "Crowdsale_investInternal_25",
+				"exp": "! multisigWallet.send(weiAmount)"
+			},
+			{
+				"name": "Crowdsale_refund_8",
+				"exp": "! msg.sender.send(weiValue)"
+			}
+		]
+	},
+	"Plusoneponzi2": {
+		"addre": "Plusoneponzi2",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "plusOnePonzi_fallback_11",
+				"exp": "payouts[payoutIndex].addr.send(payouts[payoutIndex].yield)"
+			}
+		]
+	},
+	"0x2c8eab1b7c57a6f9f81f761b26b71f99b25ff59c": {
+		"addre": "0x2c8eab1b7c57a6f9f81f761b26b71f99b25ff59c",
+		"slice": []
+	},
+	"BigRisk2": {
+		"addre": "BigRisk2",
+		"slice": [
+			{
+				"name": "BigRisk_enter_4",
+				"exp": "msg.sender.send(amount)"
+			},
+			{
+				"tag": "1",
+				"name": "BigRisk_enter_15",
+				"exp": "persons[payoutIdx].etherAddress.send(transactionAmount)"
+			}
+		]
+	},
+	"SwarmRedistribution": {
+		"addre": "SwarmRedistribution",
+		"slice": [
+			{
+				"name": "RES_sell_5",
+				"exp": "! msg.sender.send(_value)"
+			},
+			{
+				"name": "SwarmRedistribution_sell_5",
+				"exp": "! msg.sender.send(_value)"
+			},
+			{
+				"name": "Resilience_sell_5",
+				"exp": "! msg.sender.send(_value)"
+			}
+		]
+	},
+	"MyScheme": {
+		"addre": "MyScheme",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "MyScheme_fallback_8",
+				"exp": "myTree[0].send(treeBalance)"
+			},
+			{
+				"tag": "1",
+				"name": "MyScheme_fallback_16",
+				"exp": "myTree[i].send(500000000000000000)"
+			},
+			{
+				"tag": "1",
+				"name": "MyScheme_fallback_25",
+				"exp": "myTree[i].send(eachLevelGets / numInLevel - 1)"
+			}
+		]
+	},
+	"Doubler3": {
+		"addre": "Doubler3",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "Doubler_enter_10",
+				"exp": "participants[payoutIdx].etherAddress.send(NeedAmount)"
+			},
+			{
+				"tag": "1",
+				"name": "Doubler_NextPayout_4",
+				"exp": "participants[payoutIdx].etherAddress.send(NeedAmount)"
+			},
+			{
+				"name": "Doubler_collectFees_5",
+				"exp": "owner.send(collectedFees)"
+			},
+			{
+				"name": "Doubler_collectBalance_5",
+				"exp": "owner.send(balance)"
+			}
+		]
+	},
+	"Resetponzi": {
+		"addre": "Resetponzi",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "ResetPonzi_fallback_22",
+				"exp": "currentNiceGuy.send(1000000000000000000)"
+			},
+			{
+				"tag": "1",
+				"name": "ResetPonzi_fallback_25",
+				"exp": "persons[payoutIdx].addr.send(10000000000000000000)"
+			}
+		]
+	},
+	"Ethstick": {
+		"addre": "Ethstick",
+		"slice": [
+			{
+				"name": "Ethstick_init_2",
+				"exp": "msg.sender.send(msg.value)"
+			},
+			{
+				"name": "Ethstick_chase_3",
+				"exp": "msg.sender.send(msg.value - maxDeposit * 1000000000000000000)"
+			},
+			{
+				"tag": "1",
+				"name": "Ethstick_chase_48",
+				"exp": "entries[payoutOrder].entryAddress.send(payout)"
+			},
+			{
+				"name": "Ethstick_chase_60",
+				"exp": "ranking[luckyDonkey].addr.send(fees)"
+			},
+			{
+				"name": "Ethstick_chase_61",
+				"exp": "donkeyKing.send(fees)"
+			},
+			{
+				"name": "Ethstick_chase_63",
+				"exp": "pig.send(fees)"
+			}
+		]
+	},
+	"0x2101ba900918345003585b0a17de91570609d706": {
+		"addre": "0x2101ba900918345003585b0a17de91570609d706",
+		"slice": [
+			{
+				"name": "ClitCrowdFunder_payOut_3",
+				"exp": "fundRecipient.transfer(amount)"
+			},
+			{
+				"name": "ClitCrowdFunder_getRefund_3",
+				"exp": "msg.sender.transfer(amountToRefund)"
+			}
+		]
+	},
+	"CopyPaste": {
+		"addre": "CopyPaste",
+		"slice": [
+			{
+				"name": "copypaste_enter_2",
+				"exp": "msg.sender.send(msg.value)"
+			},
+			{
+				"name": "copypaste_enter_7",
+				"exp": "msg.sender.send(msg.value - 10000000000000000000)"
+			},
+			{
+				"name": "copypaste_enter_17",
+				"exp": "owner.send(collectedFees)"
+			},
+			{
+				"tag": "1",
+				"name": "copypaste_enter_25",
+				"exp": "persons[payoutIdx].etherAddress.send(transactionAmount)"
+			}
+		]
+	},
+	"The10EtherPyramid1": {
+		"addre": "The10EtherPyramid1",
+		"slice": [
+			{
+				"name": "The10ETHPyramid_enter_2",
+				"exp": "msg.sender.send(msg.value)"
+			},
+			{
+				"name": "The10ETHPyramid_enter_7",
+				"exp": "msg.sender.send(msg.value - 10000000000000000000)"
+			},
+			{
+				"name": "The10ETHPyramid_enter_17",
+				"exp": "owner.send(collectedFees)"
+			},
+			{
+				"tag": "1",
+				"name": "The10ETHPyramid_enter_25",
+				"exp": "persons[payoutIdx].etherAddress.send(transactionAmount)"
+			}
+		]
+	},
+	"PiggyBank": {
+		"addre": "PiggyBank",
+		"slice": [
+			{
+				"name": "PiggyBank_enter_2",
+				"exp": "msg.sender.send(msg.value)"
+			},
+			{
+				"name": "PiggyBank_enter_14",
+				"exp": "owner.send(fees)"
+			},
+			{
+				"tag": "1",
+				"name": "PiggyBank_enter_23",
+				"exp": "investors[k].etherAddress.send(transactionAmount)"
+			},
+			{
+				"tag": "1",
+				"name": "PiggyBank_enter_26",
+				"exp": "investors[k].etherAddress.send(transactionAmount)"
+			}
+		]
+	},
+	"FiveTimes": {
+		"addre": "FiveTimes",
+		"slice": [
+			{
+				"name": "fivetimes_enter_2",
+				"exp": "msg.sender.send(msg.value)"
+			},
+			{
+				"name": "fivetimes_enter_7",
+				"exp": "msg.sender.send(msg.value - 999000000000000000000)"
+			},
+			{
+				"name": "fivetimes_enter_17",
+				"exp": "owner.send(collectedFees)"
+			},
+			{
+				"tag": "1",
+				"name": "fivetimes_enter_25",
+				"exp": "persons[payoutIdx].etherAddress.send(transactionAmount)"
+			}
+		]
+	},
+	"DFS": {
+		"addre": "DFS",
+		"slice": [
+			{
+				"name": "DFS_makeDeposit_6",
+				"exp": "! msg.sender.send(msg.value - 1000000000000000000000)"
+			},
+			{
+				"name": "DFS_makeDeposit_13",
+				"exp": "! owner1.send(amount * 5 / 2 / 100)"
+			},
+			{
+				"name": "DFS_makeDeposit_16",
+				"exp": "! owner2.send(amount * 5 / 2 / 100)"
+			},
+			{
+				"name": "DFS_makeDeposit_20",
+				"exp": "! ref1.send(amount * 5 / 100)"
+			},
+			{
+				"name": "DFS_makeDeposit_24",
+				"exp": "! ref2.send(amount * 2 / 100)"
+			},
+			{
+				"name": "DFS_makeDeposit_28",
+				"exp": "! ref3.send(amount / 100)"
+			},
+			{
+				"tag": "1",
+				"name": "DFS_pay_28",
+				"exp": "! deposits[i].sender.send(amountToWithdraw)"
+			}
+		]
+	},
+	"0xc58492b3b14f658adff566c988029308505f81b5": {
+		"addre": "0xc58492b3b14f658adff566c988029308505f81b5",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "PonziScheme_fallback_6",
+				"exp": "lastDepositor.send(msg.value)"
+			}
+		]
+	},
+	"Rubixi": {
+		"addre": "Rubixi",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "Rubixi_addPayout_13",
+				"exp": "participants[payoutOrder].etherAddress.send(payoutToSend)"
+			},
+			{
+				"name": "Rubixi_collectAllFees_4",
+				"exp": "creator.send(collectedFees)"
+			},
+			{
+				"name": "Rubixi_collectFeesInEther_8",
+				"exp": "creator.send(_amt)"
+			},
+			{
+				"name": "Rubixi_collectPercentOfFees_5",
+				"exp": "creator.send(feesToCollect)"
+			}
+		]
+	},
+	"Niceguytax3": {
+		"addre": "Niceguytax3",
+		"slice": [
+			{
+				"name": "NiceGuyTax_fallback_4",
+				"exp": "currentNiceGuy.send(1000000000000000000)"
+			},
+			{
+				"tag": "1",
+				"name": "NiceGuyTax_fallback_25",
+				"exp": "investors[payoutIndex].addr.send(10000000000000000000)"
+			}
+		]
+	},
+	"WealthRedestributionProject": {
+		"addre": "WealthRedestributionProject",
+		"slice": [
+			{
+				"name": "WealthRedistributionProject_enter_2",
+				"exp": "msg.sender.send(msg.value)"
+			},
+			{
+				"tag": "1",
+				"name": "WealthRedistributionProject_enter_15",
+				"exp": "benefactor[k].etherAddress.send(transactionAmount)"
+			}
+		]
+	},
+	"Etheramid1": {
+		"addre": "Etheramid1",
+		"slice": [
+			{
+				"name": "Etheramid2_enter_3",
+				"exp": "msg.sender.send(msg.value)"
+			},
+			{
+				"name": "Etheramid2_enter_13",
+				"exp": "next.send(toSend)"
+			},
+			{
+				"name": "Etheramid2_enter_19",
+				"exp": "next.send(rest)"
+			}
+		]
+	},
+	"0x9bc42587af0fe34032d8068f51bd6bd7d7e4d718": {
+		"addre": "0x9bc42587af0fe34032d8068f51bd6bd7d7e4d718",
+		"slice": [
+			{
+				"name": "Crowdsale_investInternal_25",
+				"exp": "! multisigWallet.send(weiAmount)"
+			},
+			{
+				"name": "Crowdsale_refund_8",
+				"exp": "! msg.sender.send(weiValue)"
+			}
+		]
+	},
+	"NiceGuyPonzi2": {
+		"addre": "NiceGuyPonzi2",
+		"slice": [
+			{
+				"name": "NiceGuyPonzi_enter_2",
+				"exp": "msg.sender.send(msg.value)"
+			},
+			{
+				"name": "NiceGuyPonzi_enter_7",
+				"exp": "msg.sender.send(msg.value - 10000000000000000000)"
+			},
+			{
+				"name": "NiceGuyPonzi_enter_23",
+				"exp": "owner.send(collectedFees)"
+			},
+			{
+				"tag": "1",
+				"name": "NiceGuyPonzi_enter_31",
+				"exp": "persons[payoutIdx].etherAddress.send(transactionAmount)"
+			}
+		]
+	},
+	"Doubler": {
+		"addre": "Doubler",
+		"slice": [
+			{
+				"name": "Doubler_enter_2",
+				"exp": "msg.sender.send(msg.value)"
+			},
+			{
+				"tag": "1",
+				"name": "Doubler_enter_16",
+				"exp": "participants[payoutIdx].etherAddress.send(transactionAmount)"
+			},
+			{
+				"name": "Doubler_collectFees_4",
+				"exp": "owner.send(collectedFees)"
+			}
+		]
+	},
+	"0xd7cb65c907815d1852e246198aa7687e06d96e53": {
+		"addre": "0xd7cb65c907815d1852e246198aa7687e06d96e53",
+		"slice": [
+			{
+				"name": "HonestisNetworkETHpreICO_Partial23Transfer_1",
+				"exp": "honestisFort.transfer(this.balance - 1000000000000000000)"
+			},
+			{
+				"name": "HonestisNetworkETHpreICO_Partial23Send_4",
+				"exp": "honestisFort.send(this.balance - 1000000000000000000)"
+			},
+			{
+				"name": "HonestisNetworkETHpreICO_finalizebackup_5",
+				"exp": "! honestisFortbackup.send(this.balance)"
+			},
+			{
+				"name": "HonestisNetworkETHpreICO_refundTRA_13",
+				"exp": "msg.sender.transfer(ETHValue)"
+			}
+		]
+	},
+	"ZeroPonzi": {
+		"addre": "ZeroPonzi",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "ZeroPonzi_fallback_11",
+				"exp": "payouts[payoutIndex].addr.send(payouts[payoutIndex].yield)"
+			}
+		]
+	},
+	"EthMultiplier": {
+		"addre": "EthMultiplier",
+		"slice": [
+			{
+				"name": "EthMultiplier_invest_3",
+				"exp": "owner.transfer(msg.value * feePercentage / 100)"
+			},
+			{
+				"tag": "1",
+				"name": "EthMultiplier_invest_6",
+				"exp": "investors[payoutIdx].addr.transfer(investors[payoutIdx].payout)"
+			},
+			{
+				"name": "EthMultiplier_buySmartContract_1",
+				"exp": "owner.transfer(priceOfSmartContract)"
+			}
+		]
+	},
+	"0x4e1833a4a67ed1c8cb0ffc541ab7291c02d2fd06": {
+		"addre": "0x4e1833a4a67ed1c8cb0ffc541ab7291c02d2fd06",
+		"slice": [
+			{
+				"name": "countGame_endGame_2",
+				"exp": "best_gamer.transfer(this.balance)"
+			}
+		]
+	},
+	"0xed59cf07c469f071fa1eb268f3b62d744ae572c0": {
+		"addre": "0xed59cf07c469f071fa1eb268f3b62d744ae572c0",
+		"slice": [
+			{
+				"name": "BountyEscrow_payout_6",
+				"exp": "Payout(msg.sender,recipients[i],i + 1,amounts[i],recipients[i].send(amounts[i]))"
+			}
+		]
+	},
+	"0x68bbb2461d7c4c30902621e5b6e6e3e45890c1ff": {
+		"addre": "0x68bbb2461d7c4c30902621e5b6e6e3e45890c1ff",
+		"slice": [
+			{
+				"name": "Crowdsale_investInternal_25",
+				"exp": "! multisigWallet.send(weiAmount)"
+			},
+			{
+				"name": "Crowdsale_refund_8",
+				"exp": "! msg.sender.send(weiValue)"
+			}
+		]
+	},
+	"TheUltimatePyramid2": {
+		"addre": "TheUltimatePyramid2",
+		"slice": [
+			{
+				"name": "theultimatepyramid_enter_2",
+				"exp": "msg.sender.send(msg.value)"
+			},
+			{
+				"name": "theultimatepyramid_enter_7",
+				"exp": "msg.sender.send(msg.value - 40000000000000000000)"
+			},
+			{
+				"name": "theultimatepyramid_enter_17",
+				"exp": "owner.send(collectedFees)"
+			},
+			{
+				"tag": "1",
+				"name": "theultimatepyramid_enter_25",
+				"exp": "persons[payoutIdx].etherAddress.send(transactionAmount)"
+			}
+		]
+	},
+	"0xf9533353c20495527e0499ac71e1507b418b9314": {
+		"addre": "0xf9533353c20495527e0499ac71e1507b418b9314",
+		"slice": [
+			{
+				"name": "SYCPrivateEarlyPurchase_appendEarlyPurchase_5",
+				"exp": "purchaser.send(totalEarlyPurchaseRaised + amount - WEI_MAXIMUM_EARLYPURCHASE)"
+			},
+			{
+				"name": "SYCPrivateEarlyPurchase_withdraw_1",
+				"exp": "! owner.send(withdrawalAmount)"
+			},
+			{
+				"name": "SYCPrivateEarlyPurchase_withdrawAll_1",
+				"exp": "! owner.send(this.balance)"
+			}
+		]
+	},
+	"FairAndEasy2": {
+		"addre": "FairAndEasy2",
+		"slice": [
+			{
+				"name": "fairandeasy_enter_2",
+				"exp": "msg.sender.send(msg.value)"
+			},
+			{
+				"name": "fairandeasy_enter_7",
+				"exp": "msg.sender.send(msg.value - 50000000000000000000)"
+			},
+			{
+				"tag": "1",
+				"name": "fairandeasy_enter_18",
+				"exp": "persons[payoutIdx].etherAddress.send(transactionAmount)"
+			}
+		]
+	},
+	"0x934e65cead3c1c2824ed75d54768d53fa44e4e17": {
+		"addre": "0x934e65cead3c1c2824ed75d54768d53fa44e4e17",
+		"slice": [
+			{
+				"name": "CryptoSlotsGame_bet_8",
+				"exp": "msg.sender.transfer(playerWin)"
+			},
+			{
+				"name": "CryptoSlotsGame_bet_12",
+				"exp": "msg.sender.transfer(playerWin)"
+			},
+			{
+				"name": "CryptoSlotsGame_bet_14",
+				"exp": "houseAddress.transfer(msg.value * houseFee / percentDivider)"
+			},
+			{
+				"name": "CryptoSlotsGame_getProfit_6",
+				"exp": "msg.sender.transfer(profit)"
+			}
+		]
+	},
+	"NiceGuyPonzi1": {
+		"addre": "NiceGuyPonzi1",
+		"slice": [
+			{
+				"name": "NiceGuyPonzi_enter_22",
+				"exp": "cNiceGuy.send(10000000000000000)"
+			},
+			{
+				"tag": "1",
+				"name": "NiceGuyPonzi_enter_26",
+				"exp": "persons[payoutIdx].addr.send(100000000000000000)"
+			}
+		]
+	},
+	"Send1Get2": {
+		"addre": "Send1Get2",
+		"slice": [
+			{
+				"name": "Send1Get2_enter_2",
+				"exp": "msg.sender.send(msg.value)"
+			},
+			{
+				"name": "Send1Get2_enter_7",
+				"exp": "msg.sender.send(msg.value - 1000000000000000000)"
+			},
+			{
+				"name": "Send1Get2_enter_17",
+				"exp": "owner.send(collectedFees)"
+			},
+			{
+				"tag": "1",
+				"name": "Send1Get2_enter_25",
+				"exp": "persons[payoutIdx].etherAddress.send(transactionAmount)"
+			}
+		]
+	},
+	"0xbd1e1ea13de6f320e89f33a7076b29d1a00506d8": {
+		"addre": "0xbd1e1ea13de6f320e89f33a7076b29d1a00506d8",
+		"slice": []
+	},
+	"TheUltimatePyramid1": {
+		"addre": "TheUltimatePyramid1",
+		"slice": [
+			{
+				"name": "theultimatepyramid_enter_2",
+				"exp": "msg.sender.send(msg.value)"
+			},
+			{
+				"name": "theultimatepyramid_enter_7",
+				"exp": "msg.sender.send(msg.value - 40000000000000000000)"
+			},
+			{
+				"name": "theultimatepyramid_enter_17",
+				"exp": "owner.send(collectedFees)"
+			},
+			{
+				"tag": "1",
+				"name": "theultimatepyramid_enter_25",
+				"exp": "persons[payoutIdx].etherAddress.send(transactionAmount)"
+			}
+		]
+	},
+	"ResetPonzi2": {
+		"addre": "ResetPonzi2",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "ResetPonzi_fallback_22",
+				"exp": "currentNiceGuy.send(1000000000000000000)"
+			},
+			{
+				"tag": "1",
+				"name": "ResetPonzi_fallback_25",
+				"exp": "persons[payoutIdx].addr.send(10000000000000000000)"
+			},
+			{
+				"name": "ResetPonzi_funnel_1",
+				"exp": "beta.send(this.balance)"
+			}
+		]
+	},
+	"AFreeEtherADay": {
+		"addre": "AFreeEtherADay",
+		"slice": [
+			{
+				"name": "A_Free_Ether_A_Day_show_me_the_money_16",
+				"exp": "success = msg.sender.send(payout)"
+			}
+		]
+	},
+	"FastRealisticPyramid2": {
+		"addre": "FastRealisticPyramid2",
+		"slice": [
+			{
+				"name": "FastRealisticPyramid_enter_7",
+				"exp": "owner.send(collectedFees)"
+			},
+			{
+				"tag": "1",
+				"name": "FastRealisticPyramid_enter_14",
+				"exp": "person[payoutIdx].etherAddress.send(transactionAmount)"
+			}
+		]
+	},
+	"0xc27590378690620a44b1382e7cf31db5a1f9b99e": {
+		"addre": "0xc27590378690620a44b1382e7cf31db5a1f9b99e",
+		"slice": [
+			{
+				"name": "HodlContract_HodlEth_4",
+				"exp": "FeeAddress.transfer(FeeAmount)"
+			},
+			{
+				"name": "HodlContract_Realize_3",
+				"exp": "msg.sender.transfer(p.amount)"
+			}
+		]
+	},
+	"0xd92d62ce8504e5c61aa17d9a9b13c65dbd77c268": {
+		"addre": "0xd92d62ce8504e5c61aa17d9a9b13c65dbd77c268",
+		"slice": [
+			{
+				"name": "Pixiu_withdraw_5",
+				"exp": "msg.sender.transfer(_remain)"
+			},
+			{
+				"name": "Pixiu_admin_withdraw_4",
+				"exp": "msg.sender.transfer(_withdraw)"
+			},
+			{
+				"name": "Pixiu_admin_withdraw_all_2",
+				"exp": "_deposit.transfer(this.balance)"
+			}
+		]
+	},
+	"FairAndEasy": {
+		"addre": "FairAndEasy",
+		"slice": [
+			{
+				"name": "fairandeasy_enter_2",
+				"exp": "msg.sender.send(msg.value)"
+			},
+			{
+				"name": "fairandeasy_enter_7",
+				"exp": "msg.sender.send(msg.value - 50000000000000000000)"
+			},
+			{
+				"name": "fairandeasy_enter_17",
+				"exp": "owner.send(collectedFees)"
+			},
+			{
+				"tag": "1",
+				"name": "fairandeasy_enter_25",
+				"exp": "persons[payoutIdx].etherAddress.send(transactionAmount)"
+			}
+		]
+	},
+	"0xb6951dba8d2aa5156440bcc4ba1af82f12c55159": {
+		"addre": "0xb6951dba8d2aa5156440bcc4ba1af82f12c55159",
+		"slice": [
+			{
+				"name": "Crowdsale_investInternal_25",
+				"exp": "! multisigWallet.send(weiAmount)"
+			},
+			{
+				"name": "Crowdsale_refund_8",
+				"exp": "! msg.sender.send(weiValue)"
+			}
+		]
+	},
+	"TheWhaleGame2": {
+		"addre": "TheWhaleGame2",
+		"slice": [
+			{
+				"name": "thewhalegame_enter_2",
+				"exp": "msg.sender.send(msg.value)"
+			},
+			{
+				"name": "thewhalegame_enter_7",
+				"exp": "msg.sender.send(msg.value - 500000000000000000000)"
+			},
+			{
+				"name": "thewhalegame_enter_17",
+				"exp": "owner.send(collectedFees)"
+			},
+			{
+				"tag": "1",
+				"name": "thewhalegame_enter_25",
+				"exp": "persons[payoutIdx].etherAddress.send(transactionAmount)"
+			}
+		]
+	},
+	"0x7384c268c27c21654a6eb5629d36330367c910fc": {
+		"addre": "0x7384c268c27c21654a6eb5629d36330367c910fc",
+		"slice": [
+			{
+				"name": "Crowdsale_investInternal_25",
+				"exp": "! multisigWallet.send(weiAmount)"
+			},
+			{
+				"name": "Crowdsale_refund_8",
+				"exp": "! msg.sender.send(weiValue)"
+			}
+		]
+	},
+	"baseMatthew": {
+		"note": "TBD",
+		"addre": "baseMatthew",
+		"slice": [
+			{
+				"name": "Matthew_fallback_2",
+				"exp": "whale.send(stake * 9 / 10)"
+			},
+			{
+				"name": "Matthew_fallback_7",
+				"exp": "msg.sender.send(stake)"
+			}
+		]
+	}
+}
