@@ -1,4 +1,7 @@
 import os
+import random
+import re
+import string
 import subprocess
 from typing import Dict, List
 import networkx as nx
@@ -7,6 +10,36 @@ import networkx.drawing.nx_pydot as nx_dot
 from ponzi_detector.info_analyze.contract_analyze import ContractInfo
 from slither.core.declarations.function import Function
 from slither.core.cfg.node import NodeType, Node
+
+
+def reSubT(_content):
+    pattern = r"\t"
+    return re.sub(pattern, "", _content)
+
+
+def reSubN(_content):
+    pattern = r"\n"
+    return re.sub(pattern, "", _content)
+
+
+def reSubS(_content):
+    pattern = r"(\s){1,}"
+    return re.sub(pattern, " ", _content)
+
+
+def do_change_to_sequence(content):
+    nowContent = content
+
+    # 1. delete \t
+    nowContent = reSubT(nowContent)
+
+    # 2. delete \n
+    nowContent = reSubN(nowContent)
+
+    # 3. delete \s
+    nowContent = reSubS(nowContent)
+
+    return nowContent
 
 
 def _assign_to_zero(stmt_expression):
@@ -140,9 +173,10 @@ def debug_get_graph_png(graph: nx.Graph, postfix, cur_dir):
 
 class FunctionInfo:
 
-    def __init__(self, contract_info: ContractInfo, function: Function, test_mode=0, simple=0):
+    def __init__(self, contract_info: ContractInfo, function: Function, test_mode=0, simple=0, rename=0):
 
         self.simple = simple  # 简易流程
+        self.rename = rename  # 变量名称混淆
         self.test_mode = test_mode  # 测试模式
 
         self.contract_info = contract_info
@@ -160,6 +194,7 @@ class FunctionInfo:
         self.stmt_internal_call = {}  # 当前语句是否调用函数 <node_id, fid>
         self.if_stmts = []  # 条件语句列表
         self.vars_list = []  # 函数中使用的说有的变量列表
+        self.vars_map = {}  # 函数中使用的说有的变量列表
         self.stmts_var_info_maps = {}  # 各语句变量使用情况
         self.transaction_stmts = {}  # 存在交易行为的语句列表 transaction_stmts
         self.loop_stmts = []  # 循环语句列表
@@ -385,16 +420,6 @@ class FunctionInfo:
                 self.cfg.nodes[str(stmt_info.node_id)]["called"] = called_infos
                 self.cfg.nodes[str(stmt_info.node_id)]["called_params"] = call_params_info
 
-    def __construct_psc(self, stmt_info: Node):
-
-        expression = stmt_info.expression.__str__()
-
-        if stmt_info.type is NodeType.IF:
-            expression = "if({})".format(stmt_info.expression.__str__())
-
-        if expression is not None:
-            self.psc.append("{}\n".format(expression))
-
     def __stmt_var_info(self, stmt_info: Node):
 
         stmt_var_info = []
@@ -441,16 +466,15 @@ class FunctionInfo:
 
     def __get_all_vars_list(self):
 
-        duplicate = {}
-
         for stmt_id in self.stmts_var_info_maps:
             stmt_var_infos = self.stmts_var_info_maps[stmt_id]
             for var_info in stmt_var_infos:
                 if "list" in var_info:
                     for var in var_info["list"]:
-                        if var not in duplicate:
-                            duplicate[var] = 1
+                        if var not in self.vars_map:
                             self.vars_list.append(var)
+                            self.vars_map[var] = "".join(random.sample(string.ascii_letters + string.digits,
+                                                                       len(var) + random.randint(0, 8)))
 
     def __stmt_call_send(self, stmt):
 
@@ -489,14 +513,21 @@ class FunctionInfo:
                     print("变量使用: {}".format(self.stmts_var_info_maps[str(stmt.node_id)]))
                     print("=============================================================\n")
 
-    def __if_loop_struct(self, stmt, stack):
+    def __if_loop_struct(self, stmt, stack, stack_dup):
 
-        # 有bug do{}while处理不了
-        # if stmt.type == NodeType.IF or stmt.type == NodeType.IFLOOP:
-        if stmt.type == NodeType.IF:
-            stack.append(str(stmt.node_id))
-            self.if_stmts.append(str(stmt.node_id))
+        # if stmt.type == NodeType.IF:
+        if stmt.type == NodeType.IF or stmt.type == NodeType.IFLOOP:
+            print("PUSH stmt id:{}".format(stmt.node_id))
+            if str(stmt.node_id) not in stack_dup:
+                stack.append(str(stmt.node_id))
+                stack_dup[str(stmt.node_id)] = 1
+                self.if_stmts.append(str(stmt.node_id))
 
+        """
+        为什么需要通过STARTLOOP寻找IFLOOP：
+            这里的并不是遍历cfg，而是根据slither的解析顺序
+            导致endloop早startloop之前发生
+        """
         if stmt.type == NodeType.STARTLOOP:
 
             # begin_loop --> if_loop，寻找start_loop的父节点
@@ -505,10 +536,14 @@ class FunctionInfo:
                 # 根据CFG_ID 找到function node的下标, 并找到对应的节点
                 target_node = self.get_node_info_by_node_id_from_function(int(suc_node_id))
                 if target_node.type == NodeType.IFLOOP:
-                    stack.append(str(suc_node_id))
-                    self.if_stmts.append(str(suc_node_id))
+                    if str(stmt.node_id) not in stack_dup:
+                        stack.append(str(suc_node_id))
+                        stack_dup[str(suc_node_id)] = 1
+                        print("PUSH stmt id:{}".format(suc_node_id))
+                        self.if_stmts.append(str(suc_node_id))
 
         if stmt.type == NodeType.ENDIF or stmt.type == NodeType.ENDLOOP:
+            print("POP stmt id:{}".format(stmt.node_id))
             if_start = stack.pop()
             if if_start not in self.if_paris:
                 self.if_paris[if_start] = str(stmt.node_id)
@@ -555,20 +590,133 @@ class FunctionInfo:
         #         if callee_fid is not None:
         #             callee_function = self.contract_info.get_function_by_fid(callee_fid)
 
+    def __construct_events(self, stmt):
+        expression = stmt.expression.__str__()
+        for event in self.contract_info.event_names:
+            if event in expression:
+                rename = ''.join(random.sample(string.ascii_letters + string.digits, len(event) + random.randint(0, 8)))
+                event_expression = "emit " + expression.replace(event, rename)
+                event_node = self.cfg.nodes[str(stmt.node_id)]
+                event_node["expression"] = event_expression
+
+                new_label = "ID:{} {}".format(str(stmt.node_id), event_expression)
+                event_node["label"] = new_label
+
+    def __construct_psc(self, stmt):
+
+        if stmt.expression is not None:
+            expression = stmt.expression.__str__()
+        else:
+            expression = None
+
+        if stmt.type is NodeType.STARTLOOP:
+            expression = "for"
+
+        if stmt.type is NodeType.VARIABLE:
+            if expression is None:
+                var_info = stmt.variable_declaration.name
+            else:
+                var_info = expression
+
+            expression = "{} {}".format(
+                stmt.variable_declaration.type,
+                var_info
+            )
+
+        if stmt.type is NodeType.RETURN:
+            expression = "{} {}".format("return", expression)
+
+        if stmt.type is NodeType.IF:
+            expression = "if({})".format(stmt.expression.__str__())
+
+        if str(expression) != 'None':
+            self.psc.append("{}\n".format(expression))
+
+    # TODO: 未完成
+    def _construct_psc_from_cfg(self):
+
+        psc_map = {}
+
+        loop_info = {}
+        merged = {}
+        cfg = self.cfg
+
+        for idx, stmt in enumerate(self.function.nodes):
+
+            expression = stmt.expression.__str__()
+
+            if stmt.type is NodeType.VARIABLE:
+                expression = "{} {}".format(
+                    stmt.variable_declaration.type,
+                    expression
+                )
+
+            if stmt.type is NodeType.IF:
+                expression = "if({})".format(stmt.expression.__str__())
+
+            # for(loop_init; loop_if; loop_after)
+            # int i --> IFLOOP --> i < 10  <-- i++
+            if stmt.type is NodeType.STARTLOOP:
+
+                loop_info = {"init": 0, "cond": 0, "after": 0}
+                for source, _ in cfg.in_edges(stmt.node_id):
+                    loop_info["init"] = source
+                    merged[source] = 1
+                    break
+
+                for _, dst in cfg.out_edges(stmt.node_id):
+                    loop_info["cond"] = dst
+                    merged[dst] = 1
+
+                    for source, _ in cfg.in_edges(dst):
+                        if cfg[source].type != NodeType.STARTLOOP:
+                            loop_info["after"] = source
+                            merged[source] = 1
+                            break
+                    break
+
+                loop_info[stmt.node_id] = loop_info
+
+            psc_map[stmt.node_id] = expression
+
+        for idx in loop_info:
+            loop_init_expr = psc_map[loop_info[idx]["init"]]
+            psc_map[loop_info[idx]["init"]] = None
+
+            loop_cond_expr = psc_map[loop_info[idx]["cond"]]
+            psc_map[loop_info[idx]["cond"]] = None
+
+            loop_after_expr = psc_map[loop_info[idx]["after"]]
+            psc_map[loop_info[idx]["after"]] = None
+
+            loop_expr = "for({}; {}; {})".format(loop_init_expr,
+                                                 loop_cond_expr,
+                                                 loop_after_expr)
+
     def _preprocess_function(self):
 
         simple_cfg = nx.DiGraph(self.cfg)
 
         # 局部信息
+        stack_dup = {}
         stack = []
         remove_edges = []
 
         for idx, stmt in enumerate(self.function.nodes):
 
             if self.test_mode:
-                print("EXPR:{} at {} is {}".format(stmt.expression.__str__(), stmt.node_id, stmt.type.__str__()))
+                print("EXPR:{} at {} is {} {}".
+                    format(
+                    stmt.expression.__str__(),
+                    stmt.node_id,
+                    stmt.type.__str__(),
+                    stmt.internal_calls.__str__()))
 
-            # 构建函数的代码序列化表示
+
+            if self.simple:
+                self.__construct_events(stmt)
+
+            # 构建psc
             self.__construct_psc(stmt)
 
             # 语句的变量使用情况
@@ -583,9 +731,8 @@ class FunctionInfo:
             # 判断当前语句是否存在交易行为
             self.__stmt_call_send(stmt)
 
-            if self.simple != 1:
-                # 匹配 (IF, END_IF) 和 (LOOP, END_LOOP)
-                self.__if_loop_struct(stmt, stack)
+            # 匹配 (IF, END_IF) 和 (LOOP, END_LOOP)
+            self.__if_loop_struct(stmt, stack, stack_dup)
 
             # 寻找(LOOP, END_LOOP), 并记录循环边到remove_edges
             self.__loop_pair(stmt, simple_cfg, remove_edges)
@@ -610,6 +757,16 @@ class FunctionInfo:
                 slices_infos.append({"name": name, "exp": exp})
 
         self.contract_info.load_slices_infos(slices_infos)
+
+    def _rename_cfg(self):
+        for node in self.cfg.nodes:
+            expression = self.cfg.nodes[node]["expression"]
+            for var in self.vars_map:
+                if var in expression:
+                    print(var)
+                    print(self.vars_map[var])
+                    expression = expression.replace(var, self.vars_map[var])
+            self.cfg.nodes[node]["expression"] = expression
 
     def loop_body_extreact(self, criteria):
         """
@@ -746,6 +903,10 @@ class FunctionInfo:
         self._get_node_id_2_cfg_id()
         self._preprocess_function()
 
+        if self.rename:
+            self.__get_all_vars_list()
+            self._rename_cfg()
+
         if self.simple != 1:
             self._get_call_chain()
 
@@ -774,10 +935,18 @@ class FunctionInfo:
     # 函数序列化表示生成                     #
     ######################################
     def save_psc_to_file(self):
-        psc_file_name = "{}_{}_{}.txt".format(self.contract_info.name, self.name, "psc")
-        with open(psc_file_name, "w+") as f:
+        temp_psc_file_name = "temp_{}_{}_{}.txt".format(self.contract_info.name, self.name, "psc")
+        with open(temp_psc_file_name, "w+") as f:
             for line_info in self.psc:
                 f.write(line_info)
+
+        psc_file_name = "{}_{}_{}.txt".format(self.contract_info.name, self.name, "psc")
+        with open(temp_psc_file_name, "r", encoding="utf-8") as f:
+            content = f.read()
+
+        seq_content = do_change_to_sequence(content)
+        with open(psc_file_name, "w+") as f:
+            f.write(seq_content)
 
     #######################################
     # 获得所有的切片准则                     #

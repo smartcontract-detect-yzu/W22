@@ -298,7 +298,7 @@ def save_graph_to_json_format(graph, key):
         cfg_to_graph_id[node] = id
         graph_id += 1
         cfg_id = node
-        print("node:{} {}".format(node, graph.nodes[node]))
+
         if len(graph.nodes[node]) == 0:
             continue
         type = graph.nodes[node]["type"]
@@ -323,21 +323,31 @@ def save_graph_to_json_format(graph, key):
 
     for u, v, d in graph.edges(data=True):
 
+        if "type" in d:
+            d_type = d["type"]
+        else:
+            d_type = "cfg"
+
         edge_info = {
             "from": cfg_to_graph_id[u],
             "to": cfg_to_graph_id[v],
             "cfg_from": u,
-            "cfg_to": v
+            "cfg_to": v,
+            "type": d_type
         }
 
         if "type" in d:
             if d["type"] == "ctrl_dependency":
                 cdg_edges.append(edge_info)
-            if d["type"] == "data_dependency":
+
+            elif d["type"] == "data_dependency":
                 ddg_edges.append(edge_info)
-            if d["type"] == "data_flow":
+
+            elif d["type"] == "data_flow":
                 dfg_edges.append(edge_info)
+
             else:
+                print("type is {}".format(d["type"]))
                 cfg_edges.append(edge_info)
         else:
             cfg_edges.append(edge_info)
@@ -975,25 +985,43 @@ class CodeGraphConstructor:
         g.add_edges_from(new_edges)
         return g
 
+    def get_cfg(self):
+
+        if self.function_info.cfg is None:
+            return
+
+        print("开始创建 CFG: {}".format(self.function_info.name))
+        debug_get_graph_png(self.function_info.cfg, "_cfg")
+        cfg_graph_info, file_name = save_graph_to_json_format(self.function_info.cfg, "cfg")
+        with open(file_name, "w+") as f:
+            f.write(json.dumps(cfg_graph_info))
+
     def get_cfg_and_pdg(self):
 
         if self.function_info.cfg is None:
             return
 
         print("开始创建 CFG: {}".format(self.function_info.name))
-        graph_info, file_name = save_graph_to_json_format(self.function_info.cfg, "cfg")
+        debug_get_graph_png(self.function_info.cfg, "_cfg", dot=True)
+        cfg_graph_info, file_name = save_graph_to_json_format(self.function_info.cfg, "cfg")
         with open(file_name, "w+") as f:
-            f.write(json.dumps(graph_info))
+            f.write(json.dumps(cfg_graph_info))
+
         with open("cfg_done.txt", "w+") as f:
             f.write("done")
 
         print("开始创建 PDG: {}".format(self.function_info.name))
         if self.function_info.pdg is None:
             self.function_info.construct_dependency_graph()
+
         cpg = self.function_info.pdg
         pdg, _ = get_graph_from_pdg_by_type(cpg, "pdg")  # 输出pdg
-        graph_info, file_name = save_graph_to_json_format(pdg, "pdg")
+        postfix = "{}_{}_pdg".format(pdg.graph["contract_name"], self.function_info.name)
+        debug_get_graph_png(pdg, postfix, dot=True)
+
+        pdg_graph_info, file_name = save_graph_to_json_format(pdg, "pdg")
         with open(file_name, "w+") as f:
-            f.write(json.dumps(graph_info))
+            f.write(json.dumps(pdg_graph_info))
+
         with open("pdg_done.txt", "w+") as f:
             f.write("done")

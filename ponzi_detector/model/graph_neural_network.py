@@ -1,10 +1,11 @@
 import torch
 from torch_geometric.nn import CGConv, GlobalAttention, GATConv, AGNNConv
-from torch_geometric.nn import global_max_pool, global_mean_pool
+from torch_geometric.nn import global_max_pool, global_mean_pool, global_add_pool
 from torch_geometric.loader import DataLoader
 import torch.nn.functional as F
 from torch.nn import Linear, BatchNorm1d, ModuleList
 from imblearn.over_sampling import SMOTE
+
 torch.manual_seed(8)
 
 from typing import Tuple, Union
@@ -115,20 +116,23 @@ class MYGNN(MessagePassing):
         # self.att = Parameter(torch.Tensor(1, 1, channels))
 
         # self.attention = GAL(channels, channels)
+        # self.dim_edge = 16
+        # self.line_edge1 = Linear(dim, 32)
+        # self.line_edge2 = Linear(32, self.dim_edge)
 
-        self.lin_f = Linear(channels + dim, channels, bias=bias)
-        self.lin_s = Linear(channels + dim, channels, bias=bias)
+        self.line_attention = Linear(channels + self.dim, channels, bias=bias)
+        self.line_node = Linear(channels + self.dim, channels, bias=bias)
         if batch_norm:
             self.bn = BatchNorm1d(channels)
         else:
             self.bn = None
-
+        self.active = torch.nn.ReLU(inplace=True)
         self.reset_parameters()
 
     def reset_parameters(self):
         # glorot(self.att_src)
-        self.lin_f.reset_parameters()
-        self.lin_s.reset_parameters()
+        self.line_attention.reset_parameters()
+        self.line_node.reset_parameters()
         if self.bn is not None:
             self.bn.reset_parameters()
 
@@ -137,6 +141,9 @@ class MYGNN(MessagePassing):
         """"""
         if isinstance(x, Tensor):
             x: PairTensor = (x, x)
+
+        # edge_attr = self.line_edge1(edge_attr)
+        # edge_attr = self.line_edge2(edge_attr)
 
         # propagate_type: (x: PairTensor, edge_attr: OptTensor)
         out = self.propagate(edge_index, x=x, edge_attr=edge_attr, size=None)
@@ -148,11 +155,11 @@ class MYGNN(MessagePassing):
 
     def message(self, x_i, x_j, edge_attr: OptTensor) -> Tensor:
         if edge_attr is None:
-            z = torch.cat([x_i, x_j], dim=-1)
+            z = torch.cat([x_i], dim=-1)
         else:
-            # z = torch.cat([x_i, x_j, edge_attr], dim=-1)
             z = torch.cat([x_i, edge_attr], dim=-1)
-        return self.lin_f(z).sigmoid() * F.softplus(self.lin_s(z))
+
+        return self.line_attention(z).sigmoid() * F.softplus(self.line_node(z))
 
     def __repr__(self) -> str:
         return f'{self.__class__.__name__}({self.channels}, dim={self.dim})'
@@ -164,16 +171,27 @@ class CGCClass(torch.nn.Module):
         feature_size = model_params["MODEL_FEAT_SIZE"]
         self.n_layers = model_params["MODEL_LAYERS"]
         self.dropout_rate = model_params["MODEL_DROPOUT_RATE"]
+        dense_edge_neurons = model_params["MODEL_EDGE_DENSE_NEURONS"]
+        edge_neurons = model_params["MODEL_EDGE_NEURONS"]
         dense_neurons = model_params["MODEL_DENSE_NEURONS"]
         edge_dim = model_params["MODEL_EDGE_DIM"]
         out_channels = model_params["MODEL_OUT_CHANNELS"]
         self.training = True
         self.gnn_layers = ModuleList([])
 
+        if edge_dim != 0:
+            self.linear_edge1 = Linear(edge_dim, dense_edge_neurons)
+            self.linear_edge2 = Linear(dense_edge_neurons, edge_neurons)
+            self.edge_flag = 1
+            self.edge_dim = edge_neurons
+        else:
+            self.edge_flag = 0
+            self.edge_dim = 0
+
         # CGC, Transform, BatchNorm block
         for i in range(self.n_layers):
             self.gnn_layers.append(
-                MYGNN(feature_size, dim=edge_dim, batch_norm=True)
+                MYGNN(feature_size, dim=self.edge_dim, batch_norm=True)
             )
 
         # Linear layers
@@ -189,8 +207,17 @@ class CGCClass(torch.nn.Module):
         # Initial CGC ??
         # x = self.cgc1(x, edge_index, edge_attr)
 
+        if self.edge_flag == 1:
+            edge_attr = self.linear_edge1(edge_attr)
+            edge_attr = self.linear_edge2(edge_attr)
+        else:
+            edge_attr = None
+
         for i in range(self.n_layers):
             x = self.gnn_layers[i](x, edge_index, edge_attr)
+
+        # print(criterias)
+        # print(batch)
 
         # Pooling
         x = global_max_pool(x, batch)
@@ -203,8 +230,9 @@ class CGCClass(torch.nn.Module):
 
         if torch.isnan(torch.mean(self.linear2.weight)):
             raise RuntimeError("Exploding gradients. Tune learning rate")
-        
+
         x = torch.sigmoid(x)  # 二分类，输出约束在(0, 1)
+
         return x
 
 

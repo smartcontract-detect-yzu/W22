@@ -1,4 +1,6 @@
 import os
+import random
+import string
 import subprocess
 from typing import Dict
 import networkx as nx
@@ -18,6 +20,9 @@ class ContractInfo:
         self.contract = contract
 
         self.function_info_map = {}
+
+        # event names
+        self.event_names = {}
 
         # 当合约包含的切片内容
         self.dup_sliced_infos = {}  # 去重
@@ -105,6 +110,10 @@ class ContractInfo:
                             "node": node
                         }
 
+    def _get_emit_events(self):
+        for event in self.contract.events:
+            self.event_names[event.name] = 1
+
     def _construct_call_graph(self):
 
         # 函数调用图
@@ -163,7 +172,7 @@ class ContractInfo:
         self._struct_info()  # 获得结构体信息
         self._stat_vars_info_in_contract()  # 获得结构体信息
         self._functions_with_transaction_call()
-
+        self._get_emit_events()
         self._construct_call_graph()  # 函数调用图
         # self.debug_get_call_graph()
 

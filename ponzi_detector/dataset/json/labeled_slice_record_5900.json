@@ -23,6 +23,7 @@
 		"addre": "16c1e9e376628bdcc0bf4ea5f6f1a1d9cc8d7b62_EasyInvest25",
 		"slice": [
 			{
+				"dup": "1",
 				"tag": "1",
 				"name": "EasyInvest25_fallback_3",
 				"exp": "msg.sender.transfer(amount)"
@@ -43,6 +44,7 @@
 		"addre": "eafff1c115d5f8060531356a21c46668eff6da96_EasyInvest35",
 		"slice": [
 			{
+				"dup": "1",
 				"tag": "1",
 				"name": "EasyInvest35_fallback_3",
 				"exp": "msg.sender.transfer(amount)"

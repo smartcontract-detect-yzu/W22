@@ -11,9 +11,6 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.datasets import load_wine
 from sklearn.model_selection import train_test_split
 
-seed = 7
-test_size = 0.33
-
 
 def calculate_metrics(preds, labels, ponzi_label=0):
     TP = FP = TN = FN = 0
@@ -55,6 +52,7 @@ def calculate_metrics(preds, labels, ponzi_label=0):
     else:
         f1 = 0
 
+    print("统计值:{} {} {} {}".format(TP, TN, FP, FN))
     return acc, recall, precision, f1, total_data_num
 
 
@@ -98,13 +96,17 @@ def get_etherscan_data():
 
 
 def get_ponzi_train_data():
+    seed = 7
+    test_size = 0.3
+
     # ponzi_dataset
     ponzi_dataset_path = "xgboost_dataset_all_ponzi.csv"
     ponzi_dataset = loadtxt(ponzi_dataset_path, delimiter=",")
 
     X_p = ponzi_dataset[:, 1:]
-    Y_p = change_label_to_binary_classifier(ponzi_dataset[:, 0])
-    X_p_train, X_p_test, y_p_train, y_p_test = train_test_split(X_p, Y_p, test_size=test_size, random_state=seed)
+    Y_p = change_label_to_binary_classifier(ponzi_dataset[:, 0])  # [ponzi, no_ponzi]
+    X_p_train, X_p_test, y_p_train, y_p_test = train_test_split(X_p, Y_p, test_size=test_size, random_state=seed,
+                                                                shuffle=True)
 
     # no_ponzi_dataset
     no_ponzi_dataset_path = "xgboost_dataset_all_no_ponzi.csv"
@@ -112,7 +114,8 @@ def get_ponzi_train_data():
 
     X_np = no_ponzi_dataset[:, 1:]
     Y_np = change_label_to_binary_classifier(no_ponzi_dataset[:, 0])
-    X_np_train, X_np_test, y_np_train, y_np_test = train_test_split(X_np, Y_np, test_size=test_size, random_state=seed)
+    X_np_train, X_np_test, y_np_train, y_np_test = train_test_split(X_np, Y_np, test_size=test_size, random_state=seed,
+                                                                    shuffle=True)
 
     # 构建数据集
     X_train = np.concatenate((X_p_train, X_np_train))
@@ -121,8 +124,8 @@ def get_ponzi_train_data():
     X_test = np.concatenate((X_p_test, X_np_test))
     y_test = np.concatenate((y_p_test, y_np_test))
 
-    return torch.from_numpy(X_train).float(), torch.from_numpy(y_train).float(), torch.from_numpy(
-        X_test).float(), torch.from_numpy(y_test).float()
+    return torch.from_numpy(X_train).float(), torch.from_numpy(y_train).float(), \
+           torch.from_numpy(X_test).float(), torch.from_numpy(y_test).float()
 
 
 class LSTM(nn.Module):
@@ -175,12 +178,12 @@ if __name__ == '__main__':
     )
 
     # 参数：
-    epochs = 256
+    epochs = 400
     input_size = 78
     hidden_layer_size = 128
     output_size = 2
-    layers = 8
-    lr = 0.0001
+    layers = 32
+    lr = 0.0005
 
     # 模型
     model = LSTM(input_size=input_size, hidden_layer_size=hidden_layer_size, output_size=output_size, layers=layers)

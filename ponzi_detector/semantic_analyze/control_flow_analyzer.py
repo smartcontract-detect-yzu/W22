@@ -165,6 +165,7 @@ class ControlFlowAnalyzer:
                 # print("过滤控制流边{}-{}".format(from_node, to_node))
                 pass
 
+        print("控制依赖边数量：{}".format(len(cdg_edges)))
         self.control_dep_edges = cdg_edges  # 结果保存在当前控制流分析器中
         self.function_info.semantic_edges["ctrl_dep"] = self.control_dep_edges  # 结果保存在当前函数信息中
 

@@ -8,6 +8,59 @@ from torch.nn import TransformerEncoder, TransformerEncoderLayer
 from torch.utils.data import dataset
 
 
+class TextCnn(nn.Module):
+
+    def __init__(self, dropout=0.5):
+        super(TextCnn, self).__init__()
+
+        token_dim = 150
+        class_num = 2
+        kernel_num = 200
+        kernel_sizes = [3, 4, 5, 6, 7]
+        print(" kernel_num: {} kernel_sizes: {}".format(kernel_num, kernel_sizes))
+
+        Ci = 1
+        Co = kernel_num  # 200
+
+        self.convs1 = nn.ModuleList([nn.Conv2d(Ci, Co, (f, token_dim), padding=(2, 0)) for f in kernel_sizes])
+
+        self.dropout = nn.Dropout(dropout)
+        self.fc = nn.Linear(Co * len(kernel_sizes), class_num)
+
+    def forward(self, x):
+        x = x.unsqueeze(1)  # (N, Ci, token_num, embed_dim)
+
+        # print("1: {} ".format(x.shape))  # [batch * 1 * max_seq_length * embedding_size]
+
+        x = [F.relu(conv(x)).squeeze(3) for conv in self.convs1]  # [(N, Co, token_num) * len(kernel_sizes)]
+
+        # print("2: {} ".format([x_c.shape for x_c in x]))  # [[batch * out_channel * kernel_size]]
+
+        x = [F.max_pool1d(i, i.size(2)).squeeze(2) for i in x]  # [(N, Co) * len(kernel_sizes)]
+
+        # print("3: {} ".format([x_c.shape for x_c in x]))
+
+        x = torch.cat(x, 1)  # (N, Co * len(kernel_sizes))
+        # x = torch.stack(x, dim=1)
+
+        # print("4: {} ".format(x.shape))
+
+        x = self.dropout(x)  # (N, Co * len(kernel_sizes))
+
+        # print("5: {} ".format(x.shape))
+
+        logit = self.fc(x)  # (N, class_num)
+
+        # print("6: {} ".format(logit))
+
+        logit = torch.sigmoid(logit)
+        # logit = F.softmax(logit, dim=0)  # dim = 0,在列上进行Softmax;dim=1,在行上进行Softmax
+
+        # print("7: {} ".format(logit))
+
+        return logit
+
+
 class PositionalEncoding(nn.Module):
 
     def __init__(self, d_model: int, dropout: float = 0.1, max_len: int = 5000):
@@ -32,8 +85,13 @@ class PositionalEncoding(nn.Module):
 
 class TransformerModel(nn.Module):
 
-    def __init__(self, ntoken: int, d_model: int, nhead: int, d_hid: int,
-                 nlayers: int, dropout: float = 0.5):
+    def __init__(self,
+                 ntoken: int,
+                 d_model: int,
+                 nhead: int,
+                 d_hid: int,
+                 nlayers: int,
+                 dropout: float = 0.5):
         super().__init__()
         self.model_type = 'Transformer'
         self.pos_encoder = PositionalEncoding(d_model, dropout)

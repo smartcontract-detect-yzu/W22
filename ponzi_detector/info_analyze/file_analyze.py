@@ -4,7 +4,8 @@ import os
 import shutil
 from rich import print as rprint
 import subprocess
-
+import re
+from simhash import Simhash
 from ponzi_detector.info_analyze.contract_analyze import ContractInfo
 from ponzi_detector.info_analyze.function_analyze import FunctionInfo
 from ponzi_detector.semantic_analyze.control_flow_analyzer import ControlFlowAnalyzer
@@ -12,6 +13,7 @@ from ponzi_detector.semantic_analyze.data_flow_analyzer import DataFlowAnalyzer
 from ponzi_detector.semantic_analyze.code_graph_constructor import CodeGraphConstructor
 from ponzi_detector.semantic_analyze.interprocedural_analyzer import InterproceduralAnalyzer
 from ponzi_detector.semantic_analyze.intraprocedural_analyzer import IntraprocedureAnalyzer
+from ponzi_detector.tools import OPCODE_MAP
 from slither import Slither
 
 versions = ['0', '0.1.7', '0.2.2', '0.3.6', '0.4.26', '0.5.17', '0.6.12', '0.7.6', '0.8.6']
@@ -74,6 +76,8 @@ class SolFileAnalyzer:
 
         self.contract_opcode_files = {}
 
+        self.ast_json_file = None
+
         self.contract_asm_files = {}
 
         self.opcode_cnt = {}
@@ -94,6 +98,32 @@ class SolFileAnalyzer:
 
     def revert_chdir(self):
         os.chdir(self.pwd)  # 切换工作目录
+
+    def get_ast_json(self):
+
+        self.ast_json_file = "{}_{}".format(self.file_name.split(".sol")[0], "_ast.json")
+        ast_file_tmp = "{}_{}".format(self.file_name.split(".sol"), "_tmp_ast.json")
+
+        with open(ast_file_tmp, 'w+') as f:
+            subprocess.check_call(["solc", "--ast-json", self.file_name], stdout=f)
+
+        with open(ast_file_tmp, 'r') as f_tmp:
+            lines = f_tmp.readlines()
+
+        line_cnt = 0
+        with open(self.ast_json_file, 'w+') as ast_file:
+            for line in lines:
+
+                # 跳过前4行
+                line_cnt += 1
+                if line_cnt >= 4:
+
+                    # 最后一行
+                    if not line.startswith("======="):
+                        ast_file.write(line)
+
+        with open("ast_done.txt", "w+") as f:
+            f.write("done")
 
     def get_asm_from_bin(self):
 
@@ -131,8 +161,9 @@ class SolFileAnalyzer:
         if os.path.exists("asm_done.txt"):
             return
 
+        # xxx.evm
         with open(self.opcode_file, 'w+') as f:
-            subprocess.check_call(["solc", "--bin-runtime", self.file_name], stdout=f)
+            subprocess.check_call(["solc", "--optimize", "--bin-runtime", self.file_name], stdout=f)
 
         with open(self.opcode_file, 'r') as f:
 
@@ -351,3 +382,60 @@ class SolFileAnalyzer:
 
                     # 获得CFG和PDG
                     code_constructor.get_cfg_and_pdg()
+
+    def do_get_cfg(self):
+
+        slither = Slither(self.file_name)
+        for contract in slither.contracts:
+
+            contract_info = ContractInfo(contract)  # 1.合约信息抽取
+            for function in contract.functions:
+
+                print("【********】开始分析： {}".format(function.name))
+
+                # 简易流程，目标是获得CFG 和 PDG
+                function_info = FunctionInfo(contract_info, function, test_mode=0, simple=1)  # 函数对象
+                if function_info.cfg is None:
+                    continue  # 没有cfg
+                code_constructor = CodeGraphConstructor(contract_info, function_info, mode=0)  # 代码图表示构建器
+                code_constructor.get_cfg()
+
+    def get_frequency_features(self, tag):
+        opcode_frequency = "frequency.json"
+        drop_cnt = 0
+        id_cnt_map = {}
+        with open(opcode_frequency, "r") as f:
+            line_infos = []
+            info = json.load(f)
+            opcodes_info = info["opcode_cnt"]
+            total = info["total"]
+            for opcode in opcodes_info:
+
+                if opcode in OPCODE_MAP:
+                    current_id = OPCODE_MAP[opcode]
+                    current_cnt = opcodes_info[opcode]
+                    id_cnt_map[current_id] = current_cnt
+                else:
+                    # 只保留76个特征
+                    drop_cnt += opcodes_info[opcode]
+                    continue
+
+            total = total - drop_cnt
+            for opcode in OPCODE_MAP:
+
+                opcode_id = OPCODE_MAP[opcode]
+
+                if opcode_id in id_cnt_map:
+                    freq = id_cnt_map[opcode_id] / total
+                    line_infos.append("{}".format(freq))
+                else:
+                    line_infos.append("{}".format(0.0))
+
+            info_str = tag
+            for info in line_infos:
+                info_str += ", {}".format(info)
+            info_str += "\n"
+            print(self.addre)
+
+            with open("xgboost_feature.txt", "w+") as feature_f:
+                feature_f.write(info_str)

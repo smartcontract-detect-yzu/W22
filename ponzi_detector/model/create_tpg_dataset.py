@@ -45,6 +45,7 @@ class PonziDataSet(InMemoryDataset):
                  pre_filter=None):
 
         self.only_ponzi_flag = 0
+        self.filter_limit = 5
 
         if dataset_type == "cfg":
             self.type = dataset_type
@@ -77,6 +78,9 @@ class PonziDataSet(InMemoryDataset):
         self.file_json_2_id = {}
         self.id_2_json = {}
 
+        self.dup_filter = None
+        self.filter_init()
+
         super(PonziDataSet, self).__init__(root=root,
                                            transform=transform,
                                            pre_transform=pre_transform,
@@ -84,12 +88,45 @@ class PonziDataSet(InMemoryDataset):
 
         self.data, self.slices = torch.load(self.processed_paths[0])
 
+    def filter_init(self):
+        with open("dup_file_nams.json", "r") as f:
+            self.dup_filter = json.load(f)
+
+    def _filter_function(self, names_map, function_name, label):
+
+        if label == 1:
+
+            if "buyPool" in function_name:
+
+                if "buyPool" not in names_map:
+                    names_map["buyPool"] = 1
+                else:
+                    names_map["buyPool"] += 1
+
+                if names_map["buyPool"] > self.filter_limit:
+                    return True
+                else:
+                    return False
+
+            elif function_name in names_map:
+                names_map[function_name] += 1
+                if names_map[function_name] > self.filter_limit:
+                    return True
+                else:
+                    return False
+            else:
+                names_map[function_name] = 1
+                return False
+
+        return False
+
     # 返回原始文件列表
     @property
     def raw_file_names(self):
 
         names = []
         cfg_names = {}
+        names_map = {}
 
         ponzi_slice_cnt = 0
         no_ponzi_slice_cnt = 0
@@ -101,6 +138,9 @@ class PonziDataSet(InMemoryDataset):
 
                 dataset_infos = json.load(f)
                 for sc_target in dataset_infos:
+
+                    if sc_target in self.dup_filter:
+                        continue
 
                     cfg_names.clear()
                     target_infos = dataset_infos[sc_target]
@@ -143,19 +183,24 @@ class PonziDataSet(InMemoryDataset):
                         for file_name in os.listdir(sc_target_path):
                             if str(file_name).endswith(".json"):
 
-                                # labeled jason: contract_function_sliceid -> contract_function_sliceid_external<>
+                                # labeled jason: contract_function_sliceid 或者 contract_function_sliceid_external<>
                                 sc_fun_slice = str(file_name).split(".json")[0]
                                 for json_prefix in json_prefix_map:
                                     if json_prefix in sc_fun_slice:
-                                        json_file_name = sc_target_path + sc_fun_slice + ".json"
                                         label = json_prefix_map[json_prefix]
+
+                                        # if self._filter_function(names_map, sc_fun_slice, label):
+                                        #     continue
+
+                                        json_file_name = sc_target_path + sc_fun_slice + ".json"
                                         if label == 1:
                                             ponzi_slice_cnt += 1
-                                            names.append({"name": json_file_name, "label": label, "address":sc_target})
+                                            names.append({"name": json_file_name, "label": label, "address": sc_target})
                                         else:
                                             if not self.only_ponzi_flag:
                                                 no_ponzi_slice_cnt += 1
-                                                names.append({"name": json_file_name, "label": label, "address":sc_target})
+                                                names.append(
+                                                    {"name": json_file_name, "label": label, "address": sc_target})
 
         print("庞氏合约样本数量: {}".format(len(names)))
         print("正样本个数：{}  负样本个数：{}".format(ponzi_slice_cnt, no_ponzi_slice_cnt))
@@ -238,7 +283,10 @@ class PonziDataSet(InMemoryDataset):
                 self.id_2_json[self.json_id] = json_file_name
 
                 data = Data(x=x, edge_index=edge_index, edge_attr=edge_attr, y=y, address=address, json=json_file_name)
-                data_list.append(data)
+                if not data.edge_index.max() < data.x.size(0):
+                    print(data.json)
+                else:
+                    data_list.append(data)
 
         if self.pre_filter is not None:
             data_list = [data for data in data_list if self.pre_filter(data)]
