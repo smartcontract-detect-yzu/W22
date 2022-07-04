@@ -1,9 +1,9 @@
 {
 	"0xc249fe0288e75e47e62b138de8d020c9fee5a9f5": {
-		"note": "TBD",
 		"addre": "0xc249fe0288e75e47e62b138de8d020c9fee5a9f5",
 		"slice": [
 			{
+				"tag": 1,
 				"name": "Fever_withdraw_6",
 				"exp": "msg.sender.transfer(balance)"
 			},
@@ -14,9 +14,26 @@
 		]
 	},
 	"0x311f71389e3de68f7b2097ad02c6ad7b2dde4c71": {
-		"note": "TBD",
+		"note": "E",
 		"addre": "0x311f71389e3de68f7b2097ad02c6ad7b2dde4c71",
-		"slice": []
+		"slice": [
+			{
+				"name": "Revolution_payout_27",
+				"exp": "msg.sender.transfer(refBalance)"
+			},
+			{
+				"name": "Revolution_payout_30",
+				"exp": "msg.sender.transfer(refBalance)"
+			},
+			{
+				"name": "Revolution_getMyDividends_17",
+				"exp": "msg.sender.transfer(refBalance)"
+			},
+			{
+				"name": "Revolution_getMyDividends_18",
+				"exp": "msg.sender.transfer(refBalance)"
+			}
+		]
 	},
 	"0x2b22b2c65b185182786f087c1a0035b5ed76bbb7": {
 		"addre": "0x2b22b2c65b185182786f087c1a0035b5ed76bbb7",
@@ -33,7 +50,6 @@
 		]
 	},
 	"0x8b7c1450d435f2932e6a7225593d14a4dcf0372d": {
-		"note": "TBD",
 		"addre": "0x8b7c1450d435f2932e6a7225593d14a4dcf0372d",
 		"slice": [
 			{
@@ -53,6 +69,7 @@
 				"exp": "msg.sender.transfer(payout)"
 			},
 			{
+				"tag": 1,
 				"name": "MinerTokenDaily_withdraw_3",
 				"exp": "msg.sender.transfer(payout)"
 			}
@@ -123,6 +140,7 @@
 		]
 	},
 	"0xf91446ead6aadd4321602b5790a6db4d6f2a1930": {
+		"note": "NO_SRC",
 		"addre": "0xf91446ead6aadd4321602b5790a6db4d6f2a1930",
 		"slice": []
 	},
@@ -137,21 +155,23 @@
 		]
 	},
 	"0x215ce36e90b1b64e6fa2e358305177f8fe5daf25": {
-		"note": "TBD",
 		"addre": "0x215ce36e90b1b64e6fa2e358305177f8fe5daf25",
 		"slice": [
 			{
+				"tag": 1,
 				"name": "Revolution2_getMyDividends_8",
 				"exp": "msg.sender.transfer(dividends)"
 			},
-			{
+			{  
+				"tag": 1,
 				"name": "Revolution2_doInvest_19",
 				"exp": "msg.sender.transfer(excess)"
 			}
+			
 		]
 	},
 	"0x9e48a065af4d02257d9c9c83d78e7c06e7bf2449": {
-		"note": "TBD",
+		"note": "NO_SRC",
 		"addre": "0x9e48a065af4d02257d9c9c83d78e7c06e7bf2449",
 		"slice": []
 	},
@@ -160,7 +180,7 @@
 		"slice": [
 			{
 				"tag": 1,
-				"name": "X2Profit__payout_11",
+				"name": "X2Profit__payout_9",
 				"exp": "addr.transfer(interestPure)"
 			}
 		]
@@ -180,14 +200,16 @@
 		]
 	},
 	"0x29bef3878b85522ef2afa541dd7477c9e0a2c122": {
-		"note": "TBD",
+		"note": "E_AGAIN",
 		"addre": "0x29bef3878b85522ef2afa541dd7477c9e0a2c122",
 		"slice": [
 			{
+				
 				"name": "EtherLife_payRewards_11",
 				"exp": "parent.transfer(rewardValue)"
 			},
 			{
+				
 				"name": "EtherLife_payWithdraw_6",
 				"exp": "to.transfer(sum)"
 			}
@@ -575,7 +597,7 @@
 		]
 	},
 	"0x7011f3edc7fa43c81440f9f43a6458174113b162": {
-		"note": "TBD",
+		"note": "NO_SRC",
 		"addre": "0x7011f3edc7fa43c81440f9f43a6458174113b162",
 		"slice": []
 	},
@@ -675,6 +697,16 @@
 				"tag": 1,
 				"name": "BestMultiplier_send_2",
 				"exp": "_receiver.send(_amount)"
+			},
+			{
+				"tag": 1,
+				"name": "BestMultiplier_payouts_10_external_fallback",
+				"exp": "_receiver.send(_amount)"
+			},
+			{
+				"tag": 1,
+				"name": "BestMultiplier_payouts_18_external_fallback",
+				"exp": "_receiver.send(_amount)"
 			}
 		]
 	},
@@ -709,7 +741,7 @@
 		]
 	},
 	"0xcd3dc4e19418fe7dad216376ff685760685cee13": {
-		"note": "TBD",
+		"tag": 1,
 		"addre": "0xcd3dc4e19418fe7dad216376ff685760685cee13",
 		"slice": [
 			{
@@ -759,7 +791,7 @@
 		]
 	},
 	"0xc601f6938c75c4ca03eaad570701d86e607771db": {
-		"tag": 1,
+		"note": "E_AGAIN",
 		"addre": "0xc601f6938c75c4ca03eaad570701d86e607771db",
 		"slice": [
 			{
@@ -864,18 +896,20 @@
 		]
 	},
 	"0x4f3db6d4c97b8248ad5e244e4f619086084f6848": {
-		"note": "TBD",
 		"addre": "0x4f3db6d4c97b8248ad5e244e4f619086084f6848",
 		"slice": [
 			{
+				
 				"name": "SmartContractBank_allocation_4",
 				"exp": "insuranceFundAddress.transfer(msg.value.mul(insurancePercent).div(100))"
 			},
 			{
+				"tag": 1,
 				"name": "SmartContractBank_withdraw_22",
 				"exp": "msg.sender.transfer(balance)"
 			},
 			{
+				
 				"name": "MainSale_createTokens_4",
 				"exp": "require(bool)(multisigVault.send(msg.value))"
 			},
@@ -886,17 +920,9 @@
 		]
 	},
 	"0x9b63e5599f8d7b70f96da0700bde1b4c0d7f35a9": {
-		"note": "TBD",
+		"note": "E_AGAIN",
 		"addre": "0x9b63e5599f8d7b70f96da0700bde1b4c0d7f35a9",
 		"slice": [
-			{
-				"name": "DoubleUp_collectPercent_8",
-				"exp": "msg.sender.transfer(payout)"
-			},
-			{
-				"name": "DoubleUp_makeDeposit_6",
-				"exp": "referrer.transfer(msg.value.mul(referrerPercent).div(100))"
-			},
 			{
 				"name": "DoubleUp_makeDeposit_7",
 				"exp": "msg.sender.transfer(msg.value.mul(referralPercent).div(100))"
@@ -910,20 +936,13 @@
 				"exp": "msg.sender.transfer(payout)"
 			},
 			{
-				"name": "DoubleUp_collectPercent_8",
-				"exp": "msg.sender.transfer(payout)"
-			},
-			{
 				"name": "DoubleUp_makeDeposit_6",
 				"exp": "referrer.transfer(msg.value.mul(referrerPercent).div(100))"
-			},
-			{
-				"name": "DoubleUp_makeDeposit_7",
-				"exp": "msg.sender.transfer(msg.value.mul(referralPercent).div(100))"
 			}
 		]
 	},
 	"0x536a6ba0d913d5d6a4ce2c6eb7ed0de3c0f0b89e": {
+		"note": "NO_SRC",
 		"addre": "0x536a6ba0d913d5d6a4ce2c6eb7ed0de3c0f0b89e",
 		"slice": []
 	},
@@ -1116,7 +1135,23 @@
 				"tag": 1,
 				"name": "PandemicaV2_Count_3",
 				"exp": "Tx[counter].txuser.send((Tx[counter].txvalue / 1000) * 33)"
+			},
+			{
+				"tag": 1,
+				"name": "PandemicaV2_fallback_4",
+				"exp": "Tx[counter].txuser.send((Tx[counter].txvalue / 1000) * 33)"
+			},
+			{
+				"tag": 1,
+				"name": "PandemicaV2_fallback_2",
+				"exp": "Tx[counter].txuser.send((Tx[counter].txvalue / 1000) * 33)"
+			},
+			{
+				"tag": 1,
+				"name": "PandemicaV2_fallback_14",
+				"exp": "Tx[counter].txuser.send((Tx[counter].txvalue / 1000) * 33)"
 			}
+			
 		]
 	},
 	"0x064e2f3511f2399e86953de1acf54322bbdf9d2d": {
@@ -1130,15 +1165,27 @@
 		]
 	},
 	"0xfad05ee13c8e0ec94e5ee9dc056dc451b2ad6b1d": {
+		"note": "E_AGAIN",
 		"addre": "0xfad05ee13c8e0ec94e5ee9dc056dc451b2ad6b1d",
 		"slice": []
 	},
 	"0x44357ae7512fe99f55cb94a85f3e947b9143e76c": {
+		"note": "E_AGAIN",
 		"addre": "0x44357ae7512fe99f55cb94a85f3e947b9143e76c",
 		"slice": [
 			{
 				"name": "distribution_distribute_10",
 				"exp": "deposites[currentPaymentIndex].depositor.send(toSend)"
+			}
+		]
+	},
+	"35027a992a3c232dd7a350bb75004ad8567561b2_EasyInvestForever": {
+		"addre": "35027a992a3c232dd7a350bb75004ad8567561b2_EasyInvestForever",
+		"slice": [
+			{
+				"tag": "1",
+				"name": "EasyInvestForever_fallback_14",
+				"exp": "msg.sender.transfer(amount)"
 			}
 		]
 	}

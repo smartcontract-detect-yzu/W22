@@ -494,11 +494,19 @@ class FunctionInfo:
                 to = None
 
             if eth is None and to is None:
+
+                # 调用封装过的接口
                 # print("调用函数: {}".format(stmt.expression, stmt.cal))
+                # self.transaction_stmts[str(stmt.node_id)] = {
+                #     "to": "no",
+                #     "eth": "no",
+                #     "exp": stmt.expression.__str__()
+                # }
                 pass
 
-            else:  # 防止出现调用函数的情况
+            else:
 
+                # 直接调用API
                 if to in self.const_var_init:  # 防止出现交易对象是常数的情况
                     ## print("交易对象是常数：{}".format(self.const_var_init[to]))
                     pass
@@ -712,7 +720,6 @@ class FunctionInfo:
                     stmt.type.__str__(),
                     stmt.internal_calls.__str__()))
 
-
             if self.simple:
                 self.__construct_events(stmt)
 
@@ -893,9 +900,9 @@ class FunctionInfo:
         if self.cfg is None:
             return 1
 
-        if self.simple != 1:
-            self._get_function_input_params()  # 提取函数入参
-            self._add_input_params_to_cfg()  # 将函数入参作为语义补充到原始cfg中
+        # if self.simple != 1:
+        #     self._get_function_input_params()  # 提取函数入参
+        #     self._add_input_params_to_cfg()  # 将函数入参作为语义补充到原始cfg中
 
         if self.test_mode:
             self.debug_png_for_graph("cfg")
@@ -1030,7 +1037,7 @@ class FunctionInfo:
         print("\n======DEBUG: VAR_INFO at {}======".format(cfg_id))
 
     #######################################
-    # 判断指定的切片准则内容在函数中的位置           #
+    # 判断指定的切片准则内容在函数中的位置        #
     #######################################
     def get_external_criteria_by_content(self, criteria_content):
 

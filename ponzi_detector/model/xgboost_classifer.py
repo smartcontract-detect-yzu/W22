@@ -89,7 +89,7 @@ OPCODE_MAP = {
     "SELFDESTRUCT": 78
 }
 
-seed = 4
+seed = 82
 test_size = 0.33
 
 print("{} {}".format(seed, test_size))
@@ -125,7 +125,7 @@ y_test = np.concatenate((y_p_test, y_np_test))
 # model.fit(X_train, y_train)
 
 ##可视化测试集的loss
-model = XGBClassifier(learning_rate=0.01, objective='binary:logistic', seed=27)
+model = XGBClassifier(learning_rate=0.001, objective='binary:logistic', seed=82)
 eval_set = [(X_test, y_test)]
 model.fit(X_train, y_train, early_stopping_rounds=10, eval_metric="logloss", eval_set=eval_set, verbose=False)
 
@@ -146,16 +146,25 @@ X_s = sample[:, 1:]
 Y_s = sample[:, 0]
 y_pred = model.predict(X_s)
 score_r = model.score(X_s, Y_s)
-print("11111 :{} {}".format(y_pred, score_r))
+print("人工修改样本测试集: {} {}".format(y_pred, score_r))
 
-
-valid_dataset_path = "xgboost_dataset_etherscan.csv"
+valid_dataset_path = "xgboost_dataset_etherscan_ponzi.csv"
 valid_dataset = loadtxt(valid_dataset_path, delimiter=",")
 X_valid = valid_dataset[:, 1:]
 Y_valid = valid_dataset[:, 0]
 
 y_valid_pred = model.predict(X_valid)
+
+# 打印预测结果
+detected = 0
+total = len(Y_valid)
+for lable, predict in zip(Y_valid, y_valid_pred):
+    if lable == predict:
+        detected += 1
+print("=========={}/{}=====================".format(detected, total))
+
 predictions = [round(value) for value in y_valid_pred]
+print(predictions)
 
 accuracy = accuracy_score(Y_valid, predictions)
 recall = recall_score(Y_valid, predictions)

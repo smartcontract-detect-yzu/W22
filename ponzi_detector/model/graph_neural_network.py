@@ -1,5 +1,5 @@
 import torch
-from torch_geometric.nn import CGConv, GlobalAttention, GATConv, AGNNConv
+from torch_geometric.nn import GraphConv, GlobalAttention, GATConv, AGNNConv, GatedGraphConv, RGCNConv
 from torch_geometric.nn import global_max_pool, global_mean_pool, global_add_pool
 from torch_geometric.loader import DataLoader
 import torch.nn.functional as F
@@ -106,8 +106,9 @@ class MYGNN(MessagePassing):
                  bias: bool = True, **kwargs):
         super().__init__(aggr=aggr, **kwargs)
         self.channels = channels
-        self.dim = dim
+        self.dim = dim  #
         self.batch_norm = batch_norm
+        self.leakyrelu = torch.nn.LeakyReLU()
 
         # if isinstance(channels, int):
         #     channels = (channels, channels)
@@ -117,8 +118,10 @@ class MYGNN(MessagePassing):
 
         # self.attention = GAL(channels, channels)
         # self.dim_edge = 16
-        # self.line_edge1 = Linear(dim, 32)
-        # self.line_edge2 = Linear(32, self.dim_edge)
+
+        # self.line_edge_in = Linear(self.dim, 8)
+        # self.line_edge_hidden = Linear(16, 8)
+        # self.line_edge_out = Linear(8, self.dim)
 
         self.line_attention = Linear(channels + self.dim, channels, bias=bias)
         self.line_node = Linear(channels + self.dim, channels, bias=bias)
@@ -142,8 +145,9 @@ class MYGNN(MessagePassing):
         if isinstance(x, Tensor):
             x: PairTensor = (x, x)
 
-        # edge_attr = self.line_edge1(edge_attr)
-        # edge_attr = self.line_edge2(edge_attr)
+        # edge_attr = self.line_edge_in(edge_attr)
+        # edge_attr = self.line_edge_hidden(edge_attr)
+        # edge_attr = self.line_edge_out(edge_attr)
 
         # propagate_type: (x: PairTensor, edge_attr: OptTensor)
         out = self.propagate(edge_index, x=x, edge_attr=edge_attr, size=None)
@@ -180,25 +184,49 @@ class CGCClass(torch.nn.Module):
         self.gnn_layers = ModuleList([])
 
         if edge_dim != 0:
-            self.linear_edge1 = Linear(edge_dim, dense_edge_neurons)
-            self.linear_edge2 = Linear(dense_edge_neurons, edge_neurons)
+            self.linear_edge1 = Linear(edge_dim, dense_edge_neurons)  # 4 --> 8
+            self.linear_edge2 = Linear(dense_edge_neurons, edge_neurons)  # 8 --> 8
             self.edge_flag = 1
             self.edge_dim = edge_neurons
         else:
             self.edge_flag = 0
             self.edge_dim = 0
 
-        # CGC, Transform, BatchNorm block
+        # # 0. GGNN
+        # self.ggnn_layer = GatedGraphConv(feature_size, 3)
+        # self.model_name = "GGNN"
+
+        # # 1. GATConv
+        # for i in range(self.n_layers):
+        #     self.gnn_layers.append(
+        #         GATConv(feature_size, feature_size)
+        #     )
+        # self.model_name = "GATConv"
+
+        # # 2. GCN
+        # for i in range(self.n_layers):
+        #     self.gnn_layers.append(
+        #         # MYGNN(feature_size, dim=self.edge_dim, batch_norm=True)
+        #         GraphConv(feature_size, feature_size)
+        #     )
+        # self.model_name = "GCN"
+
+        # 3. RS-GCN
         for i in range(self.n_layers):
             self.gnn_layers.append(
                 MYGNN(feature_size, dim=self.edge_dim, batch_norm=True)
             )
+        self.model_name = "RS-GCN"
 
         # Linear layers
         self.linear1 = Linear(feature_size, dense_neurons)  # 100 48
         self.bn2 = BatchNorm1d(dense_neurons)
         self.smote = SMOTE(random_state=42)
         self.linear2 = Linear(dense_neurons, out_channels)  # 48 2
+
+        print("#### current model is {} #####".format(self.model_name))
+        print("\n")
+        print("\n")
 
     def forward(self, data):
 
@@ -210,14 +238,24 @@ class CGCClass(torch.nn.Module):
         if self.edge_flag == 1:
             edge_attr = self.linear_edge1(edge_attr)
             edge_attr = self.linear_edge2(edge_attr)
+            # pass  # 在图卷积层进行
         else:
             edge_attr = None
 
+        # # GGNN
+        # self.ggnn_layer(x, edge_index)
+
+        # # GATConv
+        # for i in range(self.n_layers):
+        #     x = self.gnn_layers[i](x, edge_index)
+
+        # # GCN
+        # for i in range(self.n_layers):
+        #     x = self.gnn_layers[i](x, edge_index)
+
+        # RS-GCN
         for i in range(self.n_layers):
             x = self.gnn_layers[i](x, edge_index, edge_attr)
-
-        # print(criterias)
-        # print(batch)
 
         # Pooling
         x = global_max_pool(x, batch)

@@ -20,7 +20,8 @@ edge_type_2_id = {
     "cfg_edges": 0,
     "cdg_edges": 1,
     "ddg_edges": 2,
-    "dfg_edges": 3
+    "dfg_edges": 3,
+    "sddg_edges": 4
 }
 
 labeled_json_list = {
@@ -243,6 +244,8 @@ class PonziDataSet(InMemoryDataset):
                         nodes_info = json_graph["nodes"]
 
                         for node_info in nodes_info:
+                            # if "@tag" in node_info["cfg_id"]:
+
                             expr = node_info["expr"]
                             v = infercode.encode([expr])  # note：infercode一次解析长度小于5
                             node_vectors.append(v[0])

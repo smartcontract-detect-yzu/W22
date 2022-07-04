@@ -1,9 +1,11 @@
 import json
 import os
 import shutil
+import time
 
 import torch
 from etherscan.client import EmptyResponse
+from torch.optim.lr_scheduler import StepLR
 from torch_geometric.loader import DataLoader
 from tqdm import tqdm
 
@@ -189,6 +191,7 @@ def calculate_metrics_by_address(preds, labels, address_list, ponzi_label=0):
 
     print("样本个数大检查: {}   ----- {}".format(len(ponzi_address), len(no_ponzi_address)))
     return acc, recall, precision, f1, total_data_num
+
 
 def calculate_metrics(preds, labels, ponzi_label=0):
     TP = FP = TN = FN = 0
@@ -676,6 +679,7 @@ class DataSet:
                     contract_info = dataset_info[file_name]
                     if "slice" in contract_info:
                         for slice_info in contract_info["slice"]:
+
                             if "tag" in slice_info:
                                 find_target_file_ponzi[file_name] = 1
                                 file_path = analyze_prefix + "{}/".format(dataset_type) + file_name
@@ -684,11 +688,13 @@ class DataSet:
                                     f.write("1")
                                 is_ponzi = 1
                                 break
+
                         if is_ponzi == 0:
                             file_path = analyze_prefix + "{}/".format(dataset_type) + file_name
                             with open(file_path + "/is_no_ponzi.txt", "w+") as f:
                                 f.write("0")
                             self.no_ponzi_file_names.append(file_path)
+
         if self.name == "all":
             dataset_type = "no_ponzi"
             json_file_path = prefix + "labeled_slice_record_no_ponzi.json"
@@ -721,6 +727,7 @@ class DataSet:
         no_ponzi_dataset_lines = []
 
         for name in self.ponzi_file_names:
+            print("ponzi: {}".format(name))
             _get_features_for_xgboost(name, ponzi_dataset_lines, "1")
 
         for name in self.no_ponzi_file_names:
@@ -1035,7 +1042,7 @@ class DataSet:
                         with open(file_name, "w+") as f:
                             f.write(sourcecode[0]['SourceCode'])
 
-    def _do_test(self, model, dataset, device):
+    def _do_test(self, model, dataset, device, etherscan=0):
 
         # 开始验证
         with torch.no_grad():
@@ -1043,6 +1050,10 @@ class DataSet:
             valid_off_loader = DataLoader(dataset, batch_size=64, shuffle=True)
             valid_preds = []
             valid_labels = []
+            valid_address = []
+            records = []
+            total_address = {}
+            detected_map = {}
             correct = 0.
             loss = 0.
             criterion = torch.nn.CrossEntropyLoss()
@@ -1055,6 +1066,25 @@ class DataSet:
 
                 valid_preds.append(pred)
                 valid_labels.append(label)
+                valid_address.append(data.address)
+
+                if etherscan == 1:
+                    for idx, predict_false in enumerate(torch.ne(pred, label)):
+                        file_name = data.json[idx]
+                        record_info = "False: {} Name: {}  label:{}  pre:{}".format(predict_false,
+                                                                                    file_name,
+                                                                                    label[idx],
+                                                                                    pred[idx])
+
+                        records.append(record_info)
+
+                        address = data.address[idx]
+                        if address not in total_address:
+                            total_address[address] = 1
+
+                        if predict_false.item() is False:  # 檢測成功
+                            if address not in detected_map:
+                                detected_map[address] = 1
 
                 batch_loss = criterion(out, data.y)
                 correct += int((pred == label).sum())
@@ -1065,10 +1095,18 @@ class DataSet:
             val_loss = loss / len(valid_off_loader.dataset)
             print("\nnormal Validation loss: {}\taccuracy:{}".format(val_loss, val_acc))
 
-            acc, recall, precision, f1, total_num = calculate_metrics(valid_preds, valid_labels)
+            # acc, recall, precision, f1, total_num = calculate_metrics(valid_preds, valid_labels)
+            acc, recall, precision, f1, total_num = calculate_metrics_by_address(valid_preds, valid_labels, valid_address)
+
             print("{} total:{} 结果指标\tacc:{} recall:{} precision:{} f1:{}".format(self.name, total_num, acc, recall,
                                                                                  precision, f1))
 
+            if etherscan == 1:
+                print("=============={}/{}========================".format(len(detected_map), len(total_address)))
+                if acc >= 0.7:
+                    for record in records:
+                        print(record)
+                    print("===========================================")
         return acc
 
     def do_learning(self):
@@ -1088,12 +1126,12 @@ class DataSet:
 
         # 训练参数
         model_params = {
-            "TRAINING_EPOCHS": 64,
+            "TRAINING_EPOCHS": 256,
             "MODEL_FEAT_SIZE": feature_size,
             "MODEL_LAYERS": 3,
             "MODEL_DROPOUT_RATE": 0,
             "MODEL_EDGE_DIM": edge_attr_size,
-            "MODEL_EDGE_DENSE_NEURONS": 16,  # edge_attr_size -> 32  ## best: edge_attr_size->16->8
+            "MODEL_EDGE_DENSE_NEURONS": 8,  # edge_attr_size -> 32  ## best: edge_attr_size->16->8
             "MODEL_EDGE_NEURONS": 8,  # 32 -> 16
             "MODEL_DENSE_NEURONS": 48,  # 100 -> 48
             "MODEL_OUT_CHANNELS": 2  # 每一类的概率
@@ -1135,10 +1173,13 @@ class DataSet:
         optimizer = torch.optim.Adam(model.parameters(),
                                      lr=solver["SOLVER_LEARNING_RATE"])
 
+        # scheduler = StepLR(optimizer, step_size=100, gamma=0.25)
+
         # 损失函数
         criterion = torch.nn.CrossEntropyLoss()
 
         # 开始训练
+        time_start = time.time()
         epochs = model_params["TRAINING_EPOCHS"]
         for epoch in range(epochs):
             model.train()
@@ -1152,91 +1193,106 @@ class DataSet:
                 training_loss += loss.item() * data.num_graphs
                 loss.backward()
                 optimizer.step()
+                # scheduler.step()
 
             training_loss /= len(train_off_loader.dataset)
             if epoch % 10 == 0 or epoch == (epochs - 1):
                 print("epoch {} Training loss: {}".format(epoch, training_loss))
+
                 # print("----------开始验证-----------")
-                # self._do_test(model, valid_dataset, device)
-                # self._do_test(model, self.pyg_test_dataset, device)
+                acc = self._do_test(model, valid_dataset, device)  # 验证集
+                # self._do_test(model, self.pyg_test_dataset, device, etherscan=1)  # etherscan
 
-        print("----------开始验证-----------")
+        # time_end = time.time()
+        # time_sum = time_end - time_start
+        # print("训练时间：{}".format(time_sum))
 
-        # 开始验证
-        with torch.no_grad():
-            model.eval()
-            valid_off_loader = DataLoader(valid_dataset, batch_size=64, shuffle=True)
-            valid_preds = []
-            valid_labels = []
-            valid_address = []
-            correct = 0.
-            loss = 0.
-            criterion = torch.nn.CrossEntropyLoss()
-            for data in valid_off_loader:
-                data = data.to(device)
-                out = model(data)
+        # # 保存模型:
+        # name = "{}/{}_{}.pt".format(self.model_save_path, "model", str(acc)[2:4])
+        # torch.save(model.state_dict(), name)
 
-                pred = out.argmax(dim=1)
-                label = data.y.argmax(dim=1)
-
-                valid_preds.append(pred)
-                valid_labels.append(label)
-                # valid_address.append(data.address)
-
-                batch_loss = criterion(out, data.y)
-                correct += int((pred == label).sum())
-
-                loss += batch_loss
-
-            val_acc = correct / len(valid_off_loader.dataset)
-            val_loss = loss / len(valid_off_loader.dataset)
-            print("\nnormal Validation loss: {}\taccuracy:{}".format(val_loss, val_acc))
-
-            # acc, recall, precision, f1, total_num = calculate_metrics_by_address(valid_preds,
-            #                                                                      valid_labels,
-            #                                                                      valid_address)
-            acc, recall, precision, f1, total_num = calculate_metrics(valid_preds, valid_labels)
-            print("total:{} \n结果指标\tacc:{} recall:{} precision:{} f1:{}".format(total_num, acc, recall, precision, f1))
+        # # 开始验证
+        # with torch.no_grad():
+        #     model.eval()
+        #     valid_off_loader = DataLoader(valid_dataset, batch_size=64, shuffle=True)
+        #     valid_preds = []
+        #     valid_labels = []
+        #     valid_address = []
+        #     correct = 0.
+        #     loss = 0.
+        #     criterion = torch.nn.CrossEntropyLoss()
+        #     for data in valid_off_loader:
+        #         data = data.to(device)
+        #         out = model(data)
+        #
+        #         pred = out.argmax(dim=1)
+        #         label = data.y.argmax(dim=1)
+        #
+        #         valid_preds.append(pred)
+        #         valid_labels.append(label)
+        #         valid_address.append(data.address)
+        #
+        #         batch_loss = criterion(out, data.y)
+        #         correct += int((pred == label).sum())
+        #
+        #         loss += batch_loss
+        #
+        #     val_acc = correct / len(valid_off_loader.dataset)
+        #     val_loss = loss / len(valid_off_loader.dataset)
+        #     print("\nnormal Validation loss: {}\taccuracy:{}".format(val_loss, val_acc))
+        #
+        #     acc, recall, precision, f1, total_num = calculate_metrics_by_address(valid_preds,
+        #                                                                          valid_labels,
+        #                                                                          valid_address)
+        #
+        #     # acc, recall, precision, f1, total_num = calculate_metrics(valid_preds, valid_labels)
+        #     print("total:{} \n结果指标\tacc:{} recall:{} precision:{} f1:{}".format(total_num, acc, recall, precision, f1))
 
         # 开始测试
-        with torch.no_grad():
-            model.eval()
-            test_off_loader = DataLoader(self.pyg_test_dataset, batch_size=64, shuffle=True)
-            test_preds = []
-            test_labels = []
-            correct = 0.
-            loss = 0.
-            criterion = torch.nn.CrossEntropyLoss()
-            for data in test_off_loader:
+        # with torch.no_grad():
+        #     model.eval()
+        #     test_off_loader = DataLoader(self.pyg_test_dataset, batch_size=64, shuffle=True)
+        #     test_preds = []
+        #     test_labels = []
+        #     test_address = []
+        #     correct = 0.
+        #     loss = 0.
+        #     criterion = torch.nn.CrossEntropyLoss()
+        #     for data in test_off_loader:
+        #
+        #         data = data.to(device)
+        #         out = model(data)
+        #
+        #         pred = out.argmax(dim=1)
+        #         label = data.y.argmax(dim=1)
+        #
+        #         test_preds.append(pred)
+        #         test_labels.append(label)
+        #         test_address.append(data.address)
+        #
+        #         # 小数据集的详细结果
+        #         for idx, predict_false in enumerate(torch.ne(pred, label)):
+        #             file_name = data.json[idx]
+        #             print("False: {} Name: {}  label:{}  pre:{}".format(predict_false, file_name, label[idx], pred[idx]))
+        #
+        #         batch_loss = criterion(out, data.y)
+        #         correct += int((pred == label).sum())
+        #         loss += batch_loss
+        #
+        #     val_acc = correct / len(test_off_loader.dataset)
+        #     val_loss = loss / len(test_off_loader.dataset)
+        #     print("\nnormal test loss: {}\taccuracy:{}".format(val_loss, val_acc))
+        #
+        #     # acc, recall, precision, f1, total_num = calculate_metrics(test_preds, test_labels)
+        #     acc, recall, precision, f1, total_num = calculate_metrics_by_address(test_preds,
+        #                                                                          test_labels,
+        #                                                                          test_address)
+        #     print("total:{} \n结果指标\tacc:{} recall:{} precision:{} f1:{}".format(total_num, acc, recall, precision, f1))
 
-                data = data.to(device)
-                out = model(data)
-
-                pred = out.argmax(dim=1)
-                label = data.y.argmax(dim=1)
-
-                test_preds.append(pred)
-                test_labels.append(label)
-
-                batch_loss = criterion(out, data.y)
-                for idx, predict_false in enumerate(torch.ne(pred, label)):
-                    if predict_false:
-                        file_name = data.json[idx]
-
-                correct += int((pred == label).sum())
-
-                loss += batch_loss
-
-            val_acc = correct / len(test_off_loader.dataset)
-            val_loss = loss / len(test_off_loader.dataset)
-            print("\nnormal test loss: {}\taccuracy:{}".format(val_loss, val_acc))
-
-            acc, recall, precision, f1, total_num = calculate_metrics(test_preds, test_labels)
-            print("total:{} \n结果指标\tacc:{} recall:{} precision:{} f1:{}".format(total_num, acc, recall, precision, f1))
-
-        # 保存模型:
-        name = "{}/{}_{}.pt".format(self.model_save_path, "model", str(val_acc)[2:4])
-        torch.save(model.state_dict(), name)
+        # # 保存模型:
+        # print("----------开始验证-----------")
+        # name = "{}/{}_{}.pt".format(self.model_save_path, "model", str(acc)[2:4])
+        # torch.save(model.state_dict(), name)
 
     def prepare_for_cfg_dataset(self, label):
 
@@ -1345,6 +1401,25 @@ class DataSet:
         """
         root_dir = 'ponzi_detector/dataset/pdg'
         pyg_dataset = PonziDataSetCfg(root=root_dir, dataset_type="pdg")
+        self.pyg_dataset = pyg_dataset
+
+        # root_dir = 'ponzi_detector/dataset/cfg/big'
+        # pyg_test_dataset = PonziDataSetCfg(root=root_dir, dataset_type="big")
+        # self.pyg_test_dataset = pyg_test_dataset
+
+        root_dir = 'ponzi_detector/dataset/pdg/etherscan'
+        pyg_test_dataset = PonziDataSetCfg(root=root_dir, dataset_type="etherscan")
+        self.pyg_test_dataset = pyg_test_dataset
+
+    def prepare_dataset_for_learning_cfg_pdg(self):
+        """
+        为进行神经网络训练创建数据集
+        """
+
+        print("==============learning_for_cfg_pdg=================")
+
+        root_dir = 'ponzi_detector/dataset/cfg_pdg'
+        pyg_dataset = PonziDataSetCfg(root=root_dir, dataset_type="cfg_pdg")
         self.pyg_dataset = pyg_dataset
 
         # root_dir = 'ponzi_detector/dataset/cfg/big'

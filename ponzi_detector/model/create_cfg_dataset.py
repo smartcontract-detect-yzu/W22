@@ -47,10 +47,11 @@ class PonziDataSetCfg(InMemoryDataset):
                  pre_filter=None):
 
         self.only_ponzi_flag = 0
-
         self.type = dataset_type
         self.fild_type = "cfg"
+
         if dataset_type == "cfg":
+            self.fild_type = "cfg"
             self.root = root
             self.raw = "{}/{}".format(root, "raw")
             self.processed = "{}/{}".format(root, "processed")
@@ -68,14 +69,16 @@ class PonziDataSetCfg(InMemoryDataset):
                 "no_ponzi_cfg_function.json": 0
             }
         elif dataset_type == "etherscan":
+            self.fild_type = "cfg"
             self.root = root + "cfg/" + "etherscan"
             self.raw = "{}/{}".format(root, "raw")
             self.processed = "{}/{}".format(root, "processed")
             self.json_files = {
                 "etherscan_ponzi_cfg_function.json": 1
             }
-        elif dataset_type == "big":
-            self.root = root + "big"
+        elif dataset_type == "cfg_pdg":
+            self.fild_type = "cfg_pdg"
+            self.root = root
             self.raw = "{}/{}".format(root, "raw")
             self.processed = "{}/{}".format(root, "processed")
             self.json_files = {
@@ -110,21 +113,6 @@ class PonziDataSetCfg(InMemoryDataset):
     def filter_init(self):
         with open("dup_file_nams.json", "r") as f:
             self.dup_filter = json.load(f)
-
-    def _filter_function(self, names_map, function_name, label):
-
-        if label == 1:
-            if function_name in names_map:
-                names_map[function_name] += 1
-                if names_map[function_name] > self.filter_limit:
-                    return True
-                else:
-                    return False
-            else:
-                names_map[function_name] = 1
-                return False
-
-        return False
 
     def _psc_map_init(self):
 
@@ -171,12 +159,26 @@ class PonziDataSetCfg(InMemoryDataset):
         function_content_map = {}
         function_dup_map = {}
 
-        if os.path.exists("dup_cfg_function_nams.json"):
-            with open("dup_cfg_function_nams.json", "r") as f:
-                self.function_dup_filter = json.load(f)
-            return
+        # 类型为CFG和PDG的需要预先读取过滤器
+        if self.fild_type == "cfg" or self.fild_type == "pdg" or self.fild_type == "cfg_pdg":
+
+            # 过滤器的名字
+            if self.fild_type == "cfg" or self.fild_type == "cfg_pdg":
+                filter_file_name = "dup_cfg_function_nams.json"
+            else:
+                filter_file_name = "dup_pdg_function_nams.json"
+
+            # 如果过滤器存在，直接读取
+            if os.path.exists(filter_file_name):
+                with open(filter_file_name, "r") as f:
+                    self.function_dup_filter = json.load(f)
+                return
+            else:
+                # 过滤器需要初始化
+                self.function_dup_filter = {}
+                print("##### 需要初始化过滤器 #######")
         else:
-            self.function_dup_filter = {}
+            return
 
         psc_name_map = self._psc_map_init()
         with tqdm(total=len(psc_name_map)) as pbar:
@@ -213,7 +215,7 @@ class PonziDataSetCfg(InMemoryDataset):
                             self.function_dup_filter[dup_cfg] = 1
 
         print("去重之后的结果：{}".format(len(self.function_dup_filter)))
-        with open("dup_cfg_function_nams.json", "w+") as f:
+        with open("dup_{}_function_nams.json".format(self.fild_type), "w+") as f:
             f.write(json.dumps(self.function_dup_filter))
 
     # 返回原始文件列表
@@ -225,15 +227,17 @@ class PonziDataSetCfg(InMemoryDataset):
         ponzi_cnt = no_ponzi_cnt = 0
 
         for target in self.json_files:
+
             label = self.json_files[target]
             with open(target, "r") as json_file:
-                dataset_infos = json.load(json_file)
 
+                dataset_infos = json.load(json_file)
                 for dataset_type in dataset_infos:
                     dataset_path = self.dataset_prefix + dataset_type + "/"
                     contracts_infos = dataset_infos[dataset_type]
                     for sol_file in contracts_infos:
 
+                        # 重复文件过滤器
                         if sol_file in self.dup_filter:
                             continue
 
@@ -245,14 +249,36 @@ class PonziDataSetCfg(InMemoryDataset):
                                 functions = sol_infos[contract]
                                 for function in functions:
 
-                                    # if not self._filter_function(names_map, function, label):
-                                    cfg_file_name = "{}_{}_{}.json".format(contract, function, self.fild_type)
-                                    cfg_file_path = dataset_path + "{}/".format(sol_file) + cfg_file_name
-                                    if cfg_file_path in self.function_dup_filter:
+                                    # # if not self._filter_function(names_map, function, label):
+                                    # type_file_name = "{}_{}_{}.json".format(contract, function, self.fild_type)
+                                    # type_file_name = dataset_path + "{}/".format(sol_file) + type_file_name
+                                    # external_file_name = None
+
+                                    if self.fild_type != "cfg_pdg":
+                                        type_file_name = "{}_{}_{}.json".format(contract, function, self.fild_type)
+                                        type_file_name = dataset_path + "{}/".format(sol_file) + type_file_name
+
+                                        external_file_name = None
+                                    else:
+
+                                        type_file_name = "{}_{}_{}.json".format(contract, function, "cfg")
+                                        type_file_name = dataset_path + "{}/".format(sol_file) + type_file_name
+
+                                        external_file_name = "{}_{}_{}.json".format(contract, function, "pdg")
+                                        external_file_name = dataset_path + "{}/".format(sol_file) + external_file_name
+
+                                    # 重复函数过滤器
+                                    if type_file_name in self.function_dup_filter:
                                         continue
 
-                                    if os.path.exists(cfg_file_path):
-                                        names.append({"name": cfg_file_path, "label": label})
+                                    if os.path.exists(type_file_name):
+
+                                        names.append({
+                                            "name": type_file_name,
+                                            "address": contract,
+                                            "external_name": external_file_name,
+                                            "label": label})
+
                                         if label == 1:
                                             ponzi_cnt += 1
                                         else:
@@ -279,8 +305,15 @@ class PonziDataSetCfg(InMemoryDataset):
             for sample_info in self.raw_file_names:
 
                 pbar.update(1)
-                json_file_name = sample_info["name"]
 
+                if self.fild_type != "cfg_pdg":
+                    json_file_name = sample_info["name"]
+                    external_json_file_name = None
+                else:
+                    json_file_name = sample_info["name"]
+                    external_json_file_name = sample_info["external_name"]
+
+                address = sample_info["address"]
                 lable = sample_info["label"]
                 if lable == 1:
                     ponzi_cnt += 1
@@ -328,6 +361,29 @@ class PonziDataSetCfg(InMemoryDataset):
                                     edge_feature[edge_type_2_id[edge_type]] = 1
                                     tmp_edge_attr[key] = edge_feature
 
+                    # CFG + PDG: 利用PDG对CFG进行语义补充
+                    if external_json_file_name is not None:
+                        with open(external_json_file_name, "r") as f:
+                            external_json_graph = json.load(f)
+                            for edge_type in EDGE_TYPES:
+                                if edge_type in external_json_graph:
+                                    cfg_edges_info = external_json_graph[edge_type]
+                                    for cfg_edge_info in cfg_edges_info:
+                                        from_id = cfg_edge_info["from"]
+                                        to_id = cfg_edge_info["to"]
+                                        key = "{}_{}".format(from_id, to_id)
+
+                                        if key not in tmp_edge_attr:
+                                            edge_feature = [0, 0, 0, 0]
+                                            edge_feature[edge_type_2_id[edge_type]] = 1
+                                            tmp_edge_attr[key] = edge_feature
+                                            src.append(from_id)
+                                            dst.append(to_id)
+                                        else:
+                                            edge_feature = tmp_edge_attr[key]
+                                            edge_feature[edge_type_2_id[edge_type]] = 1
+                                            tmp_edge_attr[key] = edge_feature
+
                 edge_attr = []
                 for u, v in zip(src, dst):
                     key = "{}_{}".format(u, v)
@@ -339,7 +395,7 @@ class PonziDataSetCfg(InMemoryDataset):
                 edge_attr = torch.tensor(edge_attr, dtype=torch.float)
                 edge_index = torch.tensor([src, dst], dtype=torch.long)
 
-                data = Data(x=x, edge_index=edge_index, edge_attr=edge_attr, y=y, json=json_file_name)
+                data = Data(x=x, edge_index=edge_index, edge_attr=edge_attr, y=y, json=json_file_name, address=address)
                 try:
                     if not data.edge_index.max() < data.x.size(0):
                         print(data.json)

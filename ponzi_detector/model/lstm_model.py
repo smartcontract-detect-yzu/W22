@@ -86,12 +86,12 @@ def change_label_to_binary_classifier(Y_t):
 
 
 def get_etherscan_data():
-    ponzi_dataset_path = "xgboost_dataset_etherscan.csv"
+    ponzi_dataset_path = "xgboost_dataset_etherscan_ponzi.csv"
     ponzi_dataset = loadtxt(ponzi_dataset_path, delimiter=",")
 
     X_etherscan = ponzi_dataset[:, 1:]
     Y_etherscan = change_label_to_binary_classifier(ponzi_dataset[:, 0])
-
+    print(X_etherscan)
     return torch.from_numpy(X_etherscan).float(), torch.from_numpy(np.array(Y_etherscan)).float()
 
 
@@ -160,8 +160,8 @@ class LSTM(nn.Module):
         c_0 = torch.zeros(1 * self.num_layers, input_x.size(0), self.hidden_layer_size)
 
         lstm_out, (hn, cn) = self.lstm(input_x, (h_0, c_0))
-        linear_out = self.linear(lstm_out.view(len(input_x), -1))  # =self.linear(lstm_out[:, -1, :])
-        predictions = self.sigmoid(linear_out)
+        predictions = self.linear(lstm_out.view(len(input_x), -1))  # =self.linear(lstm_out[:, -1, :])
+        # predictions = self.sigmoid(linear_out)
 
         return predictions
 
@@ -178,12 +178,12 @@ if __name__ == '__main__':
     )
 
     # 参数：
-    epochs = 400
+    epochs = 128
     input_size = 78
-    hidden_layer_size = 128
+    hidden_layer_size = 48
     output_size = 2
     layers = 32
-    lr = 0.0005
+    lr = 0.01
 
     # 模型
     model = LSTM(input_size=input_size, hidden_layer_size=hidden_layer_size, output_size=output_size, layers=layers)

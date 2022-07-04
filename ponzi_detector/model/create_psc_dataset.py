@@ -1,3 +1,4 @@
+import json
 import os
 
 import numpy
@@ -18,7 +19,7 @@ class PscDataset(Dataset):
         self.array = None
         self.max_len = 0
         self.total_cnt = 0
-        self.length_limit = 999999999
+        self.length_limit = 1500
         self.length_limit_cnt = 0
         self.total_length = 0
 
@@ -36,8 +37,15 @@ class PscDataset(Dataset):
         self.dataset_pt_save_p = "examples/psc_dataset/pt_file/dataset_p.pt"
         self.dataset_pt_save_np = "examples/psc_dataset/pt_file/dataset_np.pt"
         self.FASTTEXT_MODEL = None
-        self.get_max_length()
-        self.create_dataset()
+        self.dup_filter = None
+
+        self.filter_init()      # 过滤器
+        self.get_max_length()   # 合约最大长度
+        self.create_dataset()   # 数据集构建
+
+    def filter_init(self):
+        with open("dup_file_nams.json", "r") as f:
+            self.dup_filter = json.load(f)
 
     def create_dataset_v2(self):
 

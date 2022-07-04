@@ -120,8 +120,8 @@ Y_np = no_ponzi_dataset[:, 0]
 # y_test = np.concatenate((y_p_test, y_np_test))
 
 
-test_size = 0.2
-train_size = 0.8
+test_size = 0.3
+train_size = 0.7
 seed = 55
 X_data = np.concatenate((X_p, X_np))
 Y_data = np.concatenate((Y_p, Y_np))
@@ -129,7 +129,7 @@ X_train, X_test, y_train, y_test = train_test_split(X_data, Y_data, test_size=te
 
 # 训练集
 clf = DecisionTreeClassifier(random_state=2)
-rfc = RandomForestClassifier(random_state=2, criterion="entropy")
+rfc = RandomForestClassifier(random_state=12, criterion="entropy", n_estimators=3)
 clf = clf.fit(X_train, y_train)
 rfc = rfc.fit(X_train, y_train)
 
@@ -152,8 +152,9 @@ X_s = sample[:, 1:]
 Y_s = sample[:, 0]
 y_pred = rfc.predict(X_s)
 score_r = rfc.score(X_s, Y_s)
+print("人工修改样本测试集: {} {}".format(y_pred, score_r))
 
-valid_dataset_path = "xgboost_dataset_etherscan.csv"
+valid_dataset_path = "xgboost_dataset_etherscan_ponzi.csv"
 valid_dataset = loadtxt(valid_dataset_path, delimiter=",")
 X_valid = valid_dataset[:, 1:]
 Y_valid = valid_dataset[:, 0]
@@ -163,6 +164,17 @@ score_r = rfc.score(X_valid, Y_valid)
 
 # 测试集结果
 y_pred = rfc.predict(X_valid)
+
+# 打印预测结果
+detected = 0
+total = len(Y_valid)
+for lable, predict in zip(Y_valid, y_pred):
+    if lable == predict:
+        detected += 1
+print("=========={}/{}=====================".format(detected, total))
+predictions = [round(value) for value in y_pred]
+print(predictions)
+
 print("\n小数据集结果：acc:{} recall:{} pre:{} f1:{}".format(
     score_r,
     recall_score(Y_valid, y_pred),
