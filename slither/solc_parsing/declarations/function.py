@@ -748,6 +748,7 @@ class FunctionSolc(CallerContextExpression):
                         new_statement = {
                             "nodeType": "VariableDefinitionStatement",
                             "src": src,
+                            "id": variable["id"],
                             "declarations": [variable],
                             "initialValue": init,
                         }
@@ -768,6 +769,7 @@ class FunctionSolc(CallerContextExpression):
                             new_statement = {
                                 "nodeType": "VariableDefinitionStatement",
                                 "src": src,
+                                "id": variable["id"],
                                 "declarations": [variable],
                             }
                             variables.append(variable)
@@ -834,6 +836,7 @@ class FunctionSolc(CallerContextExpression):
                         new_statement = {
                             self.get_key(): "VariableDefinitionStatement",
                             "src": src,
+                            "id": variable["id"],
                             self.get_children("children"): [variable, init],
                         }
 
