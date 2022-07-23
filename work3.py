@@ -4,6 +4,7 @@ import re
 from slither import Slither
 
 from ponzi_detector.info_analyze.file_analyze import SolFileAnalyzer
+from slither.core.cfg.node import NodeType
 from slither.core.declarations import (
     Function,
     SolidityFunction,
@@ -26,14 +27,87 @@ def analyze():
     file_infos = file_analyzer.do_analyze_a_file_for_vul3()
 
 
-def convert_safemath(stmt, safe_math_ops):
-    print("开始分析......safemath")
-    for ex_exp, op in zip(reversed(stmt.external_calls_as_expressions), safe_math_ops):
-        print("expr:{} op:{}".format(ex_exp, op))
+Arithmetic_MAP = {
+    "add": "+",
+    "sub": "-",
+    "div": "/",
+    "mul": "*"
+}
 
-        p = re.compile(r'\.{}[(](.*?)[)]'.format(op))
-        result = re.findall(p, str(ex_exp))
-        print(result)
+SafeERC20_map = {
+    "safeTransferFrom": "transferFrom",
+}
+
+
+def convert_safemath(stmt, safe_math_ops):
+    # print("开始分析......safemath")
+    expr = str(stmt.expression)
+    for op in safe_math_ops:
+        op_new = " {} ".format(Arithmetic_MAP[op])
+        key = ".{}".format(op)
+        expr = expr.replace(key, op_new)
+        # print("op:{} expr:{}".format(op, expr))
+
+    return expr
+
+
+def convert_save_erc20_api(stmt, safe_ecr20_apis):
+    expr = str(stmt.expression)
+    for safe_ecr20_api in safe_ecr20_apis:
+        expr = expr.replace(safe_ecr20_api, "call")
+        # print("api:{} expr:{}".format(safe_ecr20_api, expr))
+    return expr
+
+
+def print_function(function):
+    for stmt in function.nodes:
+        # print("【AST-ID:{}】".format(stmt.node_ast_id), stmt.expression)
+
+        # for in_call in stmt.internal_calls:
+        #     if isinstance(in_call, Function):
+        #         print("----【in_call:Function】", in_call.name, in_call.id)
+        #
+        #     if isinstance(in_call, SolidityFunction):
+        #         print("----【in_call:SolidityFunction】", in_call.name, in_call.name)
+        #
+        # for lib_call in stmt.library_calls:
+        #     if isinstance(lib_call, Function):
+        #         print("****【lib_call:Function】", lib_call.name)
+        #     if isinstance(lib_call, Contract):
+        #         print("****【lib_call:Contract】", lib_call.name)
+        new_expr = stmt.expression
+        safe_math_ops = []
+        safe_trans_api = []
+        for h_call in stmt.high_level_calls:
+            if h_call[0].name == "SafeMath":
+                safe_math_ops.append(h_call[1].name)
+                # if isinstance(h_call[1], Function):
+                #     print("^^^^【h_call:Function】", h_call[0].name, " ", h_call[1].name)
+            if h_call[0].name == "SafeERC20":
+                safe_trans_api.append(h_call[1].name)
+
+        if len(safe_math_ops) != 0:
+            new_expr = convert_safemath(stmt, safe_math_ops)
+
+        if len(safe_trans_api) != 0:
+            new_expr = convert_save_erc20_api(stmt, safe_trans_api)
+
+        print(new_expr)
+        # print("============================")
+        # for h_call in stmt.high_level_calls:
+        #     if isinstance(h_call[1], Function):
+        #         print("^^^^【h_call:Function】", h_call[0].name, " ", h_call[1].name)
+        #     if isinstance(h_call[1], Contract):
+        #         print("^^^^【h_call:Contract】", h_call[0].name, " ", h_call[1].name)
+        # for ext_call in stmt.external_calls_as_expressions:
+        #     print("^^^^【ext_call】", ext_call)
+        # print("============================")
+
+        # if len(safe_math_ops) != 0:
+        #     convert_safemath(stmt, safe_math_ops)
+
+        # for external_call in stmt.external_calls_as_expressions:
+        #     print("@@@@【external_call】", external_call)
 
 
 def test():
@@ -42,14 +116,14 @@ def test():
 
     # 1.寻找需要分析的目标函数：visibility为external的函数，表面该函数可以被调用
     # 过滤规则: is_implemented && external/visibility && non-constructor && non-view
+    # and function.visibility in ["public", "external"] \
     for contract in slither.contracts:
         for function in contract.functions:
             if function.is_implemented \
-                    and function.visibility in ["public", "external"] \
                     and not function.view \
                     and function.name != "constructor":
                 target_functions[function.id] = function
-                print("需要分析的函数  name:{} id:{} ".format(function.name, function.id, ))
+                # print("需要分析的函数  name:{} id:{} ".format(function.name, function.id, ))
 
     # 2. 解析当前函数使用的安全最佳实践语句
     # 2.1 modifier
@@ -67,45 +141,81 @@ def test():
         # for modifier in function.modifiers:
         #     if modifier.name in ["nonReentrant", "onlyRole", "onlyOwner"]:
         #         print("函数：{} 包含最佳实践 {}".format(function.name, modifier.name))
+        if function.name != "_deposit":
+            continue
 
-        for stmt in function.nodes:
-            # print("【AST-ID:{}】".format(stmt.node_ast_id), stmt.expression)
+        print("首先打印modifier")
+        for modifier in function.modifiers:
 
-            # for in_call in stmt.internal_calls:
-            #     if isinstance(in_call, Function):
-            #         print("----【in_call:Function】", in_call.name, in_call.id)
-            #
-            #     if isinstance(in_call, SolidityFunction):
-            #         print("----【in_call:SolidityFunction】", in_call.name, in_call.name)
-            #
-            # for lib_call in stmt.library_calls:
-            #     if isinstance(lib_call, Function):
-            #         print("****【lib_call:Function】", lib_call.name)
-            #     if isinstance(lib_call, Contract):
-            #         print("****【lib_call:Contract】", lib_call.name)
+            # 最接实践不需要分析
+            if modifier.name == "nonReentrant" or modifier.name == "onlyOwner":
+                continue
 
-            # safe_math_ops = []
-            # for h_call in stmt.high_level_calls:
-            #     if h_call[0].name == "SafeMath":
-            #         safe_math_ops.append(h_call[1].name)
-            #         if isinstance(h_call[1], Function):
-            #             print("^^^^【h_call:Function】", h_call[0].name, " ", h_call[1].name)
+            # 不修改状态变量且不能进行交易的掠过
+            if len(modifier.state_variables_written) == 0 \
+                    and modifier.can_send_eth() is not True:
+                continue
 
-            if 2351 == stmt.node_ast_id:
-                print("============================")
-                for h_call in stmt.high_level_calls:
-                    if isinstance(h_call[1], Function):
-                        print("^^^^【h_call:Function】", h_call[0].name, " ", h_call[1].name)
-                    if isinstance(h_call[1], Contract):
-                        print("^^^^【h_call:Contract】", h_call[0].name, " ", h_call[1].name)
-                for ext_call in stmt.external_calls_as_expressions:
-                    print("^^^^【ext_call】", ext_call)
-                print("============================")
-            # if len(safe_math_ops) != 0:
-            #     convert_safemath(stmt, safe_math_ops)
+            print("需要分解的modifier：{}".format(modifier.name))
+            for node in modifier.nodes:
+                if node.expression is not None:
+                    print(node.expression)
+                else:
+                    if node.type == NodeType.PLACEHOLDER:
+                        # 开始分析函数
+                        print(node.type, " ast:", node._ast_id)
+                        print_function(function)
+                    else:
+                        print(node.type)
 
-            # for external_call in stmt.external_calls_as_expressions:
-            #     print("@@@@【external_call】", external_call)
+        # for stmt in function.nodes:
+        #     print("【AST-ID:{}】".format(stmt.node_ast_id), stmt.expression)
+        #
+        #     # for in_call in stmt.internal_calls:
+        #     #     if isinstance(in_call, Function):
+        #     #         print("----【in_call:Function】", in_call.name, in_call.id)
+        #     #
+        #     #     if isinstance(in_call, SolidityFunction):
+        #     #         print("----【in_call:SolidityFunction】", in_call.name, in_call.name)
+        #     #
+        #     # for lib_call in stmt.library_calls:
+        #     #     if isinstance(lib_call, Function):
+        #     #         print("****【lib_call:Function】", lib_call.name)
+        #     #     if isinstance(lib_call, Contract):
+        #     #         print("****【lib_call:Contract】", lib_call.name)
+        #     new_expr = stmt.expression
+        #     safe_math_ops = []
+        #     safe_trans_api = []
+        #     for h_call in stmt.high_level_calls:
+        #         if h_call[0].name == "SafeMath":
+        #             safe_math_ops.append(h_call[1].name)
+        #             # if isinstance(h_call[1], Function):
+        #             #     print("^^^^【h_call:Function】", h_call[0].name, " ", h_call[1].name)
+        #         if h_call[0].name == "SafeERC20":
+        #             safe_trans_api.append(h_call[1].name)
+        #
+        #     if len(safe_math_ops) != 0:
+        #         new_expr = convert_safemath(stmt, safe_math_ops)
+        #
+        #     if len(safe_trans_api) != 0:
+        #         new_expr = convert_save_erc20_api(stmt, safe_trans_api)
+        #
+        #     print(new_expr)
+        #     # print("============================")
+        #     # for h_call in stmt.high_level_calls:
+        #     #     if isinstance(h_call[1], Function):
+        #     #         print("^^^^【h_call:Function】", h_call[0].name, " ", h_call[1].name)
+        #     #     if isinstance(h_call[1], Contract):
+        #     #         print("^^^^【h_call:Contract】", h_call[0].name, " ", h_call[1].name)
+        #     # for ext_call in stmt.external_calls_as_expressions:
+        #     #     print("^^^^【ext_call】", ext_call)
+        #     # print("============================")
+        #
+        #     # if len(safe_math_ops) != 0:
+        #     #     convert_safemath(stmt, safe_math_ops)
+        #
+        #     # for external_call in stmt.external_calls_as_expressions:
+        #     #     print("@@@@【external_call】", external_call)
 
 
 if __name__ == '__main__':
