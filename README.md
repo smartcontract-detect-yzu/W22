@@ -1,17 +1,19 @@
 # Slither, the Solidity source analyzer
 <img src="./logo.png" alt="Logo" width="500"/>
 
-[![Build Status](https://img.shields.io/github/workflow/status/crytic/slither/CI/master)](https://github.com/crytic/slither/actions?query=workflow%3ACI)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/crytic/slither/ci.yml?branch=master)](https://github.com/crytic/slither/actions?query=workflow%3ACI)
 [![Slack Status](https://empireslacking.herokuapp.com/badge.svg)](https://empireslacking.herokuapp.com)
 [![PyPI version](https://badge.fury.io/py/slither-analyzer.svg)](https://badge.fury.io/py/slither-analyzer)
 
-Slither is a Solidity static analysis framework written in Python 3. It runs a suite of vulnerability detectors, prints visual information about contract details, and provides an API to easily write custom analyses. Slither enables developers to find vulnerabilities, enhance their code comprehension, and quickly prototype custom analyses.
+Slither is a Solidity static analysis framework written in Python3. It runs a suite of vulnerability detectors, prints visual information about contract details, and provides an API to easily write custom analyses. Slither enables developers to find vulnerabilities, enhance their code comprehension, and quickly prototype custom analyses.
 
 - [Features](#features)
-- [Bugs and Optimizations Detection](#bugs-and-optimizations-detection)
+- [Usage](#usage)
+- [How to Install](#how-to-install)
+- [Detectors](#detectors)
 - [Printers](#printers)
 - [Tools](#tools)
-- [How to Install](#how-to-install)
+- [API Documentation](#api-documentation)
 - [Getting Help](#getting-help)
 - [FAQ](#faq)
 - [Publications](#publications)
@@ -20,25 +22,60 @@ Slither is a Solidity static analysis framework written in Python 3. It runs a s
 
 * Detects vulnerable Solidity code with low false positives (see the list of [trophies](./trophies.md))
 * Identifies where the error condition occurs in the source code
-* Easily integrates into continuous integration and Truffle builds
+* Easily integrates into continuous integration and Hardhat/Foundry builds
 * Built-in 'printers' quickly report crucial contract information
 * Detector API to write custom analyses in Python
 * Ability to analyze contracts written with Solidity >= 0.4
 * Intermediate representation ([SlithIR](https://github.com/trailofbits/slither/wiki/SlithIR)) enables simple, high-precision analyses
 * Correctly parses 99.9% of all public Solidity code
 * Average execution time of less than 1 second per contract
+* Integrates with Github's code scanning in [CI](https://github.com/marketplace/actions/slither-action)
 
+## Usage
 
-## Bugs and Optimizations Detection
-
-Run Slither on a Truffle/Embark/Dapp/Etherlime/Hardhat application:
+Run Slither on a Hardhat/Foundry/Dapp/Brownie application:
 ```bash
 slither .
 ```
+This is the preferred option if your project has dependencies as Slither relies on the underlying compilation framework to compile source code.
 
-Run Slither on a single file:
+However, you can run Slither on a single file that does not import dependencies:
 ```bash
 slither tests/uninitialized.sol
+```
+
+## How to install
+
+Slither requires Python 3.8+.
+If you're **not** going to use one of the [supported compilation frameworks](https://github.com/crytic/crytic-compile), you need [solc](https://github.com/ethereum/solidity/), the Solidity compiler; we recommend using [solc-select](https://github.com/crytic/solc-select) to conveniently switch between solc versions.
+
+### Using Pip
+
+```bash
+pip3 install slither-analyzer
+```
+
+### Using Git
+
+```bash
+git clone https://github.com/crytic/slither.git && cd slither
+python3 setup.py install
+```
+
+We recommend using a Python virtual environment, as detailed in the [Developer Installation Instructions](https://github.com/trailofbits/slither/wiki/Developer-installation), if you prefer to install Slither via git.
+
+### Using Docker
+
+Use the [`eth-security-toolbox`](https://github.com/trailofbits/eth-security-toolbox/) docker image. It includes all of our security tools and every major version of Solidity in a single image. `/home/share` will be mounted to `/share` in the container.
+
+```bash
+docker pull trailofbits/eth-security-toolbox
+```
+
+To share a directory in the container:
+
+```bash
+docker run -it -v /home/share:/share trailofbits/eth-security-toolbox
 ```
 
 ### Integration
@@ -46,9 +83,7 @@ slither tests/uninitialized.sol
 - To generate a Markdown report, use `slither [target] --checklist`.
 - To generate a Markdown with GitHub source code highlighting, use `slither [target] --checklist --markdown-root https://github.com/ORG/REPO/blob/COMMIT/` (replace `ORG`, `REPO`, `COMMIT`)
 
-Use [solc-select](https://github.com/crytic/solc-select) if your contracts require older versions of solc. For additional configuration, see the [usage](https://github.com/trailofbits/slither/wiki/Usage) documentation.
-
-### Detectors
+## Detectors
 
 
 Num | Detector | What it Detects | Impact | Confidence
@@ -173,38 +208,8 @@ See the [Tool documentation](https://github.com/crytic/slither/wiki/Tool-Documen
 
 [Contact us](https://www.trailofbits.com/contact/) to get help on building custom tools.
 
-## How to install
-
-Slither requires Python 3.8+ and [solc](https://github.com/ethereum/solidity/), the Solidity compiler.
-
-### Using Pip
-
-```bash
-pip3 install slither-analyzer
-```
-
-### Using Git
-
-```bash
-git clone https://github.com/crytic/slither.git && cd slither
-python3 setup.py install
-```
-
-We recommend using a Python virtual environment, as detailed in the [Developer Installation Instructions](https://github.com/trailofbits/slither/wiki/Developer-installation), if you prefer to install Slither via git.
-
-### Using Docker
-
-Use the [`eth-security-toolbox`](https://github.com/trailofbits/eth-security-toolbox/) docker image. It includes all of our security tools and every major version of Solidity in a single image. `/home/share` will be mounted to `/share` in the container.
-
-```bash
-docker pull trailofbits/eth-security-toolbox
-```
-
-To share a directory in the container:
-
-```bash
-docker run -it -v /home/share:/share trailofbits/eth-security-toolbox
-```
+## API Documentation
+Documentation on Slither's internals is available [here](https://crytic.github.io/slither/slither.html).
 
 ## Getting Help
 
@@ -241,17 +246,19 @@ Slither is licensed and distributed under the AGPLv3 license. [Contact us](mailt
 - [Slither: A Static Analysis Framework For Smart Contracts](https://arxiv.org/abs/1908.09878), Josselin Feist, Gustavo Grieco, Alex Groce - WETSEB '19
 
 ### External publications
-Title | Usage | Authors | Venue
---- | --- | --- | ---
+Title | Usage | Authors | Venue | Code 
+--- | --- | --- | --- | ---
 [ReJection: A AST-Based Reentrancy Vulnerability Detection Method](https://www.researchgate.net/publication/339354823_ReJection_A_AST-Based_Reentrancy_Vulnerability_Detection_Method) | AST-based analysis built on top of Slither | Rui Ma, Zefeng Jian, Guangyuan Chen, Ke Ma, Yujia Chen | CTCIS 19
-[MPro: Combining Static and Symbolic Analysis forScalable Testing of Smart Contract](https://arxiv.org/pdf/1911.00570.pdf) | Leverage data dependency through Slither | William Zhang, Sebastian Banescu, Leodardo Pasos, Steven Stewart, Vijay Ganesh | ISSRE 2019
+[MPro: Combining Static and Symbolic Analysis forScalable Testing of Smart Contract](https://arxiv.org/pdf/1911.00570.pdf) | Leverage data dependency through Slither | William Zhang, Sebastian Banescu, Leodardo Pasos, Steven Stewart, Vijay Ganesh | ISSRE 2019 | [MPro](https://github.com/QuanZhang-William/M-Pro)
 [ETHPLOIT: From Fuzzing to Efficient Exploit Generation against Smart Contracts](https://wcventure.github.io/FuzzingPaper/Paper/SANER20_ETHPLOIT.pdf) | Leverage data dependency through Slither | Qingzhao Zhang, Yizhuo Wang, Juanru Li, Siqi Ma | SANER 20
 [Verification of Ethereum Smart Contracts: A Model Checking Approach](http://www.ijmlc.org/vol10/977-AM0059.pdf) | Symbolic execution built on top of Slither’s CFG | Tam Bang, Hoang H Nguyen, Dung Nguyen, Toan Trieu, Tho Quan | IJMLC 20
-[Smart Contract Repair](https://arxiv.org/pdf/1912.05823.pdf) | Rely on Slither’s vulnerabilities detectors | Xiao Liang Yu, Omar Al-Bataineh, David Lo, Abhik Roychoudhury | TOSEM 20
+[Smart Contract Repair](https://arxiv.org/pdf/1912.05823.pdf) | Rely on Slither’s vulnerabilities detectors | Xiao Liang Yu, Omar Al-Bataineh, David Lo, Abhik Roychoudhury | TOSEM 20 | [SCRepair](https://github.com/xiaoly8/SCRepair/)
 [Demystifying Loops in Smart Contracts](https://www.microsoft.com/en-us/research/uploads/prod/2020/08/loops_solidity__camera_ready-5f3fec3f15c69.pdf) | Leverage data dependency through Slither | Ben Mariano, Yanju Chen, Yu Feng, Shuvendu Lahiri, Isil Dillig | ASE 20
 [Trace-Based Dynamic Gas Estimation of Loops in Smart Contracts](https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=9268144) | Use Slither’s CFG to detect loops | Chunmiao Li, Shijie Nie, Yang Cao, Yijun Yu, Zhenjiang Hu | IEEE Open J. Comput. Soc. 1 (2020)
-[SAILFISH: Vetting Smart Contract State-Inconsistency Bugs in Seconds](https://arxiv.org/pdf/2104.08638.pdf) | Rely on SlithIR to build a *storage dependency graph* | Priyanka Bose, Dipanjan Das, Yanju Chen, Yu Feng, Christopher Kruegel, and Giovanni Vigna | S&P 22
+[SAILFISH: Vetting Smart Contract State-Inconsistency Bugs in Seconds](https://arxiv.org/pdf/2104.08638.pdf) | Rely on SlithIR to build a *storage dependency graph* | Priyanka Bose, Dipanjan Das, Yanju Chen, Yu Feng, Christopher Kruegel, and Giovanni Vigna | S&P 22 | [Sailfish](https://github.com/ucsb-seclab/sailfish)
 [SolType: Refinement Types for Arithmetic Overflow in Solidity](https://arxiv.org/abs/2110.00677) | Use Slither as frontend to build refinement type system | Bryan Tan, Benjamin Mariano, Shuvendu K. Lahiri, Isil Dillig, Yu Feng | POPL 22
 [Do Not Rug on Me: Leveraging Machine Learning Techniques for Automated Scam Detection](https://www.mdpi.com/2227-7390/10/6/949) | Use Slither to extract tokens' features (mintable, pausable, ..) | Mazorra, Bruno, Victor Adan, and Vanesa Daza | Mathematics 10.6 (2022)
+[MANDO: Multi-Level Heterogeneous Graph Embeddings for Fine-Grained Detection of Smart Contract Vulnerabilities](https://arxiv.org/abs/2208.13252) | Use Slither to extract the CFG and call graph | Hoang Nguyen, Nhat-Minh Nguyen, Chunyao Xie, Zahra Ahmadi, Daniel Kudendo, Thanh-Nam Doan and Lingxiao Jiang| IEEE 9th International Conference on Data Science and Advanced Analytics (DSAA, 2022) | [ge-sc](https://github.com/MANDO-Project/ge-sc)
+[Automated Auditing of Price Gouging TOD Vulnerabilities in Smart Contracts](https://www.cs.toronto.edu/~fanl/papers/price-icbc22.pdf) | Use Slither to extract the CFG and data dependencies| Sidi Mohamed Beillahi, Eric Keilty, Keerthi Nelaturu, Andreas Veneris, and Fan Long | 2022 IEEE International Conference on Blockchain and Cryptocurrency (ICBC) | [Smart-Contract-Repair](https://github.com/Veneris-Group/TOD-Location-Rectification)
 
 If you are using Slither on an academic work, consider applying to the [Crytic $10k Research Prize](https://blog.trailofbits.com/2019/11/13/announcing-the-crytic-10k-research-prize/).
